@@ -41,3 +41,42 @@ The script saves a CSV and PNG under `outputs\8qubit_magnetosensitivity`. The
 observable is the recombination-weighted singlet yield
 `Phi_S = integral k exp(-k t) P_S(t) dt`, truncated at the configured
 `t_max_us`.
+
+## Full FAD-Trp direction
+
+The next standalone model is:
+
+```powershell
+Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py
+```
+
+It uses the FAD-TrpC hyperfine tensor ordering and geometry from the broadband
+upper-bound/action-spectrum work. The published ordered list contains 27
+hyperfine-coupled nuclei: 15 on FAD and 12 on TrpH. Since exact density-matrix
+evolution is not tractable at that size, the script uses state-vector evolution
+and approximates the initially mixed nuclear bath by averaging over random-phase
+nuclear state samples.
+
+Fast check:
+
+```powershell
+python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --quick
+```
+
+Coarse 11-nucleus literature truncation:
+
+```powershell
+python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --max-nuclei 11 --samples 1 --theta-step 45 --t-max-us 4 --n-steps 121
+```
+
+Use the physical Cry4a FAD-TrpC dipolar tensor instead of the optimistic
+best-case axial dipole-axis assumption:
+
+```powershell
+python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --max-nuclei 11 --physical-dipole
+```
+
+For larger attempts, increase `--max-nuclei`. The 22-qubit target corresponds to
+`--max-nuclei 20`. The script automatically uses assembled SciPy sparse matrices
+for smaller systems and switches to a matrix-free state-vector operator beyond
+the configured sparse threshold.
