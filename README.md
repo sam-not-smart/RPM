@@ -7,3 +7,37 @@ I've attached a folder 'realistic system size' which contains a few helpful file
 Ultimately, we aim to have a modifiable full quantum model of the Radical pair mechanism. We're starting with the FAD-Trp molecular inspiration since it's the most studied, but hopefully we can adjust simulate other RPM molecules which live in different parameter regimes and have different dynamics/yields/control levers. 
 
 Some details about the system: 1. we'll use closed system dynamics. 2. The hamiltonian will have the Zeeman, hyperfine, exchange, and full (non-secular) dipolar interactions (maybe we'll add the quadrupolar interaction later). 3. We'll treat electrons and all nuclei as spin-1/2 qubits for now. To reiterate, the first goal is to have a magnetosensitive model and we'll go from there. See literature/code/thesis for paramter choices. One unclear parameter choice is the hyperfine coupling tensors for the full system. The 'quantum needle supp' under the 'literature' folder details hyperfine tensor values calculated using Density Functional Theory so we can use that a starting point, which we've already done for the 8-qubit code, and maybe tweak the tensors from there. 
+
+## Getting the current baseline running
+
+The current executable code lives in:
+
+```powershell
+Realistic system size\code\rpm_8qubit_magnetosensitivity.py
+```
+
+It is a standalone Python/SciPy sparse-state simulation of the 8-qubit baseline:
+2 electron spins and 6 spin-1/2 nuclear spins. From the repository root, install
+the dependencies with:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+Then run the fast sanity check:
+
+```powershell
+python "Realistic system size\code\rpm_8qubit_magnetosensitivity.py" --quick
+```
+
+If that passes, run the default theta sweep:
+
+```powershell
+cd "Realistic system size\code"
+python rpm_8qubit_magnetosensitivity.py
+```
+
+The script saves a CSV and PNG under `outputs\8qubit_magnetosensitivity`. The
+observable is the recombination-weighted singlet yield
+`Phi_S = integral k exp(-k t) P_S(t) dt`, truncated at the configured
+`t_max_us`.
