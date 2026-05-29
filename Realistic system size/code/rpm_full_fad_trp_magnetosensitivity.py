@@ -23,9 +23,8 @@ are transcribed from the public ActionSpectrumHistograms parameter source for:
 
 The Hamiltonian includes electron Zeeman, anisotropic hyperfine, exchange, and
 full electron-electron dipolar interactions. The physical dipolar tensor is
-Table S3 from the supplementary information. Exchange defaults to zero because
-the upper-bound paper states it is roughly 100 times smaller than the dipolar
-interaction and omits it.
+Table S3 from the supplementary information. Exchange defaults to 3 MHz for the
+current baseline runs, but can be changed with ``--J-MHz``.
 """
 
 from __future__ import annotations
@@ -239,7 +238,7 @@ class Params:
     n_steps: int = 301
     recombination_rate_per_us: float = 0.5
 
-    J_MHz: float = 0.0
+    J_MHz: float = 3.0
     use_published_dipolar_tensor: bool = True
     D_MHz_if_isotropic: float = -19.10703069
     optimize_dipole_axis: bool = True
@@ -792,7 +791,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--k", type=float, default=0.5)
     parser.add_argument("--t-max-us", type=float, default=10.0)
     parser.add_argument("--n-steps", type=int, default=301)
-    parser.add_argument("--J-MHz", type=float, default=0.0)
+    parser.add_argument("--J-MHz", type=float, default=3.0)
     parser.add_argument("--physical-dipole", action="store_true", help="Use the published Cry4a dipolar tensor instead of the optimistic z-axis tensor.")
     parser.add_argument("--D-MHz", type=float, default=-19.10703069, help="Optimistic axial tensor Dzz used when --physical-dipole is absent.")
     parser.add_argument("--hyperfine-mode", choices=["full", "diagonal", "z-only"], default="full")

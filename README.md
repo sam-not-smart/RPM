@@ -69,6 +69,8 @@ Coarse 11-nucleus literature truncation:
 python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --max-nuclei 11 --samples 1 --theta-step 45 --t-max-us 4 --n-steps 121
 ```
 
+The default exchange strength for this full-system script is `J = 3 MHz`.
+
 Use the physical Cry4a FAD-TrpC dipolar tensor instead of the optimistic
 best-case axial dipole-axis assumption:
 
@@ -76,7 +78,9 @@ best-case axial dipole-axis assumption:
 python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --max-nuclei 11 --physical-dipole
 ```
 
-For larger attempts, increase `--max-nuclei`. The 22-qubit target corresponds to
-`--max-nuclei 20`. The script automatically uses assembled SciPy sparse matrices
-for smaller systems and switches to a matrix-free state-vector operator beyond
-the configured sparse threshold.
+For larger attempts, increase `--max-nuclei`. A 20-nucleus run corresponds to
+22 total qubits including the two electrons. The quantum-needle S2 selection has
+22 nuclei, which would be 24 total qubits and should be treated as the next
+scaling step. The script automatically uses assembled SciPy sparse matrices for
+smaller systems and switches to a matrix-free state-vector operator beyond the
+configured sparse threshold.
