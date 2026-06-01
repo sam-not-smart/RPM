@@ -174,14 +174,14 @@ def plot_singlet_comparison(off_case: dict[str, np.ndarray], on_case: dict[str, 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--max-nuclei", type=int, default=20)
+    parser.add_argument("--max-nuclei", type=int, default=16)
     parser.add_argument("--theta", type=float, default=90.0)
     parser.add_argument("--t-max-us", type=float, default=2.0)
-    parser.add_argument("--n-steps", type=int, default=51)
+    parser.add_argument("--n-steps", type=int, default=101)
     parser.add_argument("--seed", type=int, default=20260528)
     parser.add_argument("--nuclear-state", choices=["product-up", "product-x", "random-phase"], default="product-x")
     parser.add_argument("--J-MHz", type=float, default=3.0)
-    parser.add_argument("--hyperfine-mode", choices=["full", "diagonal", "z-only"], default="z-only")
+    parser.add_argument("--hyperfine-mode", choices=["full", "diagonal", "z-only"], default="full")
     parser.add_argument("--operator-mode", choices=["auto", "sparse", "matrix-free"], default="sparse")
     parser.add_argument("--evolver", choices=["expm", "rk4"], default="expm")
     parser.add_argument("--physical-dipole", action="store_true")

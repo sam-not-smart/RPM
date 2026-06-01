@@ -42,7 +42,7 @@ observable is the recombination-weighted singlet yield
 `Phi_S = integral k exp(-k t) P_S(t) dt`, truncated at the configured
 `t_max_us`.
 
-## Full FAD-Trp direction
+## Full FAD-Trp production baseline
 
 The next standalone model is:
 
@@ -51,11 +51,34 @@ Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py
 ```
 
 It uses the FAD-TrpC hyperfine tensor ordering and geometry from the broadband
-upper-bound/action-spectrum work. The published ordered list contains 27
-hyperfine-coupled nuclei: 15 on FAD and 12 on TrpH. Since exact density-matrix
-evolution is not tractable at that size, the script uses state-vector evolution
-and approximates the initially mixed nuclear bath by averaging over random-phase
-nuclear state samples.
+upper-bound/action-spectrum work. The current main production baseline is:
+
+- `max_nuclei = 16`
+- `hyperfine_mode = full`
+- `J = 3 MHz`
+- optimistic axial electron-electron dipole enabled by default
+- `t_max = 2 us`
+- `n_steps = 101`
+- `theta = 0, 45, 90, 135, 180 deg`
+- one quantum sample unless otherwise specified
+
+For angular sweeps, the same random-phase nuclear sample ensemble is reused at
+each theta value so the reported contrast reflects field orientation rather
+than sample-to-sample bath noise.
+
+This replaces the earlier 20-nucleus `z-only` hyperfine workflow as the thesis
+baseline. The 20-nucleus `z-only` results are still useful for approximate
+screening and scaling intuition, but should be labelled as optimistic/screening
+only. The side-thread 14-nucleus comparison showed that full anisotropic
+hyperfines roughly halved the singlet yield and reduced angular contrast from
+about 2.59% to about 0.32%, so the full-anisotropic model is now the more
+defensible baseline.
+
+The published ordered list contains 27 hyperfine-coupled nuclei: 15 on FAD and
+12 on TrpH. Since exact density-matrix evolution is not tractable at that size,
+the script uses state-vector evolution and approximates the initially mixed
+nuclear bath by averaging over random-phase nuclear state samples when multiple
+samples are requested.
 
 Fast check:
 
@@ -63,10 +86,10 @@ Fast check:
 python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --quick
 ```
 
-Coarse 11-nucleus literature truncation:
+Production magnetosensitivity baseline:
 
 ```powershell
-python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --max-nuclei 11 --samples 1 --theta-step 45 --t-max-us 4 --n-steps 121
+python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --output-dir "outputs\baseline_16n_full\magnetosensitivity"
 ```
 
 The default exchange strength for this full-system script is `J = 3 MHz`.
@@ -75,12 +98,50 @@ Use the physical Cry4a FAD-TrpC dipolar tensor instead of the optimistic
 best-case axial dipole-axis assumption:
 
 ```powershell
-python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --max-nuclei 11 --physical-dipole
+python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --physical-dipole
+```
+
+Overhauser comparison on the same 16-nucleus baseline:
+
+```powershell
+python "Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py" --model overhauser --samples 400 --output-dir "outputs\baseline_16n_full\overhauser"
+```
+
+Entanglement dynamics with and without exchange/dipole:
+
+```powershell
+python "Realistic system size\code\rpm_entanglement_dynamics.py" --output-dir "outputs\baseline_16n_full\entanglement"
 ```
 
 For larger attempts, increase `--max-nuclei`. A 20-nucleus run corresponds to
-22 total qubits including the two electrons. The quantum-needle S2 selection has
-22 nuclei, which would be 24 total qubits and should be treated as the next
-scaling step. The script automatically uses assembled SciPy sparse matrices for
-smaller systems and switches to a matrix-free state-vector operator beyond the
-configured sparse threshold.
+22 total qubits including the two electrons; with `--hyperfine-mode z-only`,
+that path should be treated as an approximate screening calculation rather than
+the main baseline. The quantum-needle S2 selection has 22 nuclei, which would be
+24 total qubits and should be treated as the next scaling step. The script
+automatically uses assembled SciPy sparse matrices for systems at or below the
+configured sparse threshold and switches to a matrix-free state-vector operator
+beyond it.
+
+## Closed-system pulse control
+
+The first ideal-pulse control screen is:
+
+```powershell
+Realistic system size\code\rpm_pulse_control.py
+```
+
+It supports no-pulse, Hahn echo, and CPMG-N protocols with ideal instantaneous
+global electron pi pulses. The default screening protocols are `none`, `hahn_y`,
+`cpmg2_y`, and `cpmg4_y`.
+
+Fast smoke test:
+
+```powershell
+python "Realistic system size\code\rpm_pulse_control.py" --max-nuclei 7 --protocols none,hahn_y --theta-start 0 --theta-stop 180 --theta-step 90 --t-max-us 0.2 --n-steps 21 --verify-no-pulse
+```
+
+Production pulse-control screen:
+
+```powershell
+python "Realistic system size\code\rpm_pulse_control.py" --verify-no-pulse --output-dir "outputs\baseline_16n_full\pulse_control"
+```

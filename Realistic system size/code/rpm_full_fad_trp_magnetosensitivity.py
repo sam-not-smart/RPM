@@ -7,12 +7,13 @@ density matrices.
 
 Default model
 -------------
-The default run uses the 11-nucleus literature truncation used in the broadband
-upper-bound paper: the 7 strongest FAD nuclei and the 4 strongest TrpC nuclei.
+The default production baseline uses a 16-nucleus FAD-Trp truncation with full
+anisotropic hyperfine tensors, J = 3 MHz, optimistic axial electron-electron
+dipole, a 2 us time window, and the coarse theta grid 0, 45, 90, 135, 180 deg.
 The published complete list contains 27 magnetic nuclei, which would be 29
 spin-1/2 qubits including the two electrons. Exact density-matrix evolution is
 not viable there; this script approximates the initially mixed nuclear bath by
-averaging over random-phase pure nuclear states.
+averaging over random-phase pure nuclear states when multiple samples are used.
 
 Parameter provenance
 --------------------
@@ -227,16 +228,16 @@ class Nucleus:
 class Params:
     B_microT: float = 50.0
     gamma_e_MHz_per_mT: float = GAMMA_E_MHZ_PER_MT
-    theta_values_deg: np.ndarray = field(default_factory=lambda: np.arange(0.0, 181.0, 15.0))
+    theta_values_deg: np.ndarray = field(default_factory=lambda: np.arange(0.0, 181.0, 45.0))
     phi_deg: float = 0.0
 
-    max_nuclei: int = 11
-    n_samples: int = 2
+    max_nuclei: int = 16
+    n_samples: int = 1
     seed: int = 20260528
     model: str = "quantum"
 
-    t_max_us: float = 10.0
-    n_steps: int = 301
+    t_max_us: float = 2.0
+    n_steps: int = 101
     recombination_rate_per_us: float = 0.5
 
     J_MHz: float = 3.0
@@ -246,7 +247,7 @@ class Params:
     optimize_dipole_axis: bool = True
     hyperfine_mode: str = "full"
     operator_mode: str = "auto"
-    max_sparse_qubits: int = 16
+    max_sparse_qubits: int = 18
     evolver: str = "expm"
 
     output_dir: Path = Path("outputs") / "full_fad_trp_magnetosensitivity"
@@ -773,12 +774,14 @@ def run_overhauser_orientation(
 
 def run_sweep(params: Params) -> tuple[list[dict[str, object]], list[Nucleus]]:
     nuclei = selected_nuclei(params.max_nuclei)
-    rng = np.random.default_rng(params.seed)
     results = []
     total = len(params.theta_values_deg)
     print_model_header(params, nuclei)
     for index, theta_deg in enumerate(params.theta_values_deg, start=1):
         print(f"[{index:02d}/{total:02d}] theta={theta_deg:g} deg, samples={params.n_samples}")
+        # Reuse the same random-phase/Overhauser sample ensemble across theta
+        # values so angular contrast is not inflated by sample-to-sample noise.
+        rng = np.random.default_rng(params.seed)
         results.append(run_orientation(params, nuclei, float(theta_deg), rng))
     return results, nuclei
 
@@ -911,25 +914,25 @@ def parse_angles(start: float, stop: float, step: float) -> np.ndarray:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--quick", action="store_true", help="Run a short five-angle sanity check.")
-    parser.add_argument("--max-nuclei", type=int, default=11, help="Number of nuclei from the published ordering to include.")
-    parser.add_argument("--samples", type=int, default=2, help="Random-phase nuclear samples per orientation.")
+    parser.add_argument("--max-nuclei", type=int, default=16, help="Number of nuclei from the published ordering to include.")
+    parser.add_argument("--samples", type=int, default=1, help="Random-phase nuclear samples per orientation.")
     parser.add_argument("--seed", type=int, default=20260528, help="Random seed for nuclear samples.")
     parser.add_argument("--model", choices=["quantum", "overhauser"], default="quantum")
-    parser.add_argument("--theta-step", type=float, default=15.0)
+    parser.add_argument("--theta-step", type=float, default=45.0)
     parser.add_argument("--theta-start", type=float, default=0.0)
     parser.add_argument("--theta-stop", type=float, default=180.0)
     parser.add_argument("--phi", type=float, default=0.0)
     parser.add_argument("--b-microt", type=float, default=50.0)
     parser.add_argument("--k", type=float, default=0.5)
-    parser.add_argument("--t-max-us", type=float, default=10.0)
-    parser.add_argument("--n-steps", type=int, default=301)
+    parser.add_argument("--t-max-us", type=float, default=2.0)
+    parser.add_argument("--n-steps", type=int, default=101)
     parser.add_argument("--J-MHz", type=float, default=3.0)
     parser.add_argument("--physical-dipole", action="store_true", help="Use the published Cry4a dipolar tensor instead of the optimistic z-axis tensor.")
     parser.add_argument("--no-dipole", action="store_true", help="Disable the electron-electron dipolar interaction.")
     parser.add_argument("--D-MHz", type=float, default=-19.10703069, help="Optimistic axial tensor Dzz used when --physical-dipole is absent.")
     parser.add_argument("--hyperfine-mode", choices=["full", "diagonal", "z-only"], default="full")
     parser.add_argument("--operator-mode", choices=["auto", "sparse", "matrix-free"], default="auto")
-    parser.add_argument("--max-sparse-qubits", type=int, default=16)
+    parser.add_argument("--max-sparse-qubits", type=int, default=18)
     parser.add_argument("--evolver", choices=["expm", "rk4"], default="expm")
     parser.add_argument("--output-dir", type=Path, default=Path("outputs") / "full_fad_trp_magnetosensitivity")
     parser.add_argument("--no-plot", action="store_true")
