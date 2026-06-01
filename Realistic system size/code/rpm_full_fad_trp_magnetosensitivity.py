@@ -233,12 +233,14 @@ class Params:
     max_nuclei: int = 11
     n_samples: int = 2
     seed: int = 20260528
+    model: str = "quantum"
 
     t_max_us: float = 10.0
     n_steps: int = 301
     recombination_rate_per_us: float = 0.5
 
     J_MHz: float = 3.0
+    include_dipole: bool = True
     use_published_dipolar_tensor: bool = True
     D_MHz_if_isotropic: float = -19.10703069
     optimize_dipole_axis: bool = True
@@ -418,11 +420,12 @@ def build_terms(params: Params, nuclei: list[Nucleus], theta_deg: float) -> list
         exchange_tensor = mhz_to_rad_per_us(-2.0 * params.J_MHz) * np.identity(3)
         add_two_spin_tensor_terms(terms, 0, 1, exchange_tensor)
 
-    if params.use_published_dipolar_tensor and not params.optimize_dipole_axis:
-        dipolar_tensor_MHz = published_dipolar_tensor_MHz()
-    else:
-        dipolar_tensor_MHz = best_case_dipolar_tensor_MHz(params.D_MHz_if_isotropic)
-    add_two_spin_tensor_terms(terms, 0, 1, mhz_to_rad_per_us(dipolar_tensor_MHz))
+    if params.include_dipole:
+        if params.use_published_dipolar_tensor and not params.optimize_dipole_axis:
+            dipolar_tensor_MHz = published_dipolar_tensor_MHz()
+        else:
+            dipolar_tensor_MHz = best_case_dipolar_tensor_MHz(params.D_MHz_if_isotropic)
+        add_two_spin_tensor_terms(terms, 0, 1, mhz_to_rad_per_us(dipolar_tensor_MHz))
 
     # Keep qubit count captured for validation while keeping terms compact.
     if n_qubits != spin_count(len(nuclei)):
@@ -620,6 +623,11 @@ def evolve_rk4(hamiltonian, psi0: np.ndarray, t_us: np.ndarray) -> np.ndarray:
 
 
 def run_orientation(params: Params, nuclei: list[Nucleus], theta_deg: float, rng: np.random.Generator) -> dict[str, object]:
+    if params.model == "overhauser":
+        return run_overhauser_orientation(params, nuclei, theta_deg, rng)
+    if params.model != "quantum":
+        raise ValueError("model must be one of: quantum, overhauser.")
+
     sample_populations = []
     sample_yields = []
     for _sample_index in range(params.n_samples):
@@ -629,6 +637,126 @@ def run_orientation(params: Params, nuclei: list[Nucleus], theta_deg: float, rng
 
     mean_populations = np.mean(sample_populations, axis=0)
     t_us = np.linspace(0.0, params.t_max_us, params.n_steps)
+    return {
+        "theta_deg": float(theta_deg),
+        "phi_deg": float(params.phi_deg),
+        "singlet_yield": float(np.mean(sample_yields)),
+        "singlet_yield_std": float(np.std(sample_yields, ddof=1)) if len(sample_yields) > 1 else 0.0,
+        "singlet_population_initial": float(mean_populations[0]),
+        "singlet_population_final": float(mean_populations[-1]),
+        "singlet_population_min": float(np.min(mean_populations)),
+        "singlet_population_max": float(np.max(mean_populations)),
+        "t_us": t_us,
+        "singlet_population": mean_populations,
+    }
+
+
+def electron_spin_operators() -> dict[str, np.ndarray]:
+    ident = np.eye(2, dtype=complex)
+    sx = 0.5 * np.array([[0.0, 1.0], [1.0, 0.0]], dtype=complex)
+    sy = 0.5 * np.array([[0.0, -1.0j], [1.0j, 0.0]], dtype=complex)
+    sz = 0.5 * np.array([[1.0, 0.0], [0.0, -1.0]], dtype=complex)
+    return {
+        "S1x": np.kron(sx, ident),
+        "S1y": np.kron(sy, ident),
+        "S1z": np.kron(sz, ident),
+        "S2x": np.kron(ident, sx),
+        "S2y": np.kron(ident, sy),
+        "S2z": np.kron(ident, sz),
+    }
+
+
+def overhauser_fields_MHz(params: Params, nuclei: list[Nucleus], rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
+    """Sample classical Overhauser fields in MHz for the two electrons."""
+    field_1 = np.zeros(3, dtype=float)
+    field_2 = np.zeros(3, dtype=float)
+    for nucleus in nuclei:
+        tensor = filtered_hyperfine_tensor(nucleus.tensor_MHz, params.hyperfine_mode)
+        nuclear_projection = rng.choice([-0.5, 0.5])
+        contribution = tensor @ np.array([0.0, 0.0, nuclear_projection])
+        if nucleus.radical == "FAD":
+            field_1 += contribution
+        else:
+            field_2 += contribution
+    return field_1, field_2
+
+
+def electronic_singlet_state() -> np.ndarray:
+    state = np.zeros(4, dtype=complex)
+    state[1] = 1.0 / SQRT2
+    state[2] = -1.0 / SQRT2
+    return state
+
+
+def build_overhauser_hamiltonian(
+    params: Params,
+    theta_deg: float,
+    field_1_MHz: np.ndarray,
+    field_2_MHz: np.ndarray,
+) -> np.ndarray:
+    ops = electron_spin_operators()
+    hamiltonian = np.zeros((4, 4), dtype=complex)
+    B_mT = 1e-3 * params.B_microT * unit_vector_from_angles(theta_deg, params.phi_deg)
+    zeeman_MHz = params.gamma_e_MHz_per_mT * B_mT
+
+    total_1 = mhz_to_rad_per_us(zeeman_MHz + field_1_MHz)
+    total_2 = mhz_to_rad_per_us(zeeman_MHz + field_2_MHz)
+    for axis_index, axis in enumerate(("x", "y", "z")):
+        hamiltonian += total_1[axis_index] * ops[f"S1{axis}"]
+        hamiltonian += total_2[axis_index] * ops[f"S2{axis}"]
+
+    if abs(params.J_MHz) > 1e-15:
+        exchange_coeff = mhz_to_rad_per_us(-2.0 * params.J_MHz)
+        for axis in ("x", "y", "z"):
+            hamiltonian += exchange_coeff * (ops[f"S1{axis}"] @ ops[f"S2{axis}"])
+
+    if params.include_dipole:
+        if params.use_published_dipolar_tensor and not params.optimize_dipole_axis:
+            dipolar_tensor_MHz = published_dipolar_tensor_MHz()
+        else:
+            dipolar_tensor_MHz = best_case_dipolar_tensor_MHz(params.D_MHz_if_isotropic)
+        dipolar_tensor = mhz_to_rad_per_us(dipolar_tensor_MHz)
+        for a, axis_a in enumerate(("x", "y", "z")):
+            for b, axis_b in enumerate(("x", "y", "z")):
+                hamiltonian += dipolar_tensor[a, b] * (ops[f"S1{axis_a}"] @ ops[f"S2{axis_b}"])
+
+    return hamiltonian
+
+
+def electron_singlet_population(state: np.ndarray) -> float:
+    singlet = electronic_singlet_state()
+    amp = np.vdot(singlet, state)
+    return float((amp.conjugate() * amp).real)
+
+
+def evolve_electron_hamiltonian(hamiltonian: np.ndarray, t_us: np.ndarray) -> np.ndarray:
+    evals, evecs = np.linalg.eigh(hamiltonian)
+    psi0 = electronic_singlet_state()
+    coeffs = evecs.conj().T @ psi0
+    populations = np.empty(len(t_us), dtype=float)
+    for index, time in enumerate(t_us):
+        psi_t = evecs @ (np.exp(-1.0j * evals * time) * coeffs)
+        populations[index] = electron_singlet_population(psi_t)
+    return populations
+
+
+def run_overhauser_orientation(
+    params: Params,
+    nuclei: list[Nucleus],
+    theta_deg: float,
+    rng: np.random.Generator,
+) -> dict[str, object]:
+    t_us = np.linspace(0.0, params.t_max_us, params.n_steps)
+    sample_populations = []
+    sample_yields = []
+    for _sample_index in range(params.n_samples):
+        field_1, field_2 = overhauser_fields_MHz(params, nuclei, rng)
+        hamiltonian = build_overhauser_hamiltonian(params, theta_deg, field_1, field_2)
+        populations = evolve_electron_hamiltonian(hamiltonian, t_us)
+        sample_populations.append(populations)
+        sample_yields.append(singlet_yield(t_us, populations, params.recombination_rate_per_us))
+
+    mean_populations = np.mean(sample_populations, axis=0)
     return {
         "theta_deg": float(theta_deg),
         "phi_deg": float(params.phi_deg),
@@ -735,6 +863,7 @@ def print_model_header(params: Params, nuclei: list[Nucleus]) -> None:
     print("FAD-Trp magnetosensitivity model")
     print("--------------------------------")
     print(f"nuclei: {len(nuclei)} ({n_qubits} qubits total)")
+    print(f"model: {params.model}")
     print(f"state-vector size: {estimate_state_memory_mb(len(nuclei)):.2f} MB per vector")
     print(f"nuclear samples: {params.n_samples}")
     print(f"hyperfine mode: {params.hyperfine_mode}")
@@ -746,7 +875,9 @@ def print_model_header(params: Params, nuclei: list[Nucleus]) -> None:
     print(f"evolver: {params.evolver}")
     print(f"B field: {params.B_microT:g} uT, phi={params.phi_deg:g} deg")
     print(f"J: {params.J_MHz:g} MHz")
-    if params.use_published_dipolar_tensor and not params.optimize_dipole_axis:
+    if not params.include_dipole:
+        print("dipolar tensor: disabled")
+    elif params.use_published_dipolar_tensor and not params.optimize_dipole_axis:
         print("dipolar tensor: Table S3 Cry4a FAD-TrpCH geometry")
     else:
         print(f"dipolar tensor: optimistic axial z orientation, Dzz={params.D_MHz_if_isotropic:g} MHz")
@@ -783,6 +914,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-nuclei", type=int, default=11, help="Number of nuclei from the published ordering to include.")
     parser.add_argument("--samples", type=int, default=2, help="Random-phase nuclear samples per orientation.")
     parser.add_argument("--seed", type=int, default=20260528, help="Random seed for nuclear samples.")
+    parser.add_argument("--model", choices=["quantum", "overhauser"], default="quantum")
     parser.add_argument("--theta-step", type=float, default=15.0)
     parser.add_argument("--theta-start", type=float, default=0.0)
     parser.add_argument("--theta-stop", type=float, default=180.0)
@@ -793,6 +925,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-steps", type=int, default=301)
     parser.add_argument("--J-MHz", type=float, default=3.0)
     parser.add_argument("--physical-dipole", action="store_true", help="Use the published Cry4a dipolar tensor instead of the optimistic z-axis tensor.")
+    parser.add_argument("--no-dipole", action="store_true", help="Disable the electron-electron dipolar interaction.")
     parser.add_argument("--D-MHz", type=float, default=-19.10703069, help="Optimistic axial tensor Dzz used when --physical-dipole is absent.")
     parser.add_argument("--hyperfine-mode", choices=["full", "diagonal", "z-only"], default="full")
     parser.add_argument("--operator-mode", choices=["auto", "sparse", "matrix-free"], default="auto")
@@ -809,12 +942,14 @@ def params_from_args(args: argparse.Namespace) -> Params:
     params.max_nuclei = args.max_nuclei
     params.n_samples = args.samples
     params.seed = args.seed
+    params.model = args.model
     params.phi_deg = args.phi
     params.B_microT = args.b_microt
     params.recombination_rate_per_us = args.k
     params.t_max_us = args.t_max_us
     params.n_steps = args.n_steps
     params.J_MHz = args.J_MHz
+    params.include_dipole = not args.no_dipole
     params.optimize_dipole_axis = not args.physical_dipole
     params.D_MHz_if_isotropic = args.D_MHz
     params.hyperfine_mode = args.hyperfine_mode
