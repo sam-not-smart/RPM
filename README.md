@@ -113,6 +113,50 @@ Entanglement dynamics with and without exchange/dipole:
 python "Realistic system size\code\rpm_entanglement_dynamics.py" --output-dir "outputs\baseline_16n_full\entanglement"
 ```
 
+## Entanglement-size scaling study
+
+The scaling study described for the new subproject lives in:
+
+```powershell
+Realistic system size\code\rpm_entanglement_scaling.py
+```
+
+It starts from the two strongest FAD-coupled nuclei and the two strongest
+Trp-coupled nuclei, then adds one nucleus on each radical side per run in the
+published approximate hyperfine-strength order. For each truncation it evolves
+the closed system with electron Zeeman, full anisotropic hyperfine, exchange
+(`J = 3 MHz` by default), electron-electron dipole, and a simple N-14
+quadrupolar term for spin-1 nitrogens. It tracks the log negativity for the two
+thesis cuts, `e1+n1 | e2+n2` and `e1+e2 | n1+n2`, writes time-series and summary
+CSVs, plots both cuts separately for every completed system size, and fits a
+power law to the time-averaged log negativity of each cut.
+
+The default initial nuclear state is a fixed separable minimum-Overhauser
+product state. Spin-1 nitrogens begin in `m=0` along their quadrupolar
+principal axes. Spin-1/2 nuclei begin in fixed `m=+/-1/2` states along their
+strongest hyperfine axes, with signs chosen once from the complete FAD and Trp
+lists to minimize each radical's initial Overhauser field. The assignment is
+kept unchanged as the system grows.
+
+Fast smoke test:
+
+```powershell
+python "Realistic system size\code\rpm_entanglement_scaling.py" --quick --output-dir "outputs\entanglement_scaling_quick"
+```
+
+Production-style physical-spin run, stopping when the Hilbert-space dimension
+exceeds about 22 effective qubits:
+
+```powershell
+python "Realistic system size\code\rpm_entanglement_scaling.py" --max-nuclei 14 --max-effective-qubits 22 --stop-after-size-hours 3 --extrapolate-to-nuclei 26 --output-dir "outputs\entanglement_minimum_overhauser_scaling_full"
+```
+
+To let the sweep stop cleanly after a single truncation takes more than a few
+hours, add for example `--stop-after-size-hours 3`.
+
+To instead use the older one-nucleus-at-a-time global growth order, add
+`--growth-mode global`.
+
 For larger attempts, increase `--max-nuclei`. A 20-nucleus run corresponds to
 22 total qubits including the two electrons; with `--hyperfine-mode z-only`,
 that path should be treated as an approximate screening calculation rather than
