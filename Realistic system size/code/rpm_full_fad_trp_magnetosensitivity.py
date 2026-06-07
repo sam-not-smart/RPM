@@ -78,6 +78,54 @@ PUBLISHED_NUCLEUS_ORDER = [
     "FN1",
 ]
 
+CORE_TAIL_20_NUCLEUS_ORDER = [
+    "FN5",
+    "WCNE1",
+    "WCHE1",
+    "FN10",
+    "WCHB1",
+    "WCHE3",
+    "FH6",
+    "WCHZ2",
+    "WCHD1",
+    "WCHH2",
+    "WCN",
+    "FH73",
+    "WCHA",
+    "FH9",
+    "WCHB2",
+    "WCHZ3",
+    "FN3",
+    "WCHNm",
+    "FH3",
+    "FN1",
+]
+
+CORE_TAIL_16_NUCLEUS_ORDER = [
+    "FN5",
+    "WCNE1",
+    "WCHE1",
+    "FN10",
+    "WCHB1",
+    "WCHE3",
+    "FH6",
+    "WCHZ2",
+    "WCHD1",
+    "FH9",
+    "WCHB2",
+    "WCHZ3",
+    "FN3",
+    "WCHNm",
+    "FH3",
+    "FN1",
+]
+
+NUCLEUS_PRESETS = {
+    "strongest": None,
+    "core-tail-16": tuple(CORE_TAIL_16_NUCLEUS_ORDER),
+    "core-tail-20": tuple(CORE_TAIL_20_NUCLEUS_ORDER),
+}
+
 
 GAUSSIAN_FAD_ROTATION = np.array(
     [
@@ -232,6 +280,7 @@ class Params:
     phi_deg: float = 0.0
 
     max_nuclei: int = 16
+    nucleus_names: tuple[str, ...] | None = None
     n_samples: int = 1
     seed: int = 20260528
     model: str = "quantum"
@@ -307,11 +356,34 @@ def literature_tensor_MHz(published_name: str) -> np.ndarray:
     return rotate_trp_to_fad_frame(trp_tensor_in_trp_frame(atom_key))
 
 
-def selected_nuclei(max_nuclei: int) -> list[Nucleus]:
-    if max_nuclei < 0 or max_nuclei > len(PUBLISHED_NUCLEUS_ORDER):
-        raise ValueError(f"max_nuclei must be between 0 and {len(PUBLISHED_NUCLEUS_ORDER)}.")
+def parse_nucleus_names(value: str) -> tuple[str, ...]:
+    names = tuple(name.strip() for name in value.split(",") if name.strip())
+    if not names:
+        raise ValueError("nucleus list must contain at least one name.")
+    return names
+
+
+def validate_nucleus_names(names: Iterable[str]) -> tuple[str, ...]:
+    normalized = tuple(names)
+    known = set(PUBLISHED_NUCLEUS_ORDER)
+    unknown = [name for name in normalized if name not in known]
+    if unknown:
+        raise ValueError(f"unknown nucleus name(s): {', '.join(unknown)}")
+    duplicates = sorted({name for name in normalized if normalized.count(name) > 1})
+    if duplicates:
+        raise ValueError(f"duplicate nucleus name(s): {', '.join(duplicates)}")
+    return normalized
+
+
+def selected_nuclei(max_nuclei: int, nucleus_names: Iterable[str] | None = None) -> list[Nucleus]:
+    if nucleus_names is None:
+        if max_nuclei < 0 or max_nuclei > len(PUBLISHED_NUCLEUS_ORDER):
+            raise ValueError(f"max_nuclei must be between 0 and {len(PUBLISHED_NUCLEUS_ORDER)}.")
+        selected_names = tuple(PUBLISHED_NUCLEUS_ORDER[:max_nuclei])
+    else:
+        selected_names = validate_nucleus_names(nucleus_names)
     nuclei = []
-    for name in PUBLISHED_NUCLEUS_ORDER[:max_nuclei]:
+    for name in selected_names:
         _atom_key, radical = canonical_atom_key(name)
         nuclei.append(Nucleus(name=name, radical=radical, tensor_MHz=literature_tensor_MHz(name)))
     return nuclei
@@ -773,7 +845,7 @@ def run_overhauser_orientation(
 
 
 def run_sweep(params: Params) -> tuple[list[dict[str, object]], list[Nucleus]]:
-    nuclei = selected_nuclei(params.max_nuclei)
+    nuclei = selected_nuclei(params.max_nuclei, params.nucleus_names)
     results = []
     total = len(params.theta_values_deg)
     print_model_header(params, nuclei)
@@ -915,6 +987,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--quick", action="store_true", help="Run a short five-angle sanity check.")
     parser.add_argument("--max-nuclei", type=int, default=16, help="Number of nuclei from the published ordering to include.")
+    parser.add_argument("--nucleus-preset", choices=sorted(NUCLEUS_PRESETS), default="strongest", help="Named nucleus subset to use.")
+    parser.add_argument("--nuclei", help="Comma-separated explicit nucleus list. Overrides --nucleus-preset and --max-nuclei.")
     parser.add_argument("--samples", type=int, default=1, help="Random-phase nuclear samples per orientation.")
     parser.add_argument("--seed", type=int, default=20260528, help="Random seed for nuclear samples.")
     parser.add_argument("--model", choices=["quantum", "overhauser"], default="quantum")
@@ -943,6 +1017,13 @@ def parse_args() -> argparse.Namespace:
 def params_from_args(args: argparse.Namespace) -> Params:
     params = Params()
     params.max_nuclei = args.max_nuclei
+    preset_names = NUCLEUS_PRESETS[args.nucleus_preset]
+    if args.nuclei:
+        params.nucleus_names = validate_nucleus_names(parse_nucleus_names(args.nuclei))
+    elif preset_names is not None:
+        params.nucleus_names = preset_names
+    if params.nucleus_names is not None:
+        params.max_nuclei = len(params.nucleus_names)
     params.n_samples = args.samples
     params.seed = args.seed
     params.model = args.model
@@ -964,7 +1045,11 @@ def params_from_args(args: argparse.Namespace) -> Params:
     params.show_plot = args.show_plot
 
     if args.quick:
-        params.max_nuclei = min(params.max_nuclei, 7)
+        if params.nucleus_names is not None:
+            params.nucleus_names = params.nucleus_names[:7]
+            params.max_nuclei = len(params.nucleus_names)
+        else:
+            params.max_nuclei = min(params.max_nuclei, 7)
         params.n_samples = min(params.n_samples, 1)
         params.theta_values_deg = np.array([0.0, 45.0, 90.0, 135.0, 180.0], dtype=float)
         params.t_max_us = min(params.t_max_us, 2.0)
