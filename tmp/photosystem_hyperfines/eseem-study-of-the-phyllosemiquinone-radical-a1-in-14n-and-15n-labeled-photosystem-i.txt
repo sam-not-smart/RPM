@@ -1,0 +1,732 @@
+
+
+--- PAGE 1 ---
+Accelerated Publications
+ESEEM Study of the Phyllosemiquinone Radical A 1•- in 14N- and 15N-Labeled
+Photosystem I†
+Jonathan Hanley, Yiannis Deligiannakis,* ,‡ Fraser MacMillan, Herve´ Bottin, and A. William Rutherford
+Section de Bioe´nerge´tique (URA CNRS 2096), De´partement de Biologie Cellulaire et Mole´culaire,
+CEA Saclay, F-91191 Gif-sur-Y Vette, France
+ReceiVed June 9, 1997; Re Vised Manuscript Recei Ved August 5, 1997 X
+ABSTRACT: The phyllosemiquinone radical of the photosystem I reaction center has been studied by electron
+spin echo envelope modulation (ESEEM) spectroscopy. A comparative analysis of ESEEM data of the
+semiquinone in
+14N- and 15N-labeled PSI and numerical simulations demonstrate the existence of two
+protein nitrogen nuclei coupled to the semiquinone. One of the 14N couplings is characterized by a
+quadrupolar coupling constant e2qQ/4h of 0.77 MHz, an asymmetry parameter η of 0.18, and a hyperfine
+coupling tensor with an almost pure isotropic hyperfine coupling, i.e. (Axx,A yy,A zz) ) (1.3, 1.3, 1.5 MHz).
+The second nitrogen coupling is characterized by a quadrupolar coupling constant e2qQ/4h of 0.45 MHz,
+an asymmetry parameter η of 0.85, and a weak hyperfine coupling tensor with a dominant anisotropic
+part, i.e. (Axx,A yy,A zz) ) (-0.2, -0.2, 1.5 MHz). On the basis of a comparison of the 14N-ESEEM data
+with 14N-NQR and 14N-ESEEM data from the literature, the first coupled nitrogen is assigned to the
+indole nitrogen of a tryptophan residue. The coupling of the second nitrogen is much weaker and therefore
+more difficult to assign. However, the simulated spectrum best describes an amino nitrogen of a histidine,
+although the amide group of an asparagine or glutamine cannot be ruled out. The possible origins of the
+nitrogen hyperfine coupling are discussed in terms of the amino acid residues thought to be close to the
+semiquinone in PSI.
+Photosystem I is a large multisubunit pigment -protein
+complex of approximately 300 kDa embedded in the
+photosynthetic membrane. It is comprised of at least 11
+subunits and about 100 chlorophyll molecules (reviewed in
+ref 1). The general function of PSI
+1 is that of a light-driven
+plastocyanin/ferredoxin oxidoreductase. The redox compo-
+nents involved in the first steps of photoinduced electron
+transfer are located in the reaction center core complex which
+is largely hydrophobic and is comprised of subunits PsaA
+and PsaB. Upon light excitation, the primary electron donor,
+a dimer of chlorophyll a molecules known as P700, forms a
+highly reducing singlet state which initiates charge separation
+between P700* and the primary acceptor chlorophylla (A
+0).
+Electrons are then transferred to a phylloquinone, labeled
+A
+1, and then through three iron -sulfur centers before
+reaching soluble ferredoxin (reviewed in ref 2).
+† This work was supported by TMR Grant ERB4001GT957977
+(to F.M.), HCM Grant ERBCHRXCT940524, HCM Grant
+ERB0049GI1901 (to Y.D.), and HFSPO Grant RG0349.
+* Corresponding author.
+‡Current address: The Institute of Materials Science, NCSR “Dem-
+ocritos”, 15310 Aghia Paraskevi Attikis, Greece.
+X Abstract published inAdVance ACS Abstracts,September 15, 1997.
+1 Abbreviations: PSI, photosystem I; A 0, primary electron acceptor
+chlorophyll a;A 1, PSI phylloquinone secondary electron acceptor;
+ESEEM, electron spin echo envelope modulation; EPR, electron
+paramagnetic resonance; NQI, nuclear quadrupole interaction; â-DM,
+n-dodecyl â-
+D-maltoside; Chl: chlorophyll, F A,F B, and FX, three [4Fe-
+4S] centers of PSI; HEPES, N-(2-hydroxyethyl)piperazine-N′-2-ethane-
+sulfonic acid; MES, 2-(N-morpholino)ethanesulfonic acid; PsaA -C,
+polypeptides coded by the genes psaA-C, respectively; Tricine, N-[2-
+hydroxy-1,1-bis(hydroxymethyl)ethyl]glycine; EDTA, ethylenediamine-
+tetraaceticacid
+© Copyright 1997 by the American Chemical Society Volume 36, Number 39 September 30, 1997
+S0006-2960(97)01360-3 CCC: $14.00 © 1997 American Chemical Society
+Downloaded via COLORADO SCHOOL OF MINES on June 29, 2026 at 02:20:28 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+
+--- PAGE 2 ---
+The first evidence of two electron transfer components
+between P700 and the iron -sulfur centers came from the
+detection of two radicals by EPR spectroscopy following
+illumination at 200 K under conditions where the iron-sulfur
+centers were reduced or removed (3, 4). These species were
+attributed to a chlorophyll anion (A
+0-) and a semiquinone
+(A1-). The latter was unequivocally identified by isotopic
+labeling (5) (for reviews, see refs 2 and 6).
+The three-dimensional structure of PSI has been deter-
+mined at low resolution (7); however, the location of A1 has
+not been established. ESEEM spectroscopy has recently
+been used to characterize hyperfine couplings to semiquinone
+radicals in the bacterial reaction center and photosystem II
+(8-11), providing information on the nature of the amino
+acid environment of these radicals. In the work described
+here, we report the comparative analysis of the ESEEM data
+of the phyllosemiquinone (A
+1•-) radical in 14N- and 15N-
+labeled PSI.
+MATERIALS AND METHODS
+Liquid cultures of wild type Synechocystis 6803 were
+grown in BG11 medium ( 12), buffered with 6 mM HEPES
+at pH 7.3. Solid cultures were grown on BG11 with 1.5%
+agar in the absence of HEPES. Uniformly
+15N-labeled PSI
+was isolated from Synechocystis cells grown on the same
+medium as above, containing sodium (15N) nitrate (99% 15N)
+as the sole nitrogen source. Cells in liquid culture were
+grown to an OD (820 nm) of∼1.5, harvested by centrifuga-
+tion, and broken with a French press, and the cell debris
+was removed by further centrifugation. Isolated membranes
+were washed four times with ice cold 20 mM Tricine and 5
+mM EDTA at pH 7.8, then resuspended (2 mg/mL chloro-
+phyll) in 20 mM Tricine at pH 8.0, and frozen at 77 K.
+Samples (200 µL) in EPR tubes were reduced with sodium
+dithionite (final concentration of 25 mM and 200 mM glycine
+at pH 10.0) and then illuminated for 15 s at 200 K (solid
+CO
+2/ethanol) using an 800 W lamp filtered by 4 cm of water
+and a 720 nm cutoff filter. This treatment was used to fully
+reduce the iron-sulfur centers. The sample was then further
+illuminated for 5 min at 220 K followed by 1 min of dark
+adaptation at 200 K before cooling in the dark to 77 K.
+EPR spectra were recorded at liquid He temperatures with
+a Bruker 300 X-band spectrometer equipped with an Oxford
+Instruments cryostat. Pulsed EPR was performed with a
+Bruker ESP 380 spectrometer (9). In the three-pulse ( π/2-
+τ-π/2-T-π/2) ESEEM data, the amplitude of the stimu-
+lated echo as a function of τ + T was measured at ∼9.6
+GHz and at a magnetic field corresponding to the maximum
+intensity of the field-swept spectrum of the A
+1-. The
+minimum interpulse τ + T was 16 ns and was incremented
+in steps of 8 ns; the length of theπ/2 pulse was 16 ns. Dead-
+time reconstruction was performed as in ref 13. To remove
+unwanted echoes in the three-pulse experiment, the phase-
+cycling method in ref 14 was used. Before Fourier trans-
+formation, the time domain echo decay was factored out by
+subtraction of a linear function. Field-swept spectra were
+obtained by recording the integral of the echo as a function
+of the magnetic field after a two-pulse sequence ( π/2-144
+ns-π); the π/2 and π pulses were 16 and 32 ns, respectively,
+and the integration gate was 200 ns.
+The spin Hamiltonian for an S )
+1/2, I ) 1 system
+characterized by an isotropic g tensor with the magnetic field
+B0 along z is
+where the hyperfine coupling tensor A has principal values
+(Axx,A yy,A zz) and consists of the isotropic contribution Riso
+and the traceless tensorT describing the anisotropic hyperfine
+coupling and, for the case of axial symmetry, has principal
+values (-T, -T,2 T). The nuclear quadrupole interaction,
+Q, is traceless by definition. In its principal axis system,
+the final term in eq 1 is expressed in the form
+where K represents the quadrupole coupling constant e
+2qQ/
+4h and η is the asymmetry parameter of the electric field
+gradient. The energies and eigenfunctions are calculated by
+numerical diagonalization of the spin Hamiltonian (eq 1),
+and the three-pulse modulations for each spin-manifold E
+R-
+(τ,T) and Eâ(τ,T) and the three-pulse modulations were
+calculated with the relations derived in ref 15. In the case
+of several nuclei coupled to the same electron spin, the
+resulting modulation functions for each spin manifold were
+multiplied in the same domain ( 15, 16) according to
+and the powder average in the time domain is calculated as
+RESULTS
+The X-band EPR spectrum of the phyllosemiquinone (A
+1-)
+in PSI is shown in Figure 1 (left inset). The signal is at g
+) 2.0043 ( 0.0002 and has partially resolved hyperfine
+structure. These characteristics are typical of the semi-
+quinone anion radicals (17), (see also ref5). At temperatures
+<15 K, spectra assigned to the reduced iron -sulfur centers
+were resolved (not shown). These iron -sulfur centers relax
+much faster than the semiquinone. ESEEM of A
+1- was
+performed at a high temperature (32 K) to avoid contributions
+from the iron-sulfur centers in the detected echo, and thus,
+the modulations originate exclusively from the semiquinone
+radical.
+ESEEM in Unlabeled (
+14N) PSI. Figure 1A shows the
+decay of the time domain three-pulse ESE trace. This was
+recorded at a magnetic field (3457 G) corresponding to the
+maximum intensity of the echo-detected field-swept spectrum
+(Figure 1, right inset). The echo decay was recorded at 24
+different τ values to avoid missing modulation frequencies
+due to suppression effects ( 18). The corresponding fre-
+quency domain spectra are shown in Figure 1B. In addition
+to the matrix -proton line at ∼15 MHz, several low-
+frequency components are resolved at 0.5, 1.7, 2.6, and 2.9
+MHz and a broader component with a maximum at ∼4.2-
+4.5 MHz. The low-frequency components are caused by
+interactions between the electron spin of A
+1- and nuclear
+spins which may arise from protons or nitrogen nuclei. To
+assign the nuclear-electron interaction arising from nitrogen,
+and thus analyze the nitrogen hyperfine coupling, ESEEM
+measurements of A
+1- were carried out in both 14N- and 15N-
+labeled PSI. The nitrogen hyperfine coupling data were then
+H ) gµBB0Sz - gNµNB0Iz + S‚A‚I + I‚Q‚I (1)
+I‚Q‚I ) K[3Iz
+2 - I2 + η(Ix
+2 - Iy
+2)] (2)
+E(τ,T ) ) 1/2∏
+i
+ER(τ,T) + ∏
+i
+Eâ(τ,T) (3)
+Ea(τ,T)powder ) 1
+4π∫æ)0
+2π
+∫θ)0
+π
+E(τ,T,θ,φ) sin θ dθ dφ (4)
+11544 Biochemistry, Vol. 36, No. 39, 1997 Accelerated Publications
+
+
+
+--- PAGE 3 ---
+used to determine the nuclear quadrupole coupling param-
+eters for the interacting 14N nuclei.
+ESEEM in [15N] PSI. Figure 2A shows representative time
+domain ESEEM spectra of the semiquinone in [ 15N]PSI
+recorded at several τ values. The dominating feature is a
+modulation of the echo decay with a period of 1.2 µs.
+Shallower modulations with periods of ≈0.7 and≈0.3 µs
+can be resolved at certain τ values. The frequency domain
+spectrum is shown in Figure 2B (solid line) and is the sum
+of 15 τ values (the dashed line is a numerical simulation;
+see below). In the low-frequency region, there are two strong
+features at 0.7 and 1.7 MHz. By comparison of the
+14N and
+15N frequency domain spectra (Figures 1B and 2B, respec-
+tively), and from the clear differences in the τ dependence
+and modulation depths of the spectral features (see Figure
+1A and 2A), we conclude that the low-frequency features
+present in the
+14N sample are lost in the 15N sample. This
+allows an unequivocal assignment of these lines to nitrogen.
+Simulations. In an orientationally disordered S ) 1/2, I )
+1/2 system, the line shapes for the basic ESEEM frequencies
+are determined by the angular dependence of the line
+positions, the modulation depth factor, and the statistical
+weight factor (9, 16). Generally, the positions of the peaks
+in the ESEEM spectrum do not correspond to any of the
+principal values of the hyperfine coupling tensor.
+The [
+15N]semiquinone spectrum shown in Figure 2B has
+a feature at 1.7 MHz which is close to the Larmor frequency
+(VI)o ft h e 15N nucleus and probably arises from weak
+hyperfine coupling. The numerical simulations (Figure 2B,
+dashed line) verify this qualitative view, and the correspond-
+ing tensor, labeled tensor I, is characterized by a small
+R
+iso ) 0.33 MHz which is smaller than the anisotropy
+part|T|) 0.58 MHz. The simulation indicates that a small
+part of the peak at 0.7 MHz also originates, partially, from
+tensor I. The hyperfine coupling for tensor I is listed in
+Table 1.
+Although the peak at 0.7 MHz is partially accounted for
+by tensor I, the simulated spectra demonstrate that this feature
+arises predominantly from a second coupled nitrogen nucleus
+labeled nitrogen II. The type of spectra observed for nitrogen
+II generally arises from a system where there is only a modest
+deviation from the “matching condition” i.e.; when ( R
+iso +
+T)/4∼vI (19-21). In the matching condition, the frequency
+dispersion arising from the anisotropic hyperfine interactions
+in the low-frequency nuclear transition vanishes; this is a
+result of the compensation of dispersive terms bearing
+opposite algebraic signs. The resulting frequency domain
+spectrum is characterized by relatively strong narrow fea-
+tures. The numerical simulation shown in Figure 2B
+demonstrates that tensor II accounts for ≈90% of the 0.7
+MHz peak and has an R
+iso of 1.98 MHz and a small
+anisotropy of |T|) 0.14 MHz. Analogous features have
+been observed in the ESEEM of [ 15N]chlorophyll (22, 23)
+and recently for one of the pyrole nitrogens of the pheophytin
+FIGURE 1: Three-pulse ESEEM signal (A) and Fourier transform (B) of A1•- in [14N]PSI. Experimental conditions were as follows: frequency,
+9.65 GHz; magnetic field, 3457 G; temperature, 31 K; time interval between successive pulse sets, 6.4 ms; and 200 events averaged for
+each time point. For each τ value the initial T value was 40 ns, and 1024 data points were collected at 8 ns intervals; a four-step phase cycle
+was employed. The τ values from top to the bottom are 380, 312, 260, 244, 168, and 120 ns, respectively; 1024 data points were collected
+at 16 ns intervals. (Left inset) : X-band continuous wavelength EPR spectrum of A
+1•-. Experimental conditions were as follows: temperature,
+15 K; frequency, 9.42 GHz; power, 50 µW; modulation amplitude, 2 G; and modulation frequency, 100 kHz. (Right inset) Amplitude of
+the electron spin echo of A 1•- resulting from a two-pulse sequence, as a function of the magnetic field. Experimental conditions were as
+follows: temperature, 32 K; τ ) 144 ns; time interval between successive pulse sets, 6.4 ms; and frequency, 9.65 GHz.
+Accelerated Publications Biochemistry, Vol. 36, No. 39, 1997 11545
+
+
+
+--- PAGE 4 ---
+anion in [15N]photosystem II (24) under conditions of modest
+deviation from the matching regime. It is worth noting at
+this point that the τ dependence of the experimental ESEEM
+spectrum is of primary importance for simulating the spectral
+features. For example, the frequency position of the feature
+at 1.7 MHz can also be simulated by a tensor with principal
+values (0.2, 0.2, 4 MHz); however, the resulting spectrum
+has a τ dependence that clearly does not fit the experimental
+trend and can thus be discarded.
+In order to account for the relative intensity of the main
+peaks at 0.7 and 1.7 MHz, we had to add a third
+15N tensor
+which results in additional intensity to the 1.7 MHz peak.
+This tensor is characterized by a weak hyperfine coupling
+of <0.2 MHz. After being scaled for
+14N, this tensor does
+not result in detectable features.
+In summary, the analysis of the 15N data shows that the
+experimental spectra are described well by two N nuclei
+coupled to A
+1- and an additional weak “matrix-type”
+nitrogen coupling. The two main couplings are characterized
+by hyperfine coupling tensors, I and II, with axial charac-
+teristics. These tensors are listed in Table 1. The combina-
+tion lines arising from multiple nuclear coupling are too weak
+to be resolved in the present case.
+14N Quadrupole Interaction Constants. The analysis of
+the 15N data allows the determination of hyperfine coupling
+tensors I and II for two nitrogens interacting with the
+semiquinone radical in PSI. With the principal values of
+hyperfine coupling tensors already having been estimated,
+subsequent analysis of the
+14N data allows the estimation of
+the quadrupole coupling parameters K and η. The prelimi-
+FIGURE 2: (A) Stimulated echo ESEEM signal of A 1•- in [15N]PSI. The τ values are from top to the bottom 376, 328, 280, 256, 160, and
+136 ns, respectively. (B) (Solid line) Sum of the Fourier transform of ESEEM recorded at 15 τ values, from 136 to 496 ns in steps of 24
+ns. Experimental conditions were as follows: frequency, 9.65 GHz; magnetic field, 3458 G; temperature, 31 K; and other conditions as in
+figure 1A. (Dashed line) Fourier transform of theoretical simulations of three-pulse
+15N-ESEEM spectra obtained with the hyperfine coupling
+tensors I and II listed in Table 1 and in addition a 15N tensor with principal values (0.15, 0.15, and 0.3 MHz). The spectrum is the sum of
+15 spectra calculated for τ values from 136 to 496 ns in steps of 24 ns, including the product rule. Simulation parameters were as follows:
+frequency, 9.65 MHz; and magnetic field, 3457 G.
+Table 1: Stimulated-Echo Modulation Frequencies a and Nuclear Quadrupole and Hyperfine Interaction Constants of the A 1•- Radical in 14N-
+and 15N-Labeled Photosystem I
+ESEEM data of A1.- in PSI
+[15N]PSI [ 14N]PSI published data ( 14N)
+hyperfine parameters NQR parameters NQR Parameters
+tensor v (MHz) Riso (MHz) T (MHz) tensor v (MHz) K (MHz) η K (MHz) η ref
+I 0.7 0.33 0.58 I 0.5 0.45 0.85 0.80 -0.84 0.45 -0.51 di/tripeptide b,c
+1.7 1.7 0.81 -0.83 0.13 -0.21 imino His b,c
+0.31-0.34 0.91 -0.97 amino His b
+II 1.7 1.98 0.14 II 0.5 0.77 0.18 0.79 0.18 indole Trp c,d
+2.6
+0.98 0.6 amide c
+2.9
+4.2-4.5
+a Error ( 0.125 MHz. b Ref 28. c Ref 27. d Ref 26.
+11546 Biochemistry, Vol. 36, No. 39, 1997 Accelerated Publications
+
+
+
+--- PAGE 5 ---
+nary fitting of the experimental spectra was directed at the
+simulation of the frequency positions, i.e. the basic line
+shapes of the major features in Figure 1B. The Euler angles,
+defining the relative orientations between the
+14N hyperfine
+and quadrupole coupling tensors, were then adjusted in order
+to reproduce the correct relative intensities of the individual
+lines. The simplest situation in
+14N-ESEEM spectroscopy
+is the “exact cancellation condition” Riso/2 - vI ) 0( 25),
+under which the frequency domain spectra consist of three
+sharp, low-frequency lines at v
+0 ) 2Kη,v + ) K(3 + η),
+and v- ) K(3 - η) and a broader feature at higher frequency,
+typically 4-6 MHz, corresponding to the double-quantum
+transition. From Table 1, it can be seen that for tensor II, ∆
+)R iso/2 - vI ∼0.4 MHz which does not follow the
+exact cancellation condition. However, Flanagan and Singel
+(25) demonstrated that, if the deviation from the exact
+cancellation is such that∆ < 4K/3v
+I, then the simple spectral
+features characterizing exact cancellation are retained, thus
+allowing an estimation of the nuclear quadrupole parameters
+K and η directly from the spectrum. The expected K/v
+I
+values of the amino acid 14N nuclei in the present study are
+in the range of 0.5 -0.9 MHz which gives ∆ < 4K/3vI (8-
+11, 26-28). It is thus expected that the 14N-ESEEM
+spectrum characterized by tensor II should retain the spectral
+characteristics of the exact cancellation condition. In agree-
+ment with this analysis, the numerical simulations demon-
+strate that the features at 0.5, 2.6, and 2.9 MHz in Figure
+1B correspond to v
+o,v -, and v +, respectively, while the
+broader feature at 4.2 -4.5 MHz is related to the double-
+quantum transition.
+A series of representative simulated14N spectra are shown
+in Figure 3. Euler angles R and γ had no effect on the
+spectra and were therefore arbitrarily set to zero. The set
+of nuclear quadrupole parameters for tensor II used to
+reproduce the experimental spectrum is listed in Table 1.
+The spectroscopic features of the coupling defined by
+tensor I are more difficult to assign qualitatively, and the
+presence of a dominant anisotropic hyperfine interaction
+complicates the ESEEM spectra (29) (see also ref 24). The
+nitrogen coupling defined by tensor II dominates the
+14N
+spectra; therefore, the analysis of tensor I is largely reliant
+on the numerical simulations. A range of possible K values
+(0.1 -1.0 MHz) and η values (0-1) were used to simulate
+the experimental data. There are two sets of K and η values
+which fit the experimental data; all other combinations
+introduce simulated spectral features which were clearly
+absent in the experimental spectrum. For each case, a small
+deviation of the Euler angles from zero severely diminished
+the intensity of the observed experimental features; they were
+thus set at zero. The first set of K, and η values (0.45 MHz
+and 0.85) gives rise to two spectral features at 1.7 and 0.5
+MHz; the second set of values (0.98 MHz and 0.60) gives
+only one feature at 1.7 MHz. Each of these data sets has
+the correct experimental τ dependence observed in Figure
+1B. The quadrupole parameters used in these simulations
+are given in Table 1, and the assignment of tensor I is
+discussed below.
+DISCUSSION
+The characteristic changes observed in the ESEEM of the
+phyllosemiquinone radical (A
+1-) in PSI upon isotopic
+substitution of14Nb y 15N demonstrate that the low-frequency
+modulations arise from nitrogen nuclei coupled to the
+semiquinone. To identify the origin of these nitrogen nuclei,
+we rely on comparison of the
+14N nuclear quadrupole
+resonance (NQR) parameters ( K and η) derived from the
+present ESEEM data, with NQR parameters which are
+available in the literature ( 26-28). Such a comparison has
+been used in analogous ESEEM studies of the semiquinone
+anion Q
+A- in the photosystem II reaction center ( 8, 9) and
+in the bacterial reaction center ( 10, 11). The NQR data for
+A1- in [ 14N]PSI from Synechocytis 6803 are presented in
+Table 1. Comparison of the NQR parameters with the
+published data indicates that the nitrogen coupling which is
+defined by tensor II (nitrogen II) closely resembles the indole
+nitrogen of a tryptophan residue.
+The coupled nitrogen described by tensor I (nitrogen I) is
+more difficult to identify; it is characterized by a major
+feature at 1.7 MHz which fits two sets of NQR parameters.
+The first set of NQR parameters ( K and η ) 0.98 MHz and
+0.6, respectively), is representative of an amide nitrogen, and
+the second set of NQR parameters ( K and η ) 0.45 MHz
+and 0.85, respectively), is representative of an imidazole
+nitrogen. Fitting the
+14N data to the imidazole-like NQR
+parameters gives rise to two spectral features at 1.7 and 0.5
+MHz, and this fits better with the observed experimental data.
+The simulations thus fit best with the identification of this
+second residue as a histidine, although the amide side chain
+of asparagine or glutamine cannot be ruled out.
+The isotropic and anisotropic couplings for tensors I and
+II are listed in Table 1. Tensors I and II are both
+characterized by small anisotropic hyperfine coupling,
+whereas the isotropic coupling of tensor II is significantly
+larger than that of tensor I.
+In PSII and bacterial reaction centers, the semiquinone
+(Q
+A-) shows hyperfine couplings to nearby nitrogen atoms
+FIGURE 3: Fourier transform of theoretical simulations of three-
+pulse 14N-ESEEM spectra obtained with the hyperfine coupling
+tensors I and II listed in Table 1 including the product rule. The τ
+value is 120 ns for the bottom trace and is increased in steps of 24
+ns toward the top. Simulation parameters were as follows: fre-
+quency, 9.65 MHz; and magnetic field, 3457 G.
+Accelerated Publications Biochemistry, Vol. 36, No. 39, 1997 11547
+
+
+
+--- PAGE 6 ---
+(8-11). These couplings are presumed to reflect the
+presence of hydrogen bonds between imidazole and amide
+groups on the protein to the carbonyls of the semiquinone.
+In PSI, ENDOR studies of A
+1- indicate that the semiquinone
+is hydrogen bonded (30; F. MacMillan et al., unpublished);
+it is reasonable to suggest that tensor I, which is also
+attributed to an imidazole (or amide) nitrogen, reflects a
+hydrogen bond from the imidazole (or amide) to the
+phyllosemiquinone carbonyl. The isotropic and anisotropic
+couplings for tensor I (Table 1) are consistent with hydrogen
+bonding, although the couplings are weaker than those seen
+in PSII and bacterial reaction center semiquinones ( 9-11).
+This may indicate a greater spatial separation or a different
+geometry between the PSI semiquinone and the interacting
+nitrogen.
+Anisotropic hyperfine coupling results from a dipolar
+magnetic interaction between electron and nuclear spins. The
+size of the coupling is determined by the fraction of the
+electron spin density ( F
+e) which interacts with the nuclear
+spin and by the interspin distance (31). The distance between
+the coupled nitrogen and A 1- can be estimated from the
+point-dipole interaction using the equation T )F egngeânâe/
+hr3, where gn and ge are the nuclear and electron g values,
+respectively, ân and âe are the corresponding nuclear and
+Bohr magneton and r is the distance from the nucleus to the
+effective position of the electron ( 18). Using this equation,
+for Fe ) 1, nitrogens I and II are calculated to be 2.4 and
+3.7 Å from the spin on the semiquinone, respectively.
+The validity of this estimation is compromised by the fact
+that the electron spin is delocalized over the semiquinone.
+However, it seems likely that the coupling described by
+tensor I reflects the presence o f a H bond from the protein
+(an imidazole) to the carbonyl oxygen of semiquinone, and
+thus, it is probable that the coupling is dominated by the
+oxygen-nitrogen distance (see ref 9 for a discussion). If
+so, then the distance estimate can be improved by taking
+into account the spin density on the oxygen. Spin densities
+(ranging from 0.19 to 0.23) on the oxygens of semiquinones
+have been previously measured using
+17O-labeled benzo-
+quinones in several environments ( 32, 33). The value for
+naphthosemiquinone in a frozen alcoholic solution was
+measured to be 0.2 (F. MacMillan, unpublished results).
+Using this estimated spin density, the oxygen -nitrogen
+distances are thus calculated as ∼1.4 and 2.2 Å. It should
+be stressed that this distance estimate relies on the assump-
+tions described above and also assumes that semiquinone
+atoms other than the nearest oxygen have a negligible
+contribution to the coupling. This distance estimate should
+thus be taken as a lower limit.
+Although tensor II has a weak anisotropic coupling,
+comparable to that of tensor I, it has a relatively large
+isotropic interaction. The isotropic hyperfine coupling arises
+from the non-zero unpaired electron spin density at the
+nitrogen nucleus ( 31). A possible explanation for the
+relatively large isotropic coupling observed for tensor II may
+be the presence of a π-stacking interaction between the
+tryptophan (identified by the NQR parameters) and the
+semiquinone. However, the weakness of the anisotropic
+hyperfine coupling indicates that the indole tryptophan
+nitrogen (i.e. nitrogen II) is not very close to the semiquinone;
+the point-dipole calculation forF
+e ) 1 estimates the distance
+to be 3.7 Å. These data are consistent with a π-stacking
+interaction where the quinone and tryptophan rings are
+parallel and partially overlapping. The distance of nitrogen
+II from the quinone ring suggests that the pyrole part of the
+tryptophan molecule does not overlap the quinone.
+The midpoint potential of the PSI phylloquinone is≈700
+mV lower than those of the quinones which act as electron
+acceptors in PSII and the bacterial reaction center. The low
+midpoint potential of the PSI semiquinone is presumably
+brought about by the amino acid environment affecting the
+electronic structure of the quinone. An interaction compa-
+rable to that between the PSI semiquinone and the tryptophan
+residue reported here does not occur in either PSII or the
+bacterial reaction center (8-11). It is therefore possible that
+this interaction with the tryptophan is at least partially
+responsible for the low E
+m of phylloquinone in PSI.
+Structural and functional similarities in type I and type II
+reaction centers suggested that structural homology existed
+between the two classes of reaction centers (7, 34-40). This
+idea predicted that the Xth hydrophobic region of PSI played
+a role analogous to that of the bacterial reaction center helix
+D by providing ligands to the reaction center primary donor
+chlorophylls, P700 ( 36-38). Experimental support for the
+role of helix X in providing a ligand for P700 has been
+obtained (41). Krauss et al. ( 7) have further suggested that
+a PSI stromal helix, labeled helix n/n ′, which links trans-
+membrane helices X and XI, is comparable to the parallel
+helix (de) linking transmembrane helices D and E in the
+purple bacteria reaction center. It is thus reasonable to
+suggest that helix n/n′ may form part of the binding site for
+A
+1 in PSI. The results of the present study indicate that a
+tryptophan residue forms part of the quinone binding site.
+From the amino acid sequence for PsaA and PsaB, each of
+the predicted n/n′ helices has a hydrophobic face that contains
+a highly conserved tryptophan (PsaA W698 and PsaB
+W677). Another strongly conserved tryptophan (PsaA W707
+and PsaB W686) appears toward the end of this helix which
+could, from the primary sequence, form part of a hydrophobic
+loop. It is also interesting to note that the sequence
+containing these tryptophan residues also contains negatively
+charged amino acids which could also contribute to the low
+E
+m of the phylloquinone. On the basis of a comparison
+between the bacterial reaction center and PSI, van der Est
+et al. ( 42) have also suggested that the sequence of amino
+acids containing these tryptophan residues may form part of
+the quinone binding site in PSI. We suggest that one of the
+residues listed above could be the tryptophan identified in
+the present study and that it may be homologous to
+tryptophan 252 from theRhodobacter sphaeroidesM subunit.
+Tryptophan 252 is located between bacteriopheophytin and
+the quinone in the bacterial reaction center, and it appears
+to be important for electron transfer between these compo-
+nents (43).
+The ESEEM data presented here also indicate that there
+is an interaction of the semiquinone with a second
+14N-
+2 While this paper was being prepared, a paper appeared in which it
+was reported that no nitrogen couplings could be seen from A 1- in
+PSI from spinach ( 44). This is in clear disagreement with the present
+work. We note however that the data shown in ref 44 comparing the
+relative size of the modulations from A 1- and A0- are similar to those
+seen in our laboratory (not shown) except that the data in ref 44 have
+a level of noise which does not allow low-frequency modulations in
+A
+1- to be reliably distinguished. Therefore, we consider the fact that
+the apparent discrepancy arises due to the weakness of the A 1- signal
+and/or insufficient signal accumulation in ref 44 and that this led to
+the 14N modulations being overlooked.
+11548 Biochemistry, Vol. 36, No. 39, 1997 Accelerated Publications
+
+
+
+--- PAGE 7 ---
+containing residue which has NQR parameters consistent
+with it being a histidine. However, it must be noted that
+this nitrogen tensor has very weak coupling and the assign-
+ment is based largely on one well-resolved peak at 1.7 MHz
+and a less well resolved peak at 0.5 MHz. There are
+conserved histidines at positions 689 and 719 in PsaB and
+at 709 and 735 in PsaA, any of which could hydrogen bond
+with the phyllosemiquinone. However, structural comparison
+of the purple bacteria reaction center to PSI tends to favor
+histidine 719 and 735 (PsaB and PsaA) as a likely hydrogen
+bonding residue because it lies six residues into the trans-
+membrane helix XI at the stromal side of the membrane.
+Although the ESEEM experiments described here indicate
+the presence of a tryptophan and possibly a histidine residue
+close to the quinone in PSI, it is not yet possible to identify
+their exact position in the primary sequence of the protein.
+However, on the basis of structural, functional, and evolu-
+tionary comparisons, the two conserved tryptophan and
+histidine residues seem to be interesting candidates for site-
+directed mutagenesis studies
+2 .
+ACKNOWLEDGMENT
+We thank T. A. Mattioli, S. Un, and M. Knu ¨pling for
+useful discussions and J. McCracken (Michigan State
+University) for kindly proving a program for the simulation
+of ESEEM spectra.
+REFERENCES
+1. Golbeck, J. H. (1994) in The Molecular Biology of Cyano-
+bacteria (Bryant, D. A., Ed.) pp 319-360, Kluwer Academic
+Publishers, Dordrecht, The Netherlands.
+2. Brettel, K. (1996) Biochim. Biophys. Acta 1318 , 322-373.
+3. Bonnerjea, J. R., and Evans, M. C. W. (1982)FEBS Lett. 148,
+313-316.
+4. Gast, P., Swarthoff, T., Ebskamp, F. C. R., and Hoff, A. J.
+(1983) Biochim. Biophys. Acta 722 , 163-175.
+5. Heathcote, P., Moe`nne-Loccoz, P., Rigby, S. E. J., and Evans,
+M. C. W. (1996) Biochemistry 35, 6644.
+6. Snyder, S. W., and Thurnauer, M. C. (1993) in The Photo-
+synthetic Reaction Center (Deisenhofer, J., and Norris, J. R.,
+Eds.) Vol. II, Academic Press, San Diego.
+7. Krauss, N., Schubert, W. D., Klukas, O., Fromme, P., Witt,
+H. T., and Saenger, W. (1996) Nat. Struct. Biol. 3, 965-973.
+8. Astashkin, A. V., Kawamori, A., Kodera, Y., Kuroiwa, S.,
+and Akabori, K. (1995 ) J. Chem. Phys . 102, 5583.
+9. Deligiannakis, Y., Boussac, A., and Rutherford A. W. (1995)
+Biochemistry 34, 16030.
+10. Spoyalov, A. P., Huslsebosch, R. J., Shochat, S., Gast, P., and
+Hoff A. J. (1996) Chem. Phys. Lett. 263 , 715.
+11. Lendzian, F., Rautter, G., Ka¨ss, H., Gardiner, A., and Lubitz,
+W. (1996) Ber. Bunsen-Ges. Phys. Chem. 100 , 2036.
+12. Rippka, R., Deruelles, J., Waterbury, J. B., Herdmann, M.,
+and Stanier, R. Y. (1979) J. Gen. Microbiol. 111, 1-61.
+13. Mims, W. B. (1984) J. Magn. Reson . 59, 291.
+14. Fauth, J. M., Schweiger, A., Braunschweiler, L., Forrer, J.,
+and Ernst, R. (1986) J. Magn. Reson. 66 , 64.
+15. Mims, W. B. (1972) Phys. ReV.B6 , 3543.
+16. Dikanov, S. A., and Tsvetkov, Y. D. (1992) ESEEM Spec-
+troscopy, CRC Press, Boca Raton, FL.
+17. Hales, B. J., and Case, E. E. (1981) Biochim. Biophys. Acta
+637, 291.
+18. Mims, W. B., and Peisach, J. (1981) in Biological Magnetic
+Resonance, Vol. 3, Chapter 5, Plenum Press, New York.
+19. Lai, A., Flanagan, H. L., and Singel, D. J. (1988) J. Chem.
+Phys. 89, 7161.
+20. Reijerse, E. J., and Dikanov, S. A. (1991) J. Chem. Phys. 95,
+836.
+21. Larsen, R. G., Halkides, C. J., and Singel, D. J. (1993)J. Chem.
+Phys. 98, 6705.
+22. Dikanov, S. A., Tsvetkov, Y. D., Bowman, M. K., and
+Astashkin, A. V. (1982) Chem. Phys. Lett. 90 , 149.
+23. Ka¨ss, H., Bittersmann-Weidlich, E., Andreasson, L.-E., Boenigk,
+B., and Lubitz, W. (1995) Chem. Phys. 194 , 419-432.
+24. Deligiannakis, Y., and Rutherford A. W. (1997) J. Am. Chem.
+Soc. 119, 4471.
+25. Flanagan, H. L., and Singel, D. J. (1987 ) J. Chem. Phys. 87 ,
+5606.
+26. Hunt, M. J., and Mackay, A. L. (1976) J. Magn. Reson. 22 ,
+295.
+27. Edmonds, D. T. (1977) Phys. Rep. C 29 , 233.
+28. Ashby, C. H., Paron, W. F., and Brown, T. L. (1980 )J .A m .
+Chem. Soc. 102 , 2290.
+29. McCracken, J., Pemper, S., Benkovic, S. J., Villafranca, J. J.,
+Miller, R. J., and Peisach, J. (1988) J. Am. Chem. Soc. 110 ,
+1069.
+30. Rigby, S. E. J., Evans, M. C. W., and Heathcote, P. (1996)
+Biochemistry 35, 6651.
+31. Gordy, W. (1980) Theory and Applications of Electron Spin
+Resonance,p p1 9 8-304, John Wiley & Sons, Inc., New York.
+32. Lubitz, W., Abresch, E. C., Debus, R. J., Isaacson, R. A.,
+Okamura, M. Y., and Feher, G. (1985)Biochim. Biophys. Acta
+808, 464.
+33. MacMillan, F., Lendzian, F., and Lubitz, W. (1995) Magn.
+Reson. Chem. 33 , S81.
+34. Nitschke, W., Feiler, U., and Rutherford, A. W. (1990)
+Biochemistry 29, 3834-3842.
+35. Nitschke, W., and Rutherford, A. W. (1991) Trends Biochem.
+Sci. 16, 241-245.
+36. Nitschke, W., Mattioli, T. A., and Rutherford, A. W. (1996)
+in Origin and E Volution of Biological Energy Conser Vation
+(Baltscheffsky, H., Ed.) pp 143 -175, VCH Publishers.
+37. Rutherford, A. W., and Nitschke, W. (1996) in Origin and
+EVolution of Biological Energy ConserVation (Baltscheffsky,
+H., Ed.) pp 177 -203, VCH Publishers.
+38. Vermaas, W. F. J. (1994) Photosynth. Res. 41 , 285-294.
+39. Golbeck, J. H. (1993) Proc. Natl. Acad. Sci. U.S.A. 90, 1642-
+1646.
+40. Fromme, P., Witt, H. T., Schubert, W.-D., Klukas, O., Saenger,
+W., and Krauss, N. (1996) Biochim. Biophys. Acta 1275,7 6-
+83.
+41. Webber, A. N., Hui, S., Bingham, S. E., Ka ¨ss, H., Krabben,
+L., Kuhn, M., Jordan, R., Schlodder, E., and Lubitz, W. (1996)
+Biochemistry 35, 12857.
+42. van der Est, A., Prisner, T., Bittl, R., Fromme, P., Lubitz, W.,
+Mo¨bius, K., and Stehlik, D. (1997) J. Phys. Chem . B, 101,
+1437-1443.
+43. Deisenhofer, J., and Michel, H. (1988) EMBO J. 8, 2149-
+2170.
+44. Berry, M. C., Bratt, P. J., and Evans, M. C. W. (1997)Biochim.
+Biophys. Acta 1319 , 163-176.
+BI971360A
+Accelerated Publications Biochemistry, Vol. 36, No. 39, 1997 11549

@@ -1,0 +1,916 @@
+
+
+--- PAGE 1 ---
+ELSEVIER 
+22 March ! 996 
+Chemical Physics Letters 251 (1996) 193-203 
+CHEMICAL 
+PHYSICS LETTERS 
+Evaluation of 2D-ESEEM 
+the primary donor P700 
+data of 15N-labeled radical cations 
+in photosystem I and chlorophyll a 
+H. K~, W. Lubitz* 
+Max-Volmer-lnstitut fiir Biophysikalische und Physikalische Chemie, Technische Universitiit Berlin, 
+Strasse des 1Z Juni 135, D-10623 Berlin, Germany 
+Received 15 November 1995; in final form 30 January 1996 
+of 
+Abstract 
+Hyperfine couplings (hfc's) of the nitrogen nuclei in the 15N-labeled radical cations of chlorophylla and the primary 
+donor P7(x) in photosystem I of spinach were investigated in frozen solution by two-dimensional stimulated echo ESEEM. 
+JSN hfc tensors were evaluated by comparison of the experimental data with simulations of the time domain an d frequency 
+domain ESEEM signals. The results are discussed in the framework of a chlorophylla dimer model for the radical cation 
+of PT~N~. 
+I. Introduction 
+Photosystem I (PS I) is a transmembrane pigment- 
+protein complex located in the thylakoid membrane 
+of plant cells and cyanobacteria [ 1 ]. It contains sev- 
+eral cofactors that take part in light-harvesting and in 
+light-induced electron transfer across the membrane. 
+The latter process is initiated by excitation of the pri- 
+mary donor PToo and results in a stabilization of the 
+charge separation. Numerous investigations have fo- 
+* Corresponding author. 
+Abbreviations. BChla: bacteriochlorophylla; Chla: chloro- 
+phylla; ENDOR: electron nuclear double resonance; ESEEM: 
+electron spin echo envelope modulation; FT: Fourier transfor- 
+mation; HYSCORE: hyperline sublevel correlation spectroscopy; 
+INDO/SP: intermediate neglect of differential overlap/with spin 
+polarization; MO: molecular orbital; P: primary donor (labelled D 
+in some references); PS h plant Photosystem I; RHF: restricted 
+Hartree-Fock; bRC: bacterial reaction center; hfc: hyperfine cou- 
+pling constant; ~14/q ('gl~l,I) : gyromagnetic ratio of the 14N (ISN) 
+nucleus; ut: nuclear Larmor frequency; u~sN: nuclear I_armor fre- 
+quency of 15N; 1D/2D: one-/two-dimensional. 
+cused on PT00 [1-3]. Early optical [4] an d EPR [5] 
+experiments led to the suggestion that PT0o iisa dimer 
+of chlorophylla molecules (Chla, see Fig i 1). Later 
+this was questioned and the nature of PT0oi became a 
+matter of discussion (e.g. see Ref. [6] ). At present 
+it is generally accepted that PT0o contains ltwo Chla 
+molecules, however, the details of the electronic struc- 
+ture of this species are still unknown [ 2,3,7,8]. 
+The core protein of PSI and the bacterial pho- 
+tosynthetic reaction center (bRC) show related mo- 
+tifs [8]. This suggests that the geometricf and elec- 
+tronic structures of the primary donors i 9 the bRC 
+and PSI are similar. X-ray crystallography has re- 
+vealed the structure of the bRC to 2.3/I, resolution for 
+Rhodopseudomonas viridis [ 9] and to 2.6~ resolu- 
+tion for Rhodobacter (Rb.) sphaeroides [ 10]. This has 
+shown that the primary donor P of the bRC consists 
+of a dimer of BChl molecules which are r~lated by a 
+twofold rotation symmetry axis. Up to now Crystalliza- 
+tion of PSI from Synechococcus elongatus] resulted in 
+an X-ray structure of 4.5 A, resolution [ 1 [ ]. This re- 
+0009-2614/96/$12.00 (~) 1996 Elsevier Science B.V. All fights reserved 
+PII S0009-2614(96) 00129-7 
+
+
+
+--- PAGE 2 ---
+194 H. Karl, W. LubitzlChemical Physics Letters 251 (1996) 193-203 
+H 
+3 
+H3C~ A 
+H---~ 
+19- 
+' N °.o. 
+Ug 
+.o°'° 
+16 
+H y 
+H CH2 Im / 
+H2C 
+I CO0-phytyl 
+E /~3 
+H 
+o~C \ 
+0 
+I 
+CH 3 
+Fig. 1. Structure of chlorophylla (Chla) 
+CH 3 
+CH 3 
+/ 
+NS~CH 2 
+10 
+~--H 
+vealed a twofold rotation symmetry of the a-helices in 
+PS I, similar to the situation found in the bRC. How- 
+ever, in the case of PSI neither the exact distance nor 
+the relative orientation of the Chl a molecules form- 
+ing the putative dimer PT0o could be determined so 
+far with certainity. From t H ENDOR investigations 
+of PS I single crystals [ 12,13] it was concluded that 
+one Chl a molecule in P+o0 is oriented similar to one 
+BChl a half of P~-65 in the bRC of Rb. sphaeroides. 
+The electronic structure of the valence orbital of 
+the oxidized primary donor P+" can be deduced from 
+the spin density distribution over the two (B)Chla 
+molecules. In the bRC these are in close proximity and 
+~2-~CH 3 
+0 
+with IUPAC numbering of molecular positions. 
+form a supermolecule in which the unpaired electron 
+is delocalized. In the case of P~-65 in Rb. sphaeroides 
+the spin density distribution is asymmetric with a ra- 
+tio of about 2 : 1 in favor of the BChl a bound to the 
+L-subunit of the protein Ref. [ 14]. A similar situation 
+may occur in P~-o0. However, if the experimental pro- 
+ton hfc's [6,15] are taken as a measure, the spin den- 
+sity distribution over the dimer halves is more asym- 
+metric in P+o0. The most recent results have shown 
+that about 85 % of the spin are residing on one Chl a 
+[ 12,16]. However, since it could be that the spin den- 
+sity is rearranged in the Chla molecules in P~-0o as 
+compared with monomeric Chl a +', the estimation of 
+
+
+
+--- PAGE 3 ---
+H. Kflfl, W. Lubitz/Chemical 
+the asymmetry using only the I H hfc's might be not 
+very accurate. Thus a complementary approach, being 
+independent of the 1H hfc's, is of great interest. 
+A promising alternative for probing the spin den- 
+sity distribution in P~-00 is the determination of nitro- 
+gen hfc's, in particular after replacing all IaN nuclei 
+(nuclear spin 1 = 1) by 15N (1 = 1/2) that cause no 
+quadrupolar effects in the spectra. However, it is im- 
+portant to realize that small nitrogen hfc's, as found 
+in chlorophyll-type cation radicals, are not directly re- 
+lated to the spin density at the nuclei. In these radicals 
+they arise mainly from spin polarisation induced by 
+high spin densities at the neighbouring carbon atoms. 
+Since these carbons carry no proton nuclei the respec- 
+tive spin densities cannot be derived directly from lH 
+hfc's [ 17]. 
+Only a few data concerning nitrogen hfc's in 
+[15N]Chl a +" and [ 15N]P~-~o exist in the literature. In 
+a recent review [ 18] the authors - who performed 
+the pioneering and most elaborate work on this topic 
+- state that the total body of data is rather small 
+and should be considered as qualitative, especially 
+for [15N]P~-~o. Thus, we recently investigated 15N- 
+labeled Chl a +" and P~-o0 by 15N ENDOR, stimulated 
+echo ESEEM and HYSCORE [16]. In particular 
+the 2D HYSCORE experiment [19] with its en- 
+hanced spectral resolution [20] clearly showed the 
+presence of additional small lSN hfc's in [15N]P~'~0 
+whereas no such small couplings could be detected 
+for [ 15N]Chla+'. This was taken as an indication that 
+P~-00 electronically is a dimeric species. In this work a 
+quantitative evaluation of the stimulated echo ESEEM 
+data is given for [lsN]Chla+" and [IsN]P+~o. 
+2. Materials and Methods 
+Samples. The preparation of the [ISN] PSI samples 
+from spinach has already been described [ 16]. The 
+samples used in the experiments contained 3 mg/ml 
+Chl, the PS I concentration was approximately 90 
+/zM in PT0o. For the measurements quartz capillaries 
+Wilmad 727 Q (o.d. 4 ram, i.d. 3 nun) were used. 
+To photooxidize P700 the material was illuminated at 
+room temperature for 1 min using a 1000 W tungsten 
+projection lamp equipped with a water filter of 10 cm 
+path length. Then the samples were rapidly frozen un- 
+der illumination in liquid nitrogen to trap the radical 
+Physics Letters 251 (1996) 193-203 195 
+cation P~-00. 
+The [15N]Chla was extracted with acetone from 
+ISN-labeled spinach. The further purification has been 
+described in Ref. [ 16]. The radical cation was gen- 
+erated by oxidation of a 5 x 10 -4 M solution of 
+[15N]Chla in CH2C12/THF 10 : 1 (v/v) With iodine 
+on a high vacuum line. 
+Instrumentation. The ESEEM experiments were 
+done on a Bruker ESP 380 E FT-EPR spectrome- 
+ter that was equipped with a dielectric ring cavity 
+(ESP 380-1025 DLQ-H) and an Oxford CI~ 935 cryo- 
+stat (helium gas flow system). The measurements 
+were performed at temperatures between !0 and 20 
+K. All experiments were carried out at the center of 
+the EPR absorption line employing zr/2 pulses of 16 
+ns length (microwave field strength BI ~ 0.55 mT). 
+To avoid spectral artifacts caused by unwanied echoes 
+a four-step phase cycle was utilized [21]]. Subtrac- 
+tion of the relaxation decay and further evaluation of 
+the time domain spectra was done using ESP 380 E 
+software. 
+Simulation of stimulated echo ESEEM spectra. The 
+stimulated echo ESEEM spectra were simulated as 
+outlined in Ref. [22]. For a nucleus 1 = 1/2 cou- 
+pled to an unpaired electron with S = 1 ~2 and the 
+pulse scheme given in Fig. 2 the modulation ampli- 
+tude V(r,T) is [23] 
+V(r,T) = V~(I",T) + Va(~', T) 
+I ksin 2 (½toar)sin 2 [/toB(r + T)]] 
+I + 7 - ksin2 [½to/37"] sin2 [½w~(~" + T)] , (1) 
+i 
+toa,tol3 = ~/ (½Azz :k tot) 2 + 1 (A2x + A2~,), (2) 
+with the hyperfine transition frequencies ~o~ and to# 
+and the nuclear Larmor frequency tot (frequencies in 
+radians: to = 2zrv). The hyperfine coupling (hfc) is 
+given by the tensor A (with components A/j). The 
+modulation amplitude depends on the modhlation fac- 
+tor k: 
+totB ~2 A 2 k= , where B2=Az2x+ zv. (3) k to,to# / 
+After calculation of the product of the modulation am- 
+plitudes for the individual nuclei a powder 9verage was 
+carried out. The entire two-dimensional](2D) time 
+domain signal depending on ~- and T waS calculated 
+
+
+
+--- PAGE 4 ---
+196 H. Kilt, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 
+Table 1 
+JSN hfc tensor values a of [ tsN]Chla+" from ESEEM and cw-ENDOR experiments in frozen solution and results of an RHF-INDO/SP 
+calculation 
+Method Component Principal values b (MHz) Reference 
+1 2 3 4 
+cw-EN DOR A .L 2.35 1.66 0.83 0.51 [ 16 ] 
+ESEEM A.L 2.35 1.50 1.10 0.70 this work 
+All 5.50 2.40 2.00 2.00 
+Aiso 3.40 1.80 1.40 1.13 
+RHF-INDO/SP c ring B D A C this work 
+A 11 +2.66 + 1.56 + 1.34 + 1.23 
+A22 +2.77 + 1.80 + 1.49 + ! .37 
+A33 +6.78 +4.22 +3.24 +3.24 
+Ais o +4.07 +2.53 +2.02 + 1.88 
+ESEEM All 2.3 2.6 2.3 1.3 [ 18,31 l 
+A22 2.7 2.6 2.9 1.3 
+A33 7.9 7.7 5.3 6.7 
+Aiso 4.3 4.3 3.5 3.1 
+a Accuracy: ESEEM 4- 0.15 MHz for A_t_ and 4- 0.3 MHz for All; ENDOR 4- 0.05 MHz. 
+b The assignment of hfc tensors to pyrrole rings in Chla (see Fig. 1) follows the RHF-INDO/SP calculation. The A33 principal axis is 
+along the Pz orbital and thus oriented perpendicular to the porphyrin plane. 
+c Molecular geometry of Chla as in Ref. [22]. The values given here are averaged with regard to the rotation of the methyl groups. 
+in order to achieve a correct description of the 'blind 
+spot' pattern showing up in the frequency domain data 
+set after Fourier transformation (FT). The simulated 
+signal was subject to exactly the same apodization 
+and zero-filling procedures as the experimental data. A 
+comparison between experiment and simulation is eas- 
+ily possible employing the 'skyline projection' along 
+the v7 axis of the respective data sets after 2D FT and 
+calculation of the absolute values [22]. 
+The ESEEM spectrum of [ lSN] Chl a +" can depend 
+on up to four non-axial 15N hfc tensors, i.e. on a max- 
+imum of 12 individual principal values. Up to eight 
+different tensors must be considered in the case of 
+[ 15N ] P+oo- In order to determine reliable solutions for 
+these multi-parameter problems, it is necessary to re- 
+duce the number of free simulation parameters. This 
+was accomplished by using only axially symmetric 
+15N hfc tensors in the calculations. The justification 
+for this approach is given below. Remaining deviations 
+between experimental and simulated ESEEM spectra 
+are certainly due to unspecific effects caused by the 
+surroundings (see Section 4). The focus of this work 
+was on achieving a consistent simulation using as few 
+parameters as possible rather than calculating a per- 
+feet ESEEM simulation by employing the maximum 
+number of parameters. 
+3. R~ 
+3.1. Evaluation of llSN]Chla +" spectra 
+For evaluation of the four ISN hfc tensors in 
+[ I SN] Chl a +" from the stimulated echo ESEEM spec- 
+trum (see Fig. 2) a comparison with the related system 
+[ lSN] BChl a +" is quite helpful. In [ 15N] BChl a +" all 
+ISN hfc tensors have been found to be axially symmet- 
+ric to good approximation [22]. Their ratio AII/Ai 
+lies between 2.6 and 2.9 [ 18,22]. Since BChla +" and 
+Chl a +" have a quite similar structure axial symme- 
+try of the 15N hfc tensors can also be assumed for 
+
+
+
+--- PAGE 5 ---
+H. Ka'fl, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 197 
+[15N]Chla+'. This assumption is corroborated by 
+MO-theoretical calculations (see Table 1) using the 
+RHF-INDO/SP method [16,24,25]. Four different 
+A± tensor elements were evaluated from our earlier 
+15N ENDOR experiments on [ 15N] Chl a +" [ 16] (Ta- 
+ble 1 ). They were taken as starting parameters for the 
+simulations. 
+In the course of the calculations both the A± and All 
+tensor elements were varied within a range of several 
+megahertz. As expected for axial tensors the simulated 
+spectra are much more sensitive to a variation of A± 
+than to All. In order to give an idea of the accuracy of 
+the resulting hfc components a representative series of 
+simulations is shown in Fig. 2. They were calculated 
+"r T "r 
+Ji] A 
+! I 
+I i I I 
+0 2 4 
+"~)15 N 
+I I 
+I I 
+6 8 
+~t [MHz] 
+I 
+g 
+e 
+d 
+C 
+b 
+E! 
+for an increase of the component All of the largest hfc 
+tensor ( 1 ) in steps of 300 kHz. The A± component 
+of tensor 1 and all components of tensors 2, 3 and 4 
+(Table 1 ) were kept constant. The intensit~¢ distribu- 
+tion in the simulated spectra depends significantly on 
+the value of All. For All < 5.2 MHz the lowqfrequency 
+part of the experimental spectrum (below !.5 MHz) 
+is reproduced quite well, however, intensity is clearly 
+missing above 1.5 MHz (see Figs. 2a, 2b ar M 2c). On 
+the other hand, for All /> 5.8 MHz the simulated spec- 
+tra show quite high intensity around 1.5 MHz and a 
+distinct shoulder emerges at 0.9 MHz. Thege two ef- 
+fects are not found in the experiment (see Eigs. 2e, 2f 
+and 2g). The best simulation is shown in l~ig. 2d. 
+The optimum simulation of the experimental ES- 
+EEM spectrum (Fig. 3a, dashed line) wa~ achieved 
+by use of the tSN hfc tensors given in Table 1 us- 
+ing parallel All principal axes. Slight variatlons of the 
+tensor elements led to distinct changes of lintensities 
+whereas the positions of peaks and shoulders were not 
+much affected. This can be explained by c0nsidering 
+the modulation factor (ki) spectra that wbre calcu- 
+lated following Ref. [26] (see Fig. 3a). O k the high- 
+frequency side (above t'UN) the spectral 0verlap of 
+contributions from tensor 1 with those o 4 the three 
+tensors 2, 3, 4 is close to zero. Thus, the v~riation of 
+one of the principal values of these tensots by only 
+Fig. 2. Top: pulse sequence of a stimulated echo experiment with 
+definition of time intervals. Bottom: stimulated ech 9 experiment 
+on [15N]Chla " in frozen solution at 20 K (solid llne) in com- 
+parison with a series of simulated spectra (dashed l~nes). In the 
+calculations the tensor components given in Table II were used 
+with the only exception of the All component of ter~sor 1 which 
+was increased from (a) to (g) in steps of 300 kH~. The values 
+employed for this special All component were: (a) ~.6, (b) 4.9, 
+ra (c) 5.2, (d) 5.5, (e) 5.8, (f) 6.1 and (g) 6.4 MH~. All spect 
+shown are skyline projections of the complete tw~dimensional 
+data sets on the vr axis after Fourier transformation (FT) and 
+calculation of magnitudes. Experimental condition~: 400 x 128 
+points, start values To = 400 ns, ~0 = 120 ns; time increments 
+AT = 24 ns, A'r = 8 ns; 7r/2 pulse: 16 ns; a foljr-step phase 
+cycle was employed, the total accumulation time far the whole 
+2D array was approximately 3 hours. Nuclear Larrnor frequency 
+PlSN = 1.48 MHz. Data manipulation using the ESI~ 380 E soft- 
+ware: baseline correction for relaxation decay (3rd ~rder polyno- 
+mial), zero-filling to 512 × 128 points, application ~f a hamming 
+window (full width at half maximum (fwhm): 170 points) in 
+the T direction prior to FT. The simulations were ~alculated for 
+512 x 128 points, the resulting data were treated exactly as in the 
+case of the experiment. 
+
+
+
+--- PAGE 6 ---
+198 H. Karl, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 
+I I 
+• ,. /",,,,,,, ; % 
+r 
+:; i ,., 
+: , 2 
+................. .", ,' ..'; "~ :': ' ;: X 3 __. : .... ~..... \_ 
+""" : ""' 4 
+I i I I I I 
+I i f,; I I I I I 
+i 
+I i I I I I 
+0 1 2 3 4 5 
+"Vl5 N V T [MHz] 
+I I I I I I 
+I I 
+I I 
+b 
+I I 
+6 7 
+Fig. 3. Stimulated echo ESEEM on [lsN]Chla+" at 20 K. Com- 
+parison of the experiment shown in Fig. 2 (solid line) and sim- 
+ulation (dashed line), both represented in skyline projection. (a) 
+Top: experiment together with simulation calculated employing the 
+four axially symmetric tSN hfc tensors of Table 1. Bottom: theo- 
+retical modulation factor (ki) spectra of these tensors (see text). 
+For numbering see Table I. For tensors 2, 3 and 4 the vertical 
+scale is expanded by a factor of 5. (b) Experiment together with 
+simulation calculated employing the non-axially symmetric tensors 
+of refs. [ 18,31 ] given in Table 1. The simulations of the ESEEM 
+spectra were computed for 512 x 128 points, data manipulation 
+was the same as for the experiment (see Fig. 2). 
++50 kHz can have a pronounced effect on the inten- 
+sities in the resulting ESEEM spectrum. The simula- 
+tion of the ESEEM spectrum is, however, no simple 
+addition of the ki spectra since the complete time do- 
+main signal is a product of the modulation amplitudes 
+V/(~', T) of the individual nuclei (Eq. ( 1 ) ). Further- 
+more, Eq. (1) shows that V(~-, T) depends also upon 
+other factors than k. 
+The remaining discrepancies between the simulated 
+and experimental ESEEM spectra are most likely due 
+to slight deviations of the tensors from axial symmetry 
+(see Section 4). Attempts to simulate our spectra by 
+using non-axial tensors showed, however, that due to 
+the increased number of simulation parameters these 
+results are not unambiguous. 
+3.2. Evaluation of [IsN]P+~o spectra 
+If the assumption is valid that [ 15N] P~-00 is a dimer 
+of two Chl a molecules a maximum of eight differ- 
+ent tSN hfc tensors could contribute to the ESEEM 
+signal, as compared with only four in the case of 
+[ ]SN] Chl a +'. Therefore, we have used only hfc ten- 
+sors of axial symmetry in the simulations in order to 
+reduce the number of free parameters. 
+For [1sN]P~-65 in the bRC it was assumed that the 
+ISN hfc's found for the monomeric [15N]BChla+" 
+are scaled down by a constant factor for each dimer 
+half [22]. From the results of our ISN ENDOR mea- 
+surements [ 16] such a model must be excluded for 
+[ 15N]p~-~0. These experiments yielded five hfc values 
+assigned to A± elements of ISN hfc tensors (Table 
+2). Comparison of these values with the respective 
+ones for [ 15N] Chl a +" shows that no common scaling 
+factor of hfc's in [1sN]P~-~0 relative to those in the 
+monomeric cation can be found. For example, the A± 
+component of the largest tensor ( 1 ) is approximately 
+the same for [ lsN]Chl a +" and [lSN] P+o0 (see Tables 
+1 and 2). For tensors 2 and 3 in [lSN]P~-~0 the A± 
+value is clearly increased whereas it is decreased for 
+tensor 4. Thus, for the simulations of [IsN]P~-~0 the 
+lSN hfc tensors must be considered individually. 
+As in the case of [ lsN]Chla+" the five A± compo- 
+nents obtained in the earlier lSN ENDOR experiments, 
+together with an assumed ratio All~A± of 2.5 for all 
+tensors, were taken as starting parameters for the sim- 
+ulations. Table 2 contains the principal values for the 
+five different ISN hfc tensors used in the calculation of 
+the optimum simulation of the [ l SN] P~-00 spectrum. In 
+Fig. 4 three representative experimental 1D traces are 
+shown together with the respective simulations. In the 
+left part of Fig. 4 the time domain signals are depicted, 
+the right part presents the respective traces after FT 
+and calculation of the absolute values. The three 1D 
+traces were selected since they clearly show a spectral 
+feature not visible in most of the other 1D traces con- 
+tributing to the complete 2D data set: a distinct line 
+showing up at 0.8 MHz. For ~" = 296 ns it is missing, 
+for ~" = 520 ns the line shows maximum intensity. This 
+behaviour is modeled quite well by the simulations. 
+The high-frequency modulation on the experimental 
+time domain signals (left) contains contributions of 
+
+
+
+--- PAGE 7 ---
+H. Karl, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 
+Table 2 
+15N hfc tensor values a of [IsNIP+;0 from ESEEM and cw-ENDOR experiments in frozen solution 
+199 
+Method Component Principal values of tensor b (MHz) Ref. 
+1 2 3 4 5 
+ENDOR A j_ +2.34 + 1.75 I. 12 0.67 0.25 I 16 I 
+ESEEM A.L 2.34 1.85 1.12 0.67 0.25 this work 
+A II 5.85 5.00 2.80 1.67 0.62 
+Also 3.51 2.90 1.68 1.00 0.37 
+ESEEM A_L 1.8 1.7 [ 18.31 ] c 
+A II 2.7 2.6 
+Aiso 2.1 2.0 0.5 0.2 
+" Accuracy: ESEEM results for tensors 1, 2 and 3: All: -I- 0.2 MHz, A j_: 4- 0.1 MHz. Because of the minor contribution pf tensors 4 
+and 5 to the resulting spectrum a reasonable estimation for the accuracy of their All elements is difficult (it may be around ~ 0.3 MHz), 
+for A j_ it is about 4- 0.1 MHz. ENDOR 4- 0.05 MHz. 
+h Tentative assignment under the assumption of a dimer: tensors 1 to 4 belong to one Chl a half, tensor 5 to the other half. The given 
+signs of the hfc's result from general TRIPLE experiments 116]. 
+c There are differences between the two references. Therefore, only the isotropic hfc's are included for the tensors 3 and 4. 
+I I I 1 I 
+;t'" 
+U",: 
+""...., ... ............................ 
+T [I.ZS] 
+I I I i 
+i~\~ ~,,"- 520 ns 
+i' "." "',. ................................ 
+)'~ ";, 496 ns • .-" .., ................................. 
+.ii~ :". 296 ns . ,',.o; "%°. ............................... 
+I i I 
+o s I; I; 
+1J15 N V T [MHz] 
+Fig. 4. I D stimulated echo ESEEM of I tsN]P+~o at 20 K. Comparison of three experiments employing different spacings r between the 
+first and second pulse (solid line) and respective simulations (dashed line) both in the time domain after subtraction of the relaxation 
+decay (left) and in the frequency domain (right). The pulse sequence is given in Fig. 2, the fixed spacing r is indicated ia the spectra, 
+the time variable is T. Experimental conditions given in Fig. 5. Data manipulation analogous to Fig. 2, with the only difference that I D 
+data sets were taken. Frequency domain representation after Fr with respect to T and calculation of absolute values. 
+
+
+
+--- PAGE 8 ---
+200 H. Karl, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 
+I I : I I I I I I q 
+i 
+i 
+,'°'% i ,'%°.. 1 
+" " ' ." ...... 2 .... : "---4 ....... " °"° ........ 
+I 
+I 
+I 
+.°.-% I °.°--°. ~ 
+"° ..... I ........ 
+i 
+i 
+4 ........ s ........ 
+i 
+I 
+' (x 10) 5 
+I I ~ I I I I I _.~ 
+0 1 2 3 4 5 6 
+MtSN v t [MHz] 
+Fig. 5. Stimulated echo ESEEM of [ 15N] P+o0 in PS 1 from spinach 
+at 20 K, experiment (solid line) and simulation (dashed line), 
+both represented in skyline projection of the complete 2D data sets. 
+Experimental conditions as in Fig. 2 except: number of data points 
+350 × 101, T0 = 240 ns, r0 = 120 ns. Top: experiment together 
+with simulation calculated employing the five axially symmetric 
+[SN hfc tensors of Table 2. Bottom: theoretical modulation factor 
+(ki) spectra of these tensors. The numbers refer to the respective 
+tensors. For tensor 5 the vertical scale is expanded by a factor 
+of 10. The simulation of the ESEEM spectrum was computed for 
+512 x 128 points, data manipulation was the same as for the 
+experiment (see Fig. 2). 
+proton hfc's that were not included in the simulation. 
+In the frequency domain spectra (right) this leads to 
+the peaks at the proton Larmor frequency of 14.9 MHz. 
+Fig. 5 shows the skyline projections of the exper- 
+imental 2D data and the optimum simulation in the 
+frequency domain together with the ki spectra for the 
+five 15N hfc tensors employed in the simulation. For 
+the high frequency part above the Larmor frequency 
+WSN the resulting simulation is good. The minor differ- 
+ences beween experiment and simulation on the low 
+frequency side are most likely due to the restriction 
+to tensors of axial symmetry. The ki spectra show that 
+the simulation is clearly dominated by the three largest 
+tensors ( 1, 2 and 3 in Table 2). Modification of the 
+simulation caused by introduction of tensors 4 and 5 is 
+almost negligible. The additional introduction of ten- 
+sors with principal values below 1 MHz yielded no 
+visible changes in the simulation. 
+4. Discussion 
+4.1. Radical cation [15N]Chla+" 
+In this work we have determined four 15N hfc ten- 
+sors for the monomeric lsN-Chl a cation radical from 
+2D stimulated echo ESEEM experiments. The data ob- 
+tained from 15N ENDOR, in which essentially the A± 
+elements could be measured [ 16], show good agree- 
+ment with those from ESEEM (Table 1). 
+From the qualitative evaluation of the 2D HY- 
+SCORE spectra in Ref. [16] a lower limit of 4.7 
+MHz was estimated for the maximum 15N hfc tensor 
+element of [15N]Chla+" which is consistent with a 
+broad feature in the 15N ENDOR spectrum assigned 
+to a All component [ 16]. The maximum All value in 
+the 15N hfc tensor set of [15N]Chla+" obtained from 
+the simulations of the ESEEM spectra is 5.50 MHz 
+(Table 1 ). Thus, the quantitative results presented in 
+this work clearly show that the direct evaluation of 2D 
+HYSCORE spectra [ 16] already yielded a satisfying 
+estimate of the maximum hfc in this radical cation. It 
+is interesting to note that the reliability of this eval- 
+uation method is confirmed by inspection of the 2D 
+HYSCORE spectrum of [ ]SN] BChl a +" in Ref. [ 22 ]. 
+In this case a maximum hfc value of 7.2 MHz was 
+concluded from 2D HYSCORE. The highly resolved 
+15N ENDOR spectra of [15N]BChla+" [22] yielded 
+a value of 7.5 (4-0.1) MHz for the A II component of 
+the largest 15N hfc tensor. 
+With the exception of our former ENDOR work 
+[ 16] all other data of nitrogen hfc's in Chl a +" resulted 
+from evaluations of ESEEM experiments [ 27-31 ]. In 
+the first investigations nitrogen hfc's were estimated 
+from the position of double quantum peaks in 14N 
+ESEEM spectra [28,29]. Isotropic 14N hfc's of 2.95 
+and 3.18 MHz were obtained for [ 14N] Chl a +'. Using 
+the ratio TJSN/TI4N = 1.4 the respective isotropic 15N 
+hfc's in [~sN]Chla+" are 4.13 and 4.45 MHz. These 
+values are considerably larger than those found in this 
+work. 
+Four non-axial 15N hfc tensors have been given 
+in Refs. [ 18,31]. They are included in Table 1. We 
+have simulated our complete 2D experiment employ- 
+ing these tensors. As can be seen in Fig. 3b, this sim- 
+
+
+
+--- PAGE 9 ---
+H. Kiifl. W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 201 
+ulation cannot reproduce our experimental spectrum. 
+The tensor elements resulting from the present work 
+- in particular the All values - are generally smaller 
+and a satisfying simulation could be achieved using 
+axially symmetric tensors (see Fig. 3a). An explana- 
+tion for these differing results may be that only 1D 
+ESEEM experiments were evaluated in Ref. [ 18,31 ]. 
+This could have led to ambiguities in the data analysis. 
+In contrast to [ 15N] Chl a +" the simulation employ- 
+ing tensors of purely axial symmetry has been almost 
+perfect for [)sN]P+~0. This could be traced back to 
+the following effect: The IH and ISN ENDOR lines 
+of Chl a +" samples in frozen solution are significantly 
+broader than those of P+0o in all investigated PS 1 
+preparations [ 16]. The environment of P~-00 in PS I 
+(protein binding pocket) is more homogeneous than 
+that of Chl a +" in a frozen organic solvent [32]. This 
+will lead to a distribution of the individual hfc's in 
+Chl a +" over a certain range and may also influence 
+the hfc tensor symmetry. The simulation does not in- 
+clude such effects, therefore some differences to the 
+experimental spectrum remain. 
+The RHF-INDO/SP calculation predicts one large 
+nitrogen hfc for ring B whereas the three other ni- 
+trogen hfc's are smaller. This is clear confirmation of 
+the experimental ESEEM results which also yield one 
+large and three smaller lSN hfc tensors for Chla +'. 
+The experimental data are consistent with the MO- 
+theoretical predictions, however, as already observed 
+for the tH hfc's of both cations [33], the agreement 
+between experimental and calculated hfc's is better for 
+[ 15N ] BChl a +" than for [ 15N] Chl a +" [ 16,18,22]. 
+4.2. Radical cation [15N]P~ o 
+As found for [15N]Chla+" the A_u elements of 
+[LsN]P~-~0 determined in our 15N ENDOR exper- 
+iments [16] and the respective values concluded 
+from the simulation of the stimulated echo ESEEM 
+spectrum presented in this work are equal within 
+experimental error. Furthermore, from our former 
+2D HYSCORE spectra the maximum 15N hfc of 
+[15N]P~-~0 was estimated to be about 6 MHz [16]. 
+This is consistent with the quantitative evaluation 
+of the 2D stimulated echo ESEEM experiment pre- 
+sented here that yields a maximum All component of 
+5.85 MHz (Table 2). In the lSN ENDOR spectra of 
+[tsN]P~-~o only one broad feature could be detected 
+yielding a hfc of 4.86 MHz which may be due to the 
+All component of tensor 2. No larger hfc could be 
+deduced from ENDOR [ 16]. 
+It is important to note that the qualitative evaluation 
+of the 2D HYSCORE spectrum [ 16] clearly showed 
+the existence of at least one 15N hfc tensor With prin- 
+cipal values smaller than I MHz in [tSN]p~-~0. The 
+results given in this work show no evidence against 
+the assumed presence of these small hfc te~ ~sors con- 
+cluded from HYSCORE. However, the exJ stence of 
+tensors 4 and 5 (Table 2) cannot be proven u nambigu- 
+ously by the simulation of the stimulated E~ ;EEM re- 
+suits. Concerning the number of hfc tensors present in 
+P~-00 it is important to note that independen informa- 
+tion is provided by 14N ESEEM experiments on PSI 
+single crystals. These experiments yielded j ive differ- 
+ent sets of 14N nuclear quadrupole paramel ers K and 
+r/ [ 12,13]. 
+Only a few data are found in the literatur', concern- 
+ing nitrogen hfc's in P~-0o. As in the case Jf Chl a +" 
+some nitrogen hfc's of P+00 were determinex, from 14N 
+ESEEM experiments. One isotropic laN h rc of 2.24 
+MHz was given in Ref. [29]. This is equi',alent to a 
+15N hfc of 3.14 MHz. Only one further investigation 
+of [14N]p~'~0 was published so far [27]. Tae evalua- 
+tion yielded two isotropic hfc values of 2.23 and 2.38 
+MHz. The average of these two values leads to a 15N 
+hfc of 3.25 MHz. Both isotropic lSN hfc'~ estimated 
+from laN results are close to the isotropic i hfc of the 
+largest tensor found in the present work (lensor 1 in 
+Table 2). 
+15N hfc's of [IsN]P~-~0 determined exp~ 
+by Dikanov et al. are also included in Tab 
+Ref. [18] ). Most of these values are in 
+ment with our data. The difference to the 
+3.14 MHz which followed from the laNE 
+periments made in the same laboratory [2! 
+discussed in Ref. [ 18]. 
+rimentally 
+te 2 (from 
+disagreee- 
+lSN hfc of 
+SEEM ex- 
+)] was not 
+4.3. Implications for the dimer model 
+All ESEEM studies on Chl a +" and P~-00 
+in the past have been aimed at answerin 
+tion of whether P~00 is a dimer with spin 
+localized over both halves. From the pion( 
+both on 14N- and tSN-labeled samples, 
+Ref. [ 18], no final conclusion could be 
+cerning this problem. The most recent v 
+undertaken 
+the ques- 
+density de- 
+ering work 
+eviewed in 
+Jrawn con- 
+ark on 14N 
+
+
+
+--- PAGE 10 ---
+202 H. Ka'fl, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 
+samples yielded two isotropic nitrogen hfc's of almost 
+the same magnitude for P~-o0 [27]. From comparison 
+with the nitrogen hfc values of monomeric Chla +" 
+[28,29] the authors concluded that the spin density 
+distribution is asymmetric over the halves of a Chl a 
+dimer with a ratio of 3 : 1 to 4 : 1. However, in this 
+analysis it was assumed that the spin density of one in- 
+dividual dimer half of P~-o0 is scaled by the same factor 
+at all nitrogen positions as compared with monomeric 
+Chl a +'. 
+Our former ENDOR experiments [ 16] and the ES- 
+EEM evaluation of this work show that no clear reduc- 
+tion of hfc's occurs when going from [ 15N]Chl a +' to 
+[15N]P+~o. For tensor 2 even an increase of A_t. and 
+the respective isotropic hfc is detected. This behavior 
+resembles the increase of one methyl proton hfc found 
+in ~H ENDOR experiments on Chl a +" and P+o0 [ 16]. 
+Taken together the ENDOR and ESEEM results are 
+indicative for a rearrangement of the spin density on 
+the spin carrying dimer half in P~o0 as compared with 
+monomeric Chl a +'. 
+It is interesting to note that the experimental re- 
+suits on [ JSN]BChla+" and [ 15N]P~-65 show a similar 
+situation for the bRC [34]. Here the individual re- 
+duction factors of the nitrogen positions on the 'spin 
+carrying half' of [ 15N] P~-65 relative to the monomer 
+[15N]BChla+" lie in the range of 0.66 to 0.90. In 
+the most simple model the sum of the spin densi- 
+ties at all nitrogens in the dimer P+" (eight nuclei) 
+and the monomer (B)Chla +' (four nuclei) should 
+be the same. However, adding up the isotropic 15N 
+hfc's in both systems yields a value of 15.0 MHz for 
+[ 15N]BChla+" and 16.7 MHz for [ 15N]P~-~5. One may 
+argue that only the Pz spin density should be consid- 
+ered and thus sum up the respective A~I components of 
+the dipolar part of the hfc tensors. The resulting values 
+are 11.17 MHz for [ 15N]BChla+" and 15.64 MHz for 
+[ 15N] P~-65. From this it is evident that the spin density 
+at the nitrogen is not fully conserved. Consequently, 
+a comparison of individual 15N hfc's determined for 
+l 15 + spec'fic molecular positions in [ NIPs65 with the re- 
+spective ones in the monomeric cation [ 15N] BChl a +" 
+can lead to errors in the calculated global asymmetry 
+ratio of the dimer I. 
+I The 15N hfc values of [15N]P+~5 given in Ref. [34] have been 
+obtained in RC single crystals near room temperature. In frozen 
+RCs a second distinct state of the dimer could be trapped, showing 
+This behaviour of the nitrogen hfc's can be ex- 
+plained by the fact that they are essentially due to spin 
+polarization effects between neighbouring carbon and 
+nitrogen atoms. In this situation even a slight rear- 
+rangement of the spin density distribution in P+" can 
+have pronounced effects on the nitrogen hfc's. Clearly, 
+the reduction of individual 15N hfc's in [15N]p~-~0 
+with respect to the corresponding values in monomeric 
+[ 15N] Chl a +" will be a poor measure of the asymme- 
+try of the spin density distribution in the protein-bound 
+dimer. A better estimate is provided by the ratio of 
+corresponding hfc's for the symmetry-related molec- 
+ular positions of the different dimer halves. For the 
+bRC this yields asymmetry ratios between 1.9 and 2.3, 
+in good agreement with the results for various proton 
+positions [ 14]. 
+ENDOR and HYSCORE have shown the existence 
+of one small 15N hfc in [ 15N] P~-o0 which is not present 
+in [ 15N] Chl a +" [ 16]. One possibility for the assign- 
+ment of this hfc would be a nitrogen located in the 
+protein binding pocket around P+o0. This could belong 
+to a histidine ligand to the central Mg of one of the 
+Chl a molecules of PT0o. However, only a small part 
+of the spin density (~< 0.001) is expected to reside 
+at the Mg [35]. It is, therefore, rather unlikely that a 
+nitrogen hfc of a ligand could yield a measurable A± 
+value. Thus, the most reasonable assignment of tensor 
+5 in Table 2 is to a nitrogen atom of the second dimer 
+half. 
+Considering the pronounced asymmetry of the spin 
+density distribution obtained in IH ENDOR experi- 
+ments [ 12,13,16] the isotropic 15N hfc of 0.37 MHz 
+(tensor 5) could be assigned to the largest nitrogen 
+hfc of the second half. Based on this assignment the 
+ratio of the largest corresponding hfc's of the dimer 
+halves (tensors 1 and 5) is 3.51 : 0.37. Taking the ex- 
+perimental error into account this leads to the conclu- 
+sion that 90(±5) % of the spin density resides on one 
+half and only about 10(4-5) % on the second half. This 
+is consistent with the ratio of 85 : 15 derived from the 
+1H ENDOR experiments on P+o0 [ 12,13,16]. Taken 
+together the proton and nitrogen hfc's yield good ev- 
+idence for P~-oo being a Chl a dimer with a strongly 
+asymmetric spin density distribution over the dimer 
+halves. 
+a more asymmetric spin density distribution with a ratio of 5 : 1 
+in favour of the L-half [ 22 ]. 
+
+
+
+--- PAGE 11 ---
+H. Karl, W. Lubitz/Chemical Physics Letters 251 (1996) 193-203 203 
+Acknowledgement 
+We thank Professor Lars-Erik Andrtasson (Uni- 
+versity of Gtteborg, Sweden) for sending us the 
+15N-labeled PSI samples. The [15N]Chla was pre- 
+pared by Dr. Birgit Btnigk (Technische Universit~it 
+Berlin). Dr. Martin Plato (Freie Universit~it Berlin) 
+is gratefully acknowledged for providing the source 
+of his RHF-INDO/SP program and Dr. Friedhelm 
+Lendzian (Technische Universitat Berlin) for helpful 
+discussions concerning the dimer model. The work 
+was supported by the 'Deutsche Forschungsgemein- 
+schaft' (SFB 312, TP A4), and by the 'Fonds der 
+Chemischen Industrie'. 
+References 
+III J.H. Golbeck, Biochim. Biophys. Acta 895 (1987) 167. 
+12] E Sttif, in: The photosystems: structure, function and 
+molecular biology, ed. J. Barber (Elsevier, Amsterdam, 
+1992) ch. 12, p. 471. 
+13 ] M.C.W. Evans and J.H.A. Nugent, in: The photosynthetic 
+reaction center, Vol. 1, eds. J. Deisenhofer and J.R. Norris 
+(Academic Press, San Diego, 1993) ch. 13, p. 391. 
+141 G. DOting, J.L. Bailey, W. Kreutz, J. Weikard and H.T. Witt, 
+Naturwissenschaften 55 (1968) 219. 
+151 J.R. Norris, R.A. Uphaus, H.L Crespi and J.J. Katz, Proc. 
+Natl. Acad. Sci. USA 68 (1971) 625. 
+161 W. Lubitz, in: Chlorophylls, ed. H. Scheer (CRC Press, 
+Boca Raton, 1991) p. 903. 
+171 P. Mathis and A.W. Rutherford, in: Photosynthesis, ed. 
+J. Amesz (Elsevier, Amsterdam, 1987) ch. 4, p. 63. 
+181 J.H. Golbeck, Proc. Natl. Acad. Sci. USA 90 (1993) 1642. 
+191 CR.D. Lancaster and H. Michel, in: Reaction centers of 
+photosynthetic bacteria: structure and dynamics, ed. M.E. 
+MicheI-Beyerle (Springer, Berlin, 1995), in press. 
+1101 U. Ermler, G. Fritzsch, S.K. Buchanan and H. Michel, 
+Structure 2 (1994) 925. 
+I I I I W.D. Schubert, O. Klukas, N. KrauB, W. Saenger, P. Fromme 
+and H. Witt, in: Proceedings of Xth International 
+Photosynthesis Congress, ed. P. Mathis (Kluwer, Dordrecht, 
+1995), in press. 
+1121 H. K~il3, P. Fromme, H. Witt and W. Lubitz, Biophys. J. 
+66(2) (1994) A228. 
+1131 H. KtiB, Ph.D. thesis, Technische Universit~it Berlin (1995). 
+1141 E Lendzian, M. Huber, R.A. Isaacson, B. Endeward, 
+M. Plato, B. BOnigk, K. MObius, W. Lubitz and G. Feher, 
+Biochim. Biophys. Acta 1183 (1993) 139. 
+[ 15] S.E.J. Rigby, J.H.A. Nugent and EJ. O'Malley, Biochemistry 
+33 (1994) 10043. 
+[16] H. K~tfl, E. Bittersmann-Weidlich, L.-E. Andr~asson, 
+B. Btnigk and W. Lubitz, Chem. Phys. 194 (1995) 419. 
+[ 17] J. Fajer, A. Forman, M.S. Davis, L.D. Spaulding I D.C. Brune 
+and R.H. Felton, J. Am. Chem. Soc. 99 (1977) 4134. 
+[18} S.A. Dikanov and Y.D. Tsvetkov, Electron i spin echo 
+envelope modulation (ESEEM) spectroscopy ~CRC Press, 
+Boca Raton, 1992). 
+[ 19] P. HOfer, A. Grupp, H. Nebenfiihr and M. Mel~ring, Chem. 
+Phys. Letters 132 (1986) 279. 
+[201 J.J. Shane, P. HOfer, E.J. Reijerse and E. de Boer, J. Magn. 
+Resort. 99 (1992) 596. 
+[21 ] J.-M. Fauth, A. Schweiger, L. Brannschweiler, J. Forrer and 
+R.R. Ernst, J. Magn. Reson. 66 (1986) 74. 
+[22] H. K~iB, J. Rautter, B. BOnigk, P. HOfer and W. Lubitz, J. 
+Phys. Chem. 99 (1995) 436. 
+[231 A. Schweiger, in: Modem pulsed and con!inuous-wave 
+electron spin resonance, eds. L. Kevan and MiK. Bowman 
+(Wiley, New York, 1990) ch. 2, p. 43. 
+[241 M. Plato, K. MObius and W. Lubitz, in: ChlOrophylls, ed. 
+H. Scheer (CRC Press, Boca Raton, 1991) p. 11015. 
+[251 M. Plato, E Lendzian, W. Lubitz and K. Mobius, in: 
+The photosynthetic bacterial reaction center ii: structure, 
+spectroscopy and dynamics, eds. J. Breton and A. Vermeglio 
+(Plenum Press, New York, 1992) p. 109. 
+[261 C.P. Lin, M.K. Bowman and J.R. Norris, J. Chbm. Phys. 85 
+(1986) 56. 
+[27] I.H. Davis, P. Heathcote, DJ. MacLachlan land I 
+M.C.W. 
+Evans, Biochim. Biophys. Acta 1143 (1993) ]83. 
+[28] S.A. Dikanov, Y.D. Tsvetkov, M.K. Bowmgn and A.V. 
+Astashkin, Chem. Phys. Letters 90 (1982) 149. 
+[291 S.A. Dikanov, A.V. Astashkin, Y.D. Tsvetk0v and M.G. 
+Goldfeld, Chem. Phys. Letters 101 (1983) 206. 
+[30] M.K. Bowman, J.R. Norris, M.C. Thumauer, J. ~/arden, S.A. 
+Dikanov and Y.D. Tsvetkov, Chem. Phys. Lette~rs 55 (1978) 
+570. 
+[31] A.V. Astashkin, S.A. Dikanov, Y.D. Tsvetkpv and M.G. 
+Goldfeld, Chem. Phys. Letters 134 (1987) 438. 
+[32] H. Kurreck, M. Book, N. Bretz, M. Elsndr, H. Kraus, 
+W. Lubitz, E MOiler, J. Geissler and P.M.H.[ Kroneck, J. 
+Am. Chem. Soc. 106 (1984) 737. 
+[33] H. K~it, J. Rautter, W. Zweygart, A. Struck, t~1. Scheer and 
+W. Lubitz, J. Phys. Chem. 98 (1994) 354. ! 
+[341 E Lendzian, B. B0nigk, M. Plato, K. MObius ~nd W. Lubitz, 
+in: The photosynthetic bacterial reaction eente~ 11: structure, 
+spectroscopy and dynamics, eds. J. Breton andA. Vermeglio 
+(Plenum Press, New York, 1992) p. 89. 
+[351 E Lendzian, K. MObius, M. Plato, U.H. Smith, M.C. 
+Thurnauer and W. Lubitz, Chem. Phys. Letters 111 (1984) 
+583. 

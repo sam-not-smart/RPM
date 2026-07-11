@@ -6,6 +6,27 @@ Since this RPM should be responsible for avian magnetreception, the next immedia
 I've attached a folder 'realistic system size' which contains a few helpful files. Firstly, under 'code' it contains an exmaple python script used to run some of the smaller (max 8-qubit) systems used in the thesis. Then we have a 'literature' folder with select research articles doing work on larger (further than toy model) RPM systems. We'll use this work as inspiration for parameter choices and maybe benchmarking our models. A copy of the current master's thesis is attached for context. 
 Ultimately, we aim to have a modifiable full quantum model of the Radical pair mechanism. We're starting with the FAD-Trp molecular inspiration since it's the most studied, but hopefully we can adjust simulate other RPM molecules which live in different parameter regimes and have different dynamics/yields/control levers. 
 
+## Danny workstation smoke test
+
+After cloning or pulling this repository on Danny, activate the intended Conda
+environment and run this read-only environment check from the repository root:
+
+```bash
+conda activate <environment-name>
+python scripts/danny_smoke_test.py
+```
+
+It reports the active Python interpreter and Conda environment, visible CPU and
+memory, repository-disk capacity, and NVIDIA GPU detection. It then checks the
+installed NumPy, SciPy, and Matplotlib packages with small numerical and
+headless-plotting tests. It is deliberately not a sustained hardware benchmark.
+
+If the smoke test passes, exercise the actual RPM code with:
+
+```bash
+python "Realistic system size/code/rpm_8qubit_magnetosensitivity.py" --quick
+```
+
 Some details about the system: 1. we'll use closed system dynamics. 2. The hamiltonian will have the Zeeman, hyperfine, exchange, and full (non-secular) dipolar interactions (maybe we'll add the quadrupolar interaction later). 3. We'll treat electrons and all nuclei as spin-1/2 qubits for now. To reiterate, the first goal is to have a magnetosensitive model and we'll go from there. See literature/code/thesis for paramter choices. One unclear parameter choice is the hyperfine coupling tensors for the full system. The 'quantum needle supp' under the 'literature' folder details hyperfine tensor values calculated using Density Functional Theory so we can use that a starting point, which we've already done for the 8-qubit code, and maybe tweak the tensors from there. 
 
 ## Getting the current baseline running

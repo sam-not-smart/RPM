@@ -1,0 +1,446 @@
+
+--- PAGE 1 ---
+J. Phys. Chem. B 2008, 112, 7315–7319 7315
+Interaction between Thymine Dimer and Flavin-Adenine Dinucleotide: A DFT and Direct
+Ab Initio Molecular Dynamics Study
+Hiroto Tachikawa*,† and Hiroshi Kawabata‡
+DiVisionofMaterialsChemistry,GraduateSchoolofEngineering,HokkaidoUniVersity,Sapporo060-8628,Japan,
+andDepartmentofElectronicScienceandEngineering,KyotoUniVersity,Nishikyo-ku,Kyoto615-8510,Japan
+ReceiVed: January 10, 2008; ReVised Manuscript ReceiVed: March 25, 2008
+Theinteractionbetweenthefullyreducedflavin-adeninedinucleotide(FADH-)andthyminedimer(T) has
+2
+beeninvestigatedbymeansofdensityfunctionaltheory(DFT)calculations.ThechargesofFADH-and(T)
+2
+werecalculatedtobe-0.9and-0.1,respectively,atthegroundstate.Byphotoirradiation,anelectrontransfer
+occurred from FADH- to (T) at the first excited state. Next, the reaction dynamics of electron capture of
+2
+(T) havebeeninvestigatedbymeansofthedirectabinitiomoleculardynamics(MD)method(HF/3-21G(d)
+2
+and B3LYP/6-31G(d) levels) in order to elucidate the mechanism of the repair process of thymine dimer
+causedbythephotoenzyme.ThethyminedimerhastwoC-Csinglebondsbetweenthyminerings(C
+5
+-C
+5′
+and C 6 -C 6′ bonds) at the neutral state, which is expressed by (T) 2 . After the electron capture of (T) 2 , the
+C
+5
+-C 5′bondwasgraduallyelongatedandthenitwaspreferentiallybroken.ThetimescaleoftheC-Cbond
+breaking and formation of the intermediate with a single bond (T) - was estimated to be 100-150 fs. The
+2
+presentcalculationsconfirmedthattherepairreactionofthyminedimertakesplaceefficientlyviaanelectron-
+transfer process from the FADH- enzyme.
+1. Introduction electron reduction strongly contributes to the thymine repair.
+Formation and repair reactions of thymine dimers have been
+TheUVirradiationofDNAsometimescausestheformation
+investigated by several groups. Femtosecond time-resolved
+of cyclobutane pyrimidine dimers (expressed by Pyr<>Pyr)
+infraredspectroscopyshowedthatthyminedimerisfullyformed
+between two adjacent thymine bases in DNA. Photolyase can around 1.0 ps after UV irradiation.8 This ultrafast photolesion
+cleavethecyclobutaneringofthePyr<>Pyrbyirradiationof
+ratepointstoanexcited-statereactionthatisnearlybarrierless
+near-UV light. Flavoprotein is one of the photolyases and
+for bases that are properly oriented at the instant of light
+contains two noncovalently bound chromophores. One chro- absorption.Itwassuggestedthatthelowquantumyieldofthis
+mophore is the fully reduced flavin-adenine dinucleotide
+photoreaction results from infrequent conformational states in
+(FADH-) and the catalytic cofactor that carries out the repair
+the unexcited system.
+function upon excitation by either direct photon absorption or Severaltheoreticalworkshavebeencarriedoutforthymine
+resonanceenergytransferfromthesecondchromophore,which
+dimertoelucidatethedimerizationmechanism.Theformation
+isanantennapigmentthatharvestssunlightandenhancesrepair
+of thymine dimers in DNA was investigated by means of the
+efficiency.1–3
+densityfunctionaltheory(DFT)method.9Althoughitisfound
+As a model for the catalytic reaction, it has been proposed thatathermallyinduced[2+2]cycloadditionreactionproceeds
+that the excited flavin cofactor transfers an electron to the viaaveryhighenergytransitionstate(80-88kcal/molabove
+Pyr<>Pyr to generate a charge-separated radical pair (FADH
+thereactantcomplex),theenergybarrierforUVlightinduced
+radical + (Pyr<>Pyr)-).4,5 The anionic ring of the dimer is
+formation is only a few kilocalories per mole. Very recently,
+splitbya[2+2]cycloreversion,andtheexcesselectronreturns
+Boggio-Pasqua et al. have calculated potential energy curves
+to the flavin radical to restore the catalytically competent (PECs)forthedimerizationofthyminemolecules.10Theground-
+FADH-.
+state PEC showed that the ground-state pathway has an
+Recently,Kaoetal.observeddirectlythyminedimerrepair activation barrier as high as 70 kcal/mol. At the excited state,
+in DNA by photolyase using femtosecond synchronization of photochemical [2 + 2] cycloaddition takes place through a
+theenzymaticdynamicswiththerepairfunction.6Theyobserved converted mechanism. The barrierless process leads to a low-
+directelectrontransferfromtheexcited(FADH-)tothethymine
+lying conical intersection S /S states. Thus, the formation
+0 1
+dimer(T) 2 in170psandbackelectrontransferfromtherepaired mechanism of thymine dimer from two monomers has been
+thyminein560ps.Pezeshkandco-workersmeasuredelectron well-established from theoretical points of view. On the other
+spin resonance (ESR) spectra of thymine dimer radical anion hand, the DNA repair process of thymine dimer is not clearly
+formed at low temperature in the condensed phase.7 They understood.Experimentalmodelstudieshavedemonstratedthat
+suggestthattheelectronadditiontothethyminedimerfollowed both the photodimer radical anion and cation undergo facile
+by ring opening occurs so fast that only the monomer radical fragmentation reactions.11–13
+anionwasdetectableat77K.Thus,itiswell-knownthatone- Static ab initio calculations were carried out for the frag-
+mentationreactionofthyminedimerradicalanionandcation.14,15
+*Corresponding author. E-mail: hiroto@eng.hokudai.ac.jp. Fax: +81 The calculation showed that the unpaired electron of thymine
+117
+†
+0
+H
+6-
+o
+7
+k
+8
+k
+9
+a
+7
+id
+.
+oUniversity.
+dimerradicalcationislocalizedonthelengthenedC
+6
+-C 6′bond
+‡KyotoUniversity. ofthyminedimerandthefragmentationstartswiththecleavage
+10.1021/jp801564t CCC: $40.75  2008 American Chemical Society
+Published on Web 05/27/2008
+.)CTU(
+43:21:61
+ta 6202
+,92
+enuJ
+no
+SENIM
+FO
+LOOHCS
+ODAROLOC
+aiv
+dedaolnwoD
+.selcitra
+dehsilbup
+erahs
+yletamitigel
+ot
+woh
+no
+snoitpo
+rof
+senilediuggnirahs/gro.sca.sbup//:sptth
+eeS
+
+--- PAGE 2 ---
+7316 J. Phys. Chem. B, Vol. 112, No. 24, 2008 Tachikawa and Kawabata
+dQ j) ∂H
+dt ∂P
+j
+dP j) ∂H )- ∂U
+dt ∂Q ∂Q
+j j
+where j ) 1 - 3N, H is the classical Hamiltonian, Q is the
+j
+Cartesian coordinate of thejth mode, and P is the conjugated
+j
+momentum. These equations were numerically solved by the
+Runge-Kuttamethod.Nosymmetryrestrictionwasappliedto
+thecalculationoftheenergygradients.Thetimestepsizewas
+chosen as 0.10 fs, and a total of 10000 or 20000 steps were
+calculatedforeachdynamicscalculation.Thedriftofthetotal
+energyisconfirmedtobelessthan10-3%throughoutallsteps
+inthetrajectory.Themomentumofthecenterofmassandthe
+angularmomentumwereassumedtozero.Moredetailsofthe
+direct ab initio MD calculations are described elsewhere.17–19
+3. Results
+3.A. Structures of FADH--Thymine Dimer Complex.
+The optimized structure of the complex composed of FADH-
+and(T) isillustratedinFigure2.Thecomplexisconstructed
+2
+oftwohydrogenbonds,N-NH(r )andCO-HN(r ).Thebond
+1 2
+Figure1. Chemicalstructuresofflavin-adeninedinucleotide(FADH-), distances, r and r , are calculated to be 1.978 and 1.865 Å,
+thyminedimer(T),anditscomplexFADH--(T). 1 2
+2 2 respectively.Tocheckthestabilityofthesemolecules,harmonic
+vibrational frequencies of FADH-, (T) , and the complex are
+2
+ofthisbond.Inthecaseoftheradicalanion,theC
+6
+-C 6′bond calculatedattheB3LYP/6-31G(d,p)level.Allfrequenciesare
+positive,indicatingthatthesemoleculesarelocatedonthelocal
+ofthyminedimerispreferentiallybroken.Theexactmechanism
+minima.
+of the fragmentation, however, is not yet clearly understood
+TheexcitationenergiesofFADH--(T) arecalculatedatthe
+for each of the dimer radicals. 2
+TD-DFT(B3LYP)/6-31G(d,p) level. The results are listed in
+Inthepresentstudy,theinteractionbetweenthefullyreduced
+FADH- and (T) has been investigated by means of DFT Table 1. The excitation energies from the ground state to the
+2 S -S excitedstatesarecalculatedtobe3.07,3.50,3.55,3.89,
+calculation.Furthermore,theelectroncapturedynamicsof(T) 1 5
+2
+and 4.45 eV, respectively. It is expected that weak and strong
+havebeeninvestigatedbymeansofthedirectabinitiomolecular
+bands are appeared to be as S f S and S f S transitions,
+dynamics(MD)methodinordertoelucidatethemechanismof 0 1 0 2
+respectively.
+therepairprocessofthyminedimercausedbyaphotoenzyme.
+2. Computational Methods
+StaticDFTcalculationswerecarriedoutusingtheGaussian
+03programpackage.16Thestructuresandelectronicstateswere
+calculatedattheB3LYP/6-31G(d,p)level.Thechargesofatoms
+were estimated by means of the natural population analysis
+(NPA)method.AsthedamagedDNAsystem,FADH-,thymine
+dimer,anditscomplexcomposedofFADH-andthyminedimer
+were chosen. The chemical structures of these molecules are
+given in Figure 1. We assumed that the group of the FADH-
+(denoted by R) is substituted by a hydrogen atom.
+Toelucidatethemechanismoftherepairreactionofthymine
+dimer, direct ab initio MD calculation was applied to the
+following reaction scheme:
+(T) +e -f[(T) ] -*f[(T) ]
+2 2 2 relaxed
+The direct ab initio MD calculation was carried out at the
+B3LYP/6-31G(d)leveloftheorythroughout.Theneutralstate
+ofthethyminedimerwasfullyoptimizedbytheenergygradient
+method. The trajectory for the anionic system was run on the
+assumptionofverticalelectronattachment.Theelectronicstate
+of the system was monitored during the simulation. We
+confirmed carefully that the electronic state is kept during the
+reaction.
+Thevelocitiesofatomsatthestartingpointweresettozero Figure2. OptimizedstructureoftheFADH--(T) complexobtained
+2
+(i.e.,momentumvectorofeachatomiszero).Theequationsof at the B3LYP/6-311G(d) level of theory. Bond lengths are in ang-
+motion for n atoms in a molecule are given by stroms.
+
+--- PAGE 3 ---
+Thymine Dimer and FADH- Interaction J. Phys. Chem. B, Vol. 112, No. 24, 2008 7317
+TABLE1: ExcitationEnergies(E ineV),OscillatorStrengths(finArbitraryUnits),andConfigurationStateFunctions
+ex
+(CSFs)CalculatedattheTD-DFT(B3LYP)/6-31G(d,p)Level
+state CSFsandCIvectors E /eV λ /nm f/10-3
+ex max
+S 0.579(cid:1)(HOMOfLUMO)-0.342(cid:1)(HOMOfLUMO+1) 3.07 404 1.8
+1
+S 0.650(cid:1)(HOMOfLUMO+2)+0.115(cid:1)(HOMOfLUMO+1) 3.50 355 109
+2
+S 0.600(cid:1)(HOMOfLUMO+1)+0.368(cid:1)(HOMOfLUMO) 3.55 350 0.3
+3
+S 0.707(cid:1)(HOMOfLUMO+2) 3.89 319 0.0
+4
+S 0.646(cid:1)(HOMOfLUMO+3) 4.45 279 179
+5
+The shapes of molecular orbitals are illustrated in Figure 3. chargeoftheelectronisslightlytransferredfromFADH-to(T).
+2
+HOMO,LUMO+2,andLUMO+4arecomposedofalocalized The charge is fully separated by the photoirradiation, and the
+orbitaldistributedontheFADH-molecule.Ontheotherhand, charge-transfer state expressed by (FADH)δ+-(T)δ- efficiently
+2
+LUMO and LUMO+1 are fully distributed on both (T) and takesplace.Tocheckthedependencyofthecomputationalmethod,
+2
+FADH-. theTD-DFT(BH&HLYP)/6-31G(d)calculationiscarriedout.The
+Toelucidatetheelectronicstructuresoftheexcitedstates similarresultsareobtainedastheexcitedstates(seetheSupporting
+ofFADH--(T) ,coefficientsofconfigurationstatefunctions Information).
+2
+(CSFs) are analyzed for each excited state. The results are 3.B. Electron Capture Dynamics of Thymine Dimer. In
+listed in Table 1. The coefficients of CSFs of (cid:1)(HOMO f theprevioussection,weshowedthattheelectronofFADH-is
+LUMO) and (cid:1)(HOMO f LUMO+1) are calculated to be transferredtothyminedimerbyphotoirradiationtothecomplex
+0.579and-0.342atthefirstexcitedstate(S ),respectively. FADH--(T) . In this section, the dynamics of the thymine
+1 2
+Here,(cid:1)(HOMOfLUMO)meansawavefunction(orCSF) dimer anion, following electron capture of neutral (T) , is
+2
+whose one electron is excited from HOMO to LUMO. This investigatedbymeansofthedirectabinitioMDmethod.Two
+resultsuggeststhatthefirstexcitedstateiscomposedmainly levels of theory, HF/3-21G(d) and B3LYP/6-31G(d), are used
+by(cid:1)(HOMOfLUMO).Therefore,thefirstexcitationband in the dynamics calculations; both levels give the similar
+(S f S ) can be assigned to a charge-transfer (CT) band qualitative feature about the reaction dynamics (see the Sup-
+0 1
+fromFADH-to(T) .Thesecondandthirdexcitationbands porting Information). Here, we discuss the reaction dynamics
+2
+are attributed to the intramolecular π-π* transition and CT using the result from the B3LYP/6-31G(d) calculation.
+band, respectively.
+TheFADH-andthyminedimermakeastrongboundcomplex
+withabindingenergyof37.3kcal/mol.Atthegroundstate,the
+Figure4. Timepropagationsof(upper)potentialenergyand(lower)
+distances(R andR)fortheelectroncapturereactionofthyminedimer.
+1 2
+Snapshotsfortheelectroncapturereactionofthethyminedimercal-
+culatedbydirectabinitioMDcalculationattheB3LYP/6-31G(d)level.
+Figure3. IllustrationsofmolecularorbitalsoftheFADH--(T) com- UpperandlowerthyminemoleculesaredefinedbyThy(I)andThy(II),
+2
+plexobtainedattheB3LYP/6-31G(d,p)leveloftheory. respectively.
+
+--- PAGE 4 ---
+7318 J. Phys. Chem. B, Vol. 112, No. 24, 2008 Tachikawa and Kawabata
+TABLE2: TimeDependenceofBondPopulation,SpinPopulation,andChargesonThymineMolecules(IandII)
+bondpopulation chargeonThy bondspinpopulation
+pointa time/fs C(5-5′) C(6-6′) Thy(I) Thy(II) totalcharge C(5-5′) C(6-6′)
+-0.0 0.308 0.264 0.023 -0.023 0
+a 0.0 0.184 0.247 -0.525 -0.475 -1 -0.145 -0.010
+b 14.0 0.152 0.267 -0.546 -0.454 -1 -0.166 -0.011
+c 83.8 0.049 0.274 -0.490 -0.510 -1 -0.230 -0.031
+d 113.5 0.038 0.305 -0.495 -0.505 -1 -0.067 -0.029
+e 152.4 0.034 0.298 -0.576 -0.424 -1 -0.041 -0.027
+f 272.5 -0.020 0.209 -0.509 -0.491 -1 0.021 0.070
+aPointsa-ecorrespondtothoseinFigure4.
+minimizedaroundthisregion.Thebonddistances(R andR )
+1 2
+arecalculatedtobe2.674and1.599Å,respectively.Theinter-
+mediateisformedatthispoint.At152.4fs,thebonddistance
+(R ) is further elongated up to 2.895 Å (point e). The
+1
+intermediate with a single bond between the thymine rings is
+formed. At time ) 272.5 fs, the bonds (R and R ) are 3.116
+1 2
+and 1.582 Å. The energy rises (-13.3 kcal/mol) because the
+structure approaches gradually to the transition state (TS) for
+theC
+6
+-C 6′bondcleavage.However,thestructuredoesnotreach
+thetransitionstatewithinthistimescale.Longersimulationis
+neededtoreachthetransitionstateofthereaction,(T) -fTS
+2
+fT-+T.TheincreasesofpotentialenergyandR arecaused
+1
+bytheincreaseofthetorsionanglebetweenthethyminerings.
+Time profiles of bond distances (R and R ) are given in
+1 2
+Figure4(lower).OnlytheC
+5
+-C 5′bondisgraduallyelongated
+asafunctionoftime,whereastheotherbondremainsuptothe
+formation of the intermediate (time ) 100-150 fs). These
+results indicate that one of the C-C bonds is rapidly and
+preferentiallybrokenaftertheelectroncaptureofthyminedimer.
+In particular, the C 5 -C 5′ bond is preferentially broken.
+Toelucidatetimedependenceofthebondingnaturebetween
+thyminemolecules,thebondpopulationsbetweenC-Cbonds
+aremonitoredasafunctionoftime(Table2).Thecalculation
+iscarriedoutattheB3LYP/6-31G(d)level.Beforetheelectron
+Figure 5. Reaction model for the repair processes of the electron
+capture,thebondpopulationsfortheC
+5
+-C 5′andC
+6
+-C 6′bonds
+of (T) are 0.308 and 0.264, respectively, indicating that both
+captureofthyminedimer. 2
+C-C bonds are constructed of normal C-C bonds. After the
+electron capture of the thymine dimer, the bond population of
+First, the structure of neutral thymine dimer is optimized at C 5 -C 5′ bond shows a smaller value (0.184), whereas that of
+the B3LYP/6-31G(d) level. The C 5 -C 5′ and C 6 -C 6′ bond theC 6 -C 6′bondisstillconstant(0.247),indicatingthatoneof
+lengths (denoted by R 1 and R 2 , respectively) are calculated to the C-C bonds (i.e., C 5 -C 5′ bond) becomes weaker after the
+be R
+1
+) 1.593 Å and R
+2
+) 1.570 Å, respectively. electroncapture.ThespinpopulationintheC
+5
+-C 5′bondshows
+The result of the direct ab initio MD calculation for the a negative value (-0.145), suggesting that the bonding nature
+electroncaptureprocessofthyminedimerisgiveninFigure4. of the C 5 -C 5′ bond is changed to antibonding by electron
+Thestructureofthyminedimerattime)0.0fs(pointa)shows capture.Thebondpopulationdecreasessuddenlyafter14.0fs.
+thattwoC-Cbondsareconnectedtotwothyminemolecules. TheC
+5
+-C 5′bonddisappearsattime)83.8fs(bondpopulation
+The bond distances are R ) 1.593 Å and R ) 1.570 Å at is close to zero). The excess electron is delocalized on both
+1 2
+timezero(i.e.,neutralstructure).Aftertheelectroncaptureof thymine rings at the final state of the reaction. These results
+thethyminedimer,thestructureof(T) -isdrasticallychanged suggest that the C-C bond cleaves and the intermediate is
+2
+asafunctionoftime,whilethepotentialenergyofthesystem generated efficiently after the electron capture, while spin
+gradually decreases, and it is minimized at 100-150 fs. densitiesandchargearelocalizedononeofthethyminerings.
+At time ) 14.0 fs (point b), one of the C-C bonds is
+elongated:theC
+5
+-C 5′bond(R
+1
+)iselongatedto1.694Å,which 4. Discussion
+is 0.101 Å longer than that of time zero. The energy is -4.2 4.A. Model of the Repair Reaction of Thymine Dimer.
+kcal/molwithrespecttothezeroleveloftimezero.Incontrast, Thepresentcalculationssuggestedthatelectrontransferoccurs
+theC
+6
+-C 6′bondisnotchangedbytheelectroncapture(R
+2
+) from FADH- to thymine dimer by photoirradiation to the
+1.582Åatpointb).Thebonddistance(R )iselongatedto2.000 complex.Onceelectroncaptureofthyminedimertakesplace,
+1
+Åattime)83.8fs(pointc).TheotherC-Cbonddistanceis oneoftheC-Cbondscleavesandanintermediatecomplexis
+stillconstant(R
+2
+)1.594Å),andthepotentialenergyis-10.4 formed.TheC
+5
+-C 5′bondispreferentiallybrokenintheinitial
+kcal/mol. stage of the reaction.
+Attime)113.5fs(pointd),theenergyissignificantlylower Onthebasisofthepresentresults,weproposehereamodelfor
+than that of zero level (-18.7 kcal/mol), while the energy is the repair reaction of FADH--thymine dimer. The model is
+
+--- PAGE 5 ---
+Thymine Dimer and FADH- Interaction J. Phys. Chem. B, Vol. 112, No. 24, 2008 7319
+schematicallyillustratedinFigure5.WhentheFADH--thymine Supporting Information Available: Excitation energies,
+dimersystemisirradiatedbyUVlight,theelectrontransferoccurs harmonic vibrational frequencies, and result of dynamics
+fromFADH- tothyminedimer.TheC-Cbondofthethymine calculationattheHF/3-21G(d)level.Thismaterialisavailable
+dimer anion is efficiently broken within 60-100 fs, and the free of charge via the Internet at http://pubs.acs.org.
+intermediateisformed.Afterthermalactivation,thyminedimeris
+fullyseparatedtobothneutralthymineandthymineanionradical.
+References and Notes
+The excess electron is localized on one thymine molecule. The
+electronwouldbetransferredfromthymineaniontoFADHradical (1) Brueckner,F.;Hennecke,U.;Carell,T.;Cramer,P.Science2007,
+315,859.
+byatunnelingmechanism.Finally,thyminedimerisconvertedto
+(2) Crespo-Hernandez,C.E.;Cohen,B.;Kohler,B.Nature2005,436,
+twonormalthyminebases. 1141.
+4.B. Comparison With Previous Studies. Kao et al. ob- (3) Mees,A.;Klar,T.;Gnau,P.;Hennecke,U.;Eker,A.P.M.;Carell,
+served directly thymine dimer repair in DNA by photolyase T.;Essen,L.-O.Science2004,306,1789–1793.
+(4) Sancar,A.Chem.ReV.2003,103,2203–2237.
+usingfemtosecondsynchronizationoftheenzymaticdynamics
+(5) Park,H.W.;Kim,S.T.;Sancar,A.;Deisenhofer,J.Science1995,
+withtherepairfunction.6Theyobserveddirectelectrontransfer 268,1866–1872.
+fromtheexcitedflavincofactortothethyminedimerandback (6) Kao, Y.-T.; Saxena, C.; Wang, L.; Sancar, A.; Zhong, D. Proc.
+Natl.Acad.Sci.U.S.A.2005,102,16128.
+electron transfer from the repaired thymine. The present
+(7) (a)Pezeshk,A.;Podmore,I.D.;Heelis,P.F.;Symons,M.C.R.
+calculation supports strongly their experimental finding. J.Phys.Chem.1996,100,19714.(b)Podmore,I.D.;Heelis,P.F.;Symons,
+Fromthetheoreticalpointofview,thestructuralchangesof M.C.R.;Pezeshk,A.J.Chem.Soc.,Chem.Commun.1994,1005.
+thymine dimer following hole or electron capture have been (8) Schreier,W.J.;Schrader,T.E.;Koller,F.O.;Gilch,P.;Crespo-
+Hernandez,C.E.;Swaminathan,V.N.;Carell,T.;Zinth,W.;Kohler,B.
+predicted by several groups.14,15,23 Aida et al. investigated
+Science2007,315,625.
+structuresandelectronicstatesofthyminedimerradicalcation (9) Durbeej, B.; Eriksson, L. A. J. Photochem. Photobiol., A 2002,
+and showed that the C 6 -C 6′ bond is preferentially elongated 152,95.
+and broken after the hole capture of thymine dimer. Durbeej (10) Boggio-Pasqua, M.; Groenhof, G.; Schaefer, L. V.; Grubmuller,
+H.;Robb,M.A.J.Am.Chem.Soc.2007,129,10996–10997.
+and Eriksson investigated the radical anion of thymine dimer (11) Burdi,D.;Begley,T.P.J.Am.Chem.Soc.1991,113,7768.
+using DFT calculations. An electron attachment to thymine (12) Diogo,H.P.;Dias,A.R.;Dhalla,A.;MinasdaPiedade,M.E.;
+dimer preferentially cleaves the C 6 -C 6′ bond. The present Begley,T.P.J.Org.Chem.1991,56,7340.
+(13) Austin,R.;McMordie,S.;Begley,T.P.J.Am.Chem.Soc.1992,
+calculation strongly confirms their theoretical prediction.
+114,1886.
+4.C. Additional Comments. In the present study, several (14) (a) Aida, M.; Inoue, F.; Kaneko, M.; Dupuis, M. J. Am. Chem.
+approximations were introduced in the calculation of the Soc. 1997, 119, 12274. (b) Aida, M.; Kaneko, M.; Dupuis, M. Int. J.
+potentialenergysurfaceandthereactiondynamics.Inparticular, QuantumChem.1996,57,949.
+(15) Durbeej,B.;Eriksson,L.A.J.Am.Chem.Soc.2000,122,10126.
+we assumed the B3LYP/6-31G(d) multidimensional potential
+(16) Frisch,M.J.;Trucks,G.W.;Schlegel,H.B.;Scuseria,G.E.;Robb,
+energy surface in the dynamics calculations because a large M.A.;Cheeseman,J.R.;Montgomery,J.A.,Jr.;Vreven,T.;Kudin,K.N.;
+number of steps needed to obtain the reaction dynamics. In Burant, J. C.; Millam, J. M.; Iyengar, S. S.; Tomasi, J.; Barone, V.;
+Mennucci, B.; Cossi, M.; Scalmani, G.; Rega, N.; Petersson, G. A.;
+previouspapers,weinvestigatedionizationandelectroncapture
+Nakatsuji,H.;Hada,M.;Ehara,M.;Toyota,K.;Fukuda,R.;Hasegawa,J.;
+dynamics of benzene-H 2 O, formanilide-H 2 O, and (H 2 O) n Ishida,M.;Nakajima,T.;Honda,Y.;Kitao,O.;Nakai,H.;Klene,M.;Li,
+usingtheHF/3-21G(d)andB3LYP/6-31G(d)levelsoftheory.20–22 X.; Knox, J. E.; Hratchian, H. P.; Cross, J. B.; Bakken, V.; Adamo, C.;
+Jaramillo,J.;Gomperts,R.;Stratmann,R.E.;Yazyev,O.;Austin,A.J.;
+The results obtained at these levels of theory would give a
+Cammi, R.; Pomelli, C.; Ochterski, J. W.; Ayala, P. Y.; Morokuma, K.;
+reasonable description of the ionization and electron capture Voth,G.A.;Salvador,P.;Dannenberg,J.J.;Zakrzewski,V.G.;Dapprich,S.;
+dynamics of these complexes. Therefore, the level of theory Daniels,A.D.;Strain,M.C.;Farkas,O.;Malick,D.K.;Rabuck,A.D.;
+used in the present calculation would be adequate to discuss Raghavachari,K.;Foresman,J.B.;Ortiz,J.V.;Cui,Q.;Baboul,A.G.;
+Clifford,S.;Cioslowski,J.;Stefanov,B.B.;Liu,G.;Liashenko,A.;Piskorz,
+qualitativelytheelectroncaptureprocessofthethyminedimer
+P.;Komaromi,I.;Martin,R.L.;Fox,D.J.;Keith,T.;Al-Laham,M.A.;
+system. However, more accurate wave functions may provide Peng,C.Y.;Nanayakkara,A.;Challacombe,M.;Gill,P.M.W.;Johnson,
+deeperinsightinthedynamics.Despitetheseveralassumptions B.; Chen, W.; Wong, M. W.; Gonzalez, C.; Pople, J. A. Gaussian 03,
+revisionB.04;Gaussian,Inc.:Pittsburgh,PA,2003.
+introduced here, the results enable us to obtain valuable
+(17) Tachikawa,H.;Abe,S.J.Chem.Phys.2007,126,194310.
+informationonthemechanismoftherepairreactionofthymine (18) Tachikawa,H.J.Chem.Phys.2006,125,144307.
+dimer. (19) Tachikawa,H.J.Chem.Phys.2006,125,133119.
+(20) Tachikawa,H.J.Phys.Chem.A2006,110,153.
+(21) Tachikawa,H.J.Phys.Chem.A2004,108,7853.
+Acknowledgment. The author (H.T.) is indebted to the
+(22) Tachikawa,H.;Igarashi,M.;Ishibashi,T.J.Phys.Chem.A2003,
+Computer Center at the Institute for Molecular Science (IMS) 107,7505.
+fortheuseofthecomputingfacilities.H.T.alsoacknowledge (23) Borg,O.A.;Eriksson,L.A.;Durbeej,B.J.Phys.Chem.A2007,
+a partial support from a Grant-in-Aid for Scientific Research 111,2351.
+(C)fromtheJapanSocietyforthePromotionofScience(JSPS). JP801564T

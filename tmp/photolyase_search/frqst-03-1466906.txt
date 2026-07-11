@@ -1,0 +1,789 @@
+
+
+--- PAGE 1 ---
+TYPE Mini Review
+PUBLISHED 30 October 2024
+DOI 10.3389/frqst.2024.1466906
+Quantum phenomena in
+biological systems
+OPEN ACCESS
+EDITED BY
+Margit Christine Egg, Pedro H. Alvarez1,2*, Luca Gerhards1, Ilia A. Solov’yov1,3,4 and
+University of Innsbruck, Austria
+Marcos C. de Oliveira 5
+REVIEWED BY
+Taras Plakhotnik,
+1Institut für Physik, Carl-von-Ossietzky Universität Oldenburg, Oldenburg, Germany, 2IDOR Pioneer
+The University of Queensland, Australia
+Science Initiative, Rio de Janeiro, Brazil, 3Research Centre for Neurosensory Sciences, Carl von Ossietzky
+H. Z. Shen,
+University of Oldenburg, Oldenburg, Germany, 4Center for Nanoscale Dynamics (CENAD), Carl von
+Northeast Normal University, China
+Ossietzky University of Oldenburg, Oldenburg, Germany, 5Instituto de Física Gleb Wataghin,
+*CORRESPONDENCE Universidade Estadual de Campinas, Campinas, São Paulo, Brazil
+Pedro H. Alvarez,
+pedro.alvarez@uni-oldenburg.de
+RECEIVED 18 July 2024
+ACCEPTED 30 September 2024 Quantum biology is a modern field of research that aims to understand how
+PUBLISHED 30 October 2024
+quantum effects can affect the chemistry underlying various biological processes.
+CORRECTED 06 March 2026
+This paper reviews several examples of biological processes where quantum
+CITATION
+Alvarez PH, Gerhards L, Solov’yov IA and effects might play a notable role. Initially, the photon capture mechanism
+de Oliveira MC (2024) Quantum phenomena in present in vision is discussed, where the energy of the photon is used to cause
+biological systems.
+conformational changes to chromophoric proteins. The second example
+Front. Quantum Sci. Technol. 3:1466906.
+doi: 10.3389/frqst.2024.1466906 elaborates the highly efficient energy transfer process present in photosynthesis
+and discusses, in particular, how the random quantum walk process may enhance
+COPYRIGHT
+© 2024 Alvarez, Gerhards, Solov’yov and de the performance drastically. Subsequently, the vertebrate magnetoreception, and
+Oliveira. This is an open-access article the possible associated role of the radical pair mechanism in the process is
+distributed under the terms of the Creative
+considered. The review concludes with the discussion of some speculative
+Commons Attribution License (CC BY). The use,
+distribution or reproduction in other forums is ideas of putative quantum effects arising in neural processes.
+permitted, provided the original author(s) and
+the copyright owner(s) are credited and that the
+original publication in this journal is cited, in KEYWORDS
+accordance with accepted academic practice. quantum biology, spin dynamics, molecular chemistry, magnetoreception,
+No use, distribution or reproduction is quantum mechanics
+permitted which does not comply with these
+terms.
+1 Introduction
+One of the first mentions of the idea of quantum biology can be traced back to the book
+“What is life?” (Schrödinger, 1944). Quantum biology studies the applications of quantum
+mechanics and theoretical chemistry to biological systems. The field of quantum biology
+aims to fundamentally understand how biological processes that rely on quantum effects
+work. With the development of computational chemistry techniques, the growth of
+quantum thermodynamics and approaches to study open quantum systems, it is
+possible to form a more fundamental understanding of the complex systems present in
+biology. In particular, this review is an introduction for anyone interested in understanding
+some of the possible ways how quantum mechanics may be relevant in several selected
+biological processes. Furthermore, a discussion of four biological processes – three well-
+established and a more speculative one – where quantum mechanisms possibly play a role is
+performed and guides the reader to a more detailed investigation on each subject. Although
+this review explores mainly quantum mechanical mechanisms, there are just as many
+proposals for classical or semiclassical descriptions of the processes discussed here (Cadiou
+and McNaughton, 2010; Runeson et al., 2022). We do not intend to discuss the existing
+controversies in detail and leave this discussion to more specialized reviews (McFadden and
+Al-Khalili, 2018; Marais et al., 2018; Cao et al., 2020) on the topics. Indeed we would like to
+briefly mention that quantum processes may need to be carefully addressed in the context of
+multiple biology processes.
+Frontiers in Quantum Science and Technology 01 frontiersin.org
+
+
+--- PAGE 2 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+Section 2 discusses the quantum effects in vision, by overviewing bacteria to guide their locomotion towards or away from a light
+the photo-absorption process in related molecules. The semi- source; the basic mechanism is similar to photodetection in higher
+classical mechanism of light detection is discussed, explaining organisms, but does not function as a visual sensor. The basic
+how vision functions. This mechanism involves a retinal molecular mechanism of vision relies on the protein rhodopsin
+molecule which, when excited by a photon, can undergo different (Rh) (Khorana, 1992; Pedram et al., 2022), in the case of animals, or
+energy decay paths depending on the photon’s energy and its its variant bacteriorhrodopsin (bRh) (Spudich and Jung, 2005), in
+molecular environment. Most organisms use similar mechanisms the case of bacteria. Central to rhodopsin’s structure is the
+for photo-detection (Schulten and Hayashi, 2014). Vision requires a chromophore retinal (Figure 1), which governs the quantum
+quantum or at least semi-classical description in which all or part of processes involved in photo-detection. A chromophore is a
+the system is described via the quantization of its states. However, molecule embedded in the protein which has the function of
+the mechanism in vision does not require any degree of coherence or absorbing light of a particular wavelength to start a cascade of
+entanglement due to the superposition of the energetic states. On the chemical reactions (Rüdiger, 1986).Upon capturing a photon, retinal
+other hand, there are examples of biological processes that might enters an electronically excited state and subsequently undergoes a
+require a degree of coherence for efficient operation - as is the case twist in one of its chemical bonds causing the molecule to change
+with photosynthesis and vertebrate magnetoreception. into a new conformation (Figure 1B), the change in conformation is
+Section 3 illustrates how the efficiency of energy transfer in called cis to trans transformation (Joly, 1921; Loulakis et al., 2017;
+photosynthesis in bacteria may reach up to 99% (Mohseni et al., Sen et al., 2022). This conformational change initiates a cascade of
+2008), which can, in principle, be rationalized through the concept chemical reactions related to the visual cycle (Wald, 1968; Mohseni
+of quantum random walks. An explanation of the difference between and Plenio, 2014), which signals the photo-detection.
+a classical and a quantum walk is given, where it is demonstrated The quantum aspect of vision is related to the changes of the
+how it can become more efficient in transferring energy inside a energetic states of the molecule, and the mechanism of how those
+protein, compared to the classical random walk analogue. The states define the function of the molecule. Only photons of specific
+section then discusses more recent works that explore how the wavelengths can be absorbed by the retinal, and those wavelengths
+quantum walk is affected by coherence (Dudhe et al., 2022). are determined by the molecular quantized energy states at the
+Section 4 explores vertebrate magnetoreception, and discribes moment of interaction between the retinal and the photon. In an
+experimental evidence which suggests that migratory songbirds idealized case, the retinal would only be able to absorb energy of one
+require light of specific wavelengths to utilize their magnetic specific wavelength. Still, many different factors affect retinal’s
+compass (Mouritsen and Hore, 2012; Mouritsen, 2018; Wiltschko energy spectrum, making it sensitive to a specific range of
+et al., 2010; Engels et al., 2012). Such behaviour could not be wavelengths, a phenomena called line broadening in spectroscopy
+rationalized for a compass sense based on magnetic materials (Haken and Wolf, 1996). Upon photo-absorption the molecule
+(Solov’yov and Greiner, 2009; Solov’yov and Greiner, 2008; enters an electronically excited state, but eventually decays back
+Wiltschko and Wiltschko, 2012). The section discusses a possible to a ground state. One possibility for decaying into a less energetic
+molecular mechanism for the Earth’s magnetic field detection, where state, is to use the energy received from the photon to cause
+correlated energy states in a receptor molecule play an essential role. conformational changes within the molecule, e.g., to exploit the
+This mechanism, called the radical pair mechanism, aims to explain transition from 11-cis-retinal to all-trans-retinal (Wald, 1968). But
+how migratory songbirds can perceive the direction of the geomagnetic there are other multiple possible ways the energy of the absorbed
+field without the use of magnetic minerals (Hore and Mouritsen, 2016). photon can be dissipated (Figure 2), impacting the efficiency of the
+The radical pair mechanism is rooted upon the blue light-sensitive photodetection mechanism.
+proteins present in the eyes of some bird species (Cashmore et al., 1999; The retinal molecule could revert to the original ground state by
+Liedvogel et al., 2007; Mouritsen et al., 2004). emitting a photon with a similar energy as the original one via
+As a last part of the review, a subject that has been gaining spontaneous emission (Valeur and Berberan-Santos, 2011); the
+relevance in recent years is presented – the potential role of quantum process of dissipating energy through photon emission is called
+mechanics in brain function, particularly concerning consciousness fluorescence. Alternatively the retinal molecule may undergo an
+(Li et al., 2018; Smith et al., 2021; Cukras and Sadlej, 2021). This adiabatic transition, when the molecule changes its state without
+section of the review provides a discussion of key theories, including radiating photons; the molecule transitions between different states
+the possible implications of quantum entanglement, coherence, and while being on the same adiabatic energy surface (Truhlar, 2003). As
+superposition in neural processes (Hagan et al., 2002; Tegmark, the molecule transitions between states, it can dissipate the excess
+2000; Froehlich, 1968; Kalra et al., 2023a; Liu et al., 2024; Babcock energy to the environment in the form of vibrational modes
+et al., 2024). The challenges and controversies surrounding the (Mohseni and Plenio, 2014), transferring the energy to the
+raised hypothesis are addressed, along with future directions for chemical bonds and, eventually, dissipating the photon’s energy
+research, highlighting recent advancements. as vibrations throughout the protein. If the energy from the captured
+photon was not dissipated, and indeed caused a conformational
+change, then a series of chemical reaction follows (Wald, 1968).
+2 Vision
+Despite decades of research, questions remain related to the
+critical understanding of the environmental influence around the
+Vision is a common ability in complex living beings, defined as retinal. The excitation properties of retinal depend on its molecular
+the ability to detect light and use it to interpret the environment environment. Changing the environment also changes the
+(Starr et al., 2006; Moazed, 2023). A similar mechanism is used by sensitivity of retinal to specific wavelengths, e.g., a chromophore
+Frontiers in Quantum Science and Technology 02 frontiersin.org
+
+
+--- PAGE 3 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+FIGURE 1
+(A) Structure of sensory rhodopsin from Natronomonas pharaonis, the retinal chromophore in all-trans form is highlighted in red inside of the
+protein (Royant et al., 2001). (B) Upon photo-absorption retinal undergoes a conformational change from 11-cis-Retinal to all-trans-Retinal (National
+Center for Biotechnology Information, 2024b; National Center for Biotechnology Information, 2024a)). The hydrogen atoms in the molecule are not
+shown for visualization clarity, grey and red spheres indicate carbon and oxygen atoms, respectively.
+FIGURE 2
+(A) Energy diagram illustrating the possible paths of energy transfer, following photoabsorption by the retinal. (B) Artistic illustration of the possible
+ways that the energy of the absorbed photon can be dissipated. Vibrational modes in the protein, cause the molecular bonds to vibrate and dissipate the
+extra energy throughout the whole protein. If no changes have occurred, all the energy of the photon can be spontaneously emitted as another photon of
+similar energy. The energy of the absorbed photon can also cause a conformational change in the molecule.
+may become affected by red, green or blue light if put in different embedding models, where a small region of the system is treated
+environments. It is not trivial to describe the effect of the with quantum mechanical methods, and the environment is
+environment onto the absorption spectra of molecules. The represented by multipoles and polarizabilities (Steinmann et al.,
+surrounding environment, in the case of vision, is complex (see 2019; Frederiksen et al., 2024b; Kretschmer et al., 2024; Di Prima
+Figure 1) and affects how the energy of the captured photon can be et al., 2024). Solvatochromism (Marini et al., 2010; Mennucci et al.,
+dissipated (Figure 2B). In theoretical calculations, one can include 1998) (Figure 3) is one notable example of how the environment
+the environmental influence into the retinal by using i.e., polarizable affects a molecule’s spectra. In this case the properties of the solvent
+Frontiers in Quantum Science and Technology 03 frontiersin.org
+
+
+--- PAGE 4 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+FIGURE 3
+Reichardt’s dye (Osterby and McKelvey, 1996) dissolved in different solutions (labeled). Dielectric constant, hydrogen bonding capacity and other
+properties of the solution affects the quantum excitations of the dye, changing its absorption and emission spectra.
+FIGURE 4
+(A) Fenna–Matthews–Olson protein from Chlorobaculum Tepidum (Tronrud et al., 2009) with Bacteriochlorophyll a (BChl a) molecules highlighted
+inside. Each color represents a chromophore molecule with localized site energy. The sphere in the center of each molecule denotes a magnesium atom.
+(B) Bacteriochlorophyll numbered following Fenna and Matthews original numbering convention (Fenna and Matthews, 1975). Site 1, 2 and 6 are closer to
+the antenna (donor), and site 3 is closer to the reaction center (acceptor) (Mohseni et al., 2008). The arrows show some possible pathways for the
+exciton to diffuse and reach site 3, getting closer to the reaction center.
+affect the dye’s quantum excitations, which changes which photon is also a current research topic within the photosynthetic system of
+wavelengths the dye absorbs. While photoabsorption is one of the many species (Mohseni et al., 2008; Zhu et al., 2010; Dudhe et al.,
+most prominent examples for the requirement of a quantum 2022) as will be described in the next section.
+mechanical description, there are a plethora of other processes
+which include quantum effects. For example, the energy
+3 Photosynthesis
+transport of the absorbed light in rhodopsin in avian species was
+investigated previously, where it was illustrated that quantum effects
+are required for an efficient energy transportation (Zueva et al., Photosynthesis is a well studied biological process (Zhu et al.,
+2019). The concept of quantum effect guided energy transportation 2010) that permits plants and some bacteria to store energy
+Frontiers in Quantum Science and Technology 04 frontiersin.org
+
+
+--- PAGE 5 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+walk, after a finite number of jumps, the probability distribution of
+the particle’s positions approaches the normal distribution, as
+illustrated in Figure 5. The width of this distribution grows with
+the increase of the number of jumps. After a sufficiently large
+number of jumps, in the classical scenario, the probability of
+finding the particle at any point becomes similar. On contrary, if
+the number of jumps is finite, the classical particle has a tendency to
+localize around its starting position.
+Quantum walk is a variation of the random walk where the
+movement of the particle is governed by quantum mechanics (Tang
+et al., 2024). Instead of considering the specific particle, in quantum
+random walk one considers the particle’s wave-function. To
+represent the particle starting at the origin, its initial wave-
+function starts as a spike at the origin with the probability to be
+observed elsewhere being zero. With each jump the wave-function
+propagates freely, i.e., analogous to the classical “jump” introduced
+FIGURE 5
+Normalized probability distribution computed for a particle above. The quantum jump is usually represented by the propagation
+experiencing a 1D classical random walk (orange line) and a quantum operator. As the number of jumps increases, the wave-function
+random walk (blue line) after 100 steps.
+starts to interfere with itself, causing the probability of the particle
+being in previous positions to decrease. After a certain number of
+jumps an interference pattern emerges. The particle has a higher
+harvested from photo-absorption. The complete process of probability of being on the extremities of the 1D space, as opposed to
+photosynthesis is rather complex, so the focus here is set to the the classical random walk where the particle has higher probability
+photosynthetic apparatus present in purple bacteria (Chlorobaculum of being around the origin (Nsofini, 2012). The higher probability of
+Tepidum) which transports the energy from the antenna, a the particle being at the periphery of the diffusion limit is the reason
+molecular structure dedicated to capturing light, to the reaction why quantum walk is theorized as the source of the FMO’s high
+center, where the energy is used to synthesize glucose. The captured efficiency in energy transport (Olaya-Castro et al., 2008; Mohseni
+photon excites an electron in the antenna, making the electron leave et al., 2008; Hoyer et al., 2010). If the exciton diffuses through a
+its current energy site. The excitation of the electron forms a region quantum walk, it tends to spread around the molecule, instead of
+with an absent negative charge, defined as a hole and can be assumed remaining around the point of origin. Although the quantum walk
+as a virtual particle with a positive charge. The electron-hole pair illustrated here is a simplified example, studies which explore the
+acts as a quasiparticle called exciton. The energy is transported as an quantum walk in photosynthesis use a more refined version of this
+exciton (Fox, 2010; Mohseni et al., 2008; Ghasemi and Shafiee, 2020; model, where more transport possibilities are considered, and with
+Dudhe et al., 2022) through the Fenma-Mattheus-Olson (FMO) the presence of different potentials which affect the wave-function’s
+protein complex (Figure 4) (Fenna and Matthews, 1975; Dudhe dynamics (Mohseni et al., 2008; Hoyer et al., 2010).
+et al., 2022; Tronrud et al., 2009) found in purple photosynthetic Figure 4 introduces a possible excitation pathway in the FMO.
+bacteria (Ritz et al., 2001; Ritz et al., 1998; Spudich and Jung, 2005). Following the numbering scheme in Figure 4, the energy is
+The FMO has embedded multiple Bactoriochlorophyll (BChl) transferred from sites 1, 2 or 6, which are closer to the antenna,
+molecules, the BChl serve as sites, where the exciton can diffuse to site 3, which in turn is closer to the reaction center. The existence
+from site to site from the antenna, near sites 1, 2, and 6, to the of quantum walk in the energy transfer is still under discussion
+reaction center near site 3. (Runeson et al., 2022). The main argument in favor of quantum walk
+The energy transport has a high degree of efficiency in bacteria. is that it might cause an enhancement in the energy transfer rate,
+About 99% of the energy from absorbed photons reach the reaction since the particle localization probability experiencing a quantum
+center (Mohseni et al., 2008). One suggestion for the high efficiency walk tends to spread out more then in the classical random walk.
+is the possibility that the exciton moves through the complex via Some works also suggest environment assisted mechanisms for the
+quantum walk (Mohseni et al., 2008; Dudhe et al., 2022; Karafyllidis, quantum walk, where environmental noise could aid transport
+2017). To better understand how the quantum walk might improve transfer pathways (Caruso et al., 2009; Plenio and Huelga, 2008;
+the efficiency one may explore the differences between classical and Mohseni et al., 2008). However, other studies point out that the
+quantum stochastic walks. energy transfer rate increase within the quantum random walk is not
+Random walk is a widely known approach from statistical guaranteed (Dudhe et al., 2022; Hoyer et al., 2010). These studies
+physics. For the sake of illustration consider a particle that suggest that the energy transfer is optimized for efficiency instead of
+experiences one dimensional (1D) random walk. The particle speed. Other quantum effects, such as entanglement (Sarovar et al.,
+could, for example, symbolize an exciton that exists in the FMO, 2010; Fassioli and Olaya-Castro, 2010; Whaley et al., 2011; Ishizaki
+although the exciton’s real motion would be much more complex. and Fleming, 2010) or Grover’s quantum search (Engel et al., 2007),
+Assume the particle to be initially placed at the origin. In the 1D are theorized to be the source of the high efficiency (Karafyllidis,
+random walk it experiences jumps in two possible directions 2017). An argument against quantum effects is the short
+(positive and negative). In the simplest scenario the particle may decoherence time at room temperature, which would greatly
+be displaced by one unit per jump. In the case of a classical random limit the lifetime of emerging quantum states. Runeson et al.
+Frontiers in Quantum Science and Technology 05 frontiersin.org
+
+
+--- PAGE 6 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+(2022) presents a counter example to the quantum walk hypothesis, adenine dinucleotide (FAD), which is sensitive to blue light (Bouly
+where the authors use trajectory-based simulations to show that a et al., 2007; Hore and Mouritsen, 2016; Liedvogel et al., 2007;
+description in terms of quantum electrons and classical nuclei is Cashmore et al., 1999). Cryptochrome also contains several
+sufficient to describe the efficiency of the FMO’s energy transfer. conserved tryptophan (Trp) residues that bridge the FAD
+cofactor with the protein surface. Figure 6 shows the structure of
+a cryptochrome from an european robin (erithacus Rubecula)
+4 Vertebrate magnetoreception (Hanić et al., 2022; Timmer et al., 2023) with the embedded FAD
+and the key Trps. The proposed radical pair mechanism utilizes
+The phenomenon of magnetoreception is observed in various these molecules to detect the geomagnetic field as illustrated
+organisms, including bacteria, insects, amphibians, birds, sharks, in Figure 7.
+fish and rays, which use it to orient themselves to the Earth’s The reaction cascade starts with the FAD absorbing a photon of
+magnetic field (Wiltschko, 2012; Grüning et al., 2022; Solov’yov an appropriate energy. The photon excites an electron in the FAD to
+et al., 2014; Maeda et al., 2012; Maeda et al., 2008; Rodgers and Hore, a higher energy state and allows the excited FAD to receive another
+2009; Hore and Mouritsen, 2016; Xu et al., 2021; Laurien et al., 2024; electron from the Trp residue nearby (Timmer et al., 2023;
+Frederiksen et al., 2024a). Behavioral experiments with European Schuhmann et al., 2023; Solov’yov et al., 2024; Matysik et al.,
+migratory songbirds suggest the presence of a mechanism that 2023; Xu et al., 2021). After the electron transfer, the FAD and
+would allow the animals to use the geomagnetic field for Trp have unpaired electrons, i.e., form a radical pair. The transferred
+navigation or orientation (Engels et al., 2012; Hore and electron was originally paired with another electron with a similar
+Mouritsen, 2016). The experiments are conducted during the energy, therefore, both electrons in the radical pair initially form a
+migratory season when the birds are most active and have an singlet spin state, where the spins of the electrons appear anti-
+impulse to migrate (Wiltschko, 2012; Engels et al., 2012; parallel, and the spins of the electrons are correlated. Each unpaired
+Mouritsen, 2018). In the experiments, the birds are placed inside electron of the radical pair is located at a different site; therefore, the
+an Emlen funnel (Emlen and Emlen, 1966). The funnel has scratch electrons experience different magnetic environments, which
+paper inside; as the birds jump and peck, they mark the direction in include the interactions between the electron spins and the
+which they intend to go; it has been observed that the distribution of nuclear spins, called hyperfine interactions, and the interaction
+the scratch marks on the paper changes depending on the controlled between the electron spins and the external magnetic field, called
+illumination of the environment. When the experiment was the Zeeman interaction (Grüning et al., 2022; Grüning et al., 2024;
+performed under less energetic colors of light, like red, the Kattnig et al., 2016a). The radical pair is sensitive to weak magnetic
+direction of the scratches was random, but with more energetic fields, such as the geomagnetic field of about 50 μT, as magnetic
+colors, like blue, the scratches were more localized in a specific interactions may affect the electron’s precession rate. The different
+direction (Wiltschko and Wiltschko, 1972). Since the birds had no precession rates cause the radical pair to change its spin state
+other form of orientation or navigation available during the between singlet (anti-parallel spins) and triplet (parallel spins)
+experiment, the conclusion was that they might be using some states, a process called interconversion (see Figure 7), and occurs
+mechanism to detect the geomagnetic field. This mechanism should with a certain rate. Figure 8 illustrates that the frequency of singlet to
+be light-dependent, accounting for the different behaviour during triplet transition may be modulated by the relative angle between the
+light conditions. Similar experiments have shown that birds have an spins and the external magnetic field. Therefore, a correlation
+inclination compass (Wiltschko, 2012; Wiltschko and Wiltschko, between the inclination of the magnetic field and the amount of
+1972). Inclination compasses work in a slightly different way than time the electrons remain in either singlet or triplet state can be
+the ordinary compasses. Standard compasses are polarity established. The radical pair state is unstable, and after a few
+compasses, they point to one of the poles of the magnetic field. microseconds the molecules are expected to recombine into
+Inclination compasses do not point to the poles; they give chemical products (P and P in Figure 7), but which product
+0 1
+information on the inclination of the field lines of a given they recombine into depends on the spin state of the electrons (Hore
+magnetic field. If the polarity of the field is flipped, but the and Mouritsen, 2016; Matysik et al., 2023; Carrillo et al., 2015). Some
+inclination is the same, then the inclination compass will not reactions are spin-selective and are only possible if the electrons are
+change its direction (Mouritsen, 2015). in the singlet state, i.e., the recombination of the radical pair. Since
+Following the experimental evidence that the birds use an the inclination of the field modulated the interconversion rates
+inclination compass, the animal would not be able to detect between the radical pairs states, it also affects the probability of
+magnetic fields solely by employing magnetic materials, since the the reactions producing a certain product. The ratio of products in a
+related mechanisms would naturally imply a polarity compass radical pair reaction could thus be sensitive to the inclination of the
+(Solov’yov and Greiner, 2008). Another magnetoreception magnetic field, and therefore the radical pair mechanism could be
+mechanism proposed by Schulten et al. (1978) is the so-called used to explain the inclination compass of migratory birds.
+radical pair mechanism. Here, a radical pair is formed by a light- A relevant discussion on the radical pair mechanism is whether
+activated chemical reaction and works as an inclination compass, it requires a quantum description. There are multiple descriptions
+providing information about the inclination of the magnetic field for the dynamics of the radical pair mechanism (Fay et al., 2020;
+and a molecular structure in which the radical pair is embedded. It is Jones and Hore, 2010; Wong et al., 2021), both purely quantum and
+theorized to exist inside a protein called cryptochrome in the bird’s semi-classical. The primary quantum aspect of radical pairs is the
+retina (Mora et al., 2004; Hanić et al., 2022; Dodson et al., 2013; correlation of spin states. Spin is a quantized property only able to
+Engels et al., 2012). Cryptochrome has a chromophore called flavin assume specific discrete values, and cannot be described by a purely
+Frontiers in Quantum Science and Technology 06 frontiersin.org
+
+
+--- PAGE 7 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+FIGURE 6
+Structure of the cryptochrome protein with indication of the location of the flavin adenine dinucleotide (FAD) cofactor and the surrounding
+tryptophan residues. After photo-absorption of blue light by FAD, an electron is transferred from TrpHa. The initial transfer initiates a chain of electron
+transfers from TrpHb to TrpHa, then from TrpHc to TrpHb and finally from TrpHd to TrpHc. With each transfer, the state of the correlated electrons is
+moved to the next residue, where the FAD has a probability of being in the radical pair state with TrpHd or TrpHc (Wong et al., 2021).
+motion of the molecular structure of proteins in which the radical
+pair is embedded, constant perturbations through adjacent magnetic
+momenta of the nuclear spins are leading to rapid decoherence of
+the radical pair emerging in spin relaxation (Gerhards et al., 2023;
+Grüning et al., 2024; Kattnig et al., 2016b; Worster et al., 2016). It
+was demonstrated in several studies that these decoherence
+processes drastically decrease the efficiency of the magnetic
+radical pair compass (Grüning et al., 2024; Kattnig et al., 2016a;
+Worster et al., 2016). Emerging new theories address the spin
+relaxation problem. For example, Smith et al. showed that
+complex time-dependencies of inter-radical pair magnetic
+interactions might drastically increase magnetic sensitivity (Smith
+et al., 2022). Non-Markovian approaches were also suggested to
+explore the impact of thermal motion in spin relaxation (Grüning
+et al., 2024; Li and Shen, 2024; Breuer et al., 2009; Vacchini and
+Breuer, 2010; Xin et al., 2022; Breuer et al., 2016; Shen et al., 2018).
+Another theory is the involvement of a third scavenger radical
+FIGURE 7 participating in the radical pair mechanism proposed by Kattnig
+Proposed reaction path for a FAD-Trp radical pair. The FAD first
+absorbs a photon and gets into an excited state. The excitation allows and co-workers (Babcock and Kattnig, 2021; Deviers et al., 2024).
+an electron from the tryptophan (Trp) to be transferred to the nearby This new hypothesis still requires the consideration of the quantum
+FAD; putting both molecules into the radical pair state. In this
+mechanical nature of spin, which sets the topic of magnetoreception
+state the electrons are sensitive to weak external magnetic fields and
+flip between the singlet(S) and the triplet(T) spin states with a rate as one of the major research areas of quantum biology.
+modulated by the external field. After some time the molecules decay
+into products P 0 or P 1, with decay rates k 0 and k 2 respectively,
+depending on their spin state. The ratio between the P 0 and P 1 5 Quantum effects in neural processes
+products could then be modulated by the inclination of the external
+magnetic field B(cid:1)
+The hypothesis that quantum mechanics may play a role in brain
+function, especially in the context of consciousness, has recently
+classical approach. The quantized nature of spin defines the sparked considerable interest and debate (Jedlicka, 2017; Hameroff,
+description of the radical pair as either semi-classical or purely 2022; Hagan et al., 2002). Quantum mechanics, which governs the
+quantum. While the radical pair mechanism is a promising behaviour of physical systems at the smallest scales, may offer
+hypothesis for the underlying phenomenon of magnetoreception, insights into the complex phenomena observed in the brain. This
+the concept of coherence challenges the theory. Due to the thermal section briefly overviews the current research on quantum effects in
+Frontiers in Quantum Science and Technology 07 frontiersin.org
+
+
+--- PAGE 8 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+FIGURE 8
+Dynamics of the singlet (blue) and triplet (orange) populations of a hypothetic radical pair (see Figure 7) during the radical pair reaction consisting of
+2 electrons and one proton with anisotropic hyperfine interaction coupled to one of the electrons, and recombination rates of k 0 (cid:2) k 2 (cid:2) 1MHz. Each plot
+shows dynamics for a given value of θ, the relative angle between the external magnetic field and the quantization axis. Notice how the dynamics can
+change given a certain inclination angle value. This change in dynamics results in different ratios of reaction products, giving information of the
+inclination of external magnetic fields in relation to the radical pair.
+the brain, focusing on some of the key findings and theories and coherent perceptual experience. Quantum entanglement, where
+presents the major challenges and controversies involved. particles remain connected over distance and time, could provide
+One of the most prominent theories on quantum effects in the a mechanism for this integration (Hameroff, 2018).
+brain is the “quantum consciousness” hypothesis proposed by In another direction, microtubules, cytoskeletal components
+Hameroff and Penrose (Hameroff and Penrose, 2014). Although within neurons, have been speculated as potential sites for
+the unfortunate naming might attract unexpected ideas, the quantum computing in the brain. Microtubules are theorized to
+quantum consciousness theory posits that quantum processes exhibit quantum resonance oscillations and might host quantum
+such as entanglement, coherence, and superposition might have a processes that regulate neuronal activity and behavior (Hameroff,
+role in brain function. Consciousness here does not relate to any 2022). Anesthetic gases are believed to dampen these oscillations,
+metaphysical ideal, but to the brain’s ability to process and to react to correlating with their ability to induce unconsciousness (Craddock
+external or internal stimuli and how anesthetics affect it, e.g., a rat et al., 2017).
+following the smell of food, or a reaction to pain. While quantum While the many ideas of quantum effects playing possible roles
+consciousness is highly controversial, it is physically possible that in brain functioning may be interesting, there are essential
+quantum phenomena might be involved in critical points in neural problematics drastically damping the hypotheses. For quantum
+processes. For instance, anesthetic gases can selectively block effects be involved in any neural process, the decoherence time
+consciousness while sparing non-conscious brain activities, for quantum states in a biological environment is critical.
+i.e., make someone unconscious (Li et al., 2018; Miller, 1961; Decoherence times (τ d ) in thermal equilibrium can be estimated
+Clar and Patel, 2023). Notably, it has been shown that, in mice, as Equation 1
+xenon isotopes with nuclear spin 1/2 are significantly less potent as
+Z
+anesthetics compared to isotopes with spin 0, suggesting a potential τ
+d
+≈
+k T
+, (1)
+link between nuclear spin and consciousness (Fisher, 2015; Li et al., B
+2018; Cukras and Sadlej, 2021; Smith et al., 2021). The lesser effect of where Z is the Planck’s constant, k B is the Boltzmann constant, and
+spin 1/2 isotopes supports the idea that consciousness might involve T is the environment temperature (Landau and Lifshitz, 1981). At
+quantum processes, possibly through mechanisms like nuclear spin body temperature (T ≈ 310 K), τ d is of the order of 10−13 seconds,
+interactions and electron spin dipole oscillations in proteins present which is too rapid for any quantum effect to have any significant
+in neurons (Li et al., 2018).
+impact (Tegmark, 2000). Under certain conditions, such as the
+Quantum effects might be particularly relevant in addressing the
+hydrophobic environments within proteins, coherence times
+“binding problem” in cognitive neuroscience—the question of how
+might be prolonged, making quantum effects more feasible
+the brain integrates disparate sensory information into a unified
+(Fisher, 2015; Hagan et al., 2002), however, experimental
+conscious experience (Feldman, 2012; Singer, 1999; Varela et al.,
+evidence for such scenarios remains elusive and challenging.
+2001). In visual processing, for example, information about the
+Furthermore, the energy required to maintain coherent quantum
+shape, color, motion, and meaning of an object is processed in states (E q ) can be compared to thermal energy (E T ), as Equation 2
+different areas of the visual cortex at different times (Bullier, 2001).
+These disparate elements are then correlated to bring forward a E q ≈ Zω and E T ≈ k B T, (2)
+Frontiers in Quantum Science and Technology 08 frontiersin.org
+
+
+--- PAGE 9 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+where ω is the frequency of quantum oscillations (Landau and mechanics. They point out that many proposed quantum brain
+Lifshitz, 1981). For quantum effects to be significant, E q must be processes remain speculative and lack direct experimental evidence
+comparable to or greater than E T. In microtubules, oscillation (Eger et al., 2008; Koch, 2016; Reimers et al., 2009; McKemmish
+frequencies in the teraHertz range have been observed, suggesting et al., 2009). Tegmark (2000) argued that the warm temperature of
+that E q may be significant relative to E T (Sahu et al., 2014; Froehlich, the brain would cause quantum coherence to break down too rapid
+1968). However, the measurements of teraHertz frequencies were to have any functional role. Despite this, proponents of quantum
+not measured in vivo, but in “cell-like” environments. consciousness theories suggest that certain brain structures, such as
+In a recent article (Babcock et al., 2024), explore the surprising microtubules, could protect against decoherence through as-yet-
+light-harvesting properties of microtubules. Their experimental unknown mechanisms (Hameroff and Penrose, 2014; Fisher, 2015).
+investigation demonstrates that microtubules can facilitate long- Additionally, the feasibility of quantum computing within
+range electronic energy migration. Using tryptophan neurons is questioned. Critics highlight the lack of empirical data
+autofluorescence lifetimes, the study shows that energy can diffuse supporting the quantum brain hypothesis and emphasize the success
+over distances of 6.6 nm within microtubules, a length significantly of classical computational models in explaining brain functions
+longer than predicted by conventional Förster theory, Forster (1946). (Koch, 2016; Freeman, 2003). The authors also argue that many
+The study also highlights that this energy migration is sensitive to the cognitive phenomena can be adequately explained without invoking
+polymerization state of tubulin and can be dampened by anesthetics quantum processes, pointing to advances in neuroscience and
+like etomidate and isoflurane. These findings suggest that computational modeling that provide a detailed understanding of
+microtubules may have unique biophysical properties that could be brain mechanisms using classical physics (Reimers et al., 2009;
+relevant in both biological processes and the development of Tegmark, 2000). Nevertheless, recent experimental and
+biohybrid devices, opening new avenues for exploring the non- theoretical developments continue to keep the debate alive, such
+classical roles of microtubules beyond their well-known functions as the peculiar effects of anesthetics on consciousness (Li et al., 2018;
+in cellular architecture and transport, and possibly influencing future Hameroff, 2018), suggest that quantum effects could play a role in
+research in quantum biology and neurobiology. brain function, even if the exact mechanisms remain elusive.
+To advance our understanding of potential quantum effects in
+the brain, interdisciplinary research combining neuroscience,
+6 Conclusion
+quantum physics, and computational biology is essential. Future
+studies should focus on identifying specific quantum processes in
+neurons and developing experimental techniques to observe these Quantum biology is an emerging interdisciplinary field that
+processes in vivo. Additionally, exploring how quantum mechanics elucidates how quantum effects can influence biological processes.
+might contribute to other cognitive functions could provide valuable This review discusses some examples that demonstrate the potential
+insights into the nature of consciousness (Schlosshauer, 2007; Varela impact of quantum mechanics on biological systems, ranging from
+et al., 2001; Hameroff, 1998). vision and photosynthesis to magnetoreception and neural
+Following this line, a recent study demonstrates the possibility of processes. Starting the discussion with more well known
+generating entangled biphotons in the myelin sheath using cavity processes and moving towards more elusive and speculative ones.
+quantum electrodynamics (cQED) (Liu et al., 2024). This study In vision, the quantum photo-absorption mechanism in retinal
+demonstrates that the vibrational modes of C-H bonds within lipid underscores the necessity of quantum descriptions for
+molecules’ tails can generate a significant number of entangled understanding light detection and subsequent chemical reactions.
+photon pairs. The discussed energy dynamics in the retinal after photo-absorption
+The abundance of C-H bond vibration units in neurons can, also illustrates how many effects, both classical and quantum, have
+therefore, serve as a source of quantum entanglement resources for to be taken into account when describing a biological process.
+the nervous system, thereby elucidating a potential source for the Section 3 illustrates the role of the quasi-particle exciton in a
+synchronized activity of neurons (Liu et al., 2024; Froehlich, 1968; molecular mechanism, and how energy can be transported during a
+Schroedinger, 1944). By demonstrating the feasibility of entangled biological process. The efficiency of photosynthetic energy transfer
+biphoton generation in the brain’s myelin sheath, Liu et al. opens up through the Fenna-Matthews-Olson complex highlights the
+new avenues for exploring how quantum entanglement could potential role of quantum random walks in biological systems.
+contribute to higher-order cognitive functions, such as decision- But there is still much to be studied on the precise description of
+making, problem-solving, and consciousness (Fisher, 2015). the photosynthesic energy transfer mechanism, and what impact
+Despite the intriguing hypotheses mentioned before, the idea of quantum random walk could have on it.
+quantum processes in the brain remains largely speculative and Magnetoreception in migratory songbirds, possibly mediated by
+controversial. One major challenge is the issue of decoherence. the radical pair mechanism in the cryptochrome protein, illustrates
+Quantum states are susceptible to environmental disturbances, how quantum effects can influence animal behavior and navigation.
+and the “warm, wet, and noisy” environment of the brain is Avian magnetoreception is one of the more elusive examples in this
+expected to cause rapid decoherence, disrupting the possible review. Although there is extensive research on the subject (Hore
+quantum effects (Tegmark, 2000). However, certain conditions, and Mouritsen, 2016; Mouritsen, 2015; Fay et al., 2020; Wiltschko,
+such as the hydrophobic environments within proteins, might be 2012), it still needs rigorous experimental and theoretical
+more conducive to maintaining quantum coherence (Hagan et al., investigation for the complete mechanism to be well understood.
+2002). Moreover, some researchers argue that the brain’s complexity The final section, discusses possible quantum effects present in
+and functionality can be explained without invoking quantum neuronal activities. Specifically the activities connected with an
+Frontiers in Quantum Science and Technology 09 frontiersin.org
+
+
+--- PAGE 10 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+animal’s active behaviour, or consciousness. As mentioned in the 1-2023 HYPpMOL, no 514664767 to I.A.S.), and the Ministry for
+section, “consciousness” here refers to the term when used in Science and Culture of Lower Saxony Simulations Meet
+anesthetic research. The ability for the animal to process and Experiments on the Nanoscale: Opening up the Quantum
+react to sensory data, or an awareness of internal and external World to Artificial Intelligence (SMART) and Dynamik auf
+stimuli. This review presents experimental results that show how der Nanoskala: Von koharenten Elementarprozessen zur
+isotopes with different spin can cause different effects on neuronal Funktionalitaet (DyNano). PA is partially supported the
+activities in mice (Li et al., 2018), and discussed the impact of low Pioneer Science Initiative (Iniciativa Ciência Pioneira) and the
+decoherence times on the presence of quantum effects in neurons. D’Or Institute of Research & Education. MO is partially
+Overall, this review emphasizes the importance of continued supported by CNPq.
+interdisciplinary research in quantum biology. As experimental
+techniques advance and theoretical models become more refined,
+Conflict of interest
+the understanding of quantum effects in biological systems will
+likely deepen, offering novel insights into the fundamental
+mechanisms of life. The authors declare that the research was conducted in the
+absence of any commercial or financial relationships that could be
+construed as a potential conflict of interest.
+Author contributions
+PA: Conceptualization, Investigation, Writing–original draft, Correction note
+Writing–review and editing. LG: Writing–review and editing. IS:
+Supervision, Writing–review and editing. MO: Conceptualization, A correction has been made to this article. Details can be found
+Supervision, Writing–original draft, Writing–review and editing. at: 10.3389/frqst.2026.1804272.
+Funding Publisher’s note
+The author(s) declare that financial support was received for All claims expressed in this article are solely those of the authors
+the research, authorship, and/or publication of this article. The and do not necessarily represent those of their affiliated
+authors would like to declare funding from the Volkswagen organizations, or those of the publisher, the editors and the
+Foundation (Lichtenberg professorship awarded to I.A.S.), the reviewers. Any product that may be evaluated in this article, or
+Deutsche Forschungsgemeinschaft (SFB 1372 Magnetoreception claim that may be made by its manufacturer, is not guaranteed or
+and Navigation in Vertebrates, no. 395940726 to I.A.S.; TRR386/ endorsed by the publisher.
+References
+Babcock, N. S., and Kattnig, D. R. (2021). Radical scavenging could answer the Cadiou, H., and McNaughton, P. A. (2010). Avian magnetite-based
+challenge posed by electron–electron dipolar interactions in the cryptochrome compass magnetoreception: a physiologist’s perspective. J. R. Soc. Interface 7, S193–S205.
+model. JACS Au 1 (11), 2033–2046. doi:10.1021/jacsau.1c00332 doi:10.1098/rsif.2009.0423.focus
+Babcock, N. S., Montes-Cabrera, G., Oberhofer, K. E., Chergui, M., Celardo, G. L., and Cao, J., Cogdell, R. J., Coker, D. F., Duan, H.-G., Hauer, J., Kleinekathöfer, U., et al.
+Kurian, P. (2024). Ultraviolet superradiance from mega-networks of tryptophan in (2020). Quantum biology revisited. Sci. Adv. 6 (14), eaaz4888. doi:10.1126/sciadv.
+biological architectures. J. Phys. Chem. B 128 (17), 4035–4046. doi:10.1021/acs.jpcb. aaz4888
+3c07936
+Carrillo, A., Cornelio, M. F., and de Oliveira, M. C. (2015). Environment-induced
+Blankenship, R. E., Tiede, D. M., Barber, J., Brudvig, G. W., Fleming, G., Ghirardi, M., et al. anisotropy and sensitivity of the radical pair mechanism in the avian compass. Phys.
+(2011). Comparing photosynthetic and photovoltaic efficiencies and recognizing the potential Rev. E 92, 012720. doi:10.1103/physreve.92.012720
+for improvement. Science 332 (6031), 805–809. doi:10.1126/science.1200165
+Caruso, F., Chin, A. W., Datta, A., Huelga, S. F., and Plenio, M. B. (2009). Highly
+Bouly, J.-P., Schleicher, E., Dionisio-Sese, M., Vandenbussche, F., Van Der Straeten, efficient energy excitation transfer in light-harvesting complexes: the fundamental
+D., Bakrim, N., et al. (2007). Cryptochrome blue light photoreceptors are activated role of noise-assisted transport. J. Chem. Phys. 131 (10), 105106. doi:10.1063/1.
+through interconversion of flavin redox states. J. Biol. Chem. 282 (13), 9383–9391. 3223548
+doi:10.1074/jbc.m609842200
+Cashmore, A. R., Jarillo, J. A., Wu, Y.-J., and Liu, D. (1999). Cryptochromes: blue light
+Boyer, M. M., Poulsen, G. L., and Nork, T. M. (2000). Relative contributions of the receptors for plants and animals. Science 284 (5415), 760–765. doi:10.1126/science.284.
+neurosensory retina and retinal pigment epithelium to macular hypofluorescence. 5415.760
+Archives Ophthalmol. 118 (1), 27–31. doi:10.1001/archopht.118.1.27
+Cintolesi, F., Ritz, T., Kay, C., Timmel, C., and Hore, P. (2003). Anisotropic
+Breuer, H.-P., Laine, E.-M., and Piilo, J. (2009). Measure for the degree of non- recombination of an immobilized photoinduced radical pair in a 50-μt magnetic
+markovian behavior of quantum processes in open systems. Phys. Rev. Lett. 103, 210401. field: a model avian photomagnetoreceptor. Chem. Phys. 294 (3), 385–399. doi:10.
+doi:10.1103/physrevlett.103.210401 1016/s0301-0104(03)00320-3
+Breuer, H.-P., Laine, E.-M., Piilo, J., and Vacchini, B. (2016). Colloquium: non- Clar, H., and Patel, R. (2023). Anesthetic Gases — ncbi.nlm.nih.gov. Available at:
+markovian dynamics in open quantum systems. Rev. Mod. Phys. 88, 021002. doi:10. https://www.ncbi.nlm.nih.gov/books/NBK537013/ (Accessed August 18, 2024).
+1103/revmodphys.88.021002
+Craddock, T. J., Kurian, P., Preto, J., Sahu, K., Hameroff, S. R., Klobukowski, M., et al.
+Breuer, H.-P., and Petruccione, F. (2007). The theory of open quantum systems. (2017). Anesthetic alterations of collective terahertz oscillations in tubulin correlate with
+Oxford: Oxford University Press. clinical potency: implications for anesthetic action and post-operative cognitive
+Bullier, J. (2001). Integrated model of visual processing. Brain Res. Rev. 36 (2), 96–107. dysfunction. Sci. Rep. 7, 9877. doi:10.1038/s41598-017-09992-7
+The Brain in Health and Disease - from Molecules to Man. Swiss National Foundation Cukras, J., and Sadlej, J. (2021). Towards quantum-chemical modeling of the activity
+Symposium NRP 38. doi:10.1016/s0165-0173(01)00085-6 of anesthetic compounds. Int. J. Mol. Sci. 22 (17), 9272. doi:10.3390/ijms22179272
+Frontiers in Quantum Science and Technology 10 frontiersin.org
+
+
+--- PAGE 11 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+Deviers, J., Cailliez, F., de la Lande, A., and Kattnig, D. R. (2024). Avian cryptochrome Haken, H., and Wolf, H. C. (1996). General laws of optical transitions. Berlin,
+4 binds superoxide. Comput. Struct. Biotechnol. J. 26, 11–21. doi:10.1016/j.csbj.2023. Heidelberg: Springer Berlin Heidelberg, 281–296. chapter 16.
+12.009 Hameroff, S. (2022). Consciousness, cognition and the neuronal cytoskeleton – a new
+Deviers, J., Cailliez, F., Gutiérrez, B. Z., Kattnig, D. R., and de la Lande, A. (2022). Ab paradigm needed in neuroscience. Front. Mol. Neurosci. 15, 869935. doi:10.3389/fnmol.
+initio derivation of flavin hyperfine interactions for the protein magnetosensor 2022.869935
+cryptochrome. Phys. Chem. Chem. Phys. 24 (27), 16784–16798. doi:10.1039/
+Hameroff, S. R. (1998). Quantum computation in brain microtubules? the penrose-
+d1cp05804e hameroff ’orch or’ model of consciousness. Philosophical Trans. R. Soc. Lond. Ser. A
+Di Prima, D., Reinholdt, P., and Kongsted, J. (2024). Color tuning in bovine Math. Phys. Eng. Sci. 356 (1743), 1869–1896. doi:10.1098/rsta.1998.0254
+rhodopsin through polarizable embedding. J. Phys. Chem. B 128 (12), 2864–2873. Hameroff, S. R. (2018). Anesthetic action and ’quantum consciousness’: a match
+PMID: 38489248. doi:10.1021/acs.jpcb.3c07891 made in olive oil. Anesthesiology 129 (2), 228–231. doi:10.1097/aln.0000000000002273
+Dodson, C. A., Hore, P., and Wallace, M. I. (2013). A radical sense of direction:
+Hameroff, S. R., and Penrose, R. (2014). Consciousness in the universe: a review
+( s 9 ig ) n , a 4 l 3 li 5 n – g 4 a 4 n 6 d . d m o e i: c 1 h 0 a .1 n 0 is 1 m 6/j i . n tib cr s y .2 p 0 t 1 o 3 c . h 0 r 7 o .0 m 0 e 2 magnetoreception. Trends Biochem. Sci. 38 of the ’orch or’ theory. Phys. Life Rev. 11 (1), 39–78. doi:10.1016/j.plrev.2013.
+08.002
+Dudhe, N., Sahoo, P. K., and Benjamin, C. (2022). Testing quantum speedups in Hanić, M., Schuhmann, F., Frederiksen, A., Langebrake, C., Manthey, G., Liedvogel,
+exciton transport through a photosynthetic complex using quantum stochastic walks.
+Phys. Chem. Chem. Phys. 24, 2601–2613. doi:10.1039/d1cp02727a M av . i , an et c a ry l. p ( t 2 o 0 c 2 h 2 ro ). m C e o 4 m . p J. u P ta h t y i s o . n C a h l e r m ec . o B ns 1 t 2 r 6 uc ( t 2 io 5 n ), 4 a 6 n 2 d 3– an 4 a 6 l 3 y 5 s . is PM of I s D tr : u 3 c 5 t 7 u 0 ra 4 l 80 m 1 o . d d e o l i s :1 o 0 f .
+Eger, E. I., Raines, D. E., Shafer, S. L., Hemmings, H. C., and Sonner, J. M. 1021/acs.jpcb.2c00878
+(2008). Is a new paradigm needed to explain how inhaled anesthetics produce
+immobility? Anesth. and Analgesia 107 (3), 832–848. doi:10.1213/ane. ma H g o n r e e t , ore P c . ept J i ., on. an A d nnu M . o R u e r v i . ts B en io , ph H ys . ics (2 4 0 5 16 (1 ). ), 2 T 9 h 9 e –34 ra 4 d . i P ca M l- I p D ai : r 27 m 21 e 6 c 9 h 3 a 6 n . is d m oi:1 o 0 f .
+0b013e318182aedb
+1146/annurev-biophys-032116-094545
+Emlen, S. T., and Emlen, J. T. (1966). A technique for recording migratory orientation
+of captive birds. Auk 83 (3), 361–367. doi:10.2307/4083048 Hoyer, S., Sarovar, M., and Birgitta Whaley, K. (2010). Limits of quantum speedup in
+photosynthetic light harvesting. New J. Phys. 12 (6), 065041. doi:10.1088/1367-2630/12/
+Engel, G. S., Calhoun, T. R., Read, E. L., Ahn, T.-K., Mančal, T., Cheng, Y.-C., et al. 6/065041
+(2007). Evidence for wavelike energy transfer through quantum coherence in
+photosynthetic systems. Nature 446 (7137), 782–786. doi:10.1038/nature05678 usi I n m g ah a as s h en i, s M or ., s W yst a e t m ana w be it , h M m ., o J l h e a c , u S la ., r a r n e d co H gn ay it a io sh n i, a K n . d (2 o 0 p 1 t 4 im ). a O l l c fa la c s ti s o ifi n c - a in ti s o p n ire a d bi s li e t n y si f n o g r
+Engels, S., Hein, C. M., Lefeldt, N., Prior, H., and Mouritsen, H. (2012). Night- comprehensive detection of gases. Sensors 14 (3), 5221–5238. doi:10.3390/s140305221
+migratory songbirds possess a magnetic compass in both eyes. PLoS ONE 7 (9), e43271.
+Ishizaki, A., and Fleming, G. R. (2010). Quantum superpositions in photosynthetic
+doi:10.1371/journal.pone.0043271
+light harvesting: delocalization and entanglement. New J. Phys. 12 (5), 055004. doi:10.
+Fassioli, F., and Olaya-Castro, A. (2010). Distribution of entanglement in light- 1088/1367-2630/12/5/055004
+harvesting complexes and their quantum efficiency. New J. Phys. 12 (8), 085006. doi:10.
+Jedlicka, P. (2017). Revisiting the quantum brain hypothesis: toward quantum
+1088/1367-2630/12/8/085006
+(neuro)biology? Front. Mol. Neurosci. 10, 366. doi:10.3389/fnmol.2017.00366
+Fay, T. P., Lindoy, L. P., Manolopoulos, D. E., and Hore, P. J. (2020). How quantum is
+radical pair magnetoreception? Faraday Discuss. 221, 77–91. doi:10.1039/c9fd00049f Pa J p o . ly a , J B . i ( o 1 l 9 . 2 C 1 h ) a . A rac q t u er an 9 t 2 um (64 th 6 e ) o , r 2 y 19 o – f 2 co 32 lo . u d r o v i: i 1 si 0 o .1 n 0 . 9 P 8 ro /r c s . p R b . .1 S 9 o 2 c. 1 L .0 o 0 n 2 d 0 . Ser. B, Contain.
+Feldman, J. (2012). The neural binding problem(s). Cogn. Neurodynamics 7 (1), 1–11.
+Jones, J., and Hore, P. (2010). Spin-selective reactions of radical pairs act as quantum
+doi:10.1007/s11571-012-9219-8 measurements. Chem. Phys. Lett. 488 (1), 90–93. doi:10.1016/j.cplett.2010.01.063
+Fenna, R. E., and Matthews, B. W. (1975). Chlorophyll arrangement in a
+bacteriochlorophyll protein from chlorobium limicola. Nature 258 (5536), 573–577. Kalra, A. P., Benny, A., Travis, S. M., Zizzi, E. A., Morales-Sanchez, A., Oblinsky, D.
+G., et al. (2023a). Electronic energy migration in microtubules. ACS Central Sci. 9 (3),
+doi:10.1038/258573a0 352–361. doi:10.1021/acscentsci.2c01114
+Fisher, M. P. A. (2015). Quantum cognition: the possibility of processing with nuclear
+spins in the brain. Ann. Phys. 362, 593–602. doi:10.1016/j.aop.2015.08.020 ha K rv a e r s a t f i y n l g lid c i o s m , I p . le G x. . J ( . 2 B 0 i 1 o 7 l. ). Ph Q y u s. an 4 t 3 u , m 239 tr – a 2 n 4 s 5 p . o d r o t i: i 1 n 0.1 th 0 e 07 f / m s1 o 08 p 6 h 7- o 0 to 1 s 7 y - n 94 th 4 e 9 t - i 4 c light-
+16 F 6 o – r 1 s 7 te 5 r . , do T i . :1 ( 0 1 .1 9 0 4 0 6 7 ). /b E f0 n 0 e 5 r 8 g 5 ie 2 w 2 a 6 nderung und fluoreszenz. Naturwissenschaften 33, Kattnig, D. R., Solov’yov, I. A., and Hore, P. (2016a). Electron spin relaxation in
+cryptochrome-based magnetoreception. Phys. Chem. Chem. Phys. 18 (18),
+Fox, M. (2010). Excitons. 2 edition. London, England: Oxford University Press, 12443–12456. doi:10.1039/c5cp06731f
+95–110. chapter 4. Kattnig, D. R., Sowa, J. K., Solov’yov, I. A., and Hore, P. (2016b). Electron spin
+Frederiksen, A., Aldag, M., Solov’yov, I. A., and Gerhards, L. (2024a). Activation of relaxation can enhance the performance of a cryptochrome-based magnetic compass
+cryptochrome 4 from atlantic herring. Biology 13 (4), 262. doi:10.3390/biology13040262 sensor. New J. Phys. 18 (6), 063007. doi:10.1088/1367-2630/18/6/063007
+Frederiksen, A., Gerhards, L., Reinholdt, P., Kongsted, J., and Solov’yov, I. A. (2024b). Khorana, H. G. (1992). Rhodopsin, photoreceptor of the rod cell. an emerging pattern
+Importance of polarizable embedding for absorption spectrum calculations of for structure and function. J. Biol. Chem. 267 (1), 1–4. doi:10.1016/s0021-9258(18)
+arabidopsis thaliana cryptochrome 1. J. Phys. Chem. B 0 (0), 6283–6290. PMID: 48444-x
+38913544. doi:10.1021/acs.jpcb.4c02168
+Koch, C. (2016). How to build a conscious machine. Sci. Am. 317 (5), 28. doi:10.1038/
+Freeman, W. J. (2003). Evidence from human scalp electroencephalograms of global scientificamerican1117-28
+chaotic itinerancy. Chaos 13 (3), 1067–1077. doi:10.1063/1.1596553 Kretschmer, K., Frederiksen, A., Reinholdt, P., Kongsted, J., and Solov’yov, I. A.
+Froehlich, H. (1968). Long-range coherence and energy storage in biological systems. (2024). Understanding the red shift in the absorption spectrum of the fad cofactor in
+Int. J. Quantum Chem. 2, 641–649. doi:10.1002/qua.560020505 clcry4 protein. J. Phys. Chem. B 128 (22), 5320–5326. PMID: 38805723. doi:10.1021/acs.
+Gerhards, L., Nielsen, C., Kattnig, D. R., Hore, P., and Solov’yov, I. A. (2023). jpcb.4c00710
+Modeling spin relaxation in complex radical systems using MolSpin. J. Comput. Chem. Landau, L. D., and Lifshitz, E. M. (1981). Quantum mechanics. 3 edition. Oxford:
+44, 1704–1714. doi:10.1002/jcc.27120 Butterworth-Heinemann.
+Ghasemi, F., and Shafiee, A. (2020). An investigation into the energy transfer Laurien, M., Mende, L., Luhrmann, L., Frederiksen, A., Aldag, M., Spiecker, L., et al.
+efficiency of a two-pigment photosynthetic system using a macroscopic quantum (2024). Magnetic orientation in juvenile atlantic herring (clupea harengus) could
+model. Biosystems 197, 104209. doi:10.1016/j.biosystems.2020.104209 involve cryptochrome 4 as a potential magnetoreceptor. J. R. Soc. Interface 21 (215),
+Grüning, G., Gerhards, L., Wong, S. Y., Kattnig, D., and Solov’yov, I. (2024). The 20240035. doi:10.1098/rsif.2024.0035
+effect of spin relaxation on magnetic compass sensitivity in ercry4a. Li, N., Lu, D., Yang, L., Tao, H., Xu, Y., Wang, C., et al. (2018). Nuclear spin attenuates
+Chemphyschem a Eur. J. Chem. Phys. Phys. Chem. 25, e202400129. the anesthetic potency of xenon isotopes in mice: implications for the mechanisms of
+e202400129–e202400129. doi:10.1002/cphc.202400129 anesthesia and consciousness. Anesthesiology 129 (2), 271–277. doi:10.1097/aln.
+0000000000002226
+Grüning, G., Wong, S. Y., Gerhards, L., Schuhmann, F., Kattnig, D. R., Hore, P., et al.
+(2022). Effects of dynamical degrees of freedom on magnetic compass sensitivity: a Li, Z. Y., and Shen, H. Z. (2024). Non-markovian dynamics with a giant atom coupled
+comparison of plant and avian cryptochromes. J. Am. Chem. Soc. 144 (50), to a semi-infinite photonic waveguide. Phys. Rev. A 109, 023712. doi:10.1103/physreva.
+22902–22914. doi:10.1021/jacs.2c06233 109.023712
+Haas, T., Krause, R., Weber, R., Demler, M., and Schmid, G. (2018). Technical Liedvogel, M., Maeda, K., Henbest, K., Schleicher, E., Simon, T., Timmel, C. R., et al.
+photosynthesis involving co2 electrolysis and fermentation. Nat. Catal. 1 (1), 32–39. (2007). Chemical magnetoreception: bird cryptochrome 1a is excited by blue light and
+doi:10.1038/s41929-017-0005-1 forms long-lived radical-pairs. PLoS ONE 2 (10), e1106. doi:10.1371/journal.pone.
+0001106
+Hagan, S., Hameroff, S. R., and Tuszynski, J. A. (2002). Quantum computation in
+brain microtubules? decoherence and biological feasibility. Phys. Rev. E 65 (6), 061901. Liu, Z., Chen, Y.-C., and Ao, P. (2024). Entangled biphoton generation in the myelin
+doi:10.1103/physreve.65.061901 sheath. Phys. Rev. E 110, 024402. doi:10.1103/physreve.110.024402
+Frontiers in Quantum Science and Technology 11 frontiersin.org
+
+
+--- PAGE 12 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+Loulakis, M., Blatsios, G., Vrettou, C., and Kominis, I. (2017). Quantum biometrics Reimers, J. R., McKemmish, L. K., McKenzie, R. H., Mark, A. E., and Hush, N. S.
+with retinal photon counting. Phys. Rev. Appl. 8 (4), 044012. doi:10.1103/ (2009). Penrose-Hameroff orchestrated objective-reduction proposal for human
+physrevapplied.8.044012 consciousness is not biologically feasible. Phys. Rev. E 80 (2), 021912. doi:10.1103/
+PhysRevE.80.021912
+Maeda, K., Henbest, K. B., Cintolesi, F., Kuprov, I., Rodgers, C. T., Liddell, P. A., et al.
+(2008). Chemical compass model of avian magnetoreception. Nature 453 (7193), Ritz, T., Hu, X., Damjanović, A., and Schulten, K. (1998). Excitons and excitation
+387–390. doi:10.1038/nature06834 transfer in the photosynthetic unit of purple bacteria. J. Luminescence 76-77, 310–321.
+doi:10.1016/s0022-2313(97)00286-x
+Maeda, K., Robinson, A. J., Henbest, K. B., Hogben, H. J., Biskup, T., Ahmad, M., et al.
+(2012). Magnetically sensitive light-induced reactions in cryptochrome are consistent Ritz, T., Park, S., and Schulten, K. (2001). Kinetics of excitation migration and
+with its proposed role as a magnetoreceptor. Proc. Natl. Acad. Sci. 109 (13), 4774–4779. trapping in the photosynthetic unit of purple bacteria. J. Phys. Chem. B 105 (34),
+doi:10.1073/pnas.1118959109 8259–8267. doi:10.1021/jp011032r
+Marais, A., Adams, B., Ringsmuth, A. K., Ferretti, M., Gruber, J. M., Hendrikx, R., Rodgers, C. T., and Hore, P. J. (2009). Chemical magnetoreception in birds: the radical
+et al. (2018). The future of quantum biology. J. R. Soc. Interface 15 (148), 20180640. pair mechanism. Proc. Natl. Acad. Sci. 106 (2), 353–360. doi:10.1073/pnas.0711968106
+doi:10.1098/rsif.2018.0640
+Royant, A., Nollert, P., Edman, K., Neutze, R., Landau, E. M., Pebay-Peyroula, E., et al.
+(cid:2)
+Marini, A., Muñoz-Losa, A., Biancardi, A., and Mennucci, B. (2010). What is (2001). X-ray structure of sensory rhodopsin II at 2.1-A resolution. Proc. Natl. Acad. Sci.
+solvatochromism? J. Phys. Chem. B 114 (51), 17128–17135. PMID: 21128657. 98 (18), 10131–10136. doi:10.1073/pnas.181203898
+doi:10.1021/jp1097487 Rüdiger, W. (1986). The chromophore. Netherlands, Dordrecht: Springer, 17–33.
+Matysik, J., Gerhards, L., Theiss, T., Timmermann, L., Kurle-Tucholski, P., chapter 2.
+Musabirova, G., et al. (2023). Spin dynamics of flavoproteins. Int. J. Mol. Sci. 24 (9),
+Runeson, J. E., Lawrence, J. E., Mannouch, J. R., and Richardson, J. O. (2022).
+8218. doi:10.3390/ijms24098218 Explaining the efficiency of photosynthesis: quantum uncertainty or classical
+McFadden, J., and Al-Khalili, J. (2018). The origins of quantum biology. Proc. vibrations? J. Phys. Chem. Lett. 13 (15), 3392–3399. PMID: 35404611. doi:10.1021/
+R. Soc. A Math. Phys. Eng. Sci. 474 (2220), 20180674. doi:10.1098/rspa.2018. acs.jpclett.2c00538
+0674
+Sahu, S., Ghosh, S. K., Fujita, D., and Bandyopadhyay, A. (2014). Live visualizations of
+McKemmish, L. K., Reimers, J. R., McKenzie, R. H., Mark, A. E., and Hush, N. S. single isolated tubulin protein self-assembly via tunneling current: effect of
+(2009). Quantum chemistry: simulation of the geometry and vibrational spectra of electromagnetic pumping during spontaneous growth of microtubule. Sci. Rep. 4,
+biomolecules relevant to the orch or model. Phys. Rev. E 80 (1), 021912. doi:10.1103/ 7303. doi:10.1038/srep07303
+physreve.80.021912
+Sarovar, M., Ishizaki, A., Fleming, G. R., and Whaley, K. B. (2010). Quantum
+Mennucci, B., Cammi, R., and Tomasi, J. (1998). Excited states and solvatochromic entanglement in photosynthetic light-harvesting complexes. Nat. Phys. 6 (6),
+shifts within a nonequilibrium solvation approach: a new formulation of the integral 462–467. doi:10.1038/nphys1652
+equation formalism method at the self-consistent field, configuration interaction, and
+multiconfiguration self-consistent field level. J. Chem. Phys. 109 (7), 2798–2807. doi:10. Schlosshauer, M. (2007). Decoherence and the quantum-to-classical transition.
+Germany: Springer.
+1063/1.476878
+Miller, S. L. (1961). A theory of gaseous anesthetics*</sup&gt. Proc. Natl. Acad. Sci. 47 Schrödinger, E. (1944). What is life? The physical aspect of the living cell. Based on
+(9), 1515–1524. doi:10.1073/pnas.47.9.1515 lectures delivered under the auspices of the Institute at trinity college, Dublin, in february
+1943. Cambridge: Cambridge University Press.
+Moazed, K. T. (2023). “Quantum retina,” in Quantum biology of the eye:
+understanding the essentials (Germany: Springer), 67–86. Schrödinger, E., and Penrose, R. (2012). What is life? with Mind and Matter and
+autobiographical sketches. Canto classics. Cambridge: Cambridge University Press.
+Mohseni, M., Rebentrost, P., Lloyd, S., and Aspuru-Guzik, A. (2008). Environment-
+Schroedinger, E. (1944). What is life? The physical aspect of the living cell. Cambridge:
+assisted quantum walks in photosynthetic energy transfer. J. Chem. Phys. 129 (17),
+Cambridge University Press.
+174106. doi:10.1063/1.3002335
+Schuhmann, F., Ryvkin, L., McLaren, J. D., Gerhards, L., and Solov’yov, I. A. (2023).
+Mohseni, O. E., and Plenio, H. (2014). Quantum effects in biology. Cambridge:
+Across atoms to crossing continents: application of similarity measures to biological
+Cambridge University Press.
+location data. Plos one 18 (5), e0284736. doi:10.1371/journal.pone.0284736
+Mora, C. V., Davison, M., Wild, J. M., and Walker, M. M. (2004). Magnetoreception
+and its trigeminal mediation in the homing pigeon. Nature 432 (7016), 508–511. doi:10. Ca S m ch b u ri l d te g n e , U K n ., iv a er n s d ity H P a r y e a s s s h , i 2 , 3 S 7 . –2 ( 6 2 3 0 . 1 c 4 h ). ap Q te u r a 1 n 1 tu . m biology of retinal. Cambridge:
+1038/nature03077
+d A i c s M a ta d o n e u c m r e i i t c m se P n ig r , r e H a s t s . i ) o , ( n 2 1 , 0 1 ” 1 3 5 i – n ) 1 . 3 S “ 3 t C u . h rk ap ie t ’ e s r a 8 vi - an ma p g h n y e si t o o l r o e g c y e . p s ti i o x n th in ed b i i t r io d n s a e n d d iti i o ts n u ( s S e a f n or D lo ie n g g o - : f m ür e S c c P h h h a u y n l s t i . e s n m C , he b K m a ., s . e S 1 d w 11 o e n n ( b 1 m ) e , r a g 1 g , – n 5 C e . t . i d c o E i fi . : , 1 e 0 l a d . n 1 d 5 m 2 o 4 W d /z u e p l l l c a e h t r e . , 1 d 9 A 7 c . o 8. h ( 1 1 e 1 r 9 1 e 7 . n 1 8 t . ) 0 . e 0 l 1 A ect b ro io n m s a p g i n n et m ic ot s i e o n n s . or Z y .
+Sen, S., Kar, R. K., Borin, V. A., and Schapiro, I. (2022). Insight into the isomerization
+Mouritsen, H. (2018). Long-distance navigation and magnetoreception in migratory
+animals. Nature 558 (7708), 50–59. doi:10.1038/s41586-018-0176-1 mechanism of retinal proteins from hybrid quantum mechanics/molecular mechanics
+simulations. Wiley Interdiscip. Rev. Comput. Mol. Sci. 12 (1), e1562. doi:10.1002/wcms.
+Mouritsen, H., and Hore, P. (2012). The magnetic retina: light-dependent and 1562
+trigeminal magnetoreception in migratory birds. Curr. Opin. Neurobiol. 22 (2),
+343–352. Neuroethology. doi:10.1016/j.conb.2012.01.005 pe S ri h o e d n i , ca H ll . y Z d ., ri X v u en , S s . y , s L t i e , m H s ., w W it u h , n S o . n L - ., m a a n r d ko Y v i i , a X n . e X ff . e ( c 2 t 0 s. 1 O 8) p . t L . i L n e e t a t. r 4 r 3 es ( p 1 o 2 n ), se 28 th 5 e 2 o – r 2 y 85 fo 5 r .
+Mouritsen, H., Janssen-Bienhold, U., Liedvogel, M., Feenders, G., Stalleicken, J., doi:10.1364/ol.43.002852
+Dirks, P., et al. (2004). Cryptochromes and neuronal-activity markers colocalize in the Singer, W. (1999). Neuronal synchrony: a versatile code for the definition of relations?
+1 re 4 t 2 in 9 a 4– o 1 f 4 m 29 ig 9 r . a d to o r i: y 10 b . i 1 r 0 d 7 s 3 d /p u n ri a n s g .0 m 40 a 5 g 9 n 6 e 8 t 1 ic 01 orientation. Proc. Natl. Acad. Sci. 101 (39), Neuron 24 (1), 49–65. doi:10.1016/s0896-6273(00)80821-1
+Smith, J., Zadeh Haghighi, H., Salahub, D., and Simon, C. (2021). Radical pairs may
+National Center for Biotechnology Information (2024a). PubChem compound
+play a role in xenon-induced general anesthesia. Sci. Rep. 11 (1), 6287. doi:10.1038/
+summary for CID 5280490, 11-cis-Retinal. Available at: https://pubchem.ncbi.nlm.
+s41598-021-85673-w
+nih.gov/compound/11-cis-Retinal (Accessed June 3, 2024).
+Smith, L. D., Chowdhury, F. T., Peasgood, I., Dawkins, N., and Kattnig, D. R.
+National Center for Biotechnology Information (2024b). PubChem compound
+(2022). Driven radical motion enhances cryptochrome magnetoreception: toward
+summary for CID 638015, retinal. Available at: https://pubchem.ncbi.nlm.nih.gov/ live quantum sensing. J. Phys. Chem. Lett. 13 (45), 10500–10506. doi:10.1021/acs.
+compound/Retinal (Accessed May 26, 2024).
+jpclett.2c02840
+Nsofini, J. (2012). Discrete quantum walk on a line with two entangled particles. Solov’yov, A. V., Verkhovtsev, A. V., Mason, N. J., Amos, R. A., Bald, I., Baldacchino,
+Olaya-Castro, A., Lee, C. F., Olsen, F. F., and Johnson, N. F. (2008). Efficiency of G., et al. (2024). Condensed matter systems exposed to radiation: multiscale theory,
+energy transfer in a light-harvesting system under quantum coherence. Phys. Rev. B 78, simulations, and experiment. Chem. Rev. 124, 8014–8129. doi:10.1021/acs.chemrev.
+085115. doi:10.1103/physrevb.78.085115 3c00902
+Osterby, B. R., and McKelvey, R. D. (1996). Convergent synthesis of betaine-30, a Solov’yov, I. A., Chandler, D. E., and Schulten, K. (2008). Exploring the possibilities
+solvatochromic dye: an advanced undergraduate project and demonstration. J. Chem. for radical pair effects in cryptochrome. Plant Signal. and Behav. 3 (9), 676–677. doi:10.
+Educ. 73 (3), 260. doi:10.1021/ed073p260 4161/psb.3.9.5809
+Pedram, A., Müstecaplıoğlu, Ö. E., and Kominis, I. K. (2022). Using quantum states of Solov’yov, I. A., and Greiner, W. (2008). Iron-mineral-based magnetoreceptor in
+light to probe the retinal network. Phys. Rev. Res. 4 (3), 033060. doi:10.1103/ birds: polarity or inclination compass? Eur. Phys. J. D 51 (1), 161–172. doi:10.1140/epjd/
+physrevresearch.4.033060 e2008-00118-y
+Plenio, M. B., and Huelga, S. F. (2008). Dephasing-assisted transport: quantum Solov’yov, I. A., and Greiner, W. (2009). Micromagnetic insight into a
+networks and biomolecules. New J. Phys. 10 (11), 113019. doi:10.1088/1367-2630/10/ magnetoreceptor in birds: existence of magnetic field amplifiers in the beak. Phys.
+11/113019 Rev. E 80, 041919. doi:10.1103/physreve.80.041919
+Frontiers in Quantum Science and Technology 12 frontiersin.org
+
+
+--- PAGE 13 ---
+Alvarez et al. 10.3389/frqst.2024.1466906
+Solov’yov, I. A., Ritz, T., Schulten, K., and Hore, P. J. (2014). A chemical compass for Whaley, K. B., Sarovar, M., and Ishizaki, A. (2011). Quantum entanglement
+bird navigation. Cambridge: Cambridge University Press, 218–236. chapter 10. phenomena in photosynthetic light harvesting complexes. Procedia Chem. 3 (1),
+152–164. 22nd Solvay Conference on Chemistry. doi:10.1016/j.proche.2011.
+Spudich, J. L., and Jung, K.-H. (2005). Microbial rhodopsins: phylogenetic and
+functional diversity. New Jersey: John Wiley and Sons, Ltd, 1–23. chapter 1. 08.021
+Wiltschko, R. (2012). Magnetic orientation in animals, Vol. 33. Germany: Springer
+Starr, C., Evers, C., and Starr, L. (2006). Biology: concepts and applications. Brooks/cole
+biology series. Pacific Grove: Thomson, Brooks/Cole. Science and Business Media.
+Wiltschko, R., Schiffner, I., Fuhrmann, P., and Wiltschko, W. (2010). The role of the
+Steinmann, C., Reinholdt, P., Nørby, M. S., Kongsted, J., and Olsen, J. M. H. (2019). magnetite-based receptors in the beak in pigeon homing. Curr. Biol. 20 (17), 1534–1538.
+Response properties of embedded molecules through the polarizable embedding model.
+doi:10.1016/j.cub.2010.06.073
+Int. J. Quantum Chem. 119 (1), e25717. doi:10.1002/qua.25717
+Wiltschko, R., and Wiltschko, W. (2012). The magnetite-based receptors in the beak
+Tang, H., Shang, X.-W., Shi, Z.-Y., He, T.-S., Feng, Z., Wang, T.-Y., et al. (2024). of birds and their role in avian navigation. J. Comp. Physiology A 199 (2), 89–98. doi:10.
+Simulating photosynthetic energy transport on a photonic network. npj Quantum Inf.
+1007/s00359-012-0769-3
+10 (1), 29. doi:10.1038/s41534-024-00824-x
+Wiltschko, W., and Wiltschko, R. (1972). Magnetic compass of european robins.
+Re T v. eg E m 6 a 1 rk ( , 4 M ), . 41 (2 9 0 4 0 – 0 4 ) 2 . 0 I 6 m . p d o o r i t :1 an 0. c 1 e 10 o 3 f / q p u h a y n s t r u e m ve.6 d 1 ec .4 o 1 h 9 e 4 rence in brain processes. Phys. Science 176 (4030), 62–64. doi:10.1126/science.176.4030.62
+Wong, S. Y., Wei, Y., Mouritsen, H., Solov’yov, I. A., and Hore, P. J. (2021).
+Timmer, D., Frederiksen, A., Lünemann, D. C., Thomas, A. R., Xu, J., Bartölke, R.,
+Cryptochrome magnetoreception: four tryptophans could be better than three. J. R.
+et al. (2023). Tracking the electron transfer cascade in european robin cryptochrome
+4 mutants. J. Am. Chem. Soc. 145 (21), 11566–11578. doi:10.1021/jacs.3c00442 Soc. Interface 18 (184), 20210601. doi:10.1098/rsif.2021.0601
+Worster, S., Kattnig, D. R., and Hore, P. (2016). Spin relaxation of radicals in
+Tronrud, D. E., Wen, J., Gay, L., and Blankenship, R. E. (2009). The structural basis for
+cryptochrome and its role in avian magnetoreception. J. Chem. Phys. 145 (3), 035104.
+the difference in absorbance spectra for the fmo antenna protein from various green
+sulfur bacteria. Photosynth. Res. 100 (2), 79–87. doi:10.1007/s11120-009-9430-6 doi:10.1063/1.4958624
+an T d r t u e h ch la n r o , l D og . y G E . d (2 it 0 o 0 r 3 R ). . “ A P . o M ten e t y i e a r l s e T ne h r i g rd y s E u d r i f t a io ce n s, ( ” N in ew En Y c o y r c k lo : p A e c d a ia de o m f p ic hy P s r i e c s a s l ) s , c 9 ie – n 1 c 7 e . wi X th in a , L t . h , r X ee u - , le S v ., e Y l i a , t X om . X. m , a e n d d iat S e h d en b , y H t . h Z e . c ( l 2 a 0 s 2 si 2 c ) a . l T l u a n se a r bl i e n n a on s - e m m a i- r i k n o fi v n ia it n e d p y h n o a t m on ic ic s
+waveguide. Phys. Rev. A 105, 053706. doi:10.1103/physreva.105.053706
+Vacchini, B., and Breuer, H.-P. (2010). Exact master equations for the non-markovian
+Xu, J., Jarocha, L. E., Zollitsch, T., Konowalczyk, M., Henbest, K. B., Richert, S., et al.
+decay of a qubit. Phys. Rev. A 81, 042103. doi:10.1103/physreva.81.042103
+(2021). Magnetic sensitivity of cryptochrome 4 from a migratory songbird. Nature 594
+Valeur, B., and Berberan-Santos, M. N. (2011). A brief history of fluorescence and (7864), 535–540. doi:10.1038/s41586-021-03618-9
+p 73 h 1 o – sp 73 h 8 o . re d s o c i e :1 n 0 c . e 10 b 2 e 1 fo /e r d e 1 t 0 h 0 e 18 e 2 m h ergence of quantum theory. J. Chem. Educ. 88 (6), gre Z a h te u r , X y . i - e G ld ., . L A o n n n g u , S . . R P e ., v a . n p d la O n r t t, B D io . l R . . 6 ( 1 20 ( 1 1 0 ) ) , . 2 Im 35 p – r 2 o 6 v 1 in . g d p oi h :1 o 0 to .1 s 1 y 4 n 6 th /a e n ti n c u e r f e fi v c - i a en rp c l y an fo t r -
+Varela, F. J., Lachaux, J.-P., Rodriguez, E., and Martinerie, J. (2001). The brainweb: 042809-112206
+phase synchronization and large-scale integration. Nat. Rev. Neurosci. 2, 229–239.
+Zueva, L., Golubeva, T., Korneeva, E., Resto, O., Inyushin, M., Khmelinskii, I.,
+doi:10.1038/35067550
+et al. (2019). Quantum mechanism of light energy propagation through an avian
+Wald, G. (1968). The molecular basis of visual excitation. Nature 219 (5156), retina. J. Photochem. Photobiol. B Biol. 197, 111543. doi:10.1016/j.jphotobiol.
+800–807. doi:10.1038/219800a0 2019.111543
+Frontiers in Quantum Science and Technology 13 frontiersin.org

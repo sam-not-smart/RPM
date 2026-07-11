@@ -1,0 +1,2462 @@
+
+
+--- PAGE 1 ---
+ENGINEERING QUANTUM DYNAMICS IN
+RADICAL PAIR MAGNETORECEPTION
+by
+Sam Smart
+
+
+--- PAGE 2 ---
+A thesis submitted to the Faculty and the Board of Trustees of the Colorado School of Mines in
+partial fulfillment of the requirements for the degree of Master of Science (Quantum Engineering).
+Golden, Colorado
+Date
+Signed:
+Sam Smart
+Signed:
+Dr. Lincoln D. Carr
+Thesis Advisor
+Golden, Colorado
+Date
+Signed:
+[Department Head Name]
+[Department Head Title]
+Department of Physics
+ii
+
+
+--- PAGE 3 ---
+ABSTRACT
+This thesis investigates radical pair magnetoreception using a fully quantum mechanical
+description of two electron spins coupled to discrete nuclear environments. The model includes
+Zeeman, anisotropic hyperfine, exchange, dipolar, and quadrupolar interactions, with open-system
+effects introduced through a Gorini–Kossakowski–Sudarshan–Lindblad master equation. The
+central aim is to determine when semiclassical and Markovian approximations fail and to identify
+the role played by the nuclear environment in shaping spin dynamics, coherence, and quantum
+correlations.
+Numerical results show that biologically motivated Markovian dissipation is too weak to
+significantly alter radical pair dynamics on microsecond timescales, while explicit quantum
+treatment of the nuclei reveals structured oscillatory behavior absent in Overhauser-field
+approximations. Tracking subsystem entropies demonstrates that the nuclear environment can act
+as an internal non-Markovian bath, temporarily storing and returning quantum information to the
+electronic subsystem. Localized nuclear control operations further show that strongly coupled
+nuclei primarily redistribute spin populations, whereas weak near-Zeeman nuclei reshape the
+spectral structure of the dynamics. A hypothetical quantum-information-theoretic model of
+nuclear decay is also introduced, in which decay-generated entanglement induces a depolarizing
+channel on the remaining proton and measurably restructures radical pair spin dynamics.
+Taken together, these results support a picture of radical pair systems as controllable
+mesoscopic quantum systems in which the nuclear environment is an active, structured subsystem
+rather than a passive source of noise.
+iii
+
+
+--- PAGE 4 ---
+TABLE OF CONTENTS
+ABSTRACT . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . iii
+LIST OF FIGURES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ix
+CHAPTER 1 INTRODUCTION . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+CHAPTER 2 RADICAL PAIR MODEL + HAMILTONIAN . . . . . . . . . . . . . . . . . 5
+HILBERT SPACE AND DEGREES OF FREEDOM . . . . . . . . . . . . . . . . . . . . . . 5
+SINGLET-TRIPLET BASIS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+FULL HAMILTONIAN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+ELECTRON ZEEMAN INTERACTION . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+HYPERFINE INTERACTIONS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.1 Overhauser Field Approximation . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+ELECTRON-ELECTRON EXCHANGE INTERACTION . . . . . . . . . . . . . . . . . . 10
+MAGNETIC DIPOLAR INTERACTION . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+EXCHANGE-DIPOLAR CANCELLATION . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+NUCLEAR QUADRUPOLE INTERACTION . . . . . . . . . . . . . . . . . . . . . . . . . 12
+SCOPE AND LIMITATIONS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+CHAPTER 3 OPEN QUANTUM SYSTEM FRAMEWORK . . . . . . . . . . . . . . . . 14
+DENSITY MATRIX FORMALISM . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+MARKOVIAN MASTER EQUATIONS . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+3.1 Born-Markov Approximation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+3.2 GKSL Master Equation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+iv
+
+
+--- PAGE 5 ---
+PHYSICAL INTERPRETATION OF OPEN-SYSTEM PROCESSES . . . . . . . . . . . . . 16
+3.3 3.4.1 Dephasing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+3.4 3.4.2 Dissipation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+3.5 3.5 Interpretation of the Bosonic Bath . . . . . . . . . . . . . . . . . . . . . . . . 17
+3.6 3.6 Limitations of Markovian Bath Models . . . . . . . . . . . . . . . . . . . . . . 18
+3.7 3.7 Transition to Non-Markovian Dynamics . . . . . . . . . . . . . . . . . . . . . 19
+CHAPTER 4 QUANTIFYING QUANTUM CORRELATIONS . . . . . . . . . . . . . . 20
+4.1 4.1 Subsystem Decompositions . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.2 4.1.1 Electronic–Nuclear Partition: . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+4.3 4.1.2 Spatial Partition: . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.4 Von Neumann Entropy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+4.5 4.3 Quantum Mutual Information . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+4.6 4.4 Logarithmic Negativity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+4.7 4.4.1 Definition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+4.8 4.4.2 Why Log-Negativity is Essential . . . . . . . . . . . . . . . . . . . . . . . . 23
+4.9 4.5 Singlet Yield as a Companion Observable . . . . . . . . . . . . . . . . . . . . 23
+4.10 4.6 Reframing the Radical Pair Mechanism . . . . . . . . . . . . . . . . . . . . . 24
+CHAPTER 5 QUANTUM MODEL OF NUCLEAR DECAY . . . . . . . . . . . . . . . . 25
+5.1 5.1 Motivation and Physical Context . . . . . . . . . . . . . . . . . . . . . . . . . 25
+5.2 5.2 Spin-System Representation of 𝛽−-Type Decay . . . . . . . . . . . . . . . . . 25
+5.3 5.3 Construction of the Decay Map . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+5.4 Lepton Pair Basis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+5.5 Total . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+v
+
+
+--- PAGE 6 ---
+5.6 General Decay Map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+5.7 5.4 Reduced Dynamics of the Remaining Proton . . . . . . . . . . . . . . . . . . . 27
+5.8 Physical Interpretation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+5.9 5.5 Embedding the Decay into the Radical Pair Model . . . . . . . . . . . . . . . . 28
+5.10 Model Assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+5.11 5.6 Scope and Interpretation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+5.12 5.7 Connection to Observables . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+5.13 Chapter 6 – Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+5.14 6.1 Open-System Dynamics and Thermalization . . . . . . . . . . . . . . . . . . . 31
+5.15 System Setup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+5.16 Thermalization Timescales . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+5.17 Dependence on Dissipation Rates . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+5.18 Implications for Zeno Stabilization . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+5.19 Summary of Open-System Results . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+5.20 Model Setup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+5.21 Nuclear Initial State Scenarios . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+5.22 Scenario A: Fully Polarized Nuclear Environment . . . . . . . . . . . . . . . . . . 39
+5.23 Scenario B: Maximally Mixed Nuclear Environment . . . . . . . . . . . . . . . . 41
+5.24 Interpretation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+5.25 Implications for Radical Pair Modeling . . . . . . . . . . . . . . . . . . . . . . . . 43
+5.26 Model System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+5.27 Subsystem Entropy Tracking . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+5.28 Effect of Exchange and Dipolar Interactions . . . . . . . . . . . . . . . . . . . . . 45
+vi
+
+
+--- PAGE 7 ---
+5.29 Dynamics Without Exchange and Dipolar Interactions . . . . . . . . . . . . . . . . 46
+5.30 Dynamics With Exchange and Dipolar Interactions . . . . . . . . . . . . . . . . . 46
+5.31 Zeeman Dependence of the Entanglement Envelope . . . . . . . . . . . . . . . . . 47
+5.32 Interpretation: Nuclear Spins as a Non-Markovian Bath . . . . . . . . . . . . . . . 48
+5.33 Implications for Radical Pair Modeling . . . . . . . . . . . . . . . . . . . . . . . . 49
+5.34 5.4.1 Strongly Coupled Nuclear Spin Flip . . . . . . . . . . . . . . . . . . . . . . 51
+5.35 5.4.2 Weak, Near-Zeeman Nuclear Spin Flip . . . . . . . . . . . . . . . . . . . . . 52
+5.36 5.4.3 Interpretation and Physical Implications . . . . . . . . . . . . . . . . . . . . 53
+5.37 6.5 Nuclear Decay Dynamics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+5.38 Model Setup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+CHAPTER 6 RESULTS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+OPEN-SYSTEM DYNAMICS AND THERMALIZATION . . . . . . . . . . . . . . . . . . 61
+OVERHAUSER FIELD APPROXIMATION VS FULL QUANTUM NUCLEAR
+DYNAMICS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+ENTANGLEMENT DYNAMICS AND EXCHANGE–DIPOLAR INTERACTION
+EFFECTS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+CONTROLLED NUCLEAR SPIN OPERATIONS AND SPECTRAL RESTRUCTURING . 73
+6.1 Strongly coupled nuclear spin flip . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+6.2 Weak, near-Zeeman nuclear spin flip . . . . . . . . . . . . . . . . . . . . . . . . . 75
+NUCLEAR DECAY DYNAMICS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+CHAPTER 7 DISCUSSION . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+7.1 7.1 Overview of Findings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+7.2 7.2 Limitations of Semiclassical and Markovian Descriptions . . . . . . . . . . . . 79
+7.3 7.3 The Nuclear Environment as a Non-Markovian Quantum Bath . . . . . . . . . 80
+vii
+
+
+--- PAGE 8 ---
+7.4 7.4 Interaction Scales and Dynamical Structure . . . . . . . . . . . . . . . . . . . 81
+7.5 7.5 Nuclear Spins as Control Channels . . . . . . . . . . . . . . . . . . . . . . . . 82
+7.6 7.6 Nuclear Decay as a Quantum Channel . . . . . . . . . . . . . . . . . . . . . . 82
+7.7 7.8 Limitations and Future Directions . . . . . . . . . . . . . . . . . . . . . . . . 84
+7.8 7.9 Concluding Remarks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 85
+REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 85
+APPENDIX FORMATTING AND SUBMISSION NOTES . . . . . . . . . . . . . . . . 86
+viii
+
+
+--- PAGE 9 ---
+LIST OF FIGURES
+Figure 6.1 Open-system trace distance to a late-time steady-state proxy versus time. The
+decay is monotonic, but the relaxation timescales remain long compared with
+the microsecond radical-pair lifetime. . . . . . . . . . . . . . . . . . . . . . . 63
+Figure 6.2 Singlet and triplet dynamics under increasing GKSL rates. The physically
+motivated rates are too small to alter the microsecond-scale dynamics
+appreciably; only strongly exaggerated rates visibly modify the evolution. . . . 64
+Figure 6.3 All-up nuclear initial state: singlet population dynamics for the full quantum
+model and the Overhauser approximation. Although both descriptions show
+singlet–triplet oscillations, the detailed temporal structure differs strongly. . . . 67
+Figure 6.4 All-up nuclear initial state: Fourier-spectrum comparison for the full
+quantum model and the Overhauser approximation. The semiclassical model
+concentrates spectral weight into a smaller set of frequencies than the explicit
+quantum description. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 68
+Figure 6.5 Maximally mixed nuclear initial state: singlet population dynamics for the
+full quantum model and the Overhauser approximation. Ensemble averaging
+improves agreement, but residual coherent structure remains in the full
+quantum calculation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+Figure 6.6 Maximally mixed nuclear initial state: Fourier-spectrum comparison. Even
+after ensemble averaging, the full quantum model retains additional spectral
+components absent in the Overhauser approximation. . . . . . . . . . . . . . . 69
+Figure 6.7 Entropy dynamics without exchange and dipolar interactions. The subsystem
+entropies oscillate at hyperfine-dominated frequencies but do not show strong
+long-time envelope modulation. . . . . . . . . . . . . . . . . . . . . . . . . . 71
+Figure 6.8 Entropy dynamics with exchange and dipolar interactions included. A slow
+envelope modulation appears on top of the faster hyperfine-scale oscillations,
+signaling structured entanglement exchange between electrons and nuclei. . . . 72
+Figure 6.9 Entropy-envelope frequency versus Zeeman frequency. The slow beating
+frequency tracks the Zeeman scale approximately linearly over the field range
+examined. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+ix
+
+
+--- PAGE 10 ---
+Figure 6.10 Effect of a 𝜋-pulse applied to a strongly coupled nucleus. (a) Singlet and
+triplet populations before and after the pulse applied at 𝑡 , showing clear
+flip
+redistribution of population among spin subspaces. (b) Fourier spectrum of
+the singlet population before the pulse. (c) Fourier spectrum after the pulse.
+The control operation primarily modifies higher-frequency components
+associated with strong hyperfine interactions, while preserving the
+low-frequency Zeeman-scale structure. . . . . . . . . . . . . . . . . . . . . . 74
+Figure 6.11 Effect of a 𝜋-pulse applied to a weakly coupled nucleus with hyperfine
+strength near the Zeeman scale. (a) Singlet and triplet populations before and
+after the pulse, showing minimal change in population dynamics. (b) Fourier
+spectrum of the singlet population before the pulse. (c) Fourier spectrum
+after the pulse. While the Zeeman-frequency peak remains stable, significant
+redistribution of higher-frequency spectral components is observed,
+indicating selective restructuring of the dynamical spectrum. . . . . . . . . . . 75
+Figure 6.12 Singlet and triplet population dynamics before and after a single nuclear
+decay event at 𝑡 = 2 𝜇s, for varying levels of decay-induced entanglement: (a)
+𝑞 = 0.25, (b) 𝑞 = 0.50, and (c) 𝑞 = 1.00. The vertical dashed line indicates
+the time of the decay event. Populations shown include 𝑃 𝑆, 𝑃 𝑇0 , 𝑃 𝑇+ , 𝑃 𝑇− ,
+and total triplet population. . . . . . . . . . . . . . . . . . . . . . . . . . . . 77
+x
+
+
+--- PAGE 11 ---
+CHAPTER 1
+INTRODUCTION
+Radical pair systems provide a unique platform for studying quantum dynamics in complex,
+room-temperature environments. Originally proposed as the underlying mechanism for avian
+magnetoreception, the radical pair mechanism describes the coherent evolution of two electron
+spins formed through photoinduced charge transfer, whose spin-dependent recombination
+pathways are sensitive to weak magnetic fields. Despite operating in a biologically warm and
+noisy environment, these systems exhibit coherent spin dynamics on microsecond timescales,
+raising fundamental questions about the role of quantum effects in biological processes.
+With strong supporting evidence that quantum mechanics is at play in these biological systems
+[], this thesis seeks to test how quantum these systems might be. The appropriateness of certain
+classical, semiclassical, and simplying assumptions, whether more complex dynamics than simple
+spin-flipping are at play, and whether entanglement might have a non-trivial position within a
+quantum mechanical model of this system.
+Traditional approaches to modeling radical pair dynamics have largely relied on semiclassical
+or phenomenological descriptions of the surrounding nuclear environment. In particular, the
+Overhauser field approximation replaces the discrete nuclear spin bath with an effective classical
+magnetic field, significantly simplifying the problem while capturing average magnetic effects.
+Similarly, environmental interactions are often modeled using Markovian open-system
+frameworks, in which decoherence and dissipation are assumed to erase memory of past system
+states. While these approximations have proven useful in many contexts, they inherently neglect
+quantum correlations, discrete environmental structure, and information backflow between
+subsystems.
+In recent years, there has been growing interest in understanding whether such approximations
+are sufficient to describe radical pair systems operating in biologically relevant regimes. The
+radical pair, together with its surrounding nuclear spins, constitutes a mesoscopic quantum system
+1
+
+
+--- PAGE 12 ---
+in which multiple interaction scales—hyperfine, Zeeman, exchange, and dipolar
+couplings—compete to shape the dynamics. In this regime, explicitly quantum mechanical
+features such as entanglement generation, correlation transport, and non-Markovian memory
+effects may play a significant role. Determining when these features become important, and how
+they influence observable spin dynamics, is central to developing a more complete understanding
+of the radical pair mechanism.
+This thesis adopts a fully quantum mechanical framework to investigate radical pair dynamics
+beyond semiclassical approximations. The system is modeled as a composite many-body spin
+network consisting of two electron spins coupled to discrete nuclear environments, with dynamics
+governed by a Hamiltonian including Zeeman, anisotropic hyperfine, exchange, dipolar, and
+quadrupolar interactions. Open-system effects are incorporated through a
+Gorini–Kossakowski–Sudarshan–Lindblad (GKSL) master equation, providing a controlled
+baseline for environmental decoherence while enabling systematic exploration of its limitations.
+A central objective of this work is to characterize how quantum correlations evolve within the
+radical pair system and to determine the extent to which the nuclear environment acts as a passive
+source of noise versus an active quantum subsystem. To this end, tools from quantum information
+theory—such as von Neumann entropy, mutual information, and logarithmic negativity—are
+employed alongside traditional observables like singlet and triplet populations. These measures
+allow direct tracking of entanglement generation, redistribution, and revival within the system,
+providing insight into the flow of quantum information between electrons and nuclei.
+The results of this work demonstrate that the nuclear environment plays a far more active role
+than is typically assumed in semiclassical models. Explicit quantum mechanical treatment of
+nuclear spins reveals structured entanglement dynamics in which quantum information is
+exchanged between electrons and nuclei over time. In particular, the nuclear environment can act
+as an effective non-Markovian bath, temporarily storing quantum correlations and returning them
+to the electronic subsystem, giving rise to coherent entanglement revivals. These effects emerge
+even in the absence of an external environment, highlighting the intrinsic memory contained
+2
+
+
+--- PAGE 13 ---
+within the finite nuclear spin system.
+In addition to characterizing passive dynamics, this thesis explores the extent to which the
+nuclear environment can be used to actively control radical pair behavior. Localized nuclear spin
+operations, implemented as unitary rotations, are shown to induce significant modifications to
+both population dynamics and spectral structure, with distinct roles played by strongly and weakly
+coupled nuclei. These results demonstrate that different components of the nuclear environment
+can act as control channels, selectively influencing either population redistribution or frequency
+content of the dynamics.
+Building on this perspective, a novel quantum-information-theoretic model of nuclear decay is
+introduced. In this framework, a decay event is treated as an isometric mapping that conserves
+total angular momentum while generating entanglement between the remaining proton and
+emitted leptonic degrees of freedom. Tracing out the emitted particles induces a depolarizing
+quantum channel on the nuclear spin, whose strength is directly linked to the degree of
+entanglement generated during decay. Embedding this process within the radical pair model
+reveals that even a single localized, non-unitary event can significantly restructure global spin
+dynamics, with observable consequences in singlet–triplet populations.
+Taken together, these results support a unified picture in which the nuclear environment is not
+merely a source of decoherence, but a structured and dynamically relevant quantum subsystem.
+The interplay between coherent spin interactions, environmental coupling, and internal nuclear
+dynamics places radical pair systems in a regime where quantum information flow plays a central
+role in determining observable behavior. This perspective suggests new avenues for understanding
+and potentially controlling spin-dependent processes in biological and chemical systems.
+The structure of this thesis is as follows. Chapter 2 introduces the quantum mechanical radical
+pair model and its governing Hamiltonian. Chapter 3 extends this framework to include
+open-system dynamics using the GKSL formalism. Chapter 4 defines the quantum correlation
+measures used to analyze the system. Chapter 5 presents the quantum model of nuclear decay and
+its embedding into the radical pair environment. Chapter 6 contains the main results, including
+3
+
+
+--- PAGE 14 ---
+investigations of thermalization, comparisons with semiclassical approximations, entanglement
+dynamics, controlled nuclear operations, and decay-induced effects. Finally, Chapters 7 and 8
+discuss the broader implications of these findings and outline directions for future work.
+4
+
+
+--- PAGE 15 ---
+CHAPTER 2
+RADICAL PAIR MODEL + HAMILTONIAN
+This chapter defines the quantum mechanical model used to describe radical pair spin
+dynamics throughout this thesis. The radical pair is treated as a composite quantum system
+consisting of two interacting electron spins coupled to local nuclear spin environments. This
+model is extended in chapter 3 to include open-system dynamics. The formulation is quantum
+theory-based with chemical and biological contexts determining parameter choices and modeling
+assumptions, while the underlying dynamics are governed by a well-defined many-body
+Hamiltonian [REF].
+This approach allows radical pair dynamics to be analyzed using tools from quantum
+information theory and open quantum systems, enabling the study of entanglement, correlations,
+and memory effects beyond traditional yield-based descriptions [REF]. The Hamiltonian
+introduced here provides the closed-system foundation to be extended in later chapters.
+HILBERT SPACE AND DEGREES OF FREEDOM
+The system consists of two electron spins, labeled 𝑒 and 𝑒 , together with nuclear spin
+1 2
+environments local to each electron. The total Hilbert space is
+(cid:32) 𝑁 (cid:33) (cid:32) 𝑁 (cid:33)
+(cid:204)1 (cid:204)2
+H =H
+𝑒
+⊗ H
+𝑒
+⊗ H
+1𝑘
+⊗ H
+2𝑘
+,
+1 2
+𝑘=1 𝑘=1
+where H 𝑒 (cid:27) C2denotes the Hilbert space of electron 𝑗 , and H 𝑗 𝑘 denotes the Hilbert space of the
+𝑗
+𝑘-th nucleus coupled to that electron.
+Electron spins are modeled as spin-1/2 operators
+1
+S 𝑗 = (𝑆 𝑗,𝑥 , 𝑆 𝑗,𝑦 , 𝑆 𝑗,𝑧 ), 𝑆 𝑗,𝛼 = 𝜎 𝑗,𝛼 ,
+2
+with 𝜎 𝛼the Pauli matrices. Nuclear spins are treated as either spin-1/2 or spin-1 degrees of
+freedom depending on isotope, allowing quadrupolar interactions to be included when
+𝐼 ≥ 1[𝑅𝐸 𝐹].
+5
+
+
+--- PAGE 16 ---
+All operators are understood to act on the full tensor-product Hilbert space by tensoring with
+identity operators on subsystems on which they do not act.
+SINGLET-TRIPLET BASIS
+The two-electron spin subspace H 𝑒 ⊗ H 𝑒 may be conveniently decomposed into total-spin
+1 2
+eigenstates. Defining the total electron spin operator
+S𝑡𝑜𝑡 = S
+1
++ S
+2
+,
+the joint electron Hilbert space splits into a one-dimensional singlet subspace with total spin
+𝑆 = 0and a three-dimensional triplet subspace with total spin 𝑆 = 1.
+The singlet state is given by
+1
+= √ ( − ) ,
+2
+while the triplet manifold consists of the three orthonormal states
+1
+= , = √ ( + ) , = .
+2
+These states form a complete basis for the electronic spin degrees of freedom and are
+eigenstates of both S
+𝑡
+2
+𝑜𝑡
+and 𝑆 𝑡𝑜𝑡,𝑧. In the absence of interactions that couple different total-spin
+sectors, the singlet and triplet subspaces evolve independently.
+Many interactions relevant to radical pair dynamics act differently within this basis. Isotropic
+exchange interactions depend only on S2 and therefore shift the singlet and triplet manifolds
+𝑡𝑜𝑡
+relative to one another, while leaving degeneracies within the triplet subspace intact [REF]. In
+contrast, anisotropic interactions, such as hyperfine and dipolar couplings, do not generally
+commute with S2 and can induce mixing between singlet and triplet states [REF].
+𝑡𝑜𝑡
+The singlet–triplet basis therefore provides a natural framework for analyzing radical pair spin
+dynamics. In particular, singlet–triplet energy splittings, degeneracies, and mixing mechanisms
+play a central role in determining coherent oscillations, sensitivity to weak magnetic fields, and
+the generation of quantum correlations. These features become especially important when
+6
+
+
+--- PAGE 17 ---
+considering the combined effects of exchange and dipolar interactions, as discussed in subsequent
+sections.
+During modelling the radical pair initialized in the singlet state, consistent with the initial
+conditions of the magnetoreception radical pair. The nuclei spins were initialized in a maximally
+mixed state with certain investigations carried out on how dynamic changes within the nuclear
+environment affect the system’s spin-dynamics.
+FULL HAMILTONIAN
+The coherent dynamics of the radical pair are generated by a Hamiltonian of the form
+𝐻 = 𝐻 𝑍 + 𝐻 ℎ 𝑓 + 𝐻 𝑒𝑥 + 𝐻 𝑑𝑖𝑝 + 𝐻 𝑄 .
+These terms describe electron Zeeman coupling to an external magnetic field, hyperfine
+interactions with surrounding nuclei, electron–electron exchange interaction, magnetic dipolar
+coupling, and nuclear quadrupole interactions, respectively.
+While simplified radical-pair models often neglect exchange and dipolar terms under
+assumptions of large electron separation or effective cancellation [REF], all interaction terms were
+retained in this work as independently tunable parameters. This allowed systematic exploration of
+how competing interaction mechanisms influence coherence, entanglement, and sensitivity to
+environmental structure.
+ELECTRON ZEEMAN INTERACTION
+The interaction between the electron spins and an external magnetic field B is described by
+𝐻 𝑍 = 𝛾 𝑒 B · (S 1 + S 2 ),
+where 𝛾 𝑒 = −𝑔𝜇 𝐵 is the electron gyromagnetic ratio.
+The magnetic field defines a preferred quantization axis and breaks rotational symmetry. In
+radical pair systems relevant to biological settings, the field strength is typically weak compared to
+hyperfine energy scales, yet it plays a central role in modulating spin dynamics and singlet–triplet
+7
+
+
+--- PAGE 18 ---
+interconversion [REF]. The nuclear Zeeman interaction is neglected due to the comparatively
+small nuclear gyromagnetic ratio, a standard approximation in radical-pair modeling [REF]
+HYPERFINE INTERACTIONS
+Each electron spin interacts locally with a surrounding nuclear spin environment through
+hyperfine coupling. The hyperfine Hamiltonian is written in tensor form as
+𝑁 𝑁
+∑︁1 ∑︁2
+𝐻 ℎ 𝑓 = S 1 · A 1𝑘 · I 1𝑘 + S 2 · A 2𝑘 · I 2𝑘 ,
+𝑘=1 𝑘=1
+where A 𝑗 𝑘 is the hyperfine coupling tensor between electron 𝑗 and nucleus 𝑘.
+In the principal-axis frame, the coupling tensor is taken to be diagonal,
+A 𝑗 𝑘 = 𝑑𝑖𝑎𝑔( 𝐴 𝑥 , 𝐴 𝑦 , 𝐴 𝑧 ),
+allowing for anisotropic hyperfine interactions. Such anisotropy is essential for generating
+singlet–triplet mixing and magnetic-field sensitivity [REF].
+2.1 Overhauser Field Approximation
+While the explicit hyperfine Hamiltonian provides a fully quantum mechanical description of
+the interaction between electron and nuclear spins, it is common in spin dynamics and radical pair
+modeling to employ a semiclassical approximation in which the nuclear environment is replaced
+by an effective magnetic field acting on the electron spins. This approach is known as the
+Overhauser field approximation.
+Starting from the hyperfine Hamiltonian
+∑︁
+𝐻
+HF
+= S·A𝑘 · I𝑘 ,
+𝑘
+the nuclear spin operators may be replaced by their expectation values,
+I𝑘 → ⟨I𝑘 ⟩,
+yielding an effective magnetic field experienced by the electron spin,
+8
+
+
+--- PAGE 19 ---
+1 ∑︁
+B
+OH
+=
+𝛾
+A𝑘 ⟨I𝑘 ⟩.
+𝑒
+𝑘
+The hyperfine interaction then reduces to a Zeeman-like term
+𝐻
+OH
+= 𝛾 𝑒S · B
+OH
+.
+In this description, the discrete quantum nuclear environment is replaced by a classical
+stochastic magnetic field, often assumed to follow a Gaussian distribution when many weakly
+coupled nuclei contribute. The electron spin therefore evolves under an effective Hamiltonian
+consisting of the external magnetic field and the Overhauser field generated by the surrounding
+nuclei.
+Physically, the Overhauser field represents the mean magnetic field produced by the
+polarized nuclear environment. In systems with a large number of nuclei, the central limit
+theorem motivates modeling the field components as random variables whose variance depends
+on the hyperfine coupling strengths.
+This approximation significantly reduces computational complexity by removing the explicit
+nuclear degrees of freedom. Instead of simulating the full electron–nuclear Hilbert space, the
+electron spins evolve under a classical field sampled from an appropriate distribution. As a result,
+the Overhauser approximation is widely used in studies of electron spin decoherence and spin
+transport.
+However, replacing nuclear spins with a classical field eliminates several inherently quantum
+features of the system. In particular, the approximation neglects:
+• Discrete nuclear spin dynamics
+• Electron–nuclear entanglement
+• Back-action of the electron spins on the nuclear environment
+• Correlations between different nuclei
+9
+
+
+--- PAGE 20 ---
+These effects may play an important role in radical pair systems where the nuclear
+environment is small or where coherent electron–nuclear dynamics persist over biologically
+relevant timescales.
+For this reason, a central objective of this thesis is to compare the full quantum nuclear
+model with the Overhauser-field approximation in order to determine under what conditions
+semiclassical descriptions fail to capture the dynamics of the radical pair system.
+ELECTRON-ELECTRON EXCHANGE INTERACTION
+The isotropic exchange interaction between the two electrons is described by a Heisenberg
+coupling,
+𝐻 𝑒𝑥 = 𝐽 S 1 · S 2 .
+This interaction energetically splits the singlet and triplet manifolds and competes directly
+with hyperfine-induced singlet–triplet interconversion.
+Depending on the magnitude and sign of 𝐽, exchange interactions may suppress coherent
+oscillations or partially cancel other interaction terms, such as the magnetic dipolar coupling
+[REF].
+MAGNETIC DIPOLAR INTERACTION
+The magnetic dipole–dipole interaction between the two electron spins arises from their
+mutual magnetic fields and, in its full form, is given by
+𝐻 𝑓 𝑢𝑙𝑙 = 𝐷 (cid:2) S · S − 3(S · r) (S · r) (cid:3) ,
+𝑑𝑖𝑝 1 2 1 (cid:98) 2 (cid:98)
+where r is the unit vector connecting the two electron spins and 𝐷 parameterizes the dipolar
+(cid:98)
+interaction strength.
+In the presence of a static external magnetic field, and for field strengths large compared to
+transverse dipolar terms, the dipolar interaction may be simplified using the secular
+10
+
+
+--- PAGE 21 ---
+approximation. In this approximation, only terms that commute with the electron Zeeman
+Hamiltonian are retained, yielding an effective dipolar Hamiltonian of the form
+(cid:20) (cid:21)
+1
+𝐻 𝑑𝑖𝑝 = 𝐷 𝑆 1𝑧 𝑆 2𝑧 − S 1 · S 2 ,
+3
+up to a geometric factor determined by the orientation of the inter-radical axis relative to the
+magnetic field direction.
+This secular form captures the dominant energetic splittings induced by the dipolar interaction
+while neglecting rapidly oscillating non-secular terms that average to zero in the rotating frame
+[REF]. The approximation is standard in radical pair theory and has been shown to reproduce the
+relevant singlet–triplet energy structure governing low-field spin dynamics [REF].
+Throughout this work, the dipolar interaction was implemented in this secular form, with
+𝐷treated as an effective control parameter incorporating both the magnitude of the dipolar
+coupling and its orientational dependence.
+EXCHANGE-DIPOLAR CANCELLATION
+Early radical pair theory assumed that for spin dynamics to be susceptible to external magnetic
+fields like in avian magnetoreception, the exchange and dipolar interactions would need to be
+negligibly weak. Since both the dipolar and exchange interaction strengths depend on the
+separation distance between the constituents of the radical pair, the inter-radical pair distance was
+required to be too large to be compatible with the geometry of radical pairs such as
+flavin-tryptophan in cryptochrome. Work done by Effimova and Hore proved that, at certain
+distances, the dipolar and exchange interactions enter a cancellation regime. In this regime the
+energy-splitting caused by the dipolar and exchange interactions tends to zero allowing the
+Zeeman interaction to dominate. Equations 1 and 2 below express the exponential decay with
+radical pair distance (r) of the dipolar and exchange coupling strengths respectively [REF].
+𝐷 (𝑟) = 3 𝜇 0 𝑔 𝑒 2 𝜇 𝐵 2
+2 4𝜋 𝑟3
+𝐽 (𝑟) = 𝐽 𝑒𝑏𝑟 , (𝑏 > 0), (2)
+0
+11
+
+
+--- PAGE 22 ---
+At distances typical of the flavin-tryptophan radical pair (r = 2nm): D(r) = -350ish uT and J(r)
+depending on differing Jo and b is also expected to be of the same order of magnitude as D(r)
+[REF].
+By inspecting the matrix elements of 𝐻 (cid:98)𝐽 and 𝐻 (cid:98)𝐷 in the singlet–triplet basis shown in (3), it
+becomes clear that an external magnetic field of ˜50uT, as in magnetoreception, would not
+generally dominate either the dipolar or exchange effects.
+(cid:16) (cid:17)
+⟨𝑆 | 𝐻 (cid:98)𝐽 | 𝑆⟩ = 𝐽, ⟨𝑇 𝑚 | 𝐻 (cid:98)𝐽 | 𝑇 𝑚 ⟩ = 𝐽, 𝑚 = 0, ±1, ⟨𝑆 | 𝐻 (cid:98)𝐷 | 𝑆⟩ = 0, ⟨𝑇 𝑚 | 𝐻 (cid:98)𝐷 | 𝑇 𝑚 ⟩ = 𝐷 𝑚2 − 2 , 𝑚 = 0, ±1. (3)
+3
+Results by Effimova and Hore detail a cancellation condition shown in (4) where certain
+degeneracies arise within the system allowing the Zeeman effect to dominate the singlet/triplet
+dynamics.
+(cid:16) (cid:17)
+𝐷 = 2 𝑚2 − 2 𝐽, 𝑚 = 0, ±1. (4)
+3
+This yields two commonly-cited cancellation regimes:
+• – degeneracy: for 𝑚 = 0, Eq. (4) gives 𝐷 = 3𝐽.
+• – degeneracy: for 𝑚 = ±1, Eq. (4) gives 𝐷 = − 2 𝐽,
+3
+The different degeneracies introduced by each cancellation regime and their effect on spin
+dynamics and entanglement were investigated and are detailed in the results of this paper.
+NUCLEAR QUADRUPOLE INTERACTION
+For nuclei with spin 𝐼 ≥ 1, electric quadrupole interactions are included through
+∑︁
+𝐻 𝑄 = I 𝑗 𝑘 · Q 𝑗 𝑘 · I 𝑗 𝑘 ,
+( 𝑗,𝑘)∈Q
+where Q 𝑗 𝑘 is a traceless quadrupole tensor defining both the strength and orientation of the
+interaction.
+12
+
+
+--- PAGE 23 ---
+Quadrupolar terms introduce additional anisotropy and internal nuclear dynamics, providing
+an additional mechanism through which nuclear degrees of freedom influence electron spin
+coherence [REF].
+SCOPE AND LIMITATIONS
+The Hamiltonian defined in this chapter describes coherent, closed-system spin dynamics.
+Environmental decoherence, dissipation, and non-Markovian effects are not included at this stage
+and are introduced in Chapter 3 using an open-quantum-system framework.
+Throughout this thesis, units with ℏ = 1are used, and all parameters are chosen to span both
+biologically motivated regimes and idealized limits designed to probe fundamental dynamical
+behavior.
+13
+
+
+--- PAGE 24 ---
+CHAPTER 3
+OPEN QUANTUM SYSTEM FRAMEWORK
+The Hamiltonian introduced in Chapter 2 describes the coherent spin dynamics of a radical
+pair and its surrounding nuclear environment under unitary time evolution. While this
+closed-system description is essential for identifying the intrinsic interaction mechanisms
+governing singlet–triplet interconversion, it is insufficient for modeling realistic biological
+systems.
+In biological environments, radical pairs are embedded in complex protein scaffolds and
+solvent environments that contain a vast number of additional degrees of freedom. These
+environmental modes interact continuously with the electronic spins, leading to decoherence,
+dissipation, and relaxation processes that cannot be captured by unitary dynamics alone. As a
+result, a complete description of radical pair spin dynamics requires the framework of open
+quantum systems, in which the system of interest is coupled to an external environment (or bath)
+and evolves non-unitarily.
+This chapter introduces the density matrix formalism and the
+Gorini–Kossakowski–Sudarshan–Lindblad (GKSL) master equation used throughout this thesis as
+a baseline to model open-system effects. The physical interpretation of the dominant decoherence
+and relaxation mechanisms is discussed, along with the assumptions underlying Markovian bath
+models and their limitations in biological contexts.
+DENSITY MATRIX FORMALISM
+The state of an open quantum system is most naturally described using a density operator 𝜌,
+rather than a pure state vector. For a composite system consisting of a system 𝑆and an
+environment 𝐸 , the total density operator evolves under unitary dynamics,
+𝜌 𝑆𝐸 (𝑡) = 𝑈 (𝑡) 𝜌 𝑆𝐸 (0) 𝑈† (𝑡),
+14
+
+
+--- PAGE 25 ---
+where 𝑈 (𝑡) = exp(−𝑖𝐻 𝑆𝐸 𝑡)and 𝐻 𝑆𝐸 is the total Hamiltonian.
+The reduced state of the system is obtained by tracing over environmental degrees of freedom,
+𝜌 𝑆 (𝑡) = 𝑇𝑟 𝐸 [𝜌 𝑆𝐸 (𝑡)] .
+Even when the combined system evolves unitarily, the reduced dynamics of 𝜌 𝑆 (𝑡)are generally
+non-unitary due to entanglement and information exchange between the system and its
+environment. This reduced description naturally captures loss of coherence, population
+relaxation, and irreversibility.
+In the context of radical pair systems, the system density matrix 𝜌 (𝑡)encodes not only
+population dynamics in the singlet and triplet manifolds but also quantum coherences and
+correlations, enabling direct access to entanglement measures and information-theoretic quantities
+explored later in this thesis.
+MARKOVIAN MASTER EQUATIONS
+3.1 Born-Markov Approximation
+To obtain a tractable equation of motion for 𝜌 𝑆 (𝑡), it is common to assume:
+1. Weak system–bath coupling (Born approximation):
+The interaction between the radical pair spins and the environment is sufficiently weak that
+the bath remains near thermal equilibrium.
+2. Short bath correlation time (Markov approximation):
+Environmental correlation functions decay much faster than the intrinsic system dynamics,
+allowing the bath to have no memory of past system states.
+Under these assumptions, the reduced dynamics of the system become local in time and are
+governed by a Markovian master equation.
+15
+
+
+--- PAGE 26 ---
+3.2 GKSL Master Equation
+The most general form of a trace-preserving, completely positive, Markovian master equation
+is the GKSL equation,
+𝑑𝜌 ∑︁ (cid:18) 1 (cid:19)
+𝑑𝑡 = −𝑖 [𝐻 𝑆 , 𝜌] + 𝛾 𝑘 𝐿 𝑘 𝜌𝐿† 𝑘 − 2 {𝐿† 𝑘 𝐿 𝑘 , 𝜌} ,
+𝑘
+where:
+• 𝐻 𝑆is the system Hamiltonian defined in Chapter 2,
+• 𝐿 𝑘 are Lindblad (jump) operators describing specific system–environment couplings,
+• 𝛾 𝑘 are positive rates determined by the bath spectral density and temperature.
+The first term generates coherent unitary evolution, while the second term accounts for
+irreversible environmental effects. This structure guarantees physical consistency by preserving
+positivity and normalization of the density matrix.
+In this thesis, GKSL master equations are used as a controlled baseline for introducing
+environmental effects before systematically relaxing the Markovian assumptions in later chapters.
+PHYSICAL INTERPRETATION OF OPEN-SYSTEM PROCESSES
+3.3 3.4.1 Dephasing
+Dephasing refers to the decay of quantum coherences without energy exchange between the
+system and the environment. In the singlet–triplet basis, dephasing suppresses off-diagonal
+density matrix elements while leaving populations unchanged.
+Physically, dephasing arises from fluctuations in local magnetic fields generated by slow
+nuclear motion, protein conformational dynamics, and solvent-induced magnetic noise. In radical
+pair systems, dephasing limits the lifetime of coherent singlet–triplet oscillations, directly
+impacting magnetic field sensitivity and entanglement.
+Dephasing processes are commonly modeled using Lindblad operators proportional to spin
+projection operators, such as 𝑆 𝑧
+16
+
+
+--- PAGE 27 ---
+3.4 3.4.2 Dissipation
+Dissipation involves energy exchange between the system and its environment, leading to
+population relaxation between eigenstates of the system Hamiltonian. In radical pairs, dissipation
+can drive transitions between different spin eigenstates, redistributing population among singlet
+and triplet manifolds.
+Microscopically, dissipative processes originate from coupling to environmental modes that
+can absorb or emit energy, such as vibrational degrees of freedom of the protein scaffold or
+solvent phonons.
+Dissipation is typically modeled using Lindblad operators that induce transitions between
+system eigenstates and depends explicitly on the bath temperature and spectral density.
+3.4.3 Longitudinal and Transverse Relaxation (T and T )
+1 2
+The phenomenological relaxation times 𝑇 and 𝑇 provide a compact way to characterize
+1 2
+open-system effects:
+• 𝑇 (longitudinal relaxation time):
+1
+Governs population relaxation toward thermal equilibrium and is associated with dissipative
+processes.
+• 𝑇 (transverse relaxation time):
+2
+Governs decay of coherences and includes contributions from both dissipation and pure
+dephasing.
+In general, 𝑇 ≤ 2𝑇 , with equality holding only in the absence of pure dephasing. In radical
+2 1
+pair systems, 𝑇 is typically the limiting timescale for coherent spin dynamics and entanglement
+2
+generation.
+3.5 3.5 Interpretation of the Bosonic Bath
+In this work, environmental effects are modeled using an effective bosonic bath. This bath
+does not represent a specific microscopic entity but rather an idealized description of the
+17
+
+
+--- PAGE 28 ---
+collective degrees of freedom external to the radical pair spin system.
+Physically, the bosonic bath represents:
+• Protein vibrational modes,
+• Solvent fluctuations,
+• Low-frequency collective motions of the molecular environment,
+• Magnetic noise arising from unresolved nuclear and electronic degrees of freedom.
+At physiological temperatures, these environmental modes are thermally populated and can be
+treated as a continuum of harmonic oscillators. This approach provides a mathematically
+controlled way to introduce decoherence and dissipation without explicitly simulating an
+intractably large environment.
+3.6 3.6 Limitations of Markovian Bath Models
+While Markovian GKSL master equations are widely used and computationally efficient, they
+impose strong physical assumptions that are not always justified in biological systems.
+In particular, Markovian baths:
+• Assume instantaneous loss of environmental memory,
+• Suppress system–environment correlations,
+• Cannot capture information backflow from the environment to the system,
+• Predict monotonic decay of coherence and entanglement.
+However, biological environments are often structured, featuring slow protein motions,
+discrete vibrational modes, and heterogeneous nuclear spin distributions. These features can
+introduce non-Markovian effects that significantly alter spin dynamics.
+18
+
+
+--- PAGE 29 ---
+3.7 3.7 Transition to Non-Markovian Dynamics
+Markovian baths provide a valuable baseline for understanding the dominant relaxation
+mechanisms acting on radical pairs. However, they inherently erase memory effects and constrain
+the dynamics to simple exponential decay.
+A central theme of this thesis is that structured environments can qualitatively modify
+radical pair dynamics, enabling non-Markovian behavior such as coherence revivals,
+entanglement backflow, and enhanced sensitivity to environmental control.
+In subsequent chapters, the Markovian assumption is progressively relaxed by introducing
+structured and few-mode environments that interpolate between idealized GKSL dynamics and
+strongly non-Markovian regimes. This transition enables systematic exploration of how
+environmental structure influences coherence, entanglement, and information flow in radical pair
+systems.
+19
+
+
+--- PAGE 30 ---
+CHAPTER 4
+QUANTIFYING QUANTUM CORRELATIONS
+The radical pair mechanism has traditionally been characterized using chemically motivated
+observables, most notably singlet and triplet reaction yields. While such quantities are essential
+for connecting theory to experiment, they provide only a limited view of the underlying quantum
+dynamics. In particular, yield-based observables are insensitive to the structure and distribution of
+quantum correlations within the radical pair system and its surrounding nuclear environment.
+In this thesis, the radical pair is treated as a composite open quantum system whose dynamics
+naturally generate entanglement, classical correlations, and information flow between subsystems.
+To characterize these effects, tools from quantum information theory are employed alongside
+conventional spin-chemical observables. This chapter introduces the subsystem partitions and
+correlation measures used throughout the remainder of the thesis and explains their physical
+relevance in the context of radical pair dynamics.
+The central objective of this chapter is to define what is measured and why these measurements
+matter. By framing radical pair dynamics in quantum-information-theoretic language, this work
+provides a bridge between spin chemistry and modern many-body quantum theory.
+4.1 4.1 Subsystem Decompositions
+Quantum correlations depend fundamentally on how a system is partitioned. Two distinct
+subsystem cuts are used throughout this work, each probing a different physical aspect of the
+radical pair mechanism.
+4.2 4.1.1 Electronic–Nuclear Partition:
+(e ,e ) | (nuclei)
+1 2
+The first partition separates the electronic spins from all nuclear degrees of freedom. This cut
+treats the radical pair electrons as the system of interest, with the nuclear spins acting as an
+internal environment.
+20
+
+
+--- PAGE 31 ---
+This decomposition is particularly useful for quantifying:
+• Entanglement generation between electrons and nuclei
+• Decoherence induced by hyperfine and quadrupolar couplings
+• Information leakage from the electronic subsystem
+As the nuclear spins are not traced out in the microscopic model, this partition allows direct
+quantification of electron–nuclear entanglement rather than modeling nuclear effects
+phenomenologically as noise.
+4.3 4.1.2 Spatial Partition:
+(e +n ) | (e +n )
+1 1 2 2
+The second partition groups each electron with its local nuclear environment, corresponding
+to a spatial separation between the two radicals.
+This cut probes:
+• Nonlocal correlations between the two radicals
+• Entanglement mediated indirectly through nuclear degrees of freedom
+• The persistence of quantum correlations under spatial separation
+This partition is particularly relevant for assessing whether radical pair dynamics exhibit
+genuinely nonlocal quantum behavior, rather than correlations confined to local electron–nuclear
+clusters.
+4.4 Von Neumann Entropy
+For a subsystem described by a reduced density matrix 𝜌 𝐴, the von Neumann entropy is
+defined as
+𝑆 ( 𝜌 𝐴 ) = −𝑇𝑟 ( 𝜌 𝐴 log 𝜌 𝐴 ).
+21
+
+
+--- PAGE 32 ---
+The von Neumann entropy quantifies the degree of mixedness of a subsystem and provides a
+measure of entanglement when the global state is pure. In the context of open quantum systems, it
+also captures entropy production due to environmental coupling.
+In radical pair dynamics, increases in electronic entropy signal entanglement with nuclear
+spins or environmental modes. While entropy alone does not distinguish classical from quantum
+correlations in mixed states, it provides a useful baseline diagnostic for information flow and
+decoherence.
+4.5 4.3 Quantum Mutual Information
+The quantum mutual information between subsystems 𝐴and 𝐵is defined as
+𝐼 ( 𝐴 : 𝐵) = 𝑆 ( 𝜌 𝐴 ) + 𝑆 ( 𝜌 𝐵 ) − 𝑆 ( 𝜌 𝐴𝐵 ).
+Mutual information quantifies the total amount of correlations—both classical and
+quantum—shared between subsystems. Unlike entanglement measures, it remains nonzero even
+in the absence of quantum entanglement.
+In this work, mutual information is used to track correlation buildup and decay across
+subsystem boundaries. It provides a complementary perspective to entanglement measures,
+particularly in regimes where decoherence suppresses entanglement but classical correlations
+persist.
+4.6 4.4 Logarithmic Negativity
+4.7 4.4.1 Definition
+For a bipartite state 𝜌 𝐴𝐵, the logarithmic negativity is defined as
+E 𝑁 ( 𝜌 𝐴𝐵 ) = log 2 ∥ 𝜌𝑇 𝐴 𝐵 𝐵 ∥ 1 ,
+where 𝑇 𝐵denotes the partial transpose with respect to subsystem 𝐵, and ∥ · ∥
+1
+is the trace norm.
+Logarithmic negativity provides a computable entanglement monotone for mixed states and
+gives an upper bound on distillable entanglement.
+22
+
+
+--- PAGE 33 ---
+4.8 4.4.2 Why Log-Negativity is Essential
+Log-negativity is the primary entanglement metric used in this thesis for several reasons:
+Mixed-state robustness
+Radical pair systems are inherently open and rapidly become mixed due to coupling with
+nuclear and bosonic environments. Many entanglement measures are either undefined or
+intractable for mixed states, whereas log-negativity remains well-defined and numerically stable.
+Operational meaning
+A nonzero logarithmic negativity certifies the presence of non-separable quantum
+correlations. Its monotonicity under local operations and classical communication ensures that
+observed entanglement cannot be generated artificially by subsystem coarse-graining.
+Sensitivity to revivals
+Log-negativity is particularly sensitive to non-Markovian dynamics. Temporary increases in
+entanglement—often referred to as entanglement revivals—are clearly visible in this measure,
+making it an ideal diagnostic for information backflow from structured environments.
+These properties make log-negativity well suited for probing whether radical pair dynamics
+exhibit genuinely quantum behavior beyond classical correlation models.
+4.9 4.5 Singlet Yield as a Companion Observable
+Despite the emphasis on quantum-information-theoretic measures, traditional spin-chemical
+observables remain essential. The singlet population,
+𝑃 𝑆 (𝑡) = 𝑇𝑟 [𝜌 (𝑡) Π𝑆 ],
+where Π𝑆is the projector onto the electronic singlet state, is tracked throughout this work as a
+companion observable.
+Singlet yield serves two key purposes:
+• It connects quantum correlation dynamics to experimentally measurable outcomes.
+23
+
+
+--- PAGE 34 ---
+• It provides a reference point for assessing whether enhanced entanglement correlates with
+chemically relevant behavior.
+Importantly, this thesis does not assume a one-to-one correspondence between entanglement
+and singlet yield. Instead, their joint analysis allows identification of regimes where quantum
+correlations play a nontrivial dynamical role without necessarily enhancing traditional yield
+metrics.
+4.10 4.6 Reframing the Radical Pair Mechanism
+By employing entropy, mutual information, and log-negativity alongside singlet yield, radical
+pair dynamics are reframed as a problem in quantum information flow rather than solely chemical
+kinetics.
+This perspective reveals features—such as entanglement persistence, correlation
+redistribution, and non-Markovian revivals—that are invisible to yield-based analyses alone. It
+also allows direct comparison between radical pair systems and other mesoscopic quantum
+platforms, including spin chains and open quantum networks.
+The tools introduced in this chapter form the quantitative backbone of the results presented in
+subsequent chapters, where they are used to diagnose environmental control, entanglement
+revival, and memory effects in radical pair systems.
+24
+
+
+--- PAGE 35 ---
+CHAPTER 5
+QUANTUM MODEL OF NUCLEAR DECAY
+5.1 5.1 Motivation and Physical Context
+In addition to coherent Hamiltonian dynamics and environmental decoherence, nuclear
+processes may introduce discrete, non-unitary transformations within the radical pair system.
+While such processes are not typically included in standard radical pair models, they provide a
+useful theoretical framework for exploring how localized perturbations within the nuclear
+environment influence spin dynamics.
+In this work, we introduce a hypothetical nuclear decay process acting on a single nucleus
+within the radical pair environment. The objective is not to model a specific microscopic decay
+channel in full detail, but rather to construct a minimal quantum-information-theoretic
+description of a decay event that:
+• conserves total angular momentum at the spin level,
+• generates entanglement between decay products,
+• and induces a nontrivial quantum channel on the remaining nuclear spin.
+This approach allows the decay process to be embedded directly into the radical pair
+simulation and analyzed alongside other mechanisms such as hyperfine interactions and
+controlled nuclear operations.
+5.2 5.2 Spin-System Representation of 𝛽−-Type Decay
+We model the decay process as a transition from an initial nuclear spin-1/2 degree of freedom
+to a composite system consisting of three spin-1/2 particles:
+• the remaining proton,
+25
+
+
+--- PAGE 36 ---
+• the emitted electron,
+• and the emitted antineutrino.
+In this simplified description, all particles are treated as qubits, and orbital angular momentum
+of the emitted particles is neglected. This yields the mapping
+H in (cid:27) C2, H out = H 𝑝 ⊗ H 𝑒 ⊗ H 𝜈 (cid:27) (C2)⊗3.
+This construction follows directly from the derivation in the project notes.
+To enforce angular momentum conservation, the decay is restricted to the total spin
+𝐽 = 1 subspace of the three-particle Hilbert space, consistent with the initial nuclear spin.
+2
+5.3 5.3 Construction of the Decay Map
+The decay process is defined as an isometric map
+𝑉 : H in → H 𝑝 ⊗ H 𝑒 ⊗ H 𝜈 , 𝑉 †𝑉 = 𝐼,
+which embeds the initial nuclear state into the allowed total-spin subspace.
+5.4 Lepton Pair Basis
+The emitted electron–antineutrino pair is first decomposed into singlet and triplet sectors:
+1 1
+⊗ = 0 ⊕ 1,
+2 2
+with basis states:
+• singlet: | 𝑠⟩ 𝑒𝜈,
+• triplets: | 𝑡 ⟩, | 𝑡 ⟩, | 𝑡 ⟩.
++ 0 −
+5.5 Total
+J = 1/2Subspace
+Coupling the proton spin with the lepton pair yields two distinct channels:
+• Singlet-lepton channel (A): automatically total 𝐽 = 1/2,
+26
+
+
+--- PAGE 37 ---
+• Triplet-lepton channel (B): projected onto the 𝐽 = 1/2subspace via Clebsch–Gordan
+coefficients.
+These define an orthonormal basis of the allowed output space
+5.6 General Decay Map
+The most general spin-conserving mapping takes the form
+1 1 1
+𝑉 | ± ⟩ = 𝑎 | 𝐴, ± ⟩ + 𝑏 | 𝐵, ± ⟩, | 𝑎 |2 + | 𝑏 |2= 1.
+2 2 2
+The coefficients 𝑎and 𝑏determine how the decay amplitude is distributed between the two
+angular-momentum channels.
+5.7 5.4 Reduced Dynamics of the Remaining Proton
+After the decay, the emitted electron and antineutrino are not tracked as part of the radical pair
+system. The effective nuclear state is therefore obtained by tracing out these degrees of freedom:
+𝜌 𝑝 = 𝑇𝑟 𝑒𝜈 (cid:2)𝑉 𝜌 in 𝑉 †(cid:3) .
+This induces a quantum channel acting on the remaining proton spin.
+Defining
+𝑞 ≡| 𝑏 |2,
+the reduced proton dynamics take the form of an SU(2)-covariant depolarizing channel:
+𝑞
+𝜌 𝑝 = (1 − 𝑞) 𝜌 in + (cid:0)𝜎 𝑥 𝜌 in 𝜎 𝑥 + 𝜎 𝑦 𝜌 in 𝜎 𝑦 + 𝜎 𝑧 𝜌 in 𝜎 𝑧 (cid:1) ,
+3
+as derived in the project notes .
+5.8 Physical Interpretation
+• 𝑞 = 0: no entanglement with decay products, proton remains pure
+• 0 < 𝑞 < 1: partial entanglement → partial depolarization
+• 𝑞 → 1: maximal mixing within this model
+27
+
+
+--- PAGE 38 ---
+Thus, the decay process acts as a controlled decoherence mechanism whose strength is
+directly tied to the entanglement generated during decay.
+5.9 5.5 Embedding the Decay into the Radical Pair Model
+To incorporate this process into the radical pair system, the decay is implemented as a single,
+instantaneous quantum operation acting on a selected nucleus at time 𝑡 .
+decay
+The protocol is:
+1. Evolve the full radical pair system under the Hamiltonian 𝐻(Chapter 2) up to 𝑡 ,
+decay
+2. Apply the decay map 𝑉 to the selected nuclear spin,
+3. Trace out the emitted electron and antineutrino,
+4. Continue unitary evolution with the updated nuclear state.
+5.10 Model Assumptions
+Consistent with the APS presentation (Slide: “Nuclear Decay”) , the following simplifying
+assumptions are made:
+• Orbital angular momentum of decay products is neglected,
+• The remaining proton retains the same hyperfine coupling tensor,
+• The emitted electron and antineutrino are removed from the system,
+• The decay occurs as a one-time, localized event.
+These approximations allow the decay to be treated as a well-defined quantum channel
+embedded within the spin dynamics.
+28
+
+
+--- PAGE 39 ---
+5.11 5.6 Scope and Interpretation
+The decay model introduced here is deliberately phenomenological. It is designed to capture
+the essential quantum-structural features of nuclear decay—namely entanglement generation and
+induced decoherence—without attempting a full microscopic description of weak-interaction
+processes.
+In particular:
+• The parameter 𝑞is treated as a free parameter controlling the strength of entanglement
+with the emitted leptons,
+• The model neglects momentum, spatial degrees of freedom, and detailed weak-interaction
+dynamics,
+• The resulting dynamics should therefore be interpreted as a hypothetical probe of how
+nuclear processes could influence radical pair spin dynamics.
+By varying 𝑞, the model enables systematic exploration of how different levels of
+decay-induced entanglement affect singlet–triplet dynamics and information flow within the
+system.
+5.12 5.7 Connection to Observables
+Although the emitted leptons are not directly observable within the radical pair system, their
+influence persists through the modified state of the remaining proton.
+This motivates the use of standard observables—particularly singlet and triplet
+populations—as indirect probes of the decay process. Changes in these quantities following the
+decay event provide insight into how entanglement generated during decay propagates into the
+electronic spin dynamics.
+This connection forms the basis for the analysis presented in Chapter 6.
+29
+
+
+--- PAGE 40 ---
+5.13 Chapter 6 – Results
+Having established the quantum mechanical radical pair model and its open-system extension
+in the preceding chapters, we now investigate the dynamical behavior of the system through
+numerical simulation. The objective of this results chapter is to determine how the interplay of
+coherent spin interactions and environmental coupling shapes the evolution of quantum
+correlations, information flow, and observable spin dynamics within the radical pair mechanism.
+The radical pair is modeled as a composite many-body quantum system consisting of two
+electron spins coupled to surrounding nuclear environments through anisotropic hyperfine
+interactions. As discussed in containing Zeeman, hyperfine, exchange, dipolar, and quadrupolar
+terms. These interactions generate singlet–triplet interconversion, electron–nuclear entanglement,
+and complex multi-spin dynamics that cannot generally be captured by semiclassical
+approximations.
+In realistic biological environments, however, the radical pair is not an isolated system. Protein
+vibrations, solvent fluctuations, and unresolved environmental degrees of freedom introduce
+decoherence and relaxation processes that can modify spin dynamics. Chapter 3 introduced the
+Gorini–Kossakowski–Sudarshan–Lindblad (GKSL) master equation as a baseline framework for
+incorporating such environmental effects in a controlled manner. Within this framework,
+dissipative and dephasing processes are modeled through Lindblad jump operators that couple the
+radical pair to an effective bosonic bath representing its surrounding molecular environment.
+The results presented in this chapter pursue three central objectives. First, we investigate how
+rapidly open-system dynamics drive the radical pair toward a steady state and quantify the
+timescale over which the system retains memory of its initial condition. Second, we compare the
+full quantum nuclear model with semiclassical approximations of the nuclear environment to
+identify regimes where explicitly quantum nuclear dynamics become essential. Third, we examine
+how competing interaction scales and environmental couplings influence the generation and
+persistence of quantum correlations within the radical pair system.
+30
+
+
+--- PAGE 41 ---
+Together, these investigations establish the dynamical regimes in which a fully quantum
+mechanical treatment of the radical pair is necessary and identify the physical mechanisms
+responsible for long-lived coherence, correlation exchange, and environmental memory effects.
+5.14 6.1 Open-System Dynamics and Thermalization
+Motivation
+Radical pair reactions occur within complex biological environments containing many
+uncontrolled degrees of freedom, including protein vibrations, solvent fluctuations, and
+unresolved nuclear spins. As a result, the radical pair spin system cannot be considered perfectly
+isolated and must, in principle, be treated as an open quantum system. While the Hamiltonian
+dynamics introduced in Chapter 2 capture the intrinsic spin interactions responsible for
+singlet–triplet interconversion, environmental couplings may introduce additional decoherence
+and dissipative processes that modify the effective spin dynamics.
+Beyond simple decoherence, environmental interactions may qualitatively alter system
+behavior through quantum measurement effects. In particular, Kominis proposed that
+spin-selective recombination channels in radical pair reactions effectively perform continuous
+measurements of the singlet projector, potentially driving the system into a quantum Zeno regime
+in which specific spin subspaces become dynamically stabilized. In this regime, sufficiently
+strong environmental coupling suppresses coherent transitions and confines the system to
+restricted regions of Hilbert space.
+Motivated by this possibility, we investigate whether biologically inspired environmental
+dissipation could produce analogous effects within a more general open-system description of the
+radical pair. Specifically, we explore whether spontaneous-emission–type Lindblad processes
+acting on the system’s energy eigenbasis could generate Zeno-like stabilization or protected
+dynamical subspaces within the radical pair Hilbert space.
+The simulations presented in this section therefore test whether environmentally induced
+dissipation at biologically plausible rates can significantly influence radical pair dynamics on the
+31
+
+
+--- PAGE 42 ---
+microsecond timescales relevant to magnetoreception.
+5.15 System Setup
+Simulating open-system radical pair dynamics over the long timescales required for
+thermalization can be computationally demanding, particularly when multiple nuclear spins are
+included explicitly. To make these simulations tractable while retaining the essential features of
+the radical pair mechanism, a simplified model was employed for the thermalization investigations.
+The system consists of two electron spins forming a radical pair. Electron 1 is coupled to two
+nuclear spins through anisotropic hyperfine interactions, while electron 2 is assumed to have no
+local nuclear environment. The two nuclei represent a minimal internal environment containing
+both strong and weak hyperfine couplings.
+The hyperfine tensors used in these simulations correspond to one strongly coupled nucleus
+and one weakly coupled nucleus,
+𝐴 𝑠𝑡𝑟𝑜𝑛𝑔 ∼ 20 MHz, 𝐴 𝑤𝑒𝑎𝑘 ∼ 20 kHz
+providing a minimal representation of the heterogeneous hyperfine environments expected in
+realistic radical pair systems. The external magnetic field was fixed at approximately Earth
+strength, 𝐵 ≈ 47 𝜇T, aligned along the 𝑧-axis.
+Electron–electron exchange and dipolar interactions were included using the cancellation
+regime 𝐷 = −3𝐽, consistent with the parameter regime discussed in Chapter 2. This regime
+restores degeneracies within the singlet–triplet manifold that allow the weak Zeeman interaction
+to play a dominant role in the spin dynamics.
+Open-system effects were incorporated using the GKSL master equation introduced in
+Chapter 3,
+𝜌(cid:164) = −𝑖 [𝐻, 𝜌] + L ( 𝜌),
+where the dissipator
+(cid:18) (cid:19)
+∑︁ 1
+L ( 𝜌) = 𝛾 𝑘 𝐿 𝑘 𝜌𝐿† 𝑘 − {𝐿† 𝑘 𝐿 𝑘 , 𝜌}
+2
+𝑘
+32
+
+
+--- PAGE 43 ---
+models environmental decoherence and dissipation. The Lindblad operators were chosen to
+represent spontaneous-emission–like transitions between energy eigenstates of the system
+Hamiltonian.
+The dissipation rates used in these simulations span the range
+𝛾 𝑘 ∼ 10 −9 s −1 − 10 −3 s −1,
+consistent with estimates for weak environmental coupling in biological systems.
+5.16 Thermalization Timescales
+To quantify how environmental coupling drives the system toward equilibrium, the approach
+to a steady state was analyzed using the trace distance between the instantaneous system state and
+a late-time steady-state proxy. The steady state was estimated by averaging the density matrix over
+the final portion of the simulation time window and comparing this average state with the evolving
+system state.
+The resulting trace distance provides a measure of how much information about the initial
+state remains in the system at a given time.
+The results reveal a clear separation between the timescales governing coherent spin dynamics
+and those associated with environmental relaxation. While coherent oscillations driven by
+33
+
+
+--- PAGE 44 ---
+hyperfine and Zeeman interactions occur on microsecond timescales, the open-system dynamics
+approach a steady state only on much longer timescales of order milliseconds.
+This behavior indicates that the radical pair system retains a substantial memory of its initial
+condition over the entire microsecond lifetime typically associated with radical pair
+recombination.
+5.17 Dependence on Dissipation Rates
+To determine whether stronger environmental coupling could influence the dynamics on
+biologically relevant timescales, the GKSL dissipation rates were systematically increased across
+several orders of magnitude. To ensure the open-system Lindbladian stayed consistent with
+weak-coupling Born approximation, the common convention of keeping the maximum dissipation
+rates, 𝛾 𝐷𝑚𝑎𝑥, at most ten times less than the characteristic frequencies of the system. The
+characteristic frequency was chosen to be the Zeeman frequency, 𝑓 𝑧, where
+𝑓
+𝑧
+≈ 1.4𝑀 𝐻𝑧⇒ 𝜔
+𝑍
+≈ 8.8 𝑟 𝑎𝑑/𝜇𝑠.
+Defining: 𝜖 = 𝛾 𝐷 /𝜔 𝑧 , we show plots with varying 𝜖 to capture when GKSL bath effects
+become non-negligible on microsecond timescales.
+𝜖 ≈ 10 −8
+𝜖 ≈ 10 −11 (𝑜𝑟𝑖𝑔𝑖𝑛𝑎𝑙 𝑠𝑐𝑎𝑙𝑒)
+34
+
+
+--- PAGE 45 ---
+𝜖 ≈ 10 −3
+𝜖 ≈ 10 −5
+Figure: Varying GKSL Rates (multiple panels)
+The results demonstrate that the dissipation rates expected from spontaneous-emission-type
+processes are far too small to affect the system on microsecond timescales. For the physically
+motivated parameter regime, the open-system dynamics are essentially indistinguishable from the
+purely unitary evolution of the closed system.
+Only when the dissipation rates are artificially increased by several orders of magnitude do
+environmental effects begin to visibly modify the spin dynamics within the radical pair lifetime.
+This behavior can be understood by comparing the characteristic scales of coherent and
+dissipative processes. The dominant coherent frequencies in the system are set by the Zeeman and
+hyperfine interactions, which lie in the megahertz regime. In contrast, biologically motivated
+dissipation rates are many orders of magnitude smaller, preventing the environment from
+significantly influencing the dynamics over microsecond timescales.
+5.18 Implications for Zeno Stabilization
+One of the motivations for introducing open-system dynamics was to explore whether
+environmental coupling could produce quantum Zeno–like stabilization of particular spin
+subspaces. In principle, sufficiently strong dissipative channels can act as continuous
+measurements, suppressing coherent transitions and confining the system to restricted regions of
+35
+
+
+--- PAGE 46 ---
+Hilbert space.
+However, the simulations presented here indicate that the dissipation rates required to induce
+such Zeno stabilization are far larger than those expected for biological environments. For
+realistic environmental coupling strengths, the radical pair dynamics remain effectively unitary on
+magnetoreception timescales.
+Consequently, spontaneous-emission–type relaxation processes are unlikely to play a
+significant role in shaping radical pair spin dynamics or generating Zeno-protected subspaces in
+the system’s energy eigenbasis.
+5.19 Summary of Open-System Results
+The open-system simulations reveal that the biologically plausible environmental dissipation
+employed in this paper is too weak to significantly alter radical pair dynamics within the
+microsecond lifetime relevant to magnetoreception. Thermalization occurs only on millisecond
+timescales, far beyond the duration over which coherent spin dynamics influence the chemical
+recombination process.
+This result implies that spontaneous-emission–type environmental relaxation is unlikely to
+provide a mechanism for quantum Zeno stabilization in radical pair systems. Instead, the
+dominant features of the dynamics are governed by the intrinsic Hamiltonian interactions between
+electron and nuclear spins.
+At the same time, the long thermalization times observed in these simulations highlight the
+importance of internal nuclear environments as potential sources of effective memory and
+information storage within the radical pair system.
+These findings motivate the subsequent investigations in this thesis, which explore
+environmental structures that go beyond simple Markovian GKSL descriptions. In particular,
+structured or non-Markovian environments may enable information backflow, coherence revivals,
+and entanglement redistribution that cannot be captured within the Markovian framework
+considered here.
+36
+
+
+--- PAGE 47 ---
+The following sections therefore investigate mechanisms through which internal nuclear
+dynamics and structured environments can generate non-Markovian behavior and long-lived
+quantum correlations in radical pair systems
+6.2 Overhauser Field Approximation vs Full Quantum Nuclear Dynamics
+Many theoretical treatments of radical pair magnetoreception replace the explicit quantum
+mechanical nuclear spin environment with an effective classical magnetic field acting on the
+electron spins. This approach, commonly referred to as the Overhauser field approximation,
+models the nuclear environment as a static or randomly sampled effective magnetic field
+generated by the surrounding nuclei. Such approximations greatly reduce computational
+complexity by eliminating the nuclear Hilbert space while still capturing the average magnetic
+influence of the nuclear environment on the radical pair.
+However, this semiclassical description neglects several intrinsically quantum mechanical
+features of the nuclear spin environment. In particular, explicit nuclear spins can become
+entangled with the electronic subsystem and can exchange quantum information with the radical
+pair over time. These processes cannot be captured by a classical field approximation and may
+therefore play an important role in determining the spin dynamics of the system.
+To investigate the validity of the Overhauser approximation in the context of radical pair
+magnetoreception, we compare the full quantum mechanical model of the nuclear environment
+with a semiclassical Overhauser-field treatment. The objective of this comparison is to determine
+whether the classical approximation faithfully reproduces the dynamical structure of the radical
+pair system or whether important features arise from explicitly quantum nuclear degrees of
+freedom.
+5.20 Model Setup
+For these simulations, the radical pair model was extended beyond the simplified
+thermalization system to include a larger nuclear environment. Each electron spin was coupled to
+three nuclear spins, yielding a total of six nuclear spins in the system. The nuclear spins were
+37
+
+
+--- PAGE 48 ---
+modeled as spin-1/2 degrees of freedom.
+The hyperfine coupling structure was chosen to mimic the heterogeneous nuclear
+environments present in realistic radical pair molecules. Each electron was coupled to three nuclei
+with distinct hyperfine strengths:
+• one strongly coupled nucleus
+• one moderately coupled nucleus
+• one weakly coupled nucleus
+The hyperfine tensors used in the simulations were chosen to produce anisotropic interactions
+and were inspired by hyperfine couplings calculated for flavin adenine dinucleotide (FAD) and
+tryptophan radical (Trp) molecules using density functional theory in previous studies [REF].
+These values are representative of the range of hyperfine couplings expected in cryptochrome
+radical pairs.
+The full Hamiltonian therefore included:
+• electron Zeeman interaction with an Earth-strength magnetic field (𝐵 ≈ 47 𝜇𝑇 ),
+• anisotropic hyperfine interactions between electrons and nuclei,
+• electron–electron exchange interaction,
+• magnetic dipolar interaction between the electrons.
+The exchange and dipolar parameters were chosen in the 𝐷 = −3𝐽cancellation regime
+discussed earlier, restoring degeneracies in the singlet–triplet manifold and allowing the Zeeman
+interaction to play a dominant role in the spin dynamics.
+Within the Overhauser approximation, the nuclear spins were replaced by classical effective
+magnetic fields acting on each electron. These fields were generated by sampling nuclear spin
+configurations and projecting their hyperfine interactions into an effective field acting on the
+38
+
+
+--- PAGE 49 ---
+electrons. Ensemble averages over many such realizations were then used to approximate the
+semiclassical dynamics.
+All simulations in this section were performed under closed-system dynamics, isolating the
+effect of the nuclear environment itself rather than environmental dissipation
+5.21 Nuclear Initial State Scenarios
+Two physically distinct nuclear initial states were considered in order to probe different
+regimes of the nuclear environment.
+5.22 Scenario A: Fully Polarized Nuclear Environment
+In the first scenario, all nuclear spins were initialized in the fully polarized “all-up” state. This
+configuration represents an extreme but useful limit in which the nuclear environment acts as a
+deterministic effective magnetic field.
+Under the Overhauser approximation, this configuration reduces to a single static classical
+field realization, whereas the full quantum simulation evolves the nuclear spins dynamically under
+the hyperfine interaction.
+Figure: All-Up Nuclear Initial State — Singlet Population
+39
+
+
+--- PAGE 50 ---
+The resulting singlet population dynamics for the full quantum model and the Overhauser
+approximation are shown in Figure X. While both approaches produce oscillatory singlet–triplet
+conversion, the detailed structure of the oscillations differs significantly.
+The full quantum model exhibits irregular oscillatory structure arising from the coherent
+coupling between the electrons and the discrete nuclear spin environment. In contrast, the
+Overhauser approximation produces smoother oscillations dominated by the effective classical
+field generated by the polarized nuclei.
+To quantify these differences, the Fourier spectra of the singlet population dynamics were
+computed.
+Figure: All-Up Nuclear Initial State — FFT Comparison
+The spectral analysis reveals substantial differences between the two descriptions. The full
+quantum model produces a broad distribution of frequency components reflecting the many-body
+spin interactions in the system, whereas the Overhauser approximation concentrates spectral
+weight at a smaller number of frequencies associated with the effective classical field.
+The resulting spectral mismatch indicates that the semiclassical model fails to reproduce the
+full dynamical structure of the radical pair system in this regime.
+40
+
+
+--- PAGE 51 ---
+5.23 Scenario B: Maximally Mixed Nuclear Environment
+The second scenario considered a maximally mixed initial nuclear state, representing a
+high-temperature nuclear environment in which all nuclear spin configurations are equally
+probable. This configuration is more representative of realistic biological conditions, where
+nuclear polarization is typically negligible.
+In the Overhauser approximation, this situation was modeled by performing an ensemble
+average over many randomly sampled nuclear field realizations.
+Figure: Maximally Mixed Nuclear Initial State — Singlet Population
+In this regime the Overhauser approximation reproduces the average behavior of the singlet
+population more closely than in the polarized case. The ensemble averaging smooths out many of
+the coherent oscillatory features present in individual quantum trajectories.
+Nevertheless, the full quantum simulation continues to exhibit oscillatory structure arising
+from coherent electron–nuclear interactions that are not fully captured by the classical
+approximation.
+The frequency-domain comparison again reveals important differences.
+41
+
+
+--- PAGE 52 ---
+Figure: Maximally Mixed Nuclear Initial State — FFT Comparison
+Although the spectral mismatch is smaller than in the polarized case, the full quantum model
+still contains additional spectral components absent in the Overhauser approximation. These
+features arise from coherent nuclear dynamics and multi-spin interactions that are suppressed in
+the semiclassical description.
+5.24 Interpretation
+The results of these simulations demonstrate that the Overhauser field approximation captures
+some qualitative aspects of radical pair spin dynamics but fails to reproduce several key features
+of the full quantum system.
+In particular, the semiclassical approximation suppresses:
+• coherent oscillatory structures generated by discrete nuclear spin dynamics,
+• multi-frequency behavior arising from many-body spin interactions,
+• dynamical correlations between electrons and nuclear spins.
+These effects become especially apparent when the nuclear environment is strongly polarized
+or when individual nuclear couplings play a significant role in the dynamics.
+42
+
+
+--- PAGE 53 ---
+Even in the maximally mixed nuclear case, where ensemble averaging improves agreement
+with the semiclassical model, the full quantum simulation reveals additional dynamical structure
+that cannot be captured by a classical field description.
+These findings indicate that explicit quantum mechanical treatment of nuclear spins is
+necessary whenever the radical pair system operates in a regime where discrete hyperfine
+interactions compete with other interaction scales, such as Zeeman, exchange, and dipolar
+couplings.
+5.25 Implications for Radical Pair Modeling
+The comparison performed here highlights an important limitation of semiclassical radical
+pair models. While Overhauser-field approximations can reproduce average magnetic effects of
+the nuclear environment, they eliminate the quantum correlations and coherent information
+exchange that naturally arise in the full spin system.
+The results therefore support the broader thesis of this work: that radical pair systems should
+be understood as mesoscopic quantum systems whose dynamics involve complex information
+exchange between electrons and nuclear spins.
+Explicit quantum nuclear environments can store, redistribute, and return quantum
+information to the electronic subsystem, generating dynamical behavior that is inaccessible to
+mean-field descriptions.
+This observation will play an important role in subsequent sections, where the nuclear
+environment is shown to generate structured entanglement dynamics and effective memory effects
+that resemble non-Markovian behavior even in the absence of an external bath.
+6.3 Entanglement Dynamics and Exchange–Dipolar Interaction Effects
+While the singlet–triplet populations of radical pair systems provide a direct observable for
+magnetoreception, they capture only a limited portion of the underlying quantum dynamics. The
+full radical pair system consists of a network of interacting spins in which quantum correlations
+can flow between electrons and nuclei. Tracking these correlations provides insight into how
+43
+
+
+--- PAGE 54 ---
+quantum information propagates through the system and whether the nuclear environment acts
+merely as classical noise or as an active participant in the spin dynamics.
+To investigate this behavior, the von Neumann entropy of various subsystems was tracked
+during closed-system evolution. Monitoring subsystem entropy provides a direct measure of
+entanglement generation and redistribution within the system. In particular, increases in the
+entropy of a subsystem indicate the buildup of entanglement with the remainder of the system.
+This analysis serves two purposes within the broader goal of validating the need for a full
+quantum mechanical treatment of radical pair dynamics. First, it reveals whether the nuclear
+environment behaves as a passive background field or as a dynamical quantum reservoir capable
+of storing and returning quantum information. Second, it allows us to determine how additional
+interaction terms, particularly exchange and dipolar couplings, influence the flow of entanglement
+within the radical pair system.
+5.26 Model System
+To isolate the phenomenology of entanglement exchange, a simplified radical pair model was
+used for these simulations. The system consists of two electron spins forming the radical pair,
+with two nuclear spins coupled to electron 1 and no nuclei coupled to electron 2. This minimal
+configuration preserves the essential structure of electron–nuclear interactions while keeping the
+Hilbert space small enough to clearly visualize subsystem dynamics.
+The hyperfine couplings were chosen to include both a strongly coupled nucleus and a weakly
+coupled nucleus, producing two distinct interaction scales. As in the previous sections, the
+external magnetic field was fixed near Earth strength (𝐵 ≈ 47 𝜇𝑇 ), corresponding to a Zeeman
+frequency of approximately 𝑓 𝑍 ≈ 1.4 MHz.
+All simulations presented in this section were performed under closed-system dynamics,
+allowing the intrinsic Hamiltonian interactions alone to determine the evolution of correlations
+within the system.
+44
+
+
+--- PAGE 55 ---
+This simplified model was chosen intentionally: since the goal is to reveal general qualitative
+features of entanglement flow rather than reproduce a specific molecular system, the reduced
+nuclear environment provides a clearer view of the underlying dynamical mechanisms.
+5.27 Subsystem Entropy Tracking
+The entanglement dynamics were analyzed by computing the von Neumann entropy
+𝑆 ( 𝜌 𝐴 ) = −Tr( 𝜌 𝐴log 𝜌 𝐴 )
+2
+for several subsystems obtained by tracing out the remaining degrees of freedom.
+Three subsystem partitions were examined:
+• the global electronic subsystem, consisting of both electrons,
+• the electron–nuclear subsystem containing electron 1 and its nuclei,
+• the total system.
+Because the overall system evolves unitarily, the total entropy of the full system remains
+constant. However, entropy within subsystems can fluctuate as entanglement is redistributed
+among different degrees of freedom.
+5.28 Effect of Exchange and Dipolar Interactions
+To determine the role of electron–electron couplings in shaping entanglement dynamics,
+simulations were performed both with and without the exchange and dipolar interaction terms.
+45
+
+
+--- PAGE 56 ---
+5.29 Dynamics Without Exchange and Dipolar Interactions
+Figure: Entropy Dynamics Without Exchange/Dipolar Interactions
+When the exchange and dipolar interactions are omitted, the subsystem entropy displays rapid
+oscillations driven primarily by hyperfine interactions. These oscillations correspond to periodic
+entanglement generation between the electron spins and the nuclear environment.
+However, the structure of the entropy dynamics remains relatively simple. The oscillations
+occur at frequencies determined by the hyperfine interaction scales and lack any clear long-time
+modulation
+5.30 Dynamics With Exchange and Dipolar Interactions
+Figure: Entropy Dynamics With Exchange/Dipolar Interactions
+46
+
+
+--- PAGE 57 ---
+The inclusion of exchange and dipolar interactions dramatically alters the behavior of the
+subsystem entropies. In addition to the fast oscillations observed previously, a slow envelope
+modulation emerges in the entropy dynamics.
+This envelope structure reflects the coherent exchange of quantum information between the
+electronic subsystem and the nuclear environment. Entanglement periodically flows from the
+electrons into the nuclei and then returns to the electronic subsystem at later times.
+These revivals indicate that the nuclear environment does not behave as a simple decohering
+bath. Instead, it temporarily stores quantum information and subsequently returns it to the
+electronic degrees of freedom. This behavior is characteristic of non-Markovian dynamics, where
+information flows bidirectionally between a system and its environment.
+Importantly, these structured entanglement revivals appear despite the fact that the overall
+dynamics are purely unitary. The nuclear spins therefore act as an internal non-Markovian bath
+for the radical pair electrons.
+5.31 Zeeman Dependence of the Entanglement Envelope
+The slow envelope modulation observed in the entropy dynamics suggests the presence of an
+additional dynamical frequency scale beyond the hyperfine interaction frequencies. To investigate
+the origin of this modulation, simulations were performed across a range of Zeeman interaction
+strengths.
+The oscillation frequency of the entropy envelope was extracted for each value of the Zeeman
+splitting and compared to the corresponding Zeeman frequency.
+47
+
+
+--- PAGE 58 ---
+Figure: Entropy Envelope Frequency vs Zeeman Frequency
+The results reveal an approximately linear relationship between the entropy envelope frequency
+and the Zeeman frequency over the range of field strengths examined. Near Earth-strength
+magnetic fields, the envelope frequency closely tracks the Zeeman splitting of the electron spins.
+This behavior indicates that the external magnetic field controls the large-scale flow of
+entanglement within the system, while the hyperfine interactions generate the faster oscillatory
+structure.
+Physically, the Zeeman interaction introduces an additional energy scale that competes with
+the hyperfine couplings. The resulting interference between these interactions produces the slow
+beating pattern observed in the subsystem entropies.
+5.32 Interpretation: Nuclear Spins as a Non-Markovian Bath
+The entanglement dynamics observed in these simulations demonstrate that the nuclear
+environment plays a far more active role than is typically assumed in semiclassical radical pair
+models.
+Rather than acting as a static background field, the nuclei form a structured quantum reservoir
+that can:
+• store quantum information originating from the electrons,
+• return this information to the electronic subsystem at later times,
+48
+
+
+--- PAGE 59 ---
+• generate coherent entanglement revivals on microsecond timescales.
+This behavior resembles the memory effects commonly associated with non-Markovian
+environments. However, in the radical pair system these effects arise naturally from the finite,
+discrete nuclear environment rather than from an external bath.
+These results therefore suggest a possible pathway toward Zeno-like stabilization mechanisms
+mediated by nuclear dynamics. If certain nuclear configurations or interactions effectively slow
+the flow of quantum information out of the electronic subsystem, they could prolong coherence or
+stabilize particular spin subspaces.
+5.33 Implications for Radical Pair Modeling
+The results presented here reinforce the central conclusion of this section: that radical pair
+systems occupy a regime in which multiple interaction scales compete to shape the spin dynamics.
+In such regimes, semiclassical approximations that treat the nuclear environment as a static or
+averaged magnetic field are unable to capture the full dynamical behavior of the system.
+Explicit quantum mechanical treatment of the nuclear spins is therefore essential for
+accurately describing:
+• the redistribution of entanglement within the system,
+• coherent information backflow between electrons and nuclei,
+• the emergence of slow dynamical structures driven by the Zeeman interaction.
+These findings further support the view that radical pairs should be understood as mesoscopic
+quantum systems whose behavior cannot be reduced to simple classical noise models.
+In the following sections, we build on this insight by exploring how controlled manipulations
+of the nuclear environment—including nuclear spin operations and hypothetical decay
+events—can further restructure the entanglement landscape of the radical pair system.
+6.4 Controlled Nuclear Spin Operations and Spectral Restructuring
+49
+
+
+--- PAGE 60 ---
+Building on the observation that the nuclear environment acts as a structured,
+information-storing reservoir for the radical pair system, we now investigate whether this
+environment can be actively manipulated to steer the spin dynamics. In particular, we examine the
+effect of localized unitary operations applied to individual nuclear spins during the evolution of
+the system.
+The motivation for this study is twofold. First, if the nuclear environment is capable of storing
+and returning quantum information—as demonstrated in Section 5.3—then targeted perturbations
+to specific nuclear degrees of freedom may allow controlled modification of the subsequent
+dynamics. Second, identifying which components of the nuclear environment exert the greatest
+influence on the radical pair provides insight into which physical mechanisms may be most
+relevant for controlling spin-dependent chemical outcomes.
+To this end, we introduce a controlled nuclear spin rotation in the form of a 𝜋-pulse applied to
+a selected nucleus at a fixed time during the evolution. The system is evolved unitarily under the
+full Hamiltonian described in Chapter 2, and at time 𝑡 𝑓 𝑙𝑖𝑝a unitary operation of the form
+𝑈 𝑓 𝑙𝑖𝑝 = 𝑒−𝑖𝜋𝐼 𝛼
+is applied to a single nuclear spin, where 𝐼 𝛼is the spin operator along a chosen axis. The system is
+then evolved further under the same Hamiltonian. This protocol provides a controlled
+perturbation that allows us to probe the sensitivity of the radical pair dynamics to specific
+components of the nuclear environment.
+Simulations were performed using the six-nucleus model introduced in Section 5.2, in which
+each electron is coupled to three nuclei with heterogeneous hyperfine strengths: one strongly
+coupled nucleus, one moderately coupled nucleus, and one weakly coupled nucleus with coupling
+strength comparable to the Zeeman interaction. The flip operation was applied separately to two
+representative nuclei: (i) the strongly coupled nucleus and (ii) the weakly coupled nucleus with
+hyperfine strength on the order of the Zeeman splitting.
+50
+
+
+--- PAGE 61 ---
+5.34 5.4.1 Strongly Coupled Nuclear Spin Flip
+The effect of a 𝜋-pulse applied to the strongly coupled nucleus is shown in Fig. 5.7(a–c). The
+left panel (Fig. 5.7a) shows the singlet and triplet population dynamics before and after the
+control pulse applied at 𝑡 𝑓 𝑙𝑖𝑝.
+Following the pulse, a clear redistribution of population among the electronic spin subspaces
+is observed. The system transitions from oscillations about a pre-pulse steady configuration to a
+distinct post-pulse population balance, with a reduction in singlet population and a corresponding
+increase in triplet occupation. This indicates that the control operation has redirected the system
+into a different region of accessible spin-state space.
+Fig. 5.7: Effect of a 𝜋-pulse applied to a strongly coupled nucleus.
+(a) Singlet and triplet populations before and after the pulse applied at 𝑡 𝑓 𝑙𝑖𝑝, showing clear
+redistribution of population among spin subspaces.
+(b) Fourier spectrum of the singlet population before the pulse.
+(c) Fourier spectrum after the pulse. The control operation primarily modifies
+higher-frequency components associated with strong hyperfine interactions, while preserving the
+low-frequency Zeeman-scale structure.
+This behavior arises from the strong hyperfine coupling between the selected nucleus and the
+electron spin. The applied rotation modifies the joint electron–nuclear state, thereby altering the
+subsequent coherent evolution of the electronic subsystem.
+The corresponding Fourier spectra of the singlet population, shown in Fig. 5.7(b–c), further
+clarify the nature of this control. While the low-frequency Zeeman-scale component remains
+present, the most significant changes occur in the higher-frequency structure of the spectrum.
+51
+
+
+--- PAGE 62 ---
+These higher-frequency components are associated with strong hyperfine interactions, indicating
+that the pulse predominantly perturbs the fast electron–nuclear dynamics.
+Together, these results demonstrate that strongly coupled nuclei act as population control
+channels, enabling substantial redistribution of electronic spin populations through localized
+nuclear operations.
+5.35 5.4.2 Weak, Near-Zeeman Nuclear Spin Flip
+The effect of applying the same 𝜋-pulse to a weakly coupled nucleus with hyperfine strength
+comparable to the Zeeman splitting is shown in Fig. 5.8(a–c).
+In contrast to the strongly coupled case, the time-domain singlet and triplet populations (Fig.
+5.8a) exhibit minimal qualitative change following the pulse. The overall population balance
+between singlet and triplet subspaces remains largely unchanged, and the oscillatory structure of
+the dynamics is preserved. From a population-based perspective alone, the weak nucleus appears
+to exert only a minor influence on the system.
+Fig. 5.8: Effect of a 𝜋-pulse applied to a weakly coupled nucleus with hyperfine strength near
+the Zeeman scale.
+(a) Singlet and triplet populations before and after the pulse, showing minimal change in
+population dynamics.
+(b) Fourier spectrum of the singlet population before the pulse.
+(c) Fourier spectrum after the pulse. While the Zeeman-frequency peak remains stable,
+significant redistribution of higher-frequency spectral components is observed, indicating
+selective restructuring of the dynamical spectrum.
+52
+
+
+--- PAGE 63 ---
+However, the frequency-domain analysis reveals a qualitatively different effect. The Fourier
+spectra of the singlet population before and after the pulse, shown in Fig. 5.8(b–c), display a clear
+restructuring of spectral weight.
+In particular, the spectral feature associated with the Zeeman frequency (∼ 1.4 MHz) remains
+largely unchanged, while substantial redistribution occurs among higher-frequency components.
+This indicates that the weakly coupled nucleus does not strongly affect population dynamics, but
+instead modifies how different dynamical frequencies contribute to the overall evolution.
+This behavior highlights the special role of nuclei with hyperfine couplings near the Zeeman
+scale. Such nuclei mediate the interplay between slow, field-driven dynamics and faster
+hyperfine-driven processes, enabling selective reshaping of the spectral structure without inducing
+large population changes.
+These results demonstrate that weak, near-resonant nuclei act as spectral control channels,
+influencing the distribution of dynamical frequencies while leaving coarse population observables
+largely intact.
+5.36 5.4.3 Interpretation and Physical Implications
+The results of these controlled nuclear operations reveal a clear distinction between the roles
+played by different components of the nuclear environment. These distinct behaviors are
+illustrated directly in Figs. 5.7 and 5.8, which show that different nuclei within the same
+environment can control qualitatively different aspects of the radical pair dynamics.
+Strongly coupled nuclei exert a dominant influence on the electronic spin populations, enabling
+direct redistribution of singlet and triplet occupation through local operations. In contrast, weak
+nuclei with hyperfine strengths near the Zeeman scale primarily influence the spectral structure of
+the dynamics, redistributing frequency components without inducing large population changes.
+This separation of roles highlights the multi-scale nature of the radical pair system. Different
+interaction strengths govern different aspects of the dynamics:
+• strong hyperfine couplings control fast oscillatory behavior and population transfer,
+53
+
+
+--- PAGE 64 ---
+• Zeeman-scale interactions set the global dynamical envelope,
+• weak, near-resonant nuclei mediate coupling between these regimes.
+Importantly, these results reinforce the conclusion of Section 5.3 that the nuclear environment
+cannot be treated as a passive background field. Instead, it functions as a structured quantum
+subsystem whose individual components can selectively control different features of the dynamics.
+From a broader perspective, this suggests that control of radical pair dynamics may not require
+direct manipulation of the electron spins themselves. Instead, targeted interventions in the nuclear
+environment—particularly those tuned to relevant interaction scales—may provide a viable
+pathway for steering spin dynamics and, consequently, spin-dependent chemical processes.
+These findings provide further evidence that radical pair systems should be understood as
+controllable mesoscopic quantum systems, in which environmental degrees of freedom can be
+harnessed to engineer both population dynamics and spectral structure.
+5.37 6.5 Nuclear Decay Dynamics
+Having established that the nuclear environment acts as a structured, information-bearing
+subsystem capable of storing and redistributing quantum correlations (Sections 6.3–6.4), we now
+investigate a more extreme form of nuclear perturbation: a localized, non-unitary decay event.
+Unlike the unitary 𝜋-pulse operations considered previously, nuclear decay introduces an
+irreversible quantum channel acting on the nuclear spin. As developed in Chapter 5, this
+process can be understood as generating entanglement between the remaining proton and emitted
+leptonic degrees of freedom, which are subsequently traced out. The net effect is a depolarizing
+transformation on the nuclear spin whose strength is controlled by the parameter 𝑞, representing
+the weight of the triplet-coupled decay channel.
+The objective of this section is to determine how such a decay-induced modification of a single
+nuclear spin propagates through the radical pair system and alters the resulting spin dynamics.
+54
+
+
+--- PAGE 65 ---
+5.38 Model Setup
+The simulations presented here follow the same six-nucleus radical pair model introduced in
+Section 6.2. The system consists of two electron spins, each coupled to three nuclei with
+heterogeneous hyperfine strengths (strong, intermediate, and weak).
+The protocol is defined as follows:
+• The system is initialized in the electronic singlet state with a maximally mixed nuclear
+environment.
+• The full system evolves under the Hamiltonian described in Chapter 2.
+• At a fixed time 𝑡 𝑑𝑒𝑐𝑎𝑦 = 2 𝜇𝑠, a single nuclear spin undergoes a decay event.
+• The decay is implemented via the quantum channel derived in Chapter 5, with varying
+values of the parameter 𝑞.
+• The system is then evolved forward under the same Hamiltonian.
+To isolate the role of decay-induced entanglement, three representative values of 𝑞are
+considered:
+• 𝑞 = 0.25(weak entanglement),
+• 𝑞 = 0.50(moderate entanglement),
+• 𝑞 = 1.00(maximal entanglement within the model).
+55
+
+
+--- PAGE 66 ---
+Figure 6.X: Singlet and triplet population dynamics before and after a single nuclear decay
+event at 𝑡 = 2 𝜇𝑠, for varying levels of decay-induced entanglement: (a) 𝑞 = 0.25, (b) 𝑞 = 0.50,
+(c) 𝑞 = 1.00. The vertical dashed line indicates the time of the decay event. Populations shown
+include 𝑃 𝑆, 𝑃 𝑇0 , 𝑃 𝑇+ , 𝑃 𝑇− , and total triplet population.
+For small values of 𝑞, corresponding to weak entanglement between the proton and emitted
+leptons, the decay event induces only a modest perturbation to the system.
+Immediately following the decay (Fig. 6.Xa), a slight redistribution of singlet and triplet
+populations is observed. However, the overall oscillatory structure of the dynamics remains
+largely intact. The system continues to exhibit coherent singlet–triplet interconversion with only
+minor shifts in amplitude and phase.
+This behavior is consistent with the interpretation of the decay as a weak depolarizing
+channel, in which the nuclear spin retains significant memory of its pre-decay state. As a result,
+the hyperfine-mediated coupling to the electron spin is only weakly modified.
+At intermediate values of 𝑞, the decay event produces a qualitatively stronger effect on the
+system dynamics (Fig. 6.Xb).
+Following the decay, a clear restructuring of the population dynamics emerges:
+• The amplitude of singlet oscillations is reduced,
+• Triplet populations redistribute toward a new dynamical balance,
+• The post-decay oscillations exhibit modified frequency content and reduced coherence.
+This regime reflects partial loss of information in the nuclear spin due to entanglement with
+the traced-out leptonic degrees of freedom. The nuclear environment no longer acts as a fully
+coherent partner in the dynamics, but instead introduces an element of effective decoherence
+localized to a single site.
+Importantly, the system does not fully thermalize or lose structure. Instead, it transitions into a
+modified coherent regime, indicating that the remaining nuclear degrees of freedom continue to
+support structured dynamics.
+56
+
+
+--- PAGE 67 ---
+In the limit of maximal entanglement within the model, the decay produces a dramatic
+restructuring of the spin dynamics (Fig. 6.Xc).
+The decay event effectively resets the nuclear spin to a highly mixed state, resulting in:
+• Strong suppression of coherent singlet–triplet oscillations,
+• Significant redistribution of population toward triplet subspaces,
+• A marked change in the long-time dynamical behavior of the system.
+This behavior is consistent with the action of a maximal depolarizing channel, in which the
+nuclear spin loses nearly all information about its pre-decay state. Consequently, its role as a
+coherent mediator of electron–nuclear interactions is substantially diminished.
+However, even in this limit, residual oscillatory structure persists, indicating that the remaining
+nuclei continue to participate in the dynamics. The decay therefore acts as a localized disruption
+rather than a global loss of coherence.
+The results presented in Fig. 6.X demonstrate that nuclear decay could hypothetically act as a
+tunable quantum operation on the nuclear environment, with effects that propagate nonlocally
+through the radical pair system.
+Several key observations emerge:
+• The impact of the decay scales continuously with 𝑞, linking the degree of entanglement
+generated during decay to the strength of the induced decoherence.
+• Even a single nuclear event can significantly alter global spin dynamics, highlighting the
+sensitivity of the system to localized perturbations.
+• The nuclear environment retains its role as a structured subsystem, with remaining nuclei
+continuing to mediate coherent dynamics after the decay.
+These findings reinforce the broader conclusion of this thesis: that the nuclear environment
+cannot be treated as a passive or classical background, but instead functions as an active quantum
+subsystem whose internal processes directly shape electron spin dynamics.
+57
+
+
+--- PAGE 68 ---
+A central open question in this model is the physical magnitude of the entanglement
+between the remaining proton and the emitted leptons. While the parameter 𝑞provides a
+convenient way to interpolate between different regimes, its realistic value for nuclear decay
+processes remains uncertain.
+Direct measurement of this entanglement is experimentally challenging, particularly due to the
+difficulty of detecting and performing joint measurements on emitted antineutrinos. As a result,
+the degree of entanglement is treated here as a free parameter.
+However, the results suggest a potential indirect probe:
+The singlet and triplet population dynamics of the radical pair may serve as a sensitive
+diagnostic of the entanglement generated during decay.
+In particular:
+• Increasing 𝑞leads to systematic suppression and restructuring of coherent oscillations,
+• Distinct dynamical signatures emerge across different entanglement regimes,
+• These signatures persist over microsecond timescales relevant to radical pair reactions.
+This raises the possibility that spin-selective observables within the radical pair system
+could, in principle, encode information about otherwise inaccessible quantum correlations
+in the decay products.
+The nuclear decay model introduced here provides a proof-of-principle demonstration that
+quantum processes within the nuclear environment—beyond simple spin rotations or
+thermal noise—can strongly influence radical pair dynamics.
+While the present treatment is intentionally simplified, it highlights several important
+directions:
+• Nuclear processes can act as engineered quantum channels within the environment,
+• Entanglement generated outside the radical pair system can feed back into observable spin
+dynamics,
+58
+
+
+--- PAGE 69 ---
+• Radical pairs may provide a platform for indirectly probing otherwise inaccessible quantum
+processes.
+A more complete understanding of these effects would require incorporating realistic nuclear
+physics, including angular momentum beyond spin, energy distributions of decay products, and
+coupling to external degrees of freedom. These extensions remain an open avenue for future work.
+59
+
+
+--- PAGE 70 ---
+CHAPTER 6
+RESULTS
+Having established the quantum mechanical radical pair model and its open-system extension
+in the preceding chapters, we now investigate the dynamical behavior of the system through
+numerical simulation. The objective of this results chapter is to determine how the interplay of
+coherent spin interactions and environmental coupling shapes the evolution of quantum
+correlations, information flow, and observable spin dynamics within the radical pair mechanism.
+The radical pair is modeled as a composite many-body quantum system consisting of two
+electron spins coupled to surrounding nuclear environments through anisotropic hyperfine
+interactions. As discussed in Chapter 2, the coherent dynamics of this system arise from a
+Hamiltonian containing Zeeman, hyperfine, exchange, dipolar, and quadrupolar terms. These
+interactions generate singlet–triplet interconversion, electron–nuclear entanglement, and complex
+multi-spin dynamics that cannot generally be captured by semiclassical approximations.
+In realistic biological environments, however, the radical pair is not an isolated system. Protein
+vibrations, solvent fluctuations, and unresolved environmental degrees of freedom introduce
+decoherence and relaxation processes that can modify spin dynamics. Chapter 3 introduced the
+Gorini–Kossakowski–Sudarshan–Lindblad (GKSL) master equation as a baseline framework for
+incorporating such environmental effects in a controlled manner. Within this framework,
+dissipative and dephasing processes are modeled through Lindblad jump operators that couple the
+radical pair to an effective bosonic bath representing its surrounding molecular environment.
+The results presented in this chapter pursue three central objectives. First, we investigate how
+rapidly open-system dynamics drive the radical pair toward a steady state and quantify the
+timescale over which the system retains memory of its initial condition. Second, we compare the
+full quantum nuclear model with semiclassical approximations of the nuclear environment to
+identify regimes where explicitly quantum nuclear dynamics become essential. Third, we examine
+60
+
+
+--- PAGE 71 ---
+how competing interaction scales and environmental couplings influence the generation and
+persistence of quantum correlations within the radical pair system.
+Together, these investigations establish the dynamical regimes in which a fully quantum
+mechanical treatment of the radical pair is necessary and identify the physical mechanisms
+responsible for long-lived coherence, correlation exchange, and environmental memory effects.
+OPEN-SYSTEM DYNAMICS AND THERMALIZATION
+Motivation. Radical pair reactions occur within complex biological environments containing
+many uncontrolled degrees of freedom, including protein vibrations, solvent fluctuations, and
+unresolved nuclear spins. As a result, the radical pair spin system cannot be considered perfectly
+isolated and must, in principle, be treated as an open quantum system. While the Hamiltonian
+dynamics introduced in Chapter 2 capture the intrinsic spin interactions responsible for
+singlet–triplet interconversion, environmental couplings may introduce additional decoherence
+and dissipative processes that modify the effective spin dynamics.
+Beyond simple decoherence, environmental interactions may qualitatively alter system
+behavior through quantum measurement effects. In particular, Kominis proposed that
+spin-selective recombination channels in radical pair reactions effectively perform continuous
+measurements of the singlet projector, potentially driving the system into a quantum Zeno regime
+in which specific spin subspaces become dynamically stabilized. In this regime, sufficiently
+strong environmental coupling suppresses coherent transitions and confines the system to
+restricted regions of Hilbert space.
+Motivated by this possibility, we investigate whether biologically inspired environmental
+dissipation could produce analogous effects within a more general open-system description of the
+radical pair. Specifically, we explore whether spontaneous-emission–type Lindblad processes
+acting on the system’s energy eigenbasis could generate Zeno-like stabilization or protected
+dynamical subspaces within the radical pair Hilbert space.
+61
+
+
+--- PAGE 72 ---
+System setup. Simulating open-system radical pair dynamics over the long timescales
+required for thermalization can be computationally demanding, particularly when multiple nuclear
+spins are included explicitly. To make these simulations tractable while retaining the essential
+features of the radical pair mechanism, a simplified model was employed for the thermalization
+investigations. The system consists of two electron spins forming a radical pair. Electron 1 is
+coupled to two nuclear spins through anisotropic hyperfine interactions, while electron 2 is
+assumed to have no local nuclear environment. The two nuclei represent a minimal internal
+environment containing both strong and weak hyperfine couplings. The hyperfine tensors used in
+these simulations correspond to one strongly coupled nucleus and one weakly coupled nucleus,
+𝐴 ∼ 20 MHz and 𝐴 ∼ 20 kHz, providing a minimal representation of the heterogeneous
+strong weak
+hyperfine environments expected in realistic radical pair systems. The external magnetic field was
+fixed at approximately Earth strength, 𝐵 ≈ 47 𝜇T, aligned along the 𝑧-axis. Electron–electron
+exchange and dipolar interactions were included using the cancellation regime 𝐷 = −3𝐽,
+consistent with the parameter regime discussed in Chapter 2. This regime restores degeneracies
+within the singlet–triplet manifold that allow the weak Zeeman interaction to play a dominant role
+in the spin dynamics.
+Open-system effects were incorporated using the GKSL master equation introduced in
+Chapter 3,
+𝜌(cid:164) = −𝑖 [𝐻, 𝜌] + L ( 𝜌),
+where the dissipator
+(cid:18) (cid:19)
+∑︁ 1
+L ( 𝜌) = 𝛾 𝑘 𝐿 𝑘 𝜌𝐿† 𝑘 − {𝐿† 𝑘 𝐿 𝑘 , 𝜌}
+2
+𝑘
+models environmental decoherence and dissipation. The Lindblad operators were chosen to
+represent spontaneous-emission–like transitions between energy eigenstates of the system
+Hamiltonian. The dissipation rates used in these simulations span the range
+𝛾 𝑘 ∼ 10−9 s−1 − 10−3 s−1, consistent with estimates for weak environmental coupling in biological
+systems.
+62
+
+
+--- PAGE 73 ---
+Figure 6.1 Open-system trace distance to a late-time steady-state proxy versus time. The decay is
+monotonic, but the relaxation timescales remain long compared with the microsecond radical-pair
+lifetime.
+Thermalization timescales. To quantify how environmental coupling drives the system
+toward equilibrium, the approach to a steady state was analyzed using the trace distance between
+the instantaneous system state and a late-time steady-state proxy. The steady state was estimated
+by averaging the density matrix over the final portion of the simulation time window and
+comparing this average state with the evolving system state. The resulting trace distance provides
+a measure of how much information about the initial state remains in the system at a given time.
+Figure Figure 6.1 shows the decay of the trace distance to the late-time steady-state proxy. The
+results reveal a clear separation between the timescales governing coherent spin dynamics and
+those associated with environmental relaxation. While coherent oscillations driven by hyperfine
+and Zeeman interactions occur on microsecond timescales, the open-system dynamics approach a
+steady state only on much longer timescales of order milliseconds. This behavior indicates that
+the radical pair system retains a substantial memory of its initial condition over the entire
+microsecond lifetime typically associated with radical pair recombination.
+63
+
+
+--- PAGE 74 ---
+Figure 6.2 Singlet and triplet dynamics under increasing GKSL rates. The physically motivated
+rates are too small to alter the microsecond-scale dynamics appreciably; only strongly exaggerated
+rates visibly modify the evolution.
+Dependence on dissipation rates. To determine whether stronger environmental coupling
+could influence the dynamics on biologically relevant timescales, the GKSL dissipation rates were
+systematically increased across several orders of magnitude. To ensure the open-system
+Lindbladian stayed consistent with the weak-coupling Born approximation, the common
+convention of keeping the maximum dissipation rates, 𝛾 𝐷,max , at most ten times less than the
+characteristic frequencies of the system, was followed. The characteristic frequency was chosen to
+be the Zeeman frequency, 𝑓 𝑧, where 𝑓 𝑧 ≈ 1.4 MHz ⇒ 𝜔 𝑍 ≈ 8.8 rad/𝜇s. Defining 𝜖 = 𝛾 𝐷 /𝜔 𝑧,
+multiple values of 𝜖 were used to capture when GKSL bath effects become non-negligible on
+microsecond timescales.
+The behavior across the rate sweep is summarized in Figure Figure 6.2. The results
+demonstrate that the dissipation rates expected from spontaneous-emission–type processes are far
+64
+
+
+--- PAGE 75 ---
+too small to affect the system on microsecond timescales. For the physically motivated parameter
+regime, the open-system dynamics are essentially indistinguishable from the purely unitary
+evolution of the closed system. Only when the dissipation rates are artificially increased by several
+orders of magnitude do environmental effects begin to visibly modify the spin dynamics within
+the radical pair lifetime.
+This behavior can be understood by comparing the characteristic scales of coherent and
+dissipative processes. The dominant coherent frequencies in the system are set by the Zeeman and
+hyperfine interactions, which lie in the megahertz regime. In contrast, biologically motivated
+dissipation rates are many orders of magnitude smaller, preventing the environment from
+significantly influencing the dynamics over microsecond timescales.
+Implications for Zeno stabilization. One of the motivations for introducing open-system
+dynamics was to explore whether environmental coupling could produce quantum Zeno–like
+stabilization of particular spin subspaces. In principle, sufficiently strong dissipative channels can
+act as continuous measurements, suppressing coherent transitions and confining the system to
+restricted regions of Hilbert space. However, the simulations presented here indicate that the
+dissipation rates required to induce such Zeno stabilization are far larger than those expected for
+biological environments. For realistic environmental coupling strengths, the radical pair dynamics
+remain effectively unitary on magnetoreception timescales. Consequently,
+spontaneous-emission–type relaxation processes are unlikely to play a significant role in shaping
+radical pair spin dynamics or generating Zeno-protected subspaces in the system’s energy
+eigenbasis.
+OVERHAUSER FIELD APPROXIMATION VS FULL QUANTUM NUCLEAR DYNAMICS
+Many theoretical treatments of radical pair magnetoreception replace the explicit quantum
+mechanical nuclear spin environment with an effective classical magnetic field acting on the
+electron spins. This approach, commonly referred to as the Overhauser field approximation,
+models the nuclear environment as a static or randomly sampled effective magnetic field
+65
+
+
+--- PAGE 76 ---
+generated by the surrounding nuclei. Such approximations greatly reduce computational
+complexity by eliminating the nuclear Hilbert space while still capturing the average magnetic
+influence of the nuclear environment on the radical pair.
+However, this semiclassical description neglects several intrinsically quantum mechanical
+features of the nuclear spin environment. In particular, explicit nuclear spins can become
+entangled with the electronic subsystem and can exchange quantum information with the radical
+pair over time. These processes cannot be captured by a classical field approximation and may
+therefore play an important role in determining the spin dynamics of the system. To investigate
+the validity of the Overhauser approximation in the context of radical pair magnetoreception, we
+compare the full quantum mechanical model of the nuclear environment with a semiclassical
+Overhauser-field treatment.
+Model setup. For these simulations, the radical pair model was extended beyond the
+simplified thermalization system to include a larger nuclear environment. Each electron spin was
+coupled to three nuclear spins, yielding a total of six nuclear spins in the system. The hyperfine
+coupling structure was chosen to mimic heterogeneous nuclear environments, with each electron
+coupled to one strongly coupled nucleus, one moderately coupled nucleus, and one weakly
+coupled nucleus. The hyperfine tensors were chosen to produce anisotropic interactions and were
+inspired by hyperfine couplings calculated for flavin adenine dinucleotide (FAD) and tryptophan
+radical (Trp) molecules using density functional theory in previous studies [REF]. All simulations
+in this section were performed under closed-system dynamics, isolating the effect of the nuclear
+environment itself rather than environmental dissipation.
+Scenario A: fully polarized nuclear environment. In the first scenario, all nuclear spins
+were initialized in the fully polarized “all-up” state. This configuration represents an extreme but
+useful limit in which the nuclear environment acts as a deterministic effective magnetic field.
+Under the Overhauser approximation, this configuration reduces to a single static classical field
+realization, whereas the full quantum simulation evolves the nuclear spins dynamically under the
+hyperfine interaction.
+66
+
+
+--- PAGE 77 ---
+Figure 6.3 All-up nuclear initial state: singlet population dynamics for the full quantum model
+and the Overhauser approximation. Although both descriptions show singlet–triplet oscillations,
+the detailed temporal structure differs strongly.
+The resulting singlet population dynamics for the full quantum model and the Overhauser
+approximation are shown in Figure Figure 6.3. While both approaches produce oscillatory
+singlet–triplet conversion, the detailed structure of the oscillations differs significantly. The full
+quantum model exhibits irregular oscillatory structure arising from the coherent coupling between
+the electrons and the discrete nuclear spin environment. In contrast, the Overhauser
+approximation produces smoother oscillations dominated by the effective classical field generated
+by the polarized nuclei.
+The Fourier comparison in Figure Figure 6.4 reveals substantial differences between the two
+descriptions. The full quantum model produces a broad distribution of frequency components
+reflecting the many-body spin interactions in the system, whereas the Overhauser approximation
+concentrates spectral weight at a smaller number of frequencies associated with the effective
+classical field. The resulting spectral mismatch indicates that the semiclassical model fails to
+reproduce the full dynamical structure of the radical pair system in this regime.
+67
+
+
+--- PAGE 78 ---
+Figure 6.4 All-up nuclear initial state: Fourier-spectrum comparison for the full quantum model
+and the Overhauser approximation. The semiclassical model concentrates spectral weight into a
+smaller set of frequencies than the explicit quantum description.
+Scenario B: maximally mixed nuclear environment. The second scenario considered a
+maximally mixed initial nuclear state, representing a high-temperature nuclear environment in
+which all nuclear spin configurations are equally probable. This configuration is more
+representative of realistic biological conditions, where nuclear polarization is typically negligible.
+In the Overhauser approximation, this situation was modeled by performing an ensemble average
+over many randomly sampled nuclear field realizations.
+Figure Figure 6.5 shows the time-domain behavior for the maximally mixed nuclear state. In
+this regime the Overhauser approximation reproduces the average behavior of the singlet
+population more closely than in the polarized case. The ensemble averaging smooths out many of
+the coherent oscillatory features present in individual quantum trajectories. Nevertheless, the full
+quantum simulation continues to exhibit oscillatory structure arising from coherent
+electron–nuclear interactions that are not fully captured by the classical approximation.
+The corresponding Fourier-domain comparison is shown in Figure Figure 6.6. Although the
+spectral mismatch is smaller than in the polarized case, the full quantum model still contains
+68
+
+
+--- PAGE 79 ---
+Figure 6.5 Maximally mixed nuclear initial state: singlet population dynamics for the full
+quantum model and the Overhauser approximation. Ensemble averaging improves agreement, but
+residual coherent structure remains in the full quantum calculation.
+Figure 6.6 Maximally mixed nuclear initial state: Fourier-spectrum comparison. Even after
+ensemble averaging, the full quantum model retains additional spectral components absent in the
+Overhauser approximation.
+69
+
+
+--- PAGE 80 ---
+additional spectral components absent in the Overhauser approximation. These features arise
+from coherent nuclear dynamics and multi-spin interactions that are suppressed in the
+semiclassical description.
+The results of these simulations demonstrate that the Overhauser field approximation captures
+some qualitative aspects of radical pair spin dynamics but fails to reproduce several key features
+of the full quantum system. In particular, the semiclassical approximation suppresses coherent
+oscillatory structures generated by discrete nuclear spin dynamics, multi-frequency behavior
+arising from many-body spin interactions, and dynamical correlations between electrons and
+nuclear spins. These findings indicate that explicit quantum mechanical treatment of nuclear spins
+is necessary whenever the radical pair system operates in a regime where discrete hyperfine
+interactions compete with other interaction scales, such as Zeeman, exchange, and dipolar
+couplings.
+ENTANGLEMENT DYNAMICS AND EXCHANGE–DIPOLAR INTERACTION EFFECTS
+While the singlet–triplet populations of radical pair systems provide a direct observable for
+magnetoreception, they capture only a limited portion of the underlying quantum dynamics. The
+full radical pair system consists of a network of interacting spins in which quantum correlations
+can flow between electrons and nuclei. Tracking these correlations provides insight into how
+quantum information propagates through the system and whether the nuclear environment acts
+merely as classical noise or as an active participant in the spin dynamics. To investigate this
+behavior, the von Neumann entropy of various subsystems was tracked during closed-system
+evolution.
+Model system. To isolate the phenomenology of entanglement exchange, a simplified radical
+pair model was used for these simulations. The system consists of two electron spins forming the
+radical pair, with two nuclear spins coupled to electron 1 and no nuclei coupled to electron 2. This
+minimal configuration preserves the essential structure of electron–nuclear interactions while
+keeping the Hilbert space small enough to clearly visualize subsystem dynamics. The hyperfine
+70
+
+
+--- PAGE 81 ---
+Figure 6.7 Entropy dynamics without exchange and dipolar interactions. The subsystem entropies
+oscillate at hyperfine-dominated frequencies but do not show strong long-time envelope
+modulation.
+couplings were chosen to include both a strongly coupled nucleus and a weakly coupled nucleus,
+producing two distinct interaction scales. All simulations presented in this section were performed
+under closed-system dynamics.
+The dynamics without exchange and dipolar terms are shown in Figure Figure 6.7. When the
+exchange and dipolar interactions are omitted, the subsystem entropy displays rapid oscillations
+driven primarily by hyperfine interactions. These oscillations correspond to periodic
+entanglement generation between the electron spins and the nuclear environment. However, the
+structure of the entropy dynamics remains relatively simple, with no clear long-time modulation.
+Figure Figure 6.8 shows that the inclusion of exchange and dipolar interactions dramatically
+alters the behavior of the subsystem entropies. In addition to the fast oscillations observed
+previously, a slow envelope modulation emerges in the entropy dynamics. This envelope structure
+reflects the coherent exchange of quantum information between the electronic subsystem and the
+nuclear environment. Entanglement periodically flows from the electrons into the nuclei and then
+returns to the electronic subsystem at later times. These revivals indicate that the nuclear
+environment does not behave as a simple decohering bath. Instead, it temporarily stores quantum
+71
+
+
+--- PAGE 82 ---
+Figure 6.8 Entropy dynamics with exchange and dipolar interactions included. A slow envelope
+modulation appears on top of the faster hyperfine-scale oscillations, signaling structured
+entanglement exchange between electrons and nuclei.
+information and subsequently returns it to the electronic degrees of freedom. This behavior is
+characteristic of non-Markovian dynamics, where information flows bidirectionally between a
+system and its environment.
+The extracted Zeeman dependence is shown in Figure Figure 6.9. The slow envelope
+modulation observed in the entropy dynamics suggests the presence of an additional dynamical
+frequency scale beyond the hyperfine interaction frequencies. The oscillation frequency of the
+entropy envelope was extracted for each value of the Zeeman splitting and compared to the
+corresponding Zeeman frequency. The results reveal an approximately linear relationship between
+the entropy envelope frequency and the Zeeman frequency over the range of field strengths
+examined. Near Earth-strength magnetic fields, the envelope frequency closely tracks the Zeeman
+splitting of the electron spins.
+These results demonstrate that the nuclear environment plays a far more active role than is
+typically assumed in semiclassical radical pair models. Rather than acting as a static background
+field, the nuclei form a structured quantum reservoir that can store quantum information
+originating from the electrons, return this information to the electronic subsystem at later times,
+72
+
+
+--- PAGE 83 ---
+Figure 6.9 Entropy-envelope frequency versus Zeeman frequency. The slow beating frequency
+tracks the Zeeman scale approximately linearly over the field range examined.
+and generate coherent entanglement revivals on microsecond timescales.
+CONTROLLED NUCLEAR SPIN OPERATIONS AND SPECTRAL RESTRUCTURING
+Building on the observation that the nuclear environment acts as a structured,
+information-storing reservoir for the radical pair system, we now investigate whether this
+environment can be actively manipulated to steer the spin dynamics. To this end, a controlled
+nuclear spin rotation in the form of a 𝜋-pulse was applied to a selected nucleus at a fixed time
+during the evolution,
+𝑈 = 𝑒−𝑖𝜋𝐼 𝛼 ,
+flip
+where 𝐼 𝛼 is the spin operator along a chosen axis.
+Simulations were performed using the six-nucleus model introduced in Section 6.2, in which
+each electron is coupled to three nuclei with heterogeneous hyperfine strengths: one strongly
+coupled nucleus, one moderately coupled nucleus, and one weakly coupled nucleus with coupling
+strength comparable to the Zeeman interaction. The flip operation was applied separately to two
+representative nuclei: (i) the strongly coupled nucleus and (ii) the weakly coupled nucleus with
+hyperfine strength on the order of the Zeeman splitting.
+73
+
+
+--- PAGE 84 ---
+Figure 6.10 Effect of a 𝜋-pulse applied to a strongly coupled nucleus. (a) Singlet and triplet
+populations before and after the pulse applied at 𝑡 , showing clear redistribution of population
+flip
+among spin subspaces. (b) Fourier spectrum of the singlet population before the pulse. (c) Fourier
+spectrum after the pulse. The control operation primarily modifies higher-frequency components
+associated with strong hyperfine interactions, while preserving the low-frequency Zeeman-scale
+structure.
+6.1 Strongly coupled nuclear spin flip
+The effect of a 𝜋-pulse applied to the strongly coupled nucleus is shown in Figure Figure 6.10.
+Following the pulse, a clear redistribution of population among the electronic spin subspaces is
+observed. The system transitions from oscillations about a pre-pulse steady configuration to a
+distinct post-pulse population balance, with a reduction in singlet population and a corresponding
+increase in triplet occupation. This indicates that the control operation has redirected the system
+into a different region of accessible spin-state space.
+This behavior arises from the strong hyperfine coupling between the selected nucleus and the
+electron spin. The applied rotation modifies the joint electron–nuclear state, thereby altering the
+subsequent coherent evolution of the electronic subsystem. The corresponding Fourier spectra
+further clarify the nature of this control. While the low-frequency Zeeman-scale component
+remains present, the most significant changes occur in the higher-frequency structure of the
+spectrum. These higher-frequency components are associated with strong hyperfine interactions,
+indicating that the pulse predominantly perturbs the fast electron–nuclear dynamics.
+74
+
+
+--- PAGE 85 ---
+Figure 6.11 Effect of a 𝜋-pulse applied to a weakly coupled nucleus with hyperfine strength near
+the Zeeman scale. (a) Singlet and triplet populations before and after the pulse, showing minimal
+change in population dynamics. (b) Fourier spectrum of the singlet population before the pulse.
+(c) Fourier spectrum after the pulse. While the Zeeman-frequency peak remains stable, significant
+redistribution of higher-frequency spectral components is observed, indicating selective
+restructuring of the dynamical spectrum.
+6.2 Weak, near-Zeeman nuclear spin flip
+The effect of applying the same 𝜋-pulse to a weakly coupled nucleus with hyperfine strength
+comparable to the Zeeman splitting is shown in Figure Figure 6.11. In contrast to the strongly
+coupled case, the time-domain singlet and triplet populations exhibit minimal qualitative change
+following the pulse. The overall population balance between singlet and triplet subspaces remains
+largely unchanged, and the oscillatory structure of the dynamics is preserved. From a
+population-based perspective alone, the weak nucleus appears to exert only a minor influence on
+the system.
+However, the frequency-domain analysis reveals a qualitatively different effect. The Fourier
+spectra of the singlet population before and after the pulse display a clear restructuring of spectral
+weight. In particular, the spectral feature associated with the Zeeman frequency (∼ 1.4 MHz)
+remains largely unchanged, while substantial redistribution occurs among higher-frequency
+components. This indicates that the weakly coupled nucleus does not strongly affect population
+dynamics, but instead modifies how different dynamical frequencies contribute to the overall
+evolution.
+These results reveal a clear distinction between the roles played by different components of the
+nuclear environment. Strongly coupled nuclei exert a dominant influence on the electronic spin
+75
+
+
+--- PAGE 86 ---
+populations, enabling direct redistribution of singlet and triplet occupation through local
+operations. In contrast, weak nuclei with hyperfine strengths near the Zeeman scale primarily
+influence the spectral structure of the dynamics, redistributing frequency components without
+inducing large population changes.
+NUCLEAR DECAY DYNAMICS
+Having established that the nuclear environment acts as a structured, information-bearing
+subsystem capable of storing and redistributing quantum correlations (Sections 6.3–6.4), we now
+investigate a more extreme form of nuclear perturbation: a localized, non-unitary decay event.
+Unlike the unitary 𝜋-pulse operations considered previously, nuclear decay introduces an
+irreversible quantum channel acting on the nuclear spin. As developed in Chapter 5, this process
+can be understood as generating entanglement between the remaining proton and emitted leptonic
+degrees of freedom, which are subsequently traced out. The net effect is a depolarizing
+transformation on the nuclear spin whose strength is controlled by the parameter 𝑞, representing
+the weight of the triplet-coupled decay channel.
+The simulations presented here follow the same six-nucleus radical pair model introduced in
+Section 6.2. The system is initialized in the electronic singlet state with a maximally mixed
+nuclear environment, evolved under the Hamiltonian described in Chapter 2, subjected to a single
+nuclear decay event at 𝑡 = 2 𝜇s, and then evolved further under the same Hamiltonian. To
+decay
+isolate the role of decay-induced entanglement, three representative values of 𝑞 are considered:
+𝑞 = 0.25 (weak entanglement), 𝑞 = 0.50 (moderate entanglement), and 𝑞 = 1.00 (maximal
+entanglement within the model).
+Figure Figure 6.12 summarizes the nuclear decay results across the three entanglement
+regimes. For small values of 𝑞, corresponding to weak entanglement between the proton and
+emitted leptons, the decay event induces only a modest perturbation to the system. Immediately
+following the decay, a slight redistribution of singlet and triplet populations is observed, but the
+overall oscillatory structure remains largely intact. This behavior is consistent with the
+76
+
+
+--- PAGE 87 ---
+Figure 6.12 Singlet and triplet population dynamics before and after a single nuclear decay event
+at 𝑡 = 2 𝜇s, for varying levels of decay-induced entanglement: (a) 𝑞 = 0.25, (b) 𝑞 = 0.50, and (c)
+𝑞 = 1.00. The vertical dashed line indicates the time of the decay event. Populations shown
+include 𝑃 𝑆, 𝑃 𝑇0 , 𝑃 𝑇+ , 𝑃 𝑇− , and total triplet population.
+interpretation of the decay as a weak depolarizing channel, in which the nuclear spin retains
+significant memory of its pre-decay state.
+At intermediate values of 𝑞, the decay event produces a qualitatively stronger effect on the
+system dynamics. The amplitude of singlet oscillations is reduced, triplet populations redistribute
+toward a new dynamical balance, and the post-decay oscillations exhibit modified frequency
+content and reduced coherence. This regime reflects partial loss of information in the nuclear spin
+due to entanglement with the traced-out leptonic degrees of freedom.
+In the limit of maximal entanglement within the model, the decay produces a dramatic
+restructuring of the spin dynamics. The decay event effectively resets the nuclear spin to a highly
+mixed state, resulting in strong suppression of coherent singlet–triplet oscillations, significant
+redistribution of population toward triplet subspaces, and a marked change in the long-time
+dynamical behavior of the system. However, even in this limit, residual oscillatory structure
+persists, indicating that the remaining nuclei continue to participate in the dynamics. The decay
+therefore acts as a localized disruption rather than a global loss of coherence.
+The results suggest a potential indirect probe: the singlet and triplet population dynamics of
+the radical pair may serve as a sensitive diagnostic of the entanglement generated during decay. In
+particular, increasing 𝑞 leads to systematic suppression and restructuring of coherent oscillations,
+distinct dynamical signatures emerge across different entanglement regimes, and these signatures
+77
+
+
+--- PAGE 88 ---
+persist over microsecond timescales relevant to radical pair reactions. This raises the possibility
+that spin-selective observables within the radical pair system could, in principle, encode
+information about otherwise inaccessible quantum correlations in the decay products.
+78
+
+
+--- PAGE 89 ---
+CHAPTER 7
+DISCUSSION
+7.1 7.1 Overview of Findings
+The results presented in Chapter 6 collectively demonstrate that radical pair systems, when
+treated within a fully quantum mechanical framework, exhibit rich and structured dynamics that
+are not captured by conventional semiclassical or Markovian descriptions. Across all
+investigations—thermalization, semiclassical comparisons, entanglement tracking, controlled
+nuclear operations, and nuclear decay—a consistent picture emerges: the nuclear environment
+plays a central and active role in shaping the spin dynamics of the system.
+In particular, three key themes arise from this work:
+1. The nuclear environment acts as a finite, structured quantum subsystem rather than a
+featureless bath.
+2. Quantum correlations between electrons and nuclei give rise to non-Markovian behavior
+and information backflow.
+3. Localized operations and processes within the nuclear environment can be used to actively
+steer both population dynamics and spectral structure.
+These themes unify the diverse results of Chapter 6 into a coherent physical interpretation of
+the radical pair system as a controllable mesoscopic quantum network.
+7.2 7.2 Limitations of Semiclassical and Markovian Descriptions
+A central motivation of this work was to assess the validity of commonly used approximations
+in radical pair modeling, particularly the Overhauser field approximation and Markovian
+open-system treatments.
+79
+
+
+--- PAGE 90 ---
+The comparison between the full quantum model and the Overhauser approximation (Section
+6.2) demonstrates that replacing the discrete nuclear environment with a classical field fails to
+capture key dynamical features. In particular, the semiclassical model suppresses coherent
+oscillatory structure and eliminates the possibility of entanglement between electrons and nuclei.
+While such approximations may reproduce average magnetic effects, they obscure the underlying
+quantum dynamics that govern information flow within the system.
+Similarly, the open-system analysis (Section 6.1) reveals that Markovian decoherence
+processes inspired by spontaneous emission, when parameterized using biologically relevant
+rates, have a negligible impact on the microsecond timescales relevant to radical pair dynamics.
+This suggests that environmental decoherence alone cannot account for the observed loss or
+redistribution of coherence within the system. Instead, the dominant mechanisms arise from
+internal interactions within the finite nuclear environment.
+Taken together, these findings indicate that both semiclassical and Markovian approaches,
+while computationally convenient, are insufficient for capturing the full dynamical richness of
+radical pair systems. A fully quantum mechanical treatment is necessary to resolve the interplay
+between interaction scales, correlations, and memory effects.
+7.3 7.3 The Nuclear Environment as a Non-Markovian Quantum Bath
+One of the most significant outcomes of this work is the identification of the nuclear
+environment as an effective non-Markovian bath.
+In contrast to traditional open-system models, where the environment acts as an infinite
+reservoir that irreversibly absorbs information, the finite nuclear spin system retains and
+redistributes quantum correlations over time. This is most clearly observed in the entanglement
+dynamics (Section 6.3), where correlations between electrons and nuclei exhibit oscillatory
+behavior and partial revivals.
+These revivals indicate that quantum information initially transferred from the electronic
+subsystem to the nuclei is not lost, but rather temporarily stored and later returned. This behavior
+80
+
+
+--- PAGE 91 ---
+is a hallmark of non-Markovian dynamics and arises naturally from the discrete and finite
+structure of the nuclear environment.
+Importantly, this non-Markovian behavior does not require an explicitly engineered
+environment. It emerges intrinsically from the hyperfine-coupled spin network. The presence of
+multiple interaction scales—particularly the interplay between Zeeman and hyperfine
+couplings—leads to structured beating patterns that govern the flow of correlations.
+This perspective reframes the role of the nuclear environment: rather than acting as a source
+of decoherence, it functions as a dynamical memory medium that mediates information
+exchange within the system.
+This paper also extends the potential idea of zeno stabilization being responsible for the
+unintuitively-long coherence times expected in the radical pair electrons. Previous work [REF]
+hypothesizes zeno stabilization as an avenue for these coherence times and research [REF] has
+shown such phenomena is more basic models. The nuclei could serve as a highly entangled
+subsystem, whose continuous observation could stabilize the electron’s coherence. This is
+theoretical and further studies need to be conducted before anything conclusive could be asserted.
+7.4 7.4 Interaction Scales and Dynamical Structure
+The results further highlight the importance of multiple competing interaction scales in
+determining radical pair dynamics.
+Hyperfine interactions govern fast, local electron–nuclear dynamics, while the Zeeman
+interaction sets a slower global timescale associated with the external magnetic field. Exchange
+and dipolar interactions introduce additional structure, modifying the coupling between electronic
+spin states and producing envelope modulations in observables such as entanglement.
+The analysis of entanglement beating (Section 6.3) reveals that these envelope modulations are
+closely linked to the Zeeman frequency, indicating that even weak interactions can play a
+dominant role in shaping long-time dynamics. This interplay between strong and weak couplings
+leads to a hierarchy of dynamical features, with different interaction scales controlling different
+81
+
+
+--- PAGE 92 ---
+aspects of the evolution.
+This multi-scale structure is essential for understanding how small perturbations—such as
+weak magnetic fields—can produce measurable effects in radical pair systems. It also underpins
+the sensitivity of the system to targeted manipulations of specific nuclear spins.
+7.5 7.5 Nuclear Spins as Control Channels
+A key extension of the analysis in this work is the exploration of active control of radical pair
+dynamics through localized nuclear operations (Section 6.4).
+The 𝜋-pulse experiments reveal a clear separation of roles within the nuclear environment:
+• Strongly coupled nuclei act as population control channels, enabling direct redistribution
+of singlet and triplet populations.
+• Weak, near-Zeeman nuclei act as spectral control channels, modifying the frequency
+content of the dynamics without significantly altering population averages.
+This distinction reflects the different ways in which nuclei couple to the electronic subsystem.
+Strong hyperfine interactions directly influence the dominant terms in the Hamiltonian, while
+weaker interactions modulate the structure of the dynamical spectrum.
+The ability to selectively target these different regimes suggests that the nuclear environment
+provides multiple independent “handles” for steering system behavior. Importantly, this control is
+achieved without direct manipulation of the electron spins themselves, highlighting the potential
+of the environment as a resource for quantum control.
+7.6 7.6 Nuclear Decay as a Quantum Channel
+The introduction of a quantum-information-theoretic model of nuclear decay (Chapter 5 and
+Section 6.5) further extends the role of the nuclear environment beyond coherent control.
+In this framework, a decay event is treated as a localized quantum channel whose strength is
+determined by the degree of entanglement generated between the remaining proton and emitted
+82
+
+
+--- PAGE 93 ---
+leptons. The resulting depolarizing map introduces a controlled loss of information in the nuclear
+spin.
+The simulations demonstrate that even a single decay event can significantly alter the global
+dynamics of the radical pair system. As the entanglement parameter increases, the decay induces
+progressively stronger suppression of coherent oscillations and redistribution of spin populations.
+These results illustrate that quantum processes external to the radical pair system can
+influence its dynamics through their effect on the nuclear environment. At the same time, the
+persistence of structured dynamics following the decay indicates that the remaining nuclei
+continue to support coherent behavior.
+An important open question concerns the physical magnitude of the entanglement generated
+during such decay processes. In this work, the entanglement parameter is treated as a free
+variable, allowing systematic exploration of its effects. The results suggest that observable
+quantities within the radical pair system—particularly singlet and triplet populations—may serve
+as indirect probes of this otherwise inaccessible entanglement.
+7.7 Implications for Radical Pair Mechanisms and Quantum Biology
+The findings of this thesis have several implications for the broader study of radical pair
+systems and quantum effects in biological environments.
+First, they suggest that quantum coherence and entanglement may persist and play a functional
+role over biologically relevant timescales, supported by the structured dynamics of the nuclear
+environment. This challenges the assumption that environmental noise rapidly destroys quantum
+effects in such systems.
+Second, the identification of the nuclear environment as a non-Markovian subsystem highlights
+the importance of considering finite, structured environments in models of biological quantum
+systems. Simplified treatments that neglect this structure may miss key dynamical features.
+Third, the demonstration of control through nuclear operations raises the possibility that
+biological systems could, in principle, exploit internal degrees of freedom to regulate spin
+dynamics. While the specific control protocols considered here are theoretical, they provide a
+83
+
+
+--- PAGE 94 ---
+framework for thinking about how environmental structure could be harnessed in more realistic
+settings.
+Finally, the decay model illustrates how processes outside the immediate radical pair system
+can influence its behavior through entanglement and information transfer. This points toward a
+broader view of radical pairs as components of larger quantum networks embedded within
+complex environments.
+7.7 7.8 Limitations and Future Directions
+While this work provides a comprehensive quantum mechanical treatment of radical pair
+dynamics, several limitations should be noted.
+The nuclear environments considered here are relatively small, consisting of a limited number
+of spins with simplified hyperfine tensors. Extending the model to include larger and more
+realistic nuclear spin networks would provide a more accurate representation of biological
+systems.
+The open-system treatment is restricted to Markovian Lindblad dynamics. While this serves as
+a useful baseline, incorporating explicitly non-Markovian environmental models—such as
+structured or few-mode baths—would allow more direct comparison with the intrinsic
+non-Markovian behavior observed in the nuclear environment.
+The nuclear decay model is intentionally simplified, neglecting orbital angular momentum,
+energy distributions, and detailed weak-interaction physics. A more complete treatment of decay
+processes would be required to assess their physical relevance in realistic systems.
+Finally, experimental validation of these results remains an open challenge. Direct
+measurement of nuclear spin dynamics and electron–nuclear entanglement in radical pair systems
+is difficult, and indirect probes—such as spin-selective reaction yields—must be carefully
+interpreted.
+Despite these limitations, the framework developed in this thesis provides a foundation for
+future studies of quantum dynamics in complex spin systems.
+84
+
+
+--- PAGE 95 ---
+7.8 7.9 Concluding Remarks
+The central conclusion of this work is that the nuclear environment in radical pair systems is
+not a passive background, but a structured and dynamically active quantum subsystem.
+Through its ability to store, redistribute, and mediate quantum correlations, the nuclear
+environment plays a decisive role in shaping both the population dynamics and spectral structure
+of the system. Moreover, it provides multiple pathways for control, ranging from coherent spin
+rotations to irreversible quantum channels.
+This perspective shifts the focus of radical pair modeling from the electrons alone to the full
+electron–nuclear system, emphasizing the importance of quantum information flow in
+understanding and potentially exploiting these systems.
+In this sense, radical pairs represent not only a model for magnetoreception, but also a broader
+platform for exploring quantum dynamics in mesoscopic, environmentally embedded systems. -
+REFERENCES
+[0] References to be completed in the final submission.
+85
+
+
+--- PAGE 96 ---
+APPENDIX
+FORMATTING AND SUBMISSION NOTES
+The bibliography and citation placeholders marked [REF] should be completed before final
+submission. If reproduced figures, published articles, or coauthored content are included in the
+final thesis, permissions should be added following the Mines formatting checklist.
+86

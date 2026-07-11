@@ -1,0 +1,1404 @@
+
+
+--- PAGE 1 ---
+436 J. Phys. Chem. 1995, 99, 436-448
+2D ESEEM of the 15N-LabeledRadical Cations of Bacteriochlorophyll a and of the Primary
+Donor in Reaction Centers of Rhodobactersphaeroides
+H. Kass,fJ. Rautter/ B. Bonigk,4P. Hofer,* and W. Lubitz*’*
+Max-Volmer-Institut fur BiophysikalischeunciPhysikalischeChemie,TechnischeUniversitat Berlin,
+Strassedes 17, Juni 135, D-10623 Berlin, Germany,and Bruker Analytische Messtechnik,Am Silberstreifen4,
+D-76287 Rheinstetten,Germany
+Received:April 22, 1994; In Final Form: August 8, 1994®
+The radical cations of [15N]bacteriochlorophyll a and of the primary donor Psmin 15N-labeledreaction centers
+of Rhodobacter sphaeroides R-26.1 were investigated in frozen solutions using two-dimensional ESEEM
+methods. Both three-pulse (stimulated echo) and four-pulse (HYSCORE) sequences were employed to avoid
+ambiguities in data analysis. Computer simulations of the experimental powder spectra were performed,
+yielding a complete set of nitrogen hyperfine coupling tensors for both systems. The obtained tensor values
+are compared with those from ENDOR measurements and from semiempirical INDO-type MO calculations.
+The results obtained from 2D stimulated echo ESEEM and HYSCORE for are interpreted in terms of an
+asymmetric spin density distribution over the halves of the bacteriochlorophyll dimer (‘special pair’) in the
+reaction center with a ratio of approximately 5:1. This asymmetry is considerably larger at low temperatures
+in the frozen state than at room temperature. It is postulated that two different conformational states of the
+dimer exist at these temperatures with different spin density distributions.
+1. Introduction
+In photosynthetic purple bacteria, reaction centers (RC’s)
+mediate the conversion of light into chemical energy by light-
+induced charge separation. In this process an electron is
+transferred from the photoexcited primary electron donor P
+(labeled D in some references), a dimer of bacteriochlorophyll
+(BChl) molecules, via intermediate electron acceptorsto a first
+and a second quinone which are both coupled to a non-heme
+Fe2+. The cofactors are rigidly held in a protein matrix made
+up of three subunits (L, M, and H). Pigments, quinones, the
+metal, and the protein are all involved in the highly efficient
+electron transfer process,the details of which are not yet fully
+understood (for recent reviews see refs 1—3).
+Reaction centersfrom two purple bacteria, Rhodopseudomo-
+nas(Rp.)viridis and Rhodobacter(Rb.)sphaeroides, have been
+crystallized, and their structures were solved by X-ray crystal-
+lography.4-5 This provides the spatial arrangement of the
+cofactors and the protein for the speciesRb. sphaeroideswhich
+is studied here.5 To understand the function of the RC from
+first principles, a knowledge of both the spatial and the
+electronic structure of the reactants is required. Information
+about the latter can be obtained from spectroscopic techniques.
+The method used to explore the electronic structure of the
+radical ions formed in the chargeseparationprocessis hyperfine
+spectroscopy. This technique measures the electron—nuclear
+hyperfine coupling constants (hfc’s) which—after assignment
+to specific nuclei—yield a map of the distribution q of the
+unpairedelectron spin over the molecule. Electron paramagnetic
+resonance (EPR) and, in particular, electron nuclear double
+resonance(ENDOR) have been extensively used to investigate
+the structuresof the monomeric BChl a'+and the primary donor
+cation radical P*+in bacterial RC’s (reviewed in ref 6). It could
+be shown from measurementson RC single crystals that the
+two bacteriochlorophylls form a supermolecule with the elec-
+* To whom correspondence should be addressed.
+f Technische Universitat Berlin.
+* Bruker Analytische Messtechnik.
+8 Abstract published in Advance ACS Abstracts, November 15, 1994.
+Figure 1. (a,top) X-ray structure56of thebacteriochlorophyll(BChl)
+a dimerconstitutingtheprimary donor P*65 in reactioncentersof Rb.
+sphaeroidesR-26. ThePl half (right)is boundto theL proteinsubunit,
+andthePMhalf (left), to theM proteinsubunitof theRC. Thephytyl
+side chains are tmneated. (b, bottom) Structureof BChl a with
+numberingscheme(IUPAC nomenclature).The nitrogennuclei are
+indicatedby shadedcircles.
+tronic wave function extending over both halves Pl and Pmof
+the dimer (see Figure la). The ratio of the spin density
+distribution is pl:£>m*** 2:1 (for details see ref 7). Whether
+0022-3654/95/2099-0436$09.00/0 &copy;1995 American Chemical Society
+Downloaded via COLORADO SCHOOL OF MINES on June 29, 2026 at 02:22:03 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+
+--- PAGE 2 ---
+15NESEEM of Bchl a‘+ and p£s J. Phys.Chem.,Vol. 99, No. 1, 1995 437
+this ratio is also valid for other BChl a containing speciesfor
+which single crystalsarenot yet availableis subjectto current
+investigations.
+Since a monomeric BChl a (Figure lb) contains only four
+14Nbut many more ’H nuclei, it would in generalbe advanta-
+geousto studythehyperfineinteractionsof theunpairedelectron
+spin in the radical cation with the few nitrogen nuclei rather
+than with the many protons in order to come to conclusions
+aboutthe symmetryof theelectronspindistributionin thedimer.
+However, it has been shown8that I4N nuclei are difficult to
+detectin ENDOR becauseof their small magneticmomentand
+the presenceof a nuclear quadrupolemoment (/«N =1). In
+this respect substitution of 14Nby 15N(/isN= ]/2) is helpful,
+since 15Nhas a somewhatlarger magnetic and no quadrupole
+moment. However, 15NENDOR experimentsarestill difficult
+to perform on the primary donor P+ in liquid or frozen RC’s9
+and also in RC single crystals.10
+The methodof choiceto detecthyperfine couplingsof nuclei
+like nitrogen exhibiting small Larmor frequenciesand small
+hfc’s in complex immobilized radicals is electron spin echo
+envelope modulation (ESEEM).11-13 When applied to such
+systems,ESEEM hasa high sensitivity. However, the elucida-
+tion of the hfc’s is difficult for powder spectraand requires
+quite elaborate spectral simulations.12’13Several ESEEM
+measurementsof the radical cationsof 15N-labeledBChl a and
+the primary donor Ps65 in RC’s in the solid statehave already
+beenreportedin the literature (reviewedin ref 12). In the work
+of De Groot et al.14andHoff etal.15only one-dimensional(ID)
+ESEEM experimentswere performed and interpreted without
+the use of spectral simulations (seeref 16 for a discussion).
+First simulationsof thetime domainsignalof suchexperiments
+weredoneby Tanget al.,17andsimulationsof frequencydomain
+spectra,by Astashkinet al.18,19In thevery recentwork of Davis
+et al.20performed on 14NRC’s, only oneisotropic 14Nhfc was
+extracted for Pjg5. All these stimulated echo (three pulse)
+ESEEM11experimentsessentially were one dimensional; i.e.,
+the spacingbetweenthe secondand the third pulsewas varied
+whereasthe time interval r separatingthe first and the second
+pulsewaskept constant. This canleadto alossof information.
+For this reason Lin et al.16,21and Tang et al.17extendedthe
+data setby using 23 different r values.
+In this paper [15N]BChl a"+ and [15N]Pg£5were reinvesti-
+gated by using real two-dimensional (2D) stimulated echo
+ESEEM and, for the first time, 2D four pulse ESEEM
+(HYSCORE)22experiments. From the methodologicalpoint of
+view, the focus was mainly on employing HYSCORE as a
+method which enhances other parts of the spectrum than
+stimulatedecho ESEEM, which leadsto a confirmation of the
+assignmentof the 15Nlines. FurthermoreHYSCORE is used
+hereasa methodfor separatingoverlappingpowderspectra.23,24
+It will be shown that the combination of both methodsyields
+detailedinformation concerningthe nitrogen hfc’s andthereby
+aboutthe asymmetryof thedimer stateevenin frozen solutions
+or powder samples. In Pjg5 up to eight different 15N hfc
+tensorscan be expectedin the caseof an asymmetric BChl a
+dimer. In the past a maximum number of only four different
+nitrogenhfc tensorswasobtained. All theseprior investigations
+failed in detectingfurther tensorswith smallerhfc’s. This paper
+shows that it is possible—by means of 2D HYSCORE—to
+determine also these smaller couplings and thereby obtain a
+complete set of the principal values of the nitrogen hyperfine
+tensors.
+2. Theory
+Monitoring the electronspin echoamplitudeof paramagnetic
+solids as a function of the spacingbetweenmicrowave pulses
+commonly exhibits coherentoscillations which are attributed
+to nonsecular hyperfine interactions. This effect is called
+ESEEM—electronspinechoenvelopemodulation.11In thecase
+of a systemwith S = V2and/ = V2,the frequently usedtwo-
+pulse(primary echo)ESEEM experimentyields atime-domain
+modulationsignalcontainingoscillationsoccurringdirectly with
+the hyperfine transition frequencies coa,copand additional
+oscillations12,13with the sumanddifference frequencies(coa±
+cop). In order to avoid the appearanceof these combination
+frequencies, three-pulse and four-pulse sequencescan be
+employed. The former experiment is also called ‘stimulated
+echo’, and the latter, ‘HYSCORE’22(hyperfine sublevel cor-
+relation spectroscopy).
+2.1. Stimulated Echo Experiment. The pulse sequence
+employed in a stimulatedecho experimentis shown in Figure
+3 (top). It consistsof three jt/2 pulseswith equal microwave
+power (Si field strength). With a definition of time intervals
+betweenthe pulsesaccordingto Figure 3, the ESEEM modula-
+tion amplitude V(t,T) causedby a single nucleus (/ = V2)
+coupled to an electron spin (5 = V2)is given by17
+V(r,7) = VJt,T) + Vp(r,D 0)
+The high- andlow-frequency hyperfine transition frequencies25
+coaand copare
+"a
+con (2)
+coq is the nuclear Larmor frequency, and the anisotropic
+hyperfine coupling is described by the hfc tensor A with
+diagonal elementsAn, Ayy,and Aa\ B contains nondiagonal
+elementsof the hfc tensor: B2= A2a4- A2y. The magnitudes
+of Va andNpdependon two factors being constantin time T.
+The first one is called the modulation factor k:
+o>qB \2
+fOafOp]
+(3)
+This factor becomes large for small hyperfine transition
+frequencies(tua, cop)and is zero when the hfc tensor has no
+off-diagonal elements (Azy,Azy),i.e. if it is diagonal in the
+laboratory frame.26 Becauseof that, the principal valuesAn,
+A22,andA33 of thehfc tensorcommonly do not appeardirectly
+as ESEEM modulation frequencies. This is important for the
+interpretationof ESEEMexperimentsof powdersamples.14,16,17
+Onepossibility to partly recovertheline-shapesingularitiesdue
+to the principal values of the hfc tensors is increasing the
+spectrometerdeadtime.18 TherebyoneobtainsamoreENDOR-
+like spectrum.
+Besides this simple approach several investigations27-29
+concerningthe dependencyof the modulation factor on experi-
+mental parameters have recently been undertaken, and the
+resultingeffectson powderESEEM spectrawerediscussed(see
+alsoref 12,Chapter6). It wasconcludedthat a matchingrange
+[cumin, ftW] existswith comin= min(AnA22A33)/2 andcomax=
+
+
+
+--- PAGE 3 ---
+438 J. Phys. Chem.,Vol. 99, No. 1, 1995 Kass et al.
+max(A11A22A33)/2.If the nuclear Larmor frequency coolies
+within this range,line shapesingularitiescanbe inducedin the
+experiment when a magnetic field Bo is employed chosenin
+such a way that a>omatchesone of the principal values of the
+hfc tensor: wo= |A;,/2|. This resultsin a cancellation28of the
+nuclear Zeeman interaction and the hyperfme interaction for
+one canonicaldirection (‘cancellation condition’). In the case
+of a hfc tensorwith axial symmetry (An = A22= Aj_andA33
+= An)thecanonicalhyperfmetransitionfrequenciesarelabeled
+<oa,±((op,±)and oori.\\(oop,\\).Then the following situations can
+occur: If the field Bq is chosenin such a way that <Oo,i= 0,
+the ESEEM spectrumhas a singularity at wp,±. Likewise if
+tOa.il= 0, amaximumat wppappears.The samesituationoccurs
+for coa,11and coa,i.for the respective(opt±.and aoppfrequencies
+being zero. In addition underthe condition coo= |(An+ Ai)/4|
+the spectrum contains another singularity,27,28namely an
+isotropic line at co= |(An—Aj_)/4|.
+The secondfactor governing the modulation amplitude is
+givenby thetwo squaredsinetermssin2((coaT)/2)andsin2((co^r)/
+2). For specific combinationsof r andooalojpthesesin2factors
+are equal to zero, causing the so-called ‘blind spots’ in the
+frequency domain ESEEM spectra. It is obvious that a two-
+dimensionalexperimentin which both spacingsT andr between
+thepulsesarevaried will yield a completedatasetwithout loss
+of information due to theseblind spots.
+Comparing primary echo (formula given in ref 13) and
+stimulatedecho (three-pulse)ESEEM, the advantageof using
+thethree-pulsesequenceis that no combinationfrequenciescua
+± ojp appearin the time domain signal in addition to the basic
+hyperfme transition frequenciesoja and cop,which are due to
+the hyperfmetransitionsbelonging to thedifferent electronspin
+manifolds |a> and j/3>. This is, however,only truefor a single
+nucleus. In the caseof several nuclei coupled to one electron
+spin, the resulting modulation function is the product of all
+modulation signalsfrom the individual nuclei.11 In the caseof
+stimulated echo ESEEM, this leadsto30
+V(r ,T,#,q>)= l-(Uv^,T) + X[Vp/T,T)) (4)
+Here V(r,Tp,(p) is the above-mentionedproduct for point (r,
+T) in time of all modulation amplitudesof theindividual nuclei
+i in the special orientation (il, cp) in the laboratory frame.
+Evaluation of eq 4 shows that products of trigonometric
+functions occurthat leadto sumanddifferencefrequenciesWa,;
+± waj and copi± copjof hyperfmetransitionsoccurring in the
+same electron spin manifold. They have reducedintensities,
+since their amplitude is proportional to k2 (k < 1).
+Simulation of Spectra. In order to interpret our spectra,the
+entire 2D time-domain signal was calculated by a powder
+averageof the form
+^.TVder = — / / V(r,TP,<p) sin(tf) di) dtp (5)
+4\=00=0
+Axial and nonaxial hfc tensorswere employed. The relative
+orientations of their principal axeswere varied in the simula-
+tions. In the caseof axially symmetrichfc tensorsandparallel
+tensor axes,eq 1 is simplified (seeref 17). This allows faster
+computation of the powder average,since it dependsonly on
+oneangle!?. In the calculationthe integration wasreplacedby
+a summationusingstepsof 2.5°for A# andA cp.The simulation
+was subject to exactly the sameapodization and zero-filling
+procedures31as usedfor the experimentaldata.
+ESEEM is only observedwhen the magnetizationsof two
+electron spin transitions interfere with each other. These
+transitions have to be excited simultaneously. Therefore the
+excitationbandwidthof themicrowavepulsespresentstheupper
+limit of hyperfmetransitionfrequenciesdetectablein anESEEM
+experiment. This effect was included in the simulation in a
+phenomenological way by multiplying Va and Vp of the
+modulationsignalwith athird amplitudefactor/, which depends
+on the ratio of the effective excitation bandwidth w ietfof the
+microwave pulses(ft>ieff= yB 1)and the spacingof resonance
+lines |ft)a—o)p\.
+_(ft/ef/2)_
+(COief/2)2+ (cua-
+(Opf
+(6)
+Thereby it was assumedthat the pulsebums a Lorentzian hole
+in the inhomogeneouslybroadenedEPRline. It could be shown
+that in our experimentson BChl a’+ andPjg5the factor /leads
+only to minor intensity changesin the simulations.
+To obtain a method in which simulation and experimental
+result canbe easily comparedwith eachother,the spectrawere
+Fourier-transformedin the two time dimensionsT and r. The
+absolute values {\j(real)2 + (imaginary)2) in space (yT, vf)
+were computed, and then a ‘skyline projection’ along the vx
+axis was performed (seefor example Figure 8a). Thereby all
+the Fourier-transformedspectrabelonging to different r values
+give their respectivecontributions. This procedureavoidsthe
+occurrenceof blind spotsin the final result. The computation
+of absolutevalues enhancesthe intensity of the wings of the
+lines relative to the peak intensities as compared with the
+standardcalculationof power spectra(re2+ im2). The latter is
+advantageouswhen evaluatingspectraof single crystalswhere
+only line positions (i.e. peaks) are of interest. In the caseof
+powder spectrait is betterto usethe first method,sincethereis
+valuable information in the spectral wings, which will be
+demonstratedbelow.
+2.2. HYSCORE Experiment. In thecaseof thestimulated
+echoexperimentthe time rangeavailablefor incrementationof
+T is limited by the longitudinal relaxation time T\. The
+respectiverangefor r is given by thetransversalrelaxationtime
+Tf (the phasememorytime). In the solid stateT{ is very short
+ascomparedwith 7j. This causeslargedifferencesin spectral
+resolution betweenthe vxand Vj directionsin a 2D experiment
+andmakesevaluationof correlationsbetweennuclearcoherences
+difficult.23,32 HYSCORE opens a way to overcome this
+problem, since here the coherencesare evolving in the time
+intervals t\ and h, which are subject only to longitudinal
+relaxation T\ (for the HYSCORE pulse sequenceseeFigure
+3). In addition, HYSCORE yields further information on
+hyperfme coupling constantswhen crosscorrelation peaksare
+evaluatedwhich appearin the 2D Fourier transformation(FT).
+The crosspeakpart of the HYSCORE time domainmodula-
+tion function33,34yields the following expression for the
+amplitudesin themagnitudespectrumin the frequencydomain
+(after FT with respectto t\ and t2):33
+V(coa,(Op)= ^ sin “•of] . (wsA
+—) sin{~! vV + 2s4 (7)
+In this notation the modulation factor k and the trigonometric
+terms c2 and s2are
+k = 4 sin2(<5/2)cos2(<5/2) (8)
+
+
+
+--- PAGE 4 ---
+15NESEEM of Bchl a’+ and Pj+
+sin2((5/2)= s2
+0>02
+~
+^(®a +
+UaU,3
+(9)
+cos2(<5/2)= c2
+U02 -
+4("a
+-
+°V2
+UgCOy
+Since the cross peaksdependon the correlation of hyperfine
+transitions, they are the most interesting features in such an
+experiment. Their positions in experimental 2D HYSCORE
+spectraafter FT can be evaluatedin the following way.23,24,28
+The criterion is the ratio of the magnitude23 of the hfc A and
+the nuclear Larmor frequency vq. Transitions belonging to a
+hfc with |A| < 2vogive a pair of crosspeaksat positions (va,
+vy) and (vy, va), i.e. in quadrant(++). Line pairs causedby a
+hfc with |A| > 2voyield crosspeaksat positions (va, —vy)and
+(vy, ~va), i.e. in quadrant (H—). Thus the (++) and (H—)
+quadrantsin the resulting 2D frequency domain HYSCORE
+spectrumcontaindifferent information in contrastto stimulated
+echoESEEM. As in stimulatedechoESEEM, the peaksin the
+frequencydomain HYSCORE powder spectrado not represent
+principal valuesof the hfc tensors. Thus, for an interpretation,
+the positionsof thewingsof thepeaks,which showup asedges
+in thecontourplots of theexperimentalabsolutevaluefrequency
+domain spectra(for details seeref 23), have to be determined
+accurately,sincethey allow an estimationof themagnitudesof
+the observedhfc’s.
+HYSCORE still suffersfrom theproblemof blind spots,since
+the delay r betweenthe first and the secondpulse determines
+the amplitude (see eq 7). Neverthelessit is a very useful
+experiment becausethe intensity distribution in the spectrais
+different from that in the stimulated echo ESEEM. Clearly a
+simulation of spectra from both experiments with the same
+tensorsetleadsto much more reliable resultsthan a simulation
+of only one experiment.
+Simulation of Spectra. Equation 7 is correct for ideal
+nonselectivemicrowave pulsesthat fullfill the condition co\»
+coa,coy,in which the Rabi frequency coi is determinedby the
+microwave field strengthB\ times the gyromagneticratio y (coi= yB\). However,eq 7 allows no discriminationbetweencross
+peaks showing up at frequencies(coi, cof) from those at (coi,
+—cof)in the 2D spectrum and describesonly the cross peak
+amplitudes. For an exact simulation of the experiments—
+especiallyin thecaseof co\beingsmallerthanthehfc—numerical
+calculations have to be performed by taking into accountthe
+Hamiltonian H describing the developmentof the spin system
+alsoduring the pulses. In the experimentsuchnonidealpulses
+lead to the occurrenceof diagonal peaksat positions (va, va)
+and (vy, vy) in the 2D spectrum.33,35’36 This leads to the fact
+that a simulation basedon eq 7 generally will not reach the
+quality of simulations performed for stimulatedecho ESEEM
+experiments. Nevertheless,such simple calculationscan help
+to decideif atensorsetis corrector not by comparingcalculated
+and experimental positions of spectral lines and shoulders,
+keeping in mind that especiallythe evaluation of intensities is
+not very reliable. In the calculation a Lorentzian line width
+wasusedfor the individual componentsin thepowder average.
+The spectral width was computed from the experimentally
+observeddecayfunction.
+In order to allow a direct comparison of simulation and
+experiment,a skyline projection on the v„ axis was performed
+after FT and calculation of absolutevalues24 from the experi-
+mental data, as in the caseof stimulatedecho ESEEM.
+J. Phys. Chem.,Vol. 99, No. 1, 1995 439
+3. Experimental Section
+Preparation of !5N-LabeledSamplesand Generation of the
+RadicalCations. Rb.sphaeroidesR 26.1wasgrownusing[15N]-
+ammoniumchloride(95%)asthesolenitrogensourcein a yeast-
+free minimal medium.10,32 The 15N-labeledRC’s werepurified
+using n-dodecyldimethylamineN-oxide (LDAO) as detergent
+according to the proceduregiven by Allen et al.38 The yield
+was 1014 RC’s per 10 g of cell paste(wet weight). The optical
+absorbanceratio of the purified RC’s was At^lAm = 1.20.
+15N-labeledBChl a was extractedfrom cell pastewith cold
+oxygen-free methanol and precipitated with dioxane/water
+(peroxide- and oxygen-free).39 It was purified by preparative
+HPLC (Knauer, Berlin) using a reversed-phaseC-18 column
+(10 pm Poligosil), run with puremethanolat arate of 19.0mL/
+min. [15N]BChla waselutedafterapproximately7 min. Water
+was removedfrom the BChl a by repetitive codistillation with
+toluene. The final yield was 31 mg, obtainedfrom 25 g of cell
+paste. The [15N]BChla showedan optical absorbanceratio of
+A769/A354 = 1.33± 0.05in diethyl ether.37 All operationswere
+performedin dim greenlight at room temperatureunderargon.
+The preparationof theradicalcationof [15N]BChla wasdone
+on a high-vacuum line. The chlorophyll was dried onceagain
+by azeotropiccodistillation with methylenechloride (3x). The
+materialwasthendissolvedin amixture of freshlydistilled CH2-
+CI2/CH3OH(6:1) to yield a concentrationof about5 x 10-4 M
+and degassedin severalfreeze/pump/thawcycles. Oxidation
+was carried out with a 5 M excessof iodine,40 and then the
+sample was sealed in a capillary and transferred to the
+spectrometer. Judging from the relative intensities of 15Nand
+14Nlines in the liquid solution ENDOR spectraof theBchl a‘+,
+the 15Ncontent was estimatedto be >90%.
+The reaction center solution (buffer: 15 mM tris(hydroxy-
+methyl)aminomethane—HC1(Tris-HCl), 0.1% LDAO, 1 mM
+EDTA, pH = 8.0) was concentratedby membranefiltration
+(Amicon) to an optical absorbanceof A^” « 80 (2.5 x 10-4
+M), illuminated in a 4 mm o.d. EPR quartz tube (Wilmad) in
+the range 830—900nm for 1 min using a 1000W projection
+lamp equippedwith a water filter (10 cm), and frozen down to
+liquid nitrogen temperatureunder illumination.
+ESEEM and ENDOR Measurements. The pulsed EPR
+experimentswere performed on a Bruker ESP 380 E FT-EPR
+spectrometer41 equippedwith adielectric ring cavity (ESP380-
+1052DLQ-H) andan Oxford cryostatCF 935 (helium gasflow
+system). All experimentswere doneon the centerof the EPR
+absorption line, where all orientations of the molecule with
+respect to the magnetic field contribute. In order to avoid
+artifacts in the spectracausedby unwantedechoes,a four-step
+phasecycle was employed in all experiments,as describedin
+refs 33 and 42 for HYSCORE and stimulated echo ESEEM,
+respectively. Subtractionof therelaxationdecayandcorrection
+for eventually occurring additional baselineoffsets due to the
+spectrometerwere done either using the ESP380 software or
+on a 486 PC with the program WinEPR.43 Experimental and
+simulated signals were treated exactly in the same way (see
+figure captions).
+ENDOR measurementswere done on a Bruker ER 200 D
+EPR spectrometerwith cw-ENDOR accessoriesconsisting of
+a 100 kHz to 1 GHz radio frequency synthesizer(Rohde &
+SchwarzSMG), a500 W radio frequencypower amplifier (ENI
+A 500), a self-built TMno ENDOR cavity,44 anda 50 £2power
+load (LucasWeischel). The spectrometerwas controlled by a
+self-written measuringprogram running on an Atari 1040 ST
+computer.
+ESEEMSimulationsand INDO Calculations. All calculations
+were done on a workstation (Hewlett PackardA 9000/730;64
+
+
+
+--- PAGE 5 ---
+440 J. Phys. Chem..Vol. 99, No. I, 1995 Kass et al.
+Figure 2. Stimulatedecho(three-pulse)ESEEMof [13N]BCH1a'+at
+20K. Thezcoordinateis theechoamplitudeasafunctionof thetime
+intervalsTand z (for pulsesequence,seeFigure3), Thecomplete2D
+datasetis shownwithoutanydatamanipulations.Experimentalcon-
+ditions: T x z = 260 x 128points;startvalues.To= 400 ns,to =
+120ns;time increments,AT = 24ns,Ar = 8 ns;Til2pulse,16ns;Bti= 3451G;a four-stepphasecyclewasemployed;thetotalaccumulation
+time for the whole 2D arraywasapproximately3 h.
+Mips/48 Mflops). Molecular orbital (MO) calculations were
+performed using the latest version of the RHF-INDO/SP
+program of Plato et al.45 It is basedon the intermediate neglect
+of differentia] overlap method introduced by Pople and Bev-
+eridge.4* It usesDewar’s half-electron method47in the frame-
+work of a restricted Hartree—Fock (RHF) approach with a
+subsequenttreatmentof spin polarization (SP) effects. Therefore
+it is called RHF-INDO/SP. In the version used here anisotropic
+hfc tensors were computed as outlined in ref 48 (Note the
+corrections to the original equationsof Beveridge and Mclver49
+given in ref 48).
+ENDOR Simulations. The solid state ENDOR spectrum of
+[l5N|BChl a‘+ was calculated employing a simple simulation
+program.50 It computes the transition frequencies following eq
+2, the hyperfine enhancement effect, and performs a powder
+average.5'
+4. Radical Cation [15N]BChl a’+
+4.1. Experimental Results.
+StimulatedEcho ESEEM. Figure 2 shows the complete 2D
+stimulated echo experiment of the [l5N]BChl a cation radical
+in the time domain. The modulation amplitude representsonly
+a few percent of the complete echo amplitude. The echo
+amplitude decays showly along the T axis caused by 7)
+relaxation. Along the r axis it exhibits a fast decay where
+essentially T{ is dominating.
+Figure 3 (solid line) shows the frequency domain stimulated
+echo ESEEM spectrum of [l5N]BChl a‘+ obtained from the
+experimental 2D data set shown in Figure 2 (for details see
+Figure 3, caption). For this radical one expects a maximum of
+four different ,5N hfc tensors. In order to simulate the ESEEM
+spectrum, these tensors were assumed to be axially symmetic
+in a first step. The simulations were performed starting with
+the hfc tensors from the cw-ENDOR experiment (see below).
+The tensor components,especially the Ahelements,were varied
+over a rangeof severalmegahertz. The results were much more
+sensitive to variation of the A^ components than to changesof
+An. A satisfying result was achieved by employing the hfc
+tensorsgiven in Table 1 (model A). As can be seenfrom the
+simulation shown in Figure 3a, this is quite a good approxima-
+tion. The use of less than four different tensors for the
+simulation is not sufficient, as is demonstratedin Figure 3b—d,
+where simulations for different combinations of axially sym-
+metric l5N hfc tensors are presented (see figure caption). The
+J?U?|_fil_A.
+Figure 3. Stimulatedecho ESEEM of f'5N]BChl a’+ at 20 K.
+Comparisonof experiment(solid line) and simulationsemploying
+differenthfc tensorsets(dashedlines). All spectrashownareskyline
+projections(seeFigure8afor anexample)of thetwo-dimensionaldata
+setson the tq-axis after Fourier transformationand calculationof
+magnitudes.Simulationswerecomputedfor 512 x 128points;data
+manipulationwas the sameas in the experiment, (a) Simulation
+calculatedfor axial symmetrichfc tensors(modelA in Table 1). (b—
+d) Simulations using three different combinationsof the axially
+symmetrichfc tensorsof modelA: (b) tensors2—4;(c) tensors3 and
+4; (d) tensor4 only, (e) Simulationcalculatedwith the nonaxially
+symmetric hfc tensorsof model B (Table 1). For experimental
+conditionsseeFigure2. DatamanipulationusingESP380 software:
+baselinecorrectionfor relaxationdecay(3rd orderpolynomial),zero-
+filling to 512 x 128points,applicationof a hammingwindow (full
+width at half maximum(fwhm): 170points)in T directionprior to
+FT.
+theoretical results for the ratios of A11/A22 of the individual hfc
+tensors (Table 1) were taken as a starting point to introduce
+nonaxial tensorsin the simulations. Thereby a slight improve-
+ment could be obtained by assuming that two out of the four
+tensors are not axially symmetric. The isotropic part of the
+tensors had to be kept constant (Table 1). In addition, the
+nonaxiality had to remain below a |An —A22Ivalue of about
+0.2 MHz in order to achieve reasonable intensity ratios of the
+two peaks at 2.55 at 2.95 MHz and to keep the position and
+shapeof the high-frequency part of the peak at 0,9 MHz at their
+optima. The best simulation of the stimulated echo ESEEM
+spectrum was calculated with the four i5N hfc tensors listed in
+Table 1 (model B). The experimental spectrum and the
+respective simulation are shown in Figure 3e.
+A changeof the hfc tensor component A± (An, A22)by ±0.1
+MHz causeschanges in the resulting simulations comparable
+to the difference between the spectra shown in Figure 3a and e.
+For A\\ this range is about ±0.2 MHz. A more quantitative
+discussion of errors is complicated because there exists no
+simple linear dependency between a modification of the
+simulation parametersand the resulting changesin the simulated
+spectra.
+In order to demonstrate the quality of the results presented
+in Table 1 (model B), three ID stimulated echo envelopes are
+shown in Figure 4. In these experiments T was varied and r
+was kept constant at the indicated values. This corresponds to
+
+
+
+--- PAGE 6 ---
+15NESEEM of Bchl a'+ and Kt« J. Phys. Chem.,Vol. 99, No. 1, 1995 441
+TABLE 1; Experimental and Theoretical 15Nhfc Tensor
+Principal Values of [15N]BChla'+
+principal valuesof the
+15Nhfc tensors0(MHz)
+method model0 component* 1 2 3 4
+ESEEM4 A A± 2.85 2.75 2.05 1.90
+An 7.70 6.80 5.80 5.60
+B An 2.85 2.75 2.05 1.90
+a22 2.90 2.80 2.05 1.90
+A33 7.65 6.75 5.80 5.60
+A andB Aiso 4.47 4.10 3.30 3.13
+cw-ENDOR A e +4.43 +4.08 +3.26 +3.18
+A A/ 2.90 2.90 2.00 2.00
+A/ 7.50 6.80 5.75* 5.75*
+Ajso 4.28 4.05 3.15 3.15
+RHF-INDO/SP* B D C A
+An +2.79 +2.74 +2.30 + 1.91
+a22 +3.04 +2.93 +2.40 +2.00
+A33 +7.96 +7.77 +6.00 +4.89
+Aiso +4.59 +4.48 +3.57 +2.93
+0 A: axial symmetry assumedfor the 15Nhfc tensors. B: nonaxial
+symmetry assumed.'’Aiso is calculated asAiS0 = */3(An + A22 + A33)
+or Aiso= '/3(2Ai+ An).cTheRHF-INDO/SP calculationyieldsnitrogen
+hfc tensors for rings A—D in BChl a. Employing these results,
+experimentally determined hfc tensors 1—4can be assignedto the
+respectiverings. Thus tensor 1 belongsto ring B, 2 to D, 3 to C, and
+4 to A. dThe accuracy of the hfc tensor values determined in the
+simulations is about ±0.1 MHz in the caseof the A± and ±0.2 MHz
+in the caseof theAnvalues.‘ Thesevalueswere obtaineddirectly from
+ENDOR in liquid solution (comparevaluesgiven in ref 9). The signs
+of the hfc’s were determined by general TRIPLE resonance. The
+experimental error of hfc values is about ±50 kHz. / The hfc values
+were obtainedfrom ENDOR in frozen solution (seeFigure 6 bottom);
+in ref 9 only two averaged15Nhfc tensorswere given. In our spectrum
+the two smaller tensorscould also not be clearly distinguished. The
+experimentalerror of hfc valuesis about±50 kHz for theA±and±100
+kHz for the An components.* The feature in Figure 6 at 4.4 MHz
+yielding anAnof 5.75 MHz is broaderthan the othersandeven shows
+and indention. It is therefore assignedto both the tensors 3 and 4.
+* Thecalculationof thetensorvalues(seetext) is basedon the molecular
+geometry of BChl a given in ref 50 (available as supplementary
+material).
+three slices parallel to the T axis of the 2D data set shown in
+Figure 2. The relaxation decayhasbeensubtractedfrom these
+time domain data to show only the modulation effect. The
+correspondingsimulationsof thesetime domain dataaregiven
+asdottedlines; they arein goodagreementwith theexperiment.
+The high-frequency ‘noise’ on the data, especially on the set
+for r = 248 ns, is causedby proton modulations. Thesewere
+not included in the simulations. The occurrence of these
+modulationsis dueto the broadexcitation bandwidth (largeB\
+field) employed in the experiments.
+The orientationsof thefour nitrogenhfc tensorprincipal axes
+relative to eachotherandrelativeto the molecularplanerequire
+some comments, (i) In the case of a planar, symmetric
+porphyrin, axially symmetrichfc tensorsareexpectedwith the
+A33 (An)axesparallel to the molecular plane normal. The in-
+planeAn axesof thefour tensorswill be pairwise magnetically
+equivalent and parallel to eachother. The sameholds for the
+A22 axes, (ii) The additional ring E presentin all chlorophylls
+lowersthe symmetryof theporphyrin andleadsto orthorhombic
+hfc tensorswith nonparallelAn (A22)axeswhich lie, however,
+still in the BChl a plane, (iii) In the most general case,the
+BChl a molecule is puckered;consequentlytheA33 axesof the
+nitrogen hfc tensorsare no longer colinear.
+In the simulations the orientations of the A33 axes of the
+tensorswere varied by introducing an angle t?,betweenthem.
+The best results were achievedwhen the A33 axes were kept
+parallel to each other within <5°. Thus, it is concludedthat
+Figure 4. ID stimulated echo ESEEM of [15N]BChl a'+ at 20 K.
+Comparison of time domain experiment (solid line) and simulation
+(dashedline) calculated with the nonaxially symmetric hfc tensorsof
+model B (Table 1). Spacingr betweenthe first andthe secondpulse:
+(a) 560ns; (b) 440 ns;(c) 248ns. Experimentalconditions: startvalue,
+To= 400 ns;time increment,AT = 24 ns;nil pulse, 16ns; a four step
+phasecycle was employed. For definition of time intervals seepulse
+sequencein Figure 3. B0= 3451 G. The experimentaland simulated
+datawerebaseline-corrected(3rd orderpolynomial) using the ESP380
+software.
+theBChl a moleculeis essentiallyplanar. Sincethe hfc tensors
+3 and 4 are axially symmetric and 1 and 2 show almost axial
+symmetry,a variation of therelative orientationof theAn (A22)
+axesfor the different nitrogenshad no effect on this result.
+To avoid errors in the evaluation of this multiparameter
+problem, the magnitudesof the obtainedhfc tensorsmust be
+confirmed independently. This can be done via an additional
+four-pulse ESEEM experiment (HYSCORE).
+HYSCORE. As statedabove HYSCORE still suffers from
+the ‘blind spotproblem’. ThereforeseveralHYSCORE experi-
+mentswere performedemploying different valuesfor the time
+interval r betweenthe first two pulsesin the HYSCORE pulse
+sequence. The skyline projection of one of theseexperiments
+is shown together with the simulation in Figure 5a. In
+HYSCORE other parts of the spectrumare enhancedthan in
+the stimulated echo ESEEM experiment. Thus, HYSCORE
+allows an independentcontrol of the obtained tensor values.
+The agreementbetweenexperimentand simulation—usingthe
+15Nhfc tensorvaluesof Table I (model B)—is quite satisfying.
+Figure 8b shows a contour plot of the 2D HYSCORE
+spectrum. Most of the lines show up in the (H—) quadrant,as
+is expectedfor larger hfc’s (|A| > 2vo). Part of the intensity
+forms a pattern parallel to the diagonal of the (H—) quadrant.
+This is the casefor |A| > 2vo,which is true for the hfc tensors
+1 and2 (Table 1,model B). The An andA22valuesof tensors
+3 and 4 yield, however, |A| < 2vq whereasthe respectiveA33
+elementsgive |A| > 2vo. Thesetensorsshould causelines in
+both the (++) and (-1—) quadrants but without a clear
+orientation of the pattern relative to the diagonals of the
+quadrantsin the contour plot.24 Exactly this is observedin the
+experiment (Figure 8b). The occurrenceof intense diagonal
+
+
+
+--- PAGE 7 ---
+442 J. Phys. Chem.,Vol. 99, No. 1, 1995 Kass et al.
+  T j T |
+Figure 5. HYSCORE (four pulse ESEEM) of (a) [15N]BChla,+and
+(b) [!5N]Pg£5,both at 20 K. Comparisonof experiments(solid lines)
+andsimulations(dashedlines). Skyline projection on the vr axis after
+FT as in Figure 3. Simulations were computed employing the hfc
+tensorsof Table 1 (model B) for [15N]BChla‘+ andTable 3 (ESEEM
+data) for [15N]Pg65.Experimental conditions: ti x t2 = 256 x 256
+points; start values,t\ = 200 ns, t2 = 200 ns; time increments,Aq =
+24 ns, Nh = 24 ns, r = 240 ns; nil pulse, 16 ns. For definition of
+time intervals seeHYSCORE pulse sequenceabove: (a) Bo = 3451
+G; (b) B0 = 3461 G. Data manipulation: Hamming windows of 128
+points fwhm in both directions prior to FT.
+Figure 6. Experimental cw-ENDOR spectrum (solid line) of [15N]-
+BChl a"+ in frozen solution at 120 K (bottom). Experimental
+conditions: microwave power, 8 mW; radio frequencypower, 125W;
+frequencymodulation, 12.5kHz; frequencymodulationdepth,150kHz;
+accumulation time, 2 h; B0 = 3439 G. The simulation shown here
+(dashedline) wascomputedemployingthehfc tensorsfrom theESEEM
+analysis(Table 1, model B) asa crosscheck. 15Nhfc valuesobtained
+from direct evaluationof theexperimentalspectrumaregiven in Table
+1 (cw-ENDOR).
+peaksin the spectrumis due to the fact that the experimental
+B\ wassmallerthantheEPRline width of [15N]BChla*+,which
+is «1.4 mT. The experimentswere performedusing nil pulse
+widths of 16 ns (B\ 0.55 mT). The HYSCORE results
+confirm the magnitudeof the tensor values given in Table 1.
+cw-ENDOR. Continous-wave15NENDOR experimentson
+[15N]BChla’+ were performed in liquid and frozen solution in
+addition to the ESEEM measurementsin order to supplement
+our earlier 15NENDOR data.9 The experimentalspectrumfor
+the frozen solution caseis depictedin Figure 6. Only thehigh-
+frequency lines are shown; the respectivelow-frequency lines
+are beyond detection becauseof the hyperfine enhancement
+effect. The 15Nhfc tensor values obtainedfrom a simulation
+aregiven in Table 1. The liquid solution andsolid statespectra
+give almost the same isotropic hfc’s. Comparison with our
+earlierresults9showsgoodagreementwithin experimentalerror.
+For simulationof thepowderENDOR spectrumshownin Figure
+6, the set of hfc tensorsfrom the ESEEM analysis was used
+(seeTable 1, model B). The agreementbetweenthe ENDOR
+experimentandthis simulation is satisfying, showing that both
+experimentsindependentlylead to very similar results.
+TABLE 2: 1SNhfc Tensor Principal Values of 15N-labeled
+BChl a'+ Taken from Literature
+principal valuesof the
+I5Nhfc tensors(MHz)
+method component 1 2 3 4 ref
+cw-ENDOR11 Ax 2.90 2.90 2.00 2.00
+A„ 7.10 7.10 5.60 5.60 9
+Ajso 4.30 4.30 3.20 3.20
+ESEEM Ax 3.10 2.20 1.80 15
+ESEEM Ai 2.99 2.76 2.10 1.94
+A,, 7.36 6.77 6.02 5.59 16
+Aiso 4.45 4.10 3.41 3.16
+ESEEM An 2.90 2.90 2.20 2.00
+A22 3.75 3.04 2.90 2.12 18
+A33 7.15 6.96 5.70 5.48
+Aiso 4.60 4.30 3.60 3.20
+0In ref 9 only two averaged15Nhfc tensorswere given. For an
+assignmentin analogyto that given in this work, the larger onehasto
+be assignedto tensors1 and2, andthe smallerone,to tensors3 and4.
+IN DOCalculation of15N hfc TensorElements. Semiempiri-
+cal MO calculationsusing the RHF-INDO/SP program45were
+performed,yielding the 15Nhfc tensorvalues. The molecular
+structure used is described in ref 50 (Cartesian coordinates
+availableassupplementarymaterial). The resulting valuesare
+listed in Table 1. All values are in satisfying agreementwith
+the experimental hfc’s. The experimental finding that the
+nitrogen tensorsarealmostaxially symmetricis reproducedby
+the calculations.
+4.2. Discussion
+Severalinvestigationswere undertakenin the past with the
+aim to determinenitrogen hfc tensorsin BChl a'+. Thereby
+the 15Nhfc tensor principal values listed in Table 2 were
+obtainedfrom cw-ENDOR andESEEM experimentsperformed
+in frozen solutions.
+In the primary echo and the stimulated echo ESEEM
+experiments,15autoregressionandFourier transformationmeth-
+ods were usedto obtain frequency spectraof the time domain
+signals. Only four different r values were employed in the
+stimulatedecho experimentspresentedin ref 15, which led to
+very limited information;i.e.,only two hfc valueswereobtained.
+Furthermore, in this paper the peak positions were directly
+assigned to the Ax hfc tensor components without further
+simulation. As waspointedout later by Lin et al.16this is rather
+questionable becausepeak positions in ESEEM spectra of
+powder samplesdo not directly yield the principal values of
+thehfc tensors. Theseauthorsperformedimprovedexperiments
+in which ID stimulatedecho traces,employing 23 different r
+values,were measuredto avoid the blind spotsin the spectra.
+Simulationsof the signalsin the time domain were performed
+using four axially symmetric hfc tensors.16
+Astashkinet al.18usednonaxial hfc tensorsin the simulation
+of theirspectraandtherebyobtainedabetteragreementbetween
+experiment and simulation. Their tensors showed quite pro-
+nounceddeviationsfrom axial symmetry. The most important
+results were obtained from evaluation of primary echo
+ESEEM.52 The experimentally (ESEEM, ENDOR) and theo-
+retically (RHF-INDO/SP) determinedhfc tensor values given
+in this work clearly show a smaller degreeof nonaxiality than
+thosefound in ref 18. We tried to simulateour stimulatedecho
+ESEEM employing the hfc’s from this referenceand obtained
+significant deviations in the ratio of peak intensities although
+the positions of the lines were still acceptable.53
+In the caseof the [15N]BChla radical cation, 15NENDOR
+allows an independentdeterminationof the hfc tensorvalues.
+The simulation of our solid statecw-ENDOR spectrumusing
+
+
+
+--- PAGE 8 ---
+15NESEEM of Bchl a’+ and Pit J. Phys. Chem.,Vol. 99, No. 1, 1995 443
+the tensorvaluesof ref 18yielded no satisfying agreement(not
+shown).54The 15Nhfc tensorvaluesdeterminedby ESEEM in
+this work agreewell with thoseobtainedfrom the cw-ENDOR
+experiments(Table 1). In addition the 2D HYSCORE experi-
+ment supports our set of tensor values, since the skyline
+projection of the spectrum of [15N]BChl a‘+ could also be
+simulatedsatisfactorilyby useof thesamesetof 15Nhfc tensors
+(Figure 5a).
+The isotropic couplings calculated by RHF-INDO/SP are
+closeto the experimentalvalues;the deviationis lessthan 10%.
+Furthermore the calculated anisotropic hf tensorsare close to
+axial symmetry;the ratio An/A22variesbetween0.91 and0.96.
+As alreadypointedout by Tanget al.17andAstashkinet al.,18
+the A33axes of the hfc tensors in [15N]BChl a’+ are almost
+parallel to each other (deviation < 5°). This shows that the
+central part of the BChl a molecule is essentiallyplanar.
+The results obtainedfor [15N]BChla‘+ in this paperclearly
+show that it is necessaryto employ more than one method to
+unequivocally determine a reliable and complete set of hfc
+tensorsin a complex radical systemin frozen solution.
+5. Radical Cation [15N]Pjg5
+5.1. Experimental Results. StimulatedEchoESEEM. The
+skyline projection of the stimulatedechoESEEM spectrumof
+[15N]Pjg5is shown in Figure 7. A satisfying simulation of the
+experimental spectrumwas achievedin three steps.
+(I) ScaledMonomer Model. In this model it was assumed
+that theintrinsic geometryof theBChl a moleculesis not altered
+when the dimer is formed. In this dimer the spin density
+distribution of BChl a’+ is scaleddown by a factor that depends
+on the ratio of the spin density distribution betweenthe dimer
+halves. For the simulation the 15Nhfc’s of the BChl a‘+
+monomer (Table 1, model A) were reduced according to the
+chosenasymmetryratios. Simulatedspectrafor suchratios (gL:
+Qm)starting from 1:1 (equal spin density on both halves)up to
+a strongly asymmetric case (7:1) are shown in Figure 7a-g.
+The symmetric (a) and the strongly asymmetric(g) casesgave
+no satisfyingagreementwith the experiment. Although intensi-
+ties arenot representedvery well, the simulation with £>uom=
+5:1 yielded reasonable peak and shoulder positions in the
+spectrum(Figure7) exceptfor apeakneartheLarmor frequency
+visN= 1.49MHz. This peakis a ‘sum frequency’ peak(seeeq
+4). That this assumption is correct could be shown by
+calculation of the modulation parameterspectraof the values
+ki for each of the tensorsused in this simulation (Figure 7e)
+(seeref 16). It turned out that the spectrumis dominatedby
+the four largest hfc tensors,in particular by hfc tensors3 and
+4. The tensors5—8show small ki values and are expectedto
+haveonly minor effects. No ki spectrumshowsintensityaround
+visN. Further details are given in the Appendix.
+(II) Axial Model. In order to improve the quality of the
+simulation,the 15Nhfc’s of eachdimer half weremodified while
+the asymmetryratio Ol:£>mwas kept constant. This approach
+is basedon theexperimentalobservation755that thedimer halves
+exhibit quite different individual methyl hfc’s at positions 21
+and 121(Figure la). Only axially symmetric hfc tensorswere
+used. Their principal values were varied in fine stepswithin
+intervals of about 1 MHz. The bestresult is shown in Figure
+7h. Here the intensity of the sum frequency peak near V5Nis
+somewhatdecreased.The peakat 0.75 MHz becomessharper
+whereasall otherpeaksaresmoothed. In generalthe simulation
+is satisfying.
+(III) Nonaxial Model. In the next and final stepnonaxially
+symmetric hfc tensorswere introduced in order to investigate
+if the simulation could be further improved. In addition the
+Figure 7. StimulatedechoESEEM of [15N]Pg£5at 20 K. Compari-
+sonof experiment(solidline) andsimulationsemployingdifferenthfc
+tensorsets(dashedlines);theskylineprojectionwasdoneasin Figure
+3. (a—g)Stimulationsfor differentasymmetryratiosq-Uquin themodel
+of scaledmonomerhyperfmecouplings(seetext). Theseratioswere
+(a) 1:1,(b) 2:1, (c) 3:1, (d) 4:1, (e) 5:1, (f) 6:1, and(g) 7:1. In panel
+h a simulationis shownemployingthe eight axially symmetric15N
+hfc tensorsgivenin Table2. Experimentalconditions: T x r = 512
+x 128points;startvalues,7b= 200ns,To= 120ns;time increments,
+AT = 16ns,At = 16ns;n/2 pulse,16ns;a four stepphasecyclewas
+employed; the total accumulationtime for the 2D spectrumwas
+approximately2 h; Bo= 3461G. Data manipulationwith ESP380
+software: baselinecorrectionfor relaxationdecay(3rd orderpolyno-
+mial); applicationof a hamming window (170 points fwhm) in T
+direction prior to FT. Simulationswith 512 x 128 points; data
+manipulationwasthe sameasin the experiment.
+orientationsof thetensoraxesrelativeto eachotherwerevaried.
+Both attemptsdid not significantly improvethe simulations.The
+A33axesof the large tensorshad to be kept parallel within 10°.
+A variation of the tensor values, while keeping the resulting
+isotropic hfc’s constant,only led to intensity changeswhereas
+peak and shoulderpositions remainedapproximately constant.
+No simulation exceededthe quality alreadyreachedin the axial
+model (Figure 7h).
+The 15Nhfc tensors resulting from the axial model (II)
+yielding the best simulation are listed in Table 3. For
+comparison the 15Nhfc’s from cw-ENDOR experiments on
+singlecrystalsof reactioncentersatroom temperature10arealso
+included in the table.
+INDO Calculation ofI5N hfc TensorElements. Calculations
+asdescribedfor BChl a'+ were also performedfor Pgg5(cf. ref
+48). The geometryof theBChl a dimer was obtainedfrom the
+X-ray structure.56The calculatedtensorvaluesfor all eight 15N
+nuclei aregiven in Table 3. The assignmentof theexperimental
+hfc’s to pyrrole rings A—D and to the dimer halves L and M
+are basedon theseRHF-INDO/SP calculations.
+HYSCORE. In Figure 8a the complete 2D HYSCORE
+spectrum of [15N]Pjg5is shown. It is divided into the two
+
+
+
+--- PAGE 9 ---
+Kass et al.444 J. Phys. Chem.,Vol. 99. No. 1. 1995
+TABLE 3: ,5N hfc Tensor Principal Values of [isN]P^j in RC’s of Rb. sphaeroides R 26.1
+j,fc principalvaluesof thel5Nhfc tensor"(MHz)
+method component 1 2 3 4 5 6 7 8 CiJQm
+ESEEM* Ai 2.37 2.34 1.84 1.58 0.47 0.46 0.34 0.32
+(axialmodel) A,, 6.42 5.78 5.22 4.67 1.28 1.13 0.97 0.93
+Aiso 3.72 3.49 2.97 2.61 0.74 0.68 0.55 0.52 5.1
+cw-ENDOR1- An 1.30 1.41 1.35 0.82 0.62 0.17 0.79 0.56
+A22 2.14 1.91 1.67 2.06 0.81 0.89 0.88 0.71
+A,3 6.28 5.47 4.18 5.16 3.33 2.84 2.70 2.57
+Aiso 3.24 2.93 2.68 2.40 1.59 1.30 1.29 1.28 2.1
+RHF-INDO/SP* Bl CL dl Al Bm Dm Am Cm
+An + 1.59 + 1.77 + 1.45 +0.95 +0.97 +0.80 +0.73 +0.62
+A22 + 1.62 + 1.86 + 1.52 + 1.05 + 1.00 +0.86 +0.78 +0.67
+An +7.78 +6.65 +6.96 +4.72 +4.37 +4.07 +3.02 +2.91
+Also +3.66 +3.51 +3.31 +2.24 +2.12 + 1.91 + 1.51 + 1.40 1.8
+“ TheRHF-INDO/SPcalculationyieldsnitrogenhfc tensorsfor thepyrrolerings A-D in thetwo BChl a moleculesformingthedimerP*+. One
+BChla is boundto theproteinsubunitL, andtheother,to subunitM. Employingtheseresults,theexperimentallydeterminedhfc tensors1—8can
+beassignedto therespectiverings in theBChl a moleculesof thetwo halves(cf. Table 1).* Ratioof spindensitieson theL-half andtheM-half
+of theBChl a dimerbasedon 1SNhfc's (cf. ref 7 for ‘H hfc’s), qJqm = lAiso(L)/LAiso(M).cAls0is calculatedasA„0= l/i(An+ A22 + An) or A,t0
+= '/<i(2Ai+ An). * This work, frozenstate(T = 20 K). Thesignsof thehfc’s shouldall bepositive. This is basedon theresultsof themonomeric
+BChla. wherethesignsof all componentshavebeendeterminedby generalTRIPLE;seeTable1. Theaccuracyof thehfc tensorvaluesdetermined
+in thesimulationsis about±0.1 MHz in caseof theAx and±0.2 MHz in the caseof theAnvalues.1Datatakenfrom ref 10,RC singlecrystals
+at roomtemperature(T = 288 K). Note that the full l5Nhfc tensorshavebeendeducedfrom experimentallydetermineddiagonalelementsand
+calculatedoff-diagonalelementsin the crystal axis system. This procedureled to a largerdeviationfrom axial symmetrythan predictedin the
+RHF-INDO/SPcalculations./ Numericalresultsof thecalculationperformedby Platoet al.48This calculationis basedon theX-ray geometryof
+theRC of Rb.sphaeroides
+Figure 8. (a) Perspectiveview of the HYSCOREexperimentof [l5N]Pj£5at 20 K after FT andmagnitudecalculation. The full 2D spectrumis
+showntogetherwith theskylineprojectiononthev(|axis(shaded).ForexperimentalconditionsseeFigure5b. (b) Contourplot of theHYSCORE
+experimentof [l5N]BChla'+ afterFT andmagnitudecalculation. ForexperimentalconditionsseeFigure5a. Skylineprojectionson bothaxesare
+included, (c) Contourplot of theHYSCOREexperimentof [l5N]Pgj5. In both contourplots thetwo quadrants(++) and(H—)of thecomplete
+2D spectrumareshown(andindicated). Furthermorethediagonalsof thesequadrantsareincluded.
+quadrants(++) (rear) and (H—) (front part) containing different
+peak positions and intensities. Furthermore, the skyline projec-
+tion along the v,2 axis is shown (shaded spectrum). The
+qualitative agreementof the skyline projection of the HYSCORE
+simulation employing the tensor set of Table 3 and the
+experiment is satisfying (Figure 5b). For a more detailed
+discussion the contour plot of the 2D HYSCORE spectrum is
+used (Figure 8c). It shows two ridges in the quadrant (H—)
+aroundcenter frequencies (0.8 MHz, —3.3MHz) and (3.3 MHz,
+—0.8MHz), which aresymmetrically placed about the diagonal
+(dashedline). The peak positions are, however, not related to
+any principal value of the respective tensors. This interesting
+information can be deduced from the extension of the ridges.
+Sincethesestructuresareessentiallysymmetric asexpectedfrom
+theory,23it is sufficient to discuss the part below the diagonal
+and take the one above ascontrol. The contours of thesepeaks
+have an almost triangular shape. The centers of their sides
+perpendicular to the diagonal are at frequencies(1.4 MHz, —4.1
+MHz) and (4.6 MHz, -1.4 MHz) in the ‘control pattern’. These
+edges are causedby an hfc of about 5.8 MHz, leading to v0 =
+4.4 MHz and vp= 1.4 MHz. This follows from the resonance
+condition vap = |vo ± A/2| and from the fact that in the (4-—)
+quadrant cross peaks appear at positions (va, —vp)and (vp,
+—
+va). The observed hfc of 5.8 MHz will still be smaller than
+the respective principal value A33. A hfc value of 6.42 MHz
+was found independently by simulation of the stimulated echo
+ESEEM experiment (tensor 1).
+
+
+
+--- PAGE 10 ---
+15NESEEM of Bchl a’+ and Pg^
+TABLE 4: 15Nhfc Tensor Principal Values of [15N]P^5 at
+Low Temperatures,Taken from Literature
+principal valuesof the
+15Nhfc tensors(MHz)
+method (species) component 1 2 3 4 ref
+cw-ENDORa Ai 2.30 1.90
+(Rb.sphaeroidesR-26) A,, 3.10 2.90 9
+Aiso 2.57 2.23
+ESEEM Ai 2.36 1.86 1.42 0.08
+(Rb.sphaeroides2.4.1) A„ 3.40 2.70 2.00 0.10 14
+Aiso 2.70 2.10 1.60 0.10
+ESEEM Ai 1.62 1.33 0.94 0.76
+(Rs.rubrum) An 4.56 3.99 2.95 1.62 16
+Aiso 2.60 2.22 1.61 1.05
+ESEEM
+(Rb.sphaeroides2.4.1) Aiso 2.666 20
+aFour isotropic 15Nhfe’s were determinedin RC solutionsin ref 9;
+the values are 1.05, 1.612.22, and2.60 MHz. Obviously only part of
+the 15Ncouplings was deducedfrom the experimental spectrum (see
+text). bIn ref 20 only one 14Nhfc value is given. To compare this
+with the respective15Nhfc value,it hasto be scaledwith a factor |yiW
+yi«N|= 1.40.
+Further evaluation of the wings of the peak pattern below
+the diagonal yields hfe’s between4 and 5 MHz. Comparison
+with the simulation of the stimulatedecho ESEEM showsthat
+thesecan be assignedto the A33 values of tensors2-4. The
+discussedridges areparallel to the diagonalof quadrant(H—),
+as it is expected23 for |A| > 2v$.
+Inspection of the second quadrant (++) shows a very
+different intensity pattern. Apart from the strong peak on the
+diagonal,57 a pronouncedridge showsup perpendicular to the
+diagonal,which extendsfrom (1.7MHz, 1.3MHz) to (2.5MHz,
+0.5 MHz); its wing goesto (2.9 MHz, 0.1 MHz). Furthermore
+it is separatedinto two partsat (2.2MHz, 1.0MHz). The saddle
+point of its symmetrical counterpart,lying on the other side of
+the diagonal, is clearly seenin Figure 8a. From the observed
+features, hfe’s in the interval between 0.4 and 2.8 MHz are
+obtained, obeying the condition |A| < 2vo-
+The quadrant (++) contains contributions of several hfc
+tensors,part of them having principal values at or even below
+0.4 MHz. In addition the An and A22 values of tensors3 and
+4 obey |A| < 2voand form the outer part of the observedridge
+(extendingfrom (2.2 MHz, 1.0MHz) to (2.5 MHz, 0.5 MHz)).
+Comparisonwith the simulation of thestimulatedechoESEEM
+showsthat the sectionbetween (1.7 MHz, 1.3 MHz) and (2.2
+MHz, 1.0 MHz) is due to tensors5-8 (Table 3). Thesewere
+alreadypostulatedon the basisof the scaledmonomer model.
+In stimulated echo ESEEM thesesmall hfe’s have only minor
+effects (see Figure 9). HYSCORE unambiguously shows
+contributions of thesehfe’s in Pg£5.
+5.2. Discussion
+In the primary donor cation radical a maximum of eight
+different nitrogen hfc tensorsis expected. A reliable analysis
+of theENDOR andthevery complicatedESEEM spectraclearly
+requires prior knowledge of the respective tensors of the
+monomeric BChl a,+. In the past severalinvestigations were
+performed on Pg£5 in frozen solution at low temperatures,
+lacking this information to a large extent. The hfc values
+obtained in these studies are listed in Table 4. With one
+exception16 all experimentsweredoneon RC’s of Rb.sphaeroi-
+des.
+Our earlier 15NENDOR experiments9 on Pj^5 in frozen RC
+solutions of Rb. sphaeroidesyielded only two groups of split
+spectrallines with different intensities from which two out of
+J. Phys. Chem.,Vol. 99, No. 1, 1995 445
+the eight possible 15Nhfe’s were deduced. Clearly, the correct
+assignment of the observed spectral features to individual
+nitrogen nuclei in the dimer representeda major problem in
+this work (cf. Tables 3 and 4). The sameis true for the four
+isotropic 15Nhfe’s in liquid RC solutionsgiven in this paper.9
+The hfc values given by De Groot et al.14 were determined
+directly from the ESEEM experimentemploying the maximum
+entropy method (MEM) instead of Fourier transformation to
+obtain a frequency spectrum. This method is well suited for
+single-crystalspectra. In thecaseof disorderedsamplesit leads,
+however,to distortions in the distribution of peakintensitiesas
+comparedwith an ideal powder pattern (seeDiscussion in ref
+16). Lin et al. performed simulations in the time domain for
+eight different ID stimulated echo experiments.16 In their
+analysisnonparalleltensoraxesweretakeninto account. It was
+shownthat the orientationof all A33 axeshadto be kept parallel
+within 30°. The hfc tensorsemployed in the simulation were
+chosenin such a way that their isotropic part was equal to the
+Abo values determined previously by liquid solution cw-
+ENDOR.9 Thus,theresultwasnot achievedindependentlyfrom
+the ENDOR experiment. The systemunder investigation was
+Pg70in reactioncentersof Rhodospirillum (Rs.)rubrum. Since
+the liquid solution 'H ENDOR spectrumof P^q in this system
+is somewhatdifferent from that of Rb. sphaeroides,58 60 it is
+questionableif it is allowed to comparethe 15NESEEM of the
+two systems. The very recent results of Davis et al.20 were
+obtainedfor 14N-containingRC’s of Rb.sphaeroides(wild type).
+Hereonly thelargesthfc wasevaluatedandgiven asanisotropic
+hfc value.
+As alreadypointed out by Dikanov,12 the valuesgiven in the
+literature for the anisotropichfe’s of 15Nnuclei in Pjg5 needto
+be refined. In all studiespublished so far a maximum of only
+four nitrogen hfc tensorswas determined. These hfe’s were
+on the averagesmaller than thoseof the monomeric BChl a*+
+by a factor of 2. For a symmetric dimer model only four
+reduced15Nhfe’s areexpected. Consequently,thefirst ESEEM
+experimentson this systemwere interpretedon the basisof an
+essentially symmetric spin density distribution in the BChl a
+dimer.19,21
+Recently the detailed analysisof !H ENDOR performed on
+Pgg5 in RC single crystals of Rb. sphaeroides near room
+temperature7 showed that the spin density distribution is
+asymmetric in the dimer, i.e. ql'-Qm~ 2:1. This result was
+supportedby thedeterminationof 15Nhfe’s atroom temperature
+using 15N-labeledRC single crystals.10 However, in these
+experimentsthe completetensorscould not be determinedand
+anassignmentof thecouplingswasonly possibleby comparison
+with MO calculations.10 TheseRHF-INDO/SP calculationsof
+the 15Nhfe’s (seeTable 3) also gave a spin density ratio close
+to 2 (ql'Qm ^ 1.8:1), in good agreementwith the *H ENDOR
+data. Thetheoreticalresults48 werebasedon thedimergeometry
+of theRC crystal structure.56 This structurewasalsodetermined
+nearroom temperature.
+In this paperthesimulationof the2D stimulatedechoESEEM
+spectrawas done on the basis of a ‘scaled monomer model’
+with eight different 15Nhfc tensors(Table 3). In this model
+the simulation is dominated by the four larger tensors (see
+Appendix). Direct experimentalproof for the presenceof the
+four smallerhfc tensorscould be obtainedby the evaluationof
+the 2D contourplots in the HYSCORE experiment(Figure 8c).
+The assignmentof the four smaller 15Nhfe’s to the dimer half
+Pm and of the four larger hfe’s to the dimer half Pl was done
+in analogy to the ENDOR results.7'10
+The analysisof the stimulatedechoESEEM andHYSCORE
+spectraof [15N]Pgg5 in RC’s at low temperaturepresentedin
+
+
+
+--- PAGE 11 ---
+446 J. Phys.Chem.,Vol. 99, No. 1, 1995 KSsset al.
+this work clearly revealsa much more asymmetricspin density
+distribution over the dimer halves;i.e., £>l:om« 5:1 (seeTable
+3). The strongerasymmetryindicatesan all-over shift of spin
+densityfrom the dimer half Pmto PL.59A possiblereasonfor
+this shift of spin density betweenthe dimer halvescould lie in
+the difference in temperaturesusedfor the ENDOR (T = 288
+K) and the ESEEM (T = 20 K) experiments. A similar shift
+of spin density has also been observedin LHENDOR spectra
+upon freezing the RC solutions.60 Obviously freezing of the
+sampleinfluences the delicate energeticbalanceof the dimer
+halvesandtherebythedistributionof thesupermolecularvalence
+orbital containingthe unpairedelectron(cf. ref 48). That effects
+of this magnitudecould occur has already beendemonstrated
+by the impact of single-pointmutationsintroducing or breaking
+H-bonds to specific positions on the dimer halves.58Further-
+more, for different BChl a containing RC’s of purple bacteria,
+a variation of the spin density distribution over the dimer was
+found.58,60The structural reasons causing the spin density
+redistributions in the dimer arenot fully understoodat present.
+Work on various preparationsis in progressin our laboratory
+to solve this question.
+6. Conclusions
+In this paper three-pulse (stimulated echo) and four-pulse
+(HYSCORE) ESEEM methodshavebeenapplied to elucidate
+the nitrogen hfc’s in complex biological systems in frozen
+solutions. The systemsinvestigatedare the radical cations of
+the monomeric [15N]BChl a and of the primary donor Pg65in
+fully I5N-labeledbacterial RC’s of Rb.sphaeroidesR 26.1. It
+could be shown that a complete set of 15Nhfc tensorscan be
+obtained by application of both ENDOR and ESEEM tech-
+niques. In particular,a substantialgain in resolutionis obtained
+in the HYSCORE experiment,which allows the separationof
+overlapping powder patternsin the two-dimensional spectrum.
+Thereby it is demonstratedthat thesemethodsare able to deal
+even with complicated immobilized radicals like the primary
+donor containingeight magnetically inequivalent nitrogen
+nuclei.
+Pjg5had already been well characterizedby cw-EPR and
+ENDOR spectroscopyin RC single crystals. It is thereforean
+ideal systemto prove the potential of thesemodempulsedEPR
+techniquesfor future applications on other biological systems
+which can not be crystallized yet.
+From the measuredand assigned15Nhfc’s in Pjgj in frozen
+RC’s, a spin density ratio of approximately 5:1 was deduced.
+This contrastswith theresultsobtainedfrom ENDOR nearroom
+temperature,which gave a ratio of only 2:1. Obviously there
+exist two distinct conformational statesof the primary donor
+Pjg5. A possible explanation could lie in a change of the
+spatialand/orelectronicstructureof thedimer andits surround-
+ing upon freezing the RC. The reasonsfor the existence of
+these statesand the possible functional relevanceare not yet
+understood and require detailed future investigations. The
+changeof the electronic structure of the dimer observedhere
+might also be of importance for other spectroscopicstudies
+performed on RC’s at low temperatures.
+Acknowledgment. We thank Dr. M. Plato (Institut fur
+Molektilphysik, Freie Universitat Berlin), for supplyingus with
+the sourceof theRHFINDO/SP programandfor thecalculation
+of the 15Nhyperfine tensor values of Pjg5. Also we want to
+thank Prof. Dr. M. Mehring (2. PhysikalischesInstitut, Uni-
+versitat Stuttgart) for experimental support. Many helpful
+discussionswith Prof. Dr. K. Mobius, Dr. M. Plato (both Freie
+Universitat Berlin), Dr. F. Lendzian (TechnischeUniversitat
+Figure 9. (a) ExperimentalstimulatedechoESEEM spectrum(skyline
+projection, solid line, from Figure 7) of [15N]Pg^5in RC’s of Rb.
+sphaeroidesR 26.1 andsimulation (dashedline) using the eight axially
+symmetric hfc tensorsgiven in Table 3. Thesetensorsresultedfrom
+the ‘axial model’ (II) for the hfc’s in PgJ5(seetext), (b) Theoretical
+modulation factor (&,)spectrausing the 15Nhfc tensorsgiven in Table
+3. The numbersrefer to the respectiveindividual tensorsin the table.
+The spectraof tensors1—4are plotted on the samevertical scale;for
+tensors5—8this scaleis expandedby a factor of 10.
+Berlin), and Prof. Dr. G. Feher (University of California, San
+Diego) concerningthedimermodelaregratefullyacknowledged.
+The work was funded by Deutsche Forschungsgemeinschaft
+(Sonderforschungsbereich312, TP A4) and by Fonds der
+ChemischenIndustrie (W.L.).
+Appendix
+To visualize the effects of the individual hfc tensorson the
+resulting stimulated echo ESEEM simulation, the modulation
+factor (kt)spectraof thetensorsemployedin the so-called‘axial
+model’ (seesection5.1.,II) were calculatedasdescribedin ref
+16. They are shown in Figure 9 (dashedlines) together with
+the resulting simulated spectraand the experimental ESEEM
+spectrum(top) of [15N]Pgg5in skyline projection.
+The contributions of die individual tensorsare not simply
+additive. Therefore this representationonly allows a crude
+estimation of the resulting effects. As outlined in the Theory
+section,the time domainmodulation signalsof thetensorshave
+to be multiplied with eachother accordingto eq 4. This leads
+to sum and difference frequenciesin the final spectrum after
+FT. Obviously the peak around the Larmor frequency vi5Wis
+sucha sumfrequencypeak, sinceno ki spectrumshowsa peak
+in this region.
+It is obvious from Figure 9 that the ESEEM spectrum is
+dominatedby the four large 15Nhfc tensors1—4(seeTable 3).
+According to ref 28 they show ‘strong hyperfine coupling’,
+which leadsto differencecombination frequenciesand /3 line
+shapesweightedto the hyperfine componentalong the perpen-
+dicular canonical position. It is important to notice for the
+stimulatedechoESEEM experimentthat tensor4 almostfulfils
+the condition |(An + A_l)/4| = Vo- Therefore it leads to a
+singularity at |(Ah+ Aj.)/4| = 0.77 MHz, which canbe seenin
+the modulation factor spectrumof tensor4 as a peak at about
+0.8 MHz. Tensor 3 obeysthe condition not as well as tensor
+4; the respectivepeakis not asintenseasthat of tensor4 in its
+modulationfactor spectrum. This explainstherathersharpand
+intense peak near 0.8 MHz in the experimental spectrum of
+
+
+
+--- PAGE 12 ---
+15NESEEM of Bchl a‘+ and p£5 J. Phys.Chem.,Vol. 99, No. 1, 1995 447
+The four hfc tensors with small coupling constantshave only
+minor effects on the resulting ESEEM spectrum (note that the
+ki spectra of tensors 5—8 are plotted on an expanded vertical
+scale). This shows that it is rather difficult to obtain a complete
+set of 15Nhfc’s from three-pulse ESEEM alone.
+In contrast to stimulated echo ESEEM, the HYSORE
+technique clearly allows the detection of the small hfc coupling
+becausein the two-dimensional contour plot of Figure 8b and
+c the large (|A| > 2visn) and the small (|A| < 2visn) couplings
+are separatedinto different quadrants (H—) and (++), respec-
+tively. This clearly demonstratesthe merits of HYSCORE. For
+principle reasons,stimulated echo ESEEM doesnot lead to such
+a separation into different quadrants.23
+Supplementary Material Available: Cartesian coordinates
+of the structure of BChl a usedin the RHF-INDO/SP calculation
+of Table 1 (2 pages). Ordering information is given on any
+current masthead page.
+References and Notes
+(1) Deisenhofer, J., Norris, J. R., Eds. ThePhotosyntheticReaction
+Center;Academic Press: San Diego, CA, 1993; Vols. I and n.
+(2) Breton, J., Vermeglio, A., Eds. The PhotosyntheticBacterial
+ReactionCenterII; Structure,SpectroscopyandDynamics;Plenum Press:
+New York, 1992.
+(3) Feher,G.; Allen J. P.; Okamura,M. Y.; Rees,D. C. Nature 1989,
+339, 111-116.
+(4) Deisenhofer, J.; Michel, H. EMBO J. 1989, 8, 2149-2170.
+(5) (a) Komiya, H.; Yeates,T. O.; Rees,D. C.; Allen, J. P.; Feher,G.
+Proc. Natl. Acad. Sci. U.SA. 1988, 85, 9012—9017. This is part 6 in a
+seriesof papers. Referencesfor parts 1-5 aregiven therein, (b) Buchanan,
+S. K.; Fritzsch, G.; Emler, U.; Michel, H. J. Mol. Biol. 1993, 230, 1311—
+1314. (c) El-Kabbani, O.; Chang,C. H.; Tiede, D.; Norris, J.; Schiffer, M.
+Biochemistry1991, 30, 5361-5369. For earlier work seereferencescited
+therein.
+(6) Lubitz, W. In Chlorophylls,CRCHandbook;Scheer,H., Ed.; CRC
+Press: Boca Raton, FL, 1991; pp 903-944 and referencescited therein.
+(7) Lendzian, F.; Huber, M.; Isaacson,R. A.; Endeward,B.; Plato,M.;
+Bonigk, B.; Mobius, K.; Lubitz, W.; Feher,G. Biochim.Biophys.Acta1993,
+1183, 139-160.
+(8) Kurreck, H.; Kirste, B.; Lubitz, W. Electron Nuclear Double
+ResonanceSpectroscopyof Radicals in Solutions; VCH: Weinheim,
+Germany, 1988; Chapter 4.4.
+(9) Lubitz, W.; Isaacson,R. A.; Abresch, E. C.; Feher,G. Proc. Natl.
+Acad. Sci. U.SA. 1984, 81, 7792-7796.
+(10) Lendzian, F.; Bonigk, B.; Plato, M.; Mobius, K.; Lubitz, W. In
+ThePhotosyntheticBacterial ReactionCenterII; Breton, J.; Vermdglio,
+A., Eds.; Plenum Press: New York, 1992; pp 89-97.
+(11) Mims, W. B. Phys.Rev.B 1972, 5, 2409-2419.
+(12) Dikanov, S. A.; Tsvetkov, Y. D. Electron Spin Echo Envelope
+Modulation (ESEEM)Spectroscopy;CRC Press: Boca Raton, FL, 1992;
+pp 334-357.
+(13) Schweiger,A. In ModemPulsedandContinuous-WaveElectron
+SpinResonance;Kevan,L. Bowman,M. K„ Eds.;Wiley: New York, 1992;
+pp 43-118.
+(14) De Groot, A.; Hoff, A. J.; De Beer, R.; Scheer,H. Chem.Phys.
+Lett. 1985, 113,286-290.
+(15) Hoff, A. J.; De Groot, A.; Dikanov, S. A.; Astashkin, A. V.;
+Tsvetkov, Y. D. Chem.Phys.Lett. 1985, 118,40-47.
+(16) Lin, C. P.; Bowman, M. K.; Norris, J. R. J. Chem.Phys.1986, 85,
+56-62.
+(17) Tang, J.; Lin, C. P.; Norris, J. R. J. Chem.Phys.1985, 83,4917—
+4919.
+(18) Astashkin, A. V.; Dikanov, S. A.; Tsvetkov, Y. D. Chem.Phys.
+Lett. 1986, 130,337-340.
+(19) Astashkin, A. V.; Dikanov, S. A.; Tsvetkov, Y. D. Chem.Phys.
+Lett. 1988, 152,258-264.
+(20) Davis, I. H.; Heathcote,P.; MacLachlan, D. J.; Evans, M. C. W.
+Biochim.Biophys.Acta 1993, 1143, 183—189.
+(21) Lin, C. P.; Norris, J. R. FEBSLett. 1986, 197,281-284.
+(22) Hofer, P.; Grupp, A.; Nebenfuhr, H.; Mehring, M. Chem.Phys.
+Lett. 1986, 132,279-281.
+(23) Shane,1.J.; Hofer, P.; Reijerse,E. J.; De Boer, E. J. Magn.Reson.
+1992, 99, 596-604.
+(24) Hofer, P. In ElectronMagneticResonanceof DisorderedSystems
+EMARDIS-91;Yordanov, N. D., Ed.; World Scientific: Singapore, 1991;
+pp 1-15.
+(25) In theoretical discussions, frequencies are given in radians.
+However for experimental frequency domain spectra the transitions are
+representedon an axis in hertz. If frequenciesaregiven in radians,we use
+the symbols co;for frequenciesin hertz we usev (m = 2,tv). If hyperfme
+couplings are usedtogether with frequenciesw, they are given in radians,
+and in the caseof v they are given in hertz.
+(26) Elementsof thehyperfine tensormeasuredin the laboratory frame
+are labeled with indices x, y, and z (e.g. A**, A„, ...) whereasnumerical
+indicesindicatethat they aregiven in the principal axis systemof thetensor
+(e.g.An, A22,...).
+(27) Lai, A.; Flanagan,H.-L.; Singel, D. J. J. Chem.Phys.1988, 89,
+7161-7166.
+(28) Reijerse,E. J.; Dikanov, S. A. J. Chem.Phys.1991,95, 836—845.
+(29) Gerfen, G.; Singel, D. J. J. Chem.Phys.1994, 100,4127-4135.
+(30) Dikanov, S. A.; Yudanov, V. F.; Tsvetkov, Yu. D. J. Magn.Reson.
+1979, 34, 631-645.
+(31) Theseproceduresaredescribedin NMR textbooks;e.g.see: Ernst,
+R. R.; Bodenhausen,G.; Wokaun, A. Principles of Nuclear Magnetic
+Resonancein OneandTwoDimensions;Oxford University Press: Oxford,
+U.K., 1991; pp 99-109.
+(32) Shane,J. J. Doctoral Thesis, Universiteit Nijmegen, 1993.
+(33) Gemperle, C.; Aebli, G.; Schweiger, A.; Ernst, R. R. J. Magn.
+Reson.1990, 88, 241-256.
+(34) Note the corrections to the original work in ref 33 given in:
+Tyryshkin, A. M.; Dikanov, S. A.; Goldfarb, D. J. Magn. Reson.1993,
+A105, 271-283.
+(35) Barkhuijsen,H.; De Beer,R.; Pronk, J.; Van Ormondt, D. J. Magn.
+Reson.1985, 61, 284-293.
+(36) Astashkin, A. V.; Dikanov, S. A.; Kurshev, V. V.; Tsvetkov, Y.
+D. Chem.Phys.Lett. 1987, 136,335-341.
+(37) Bdnigk, B. Doctoral Thesis, TechnischeUniversitat Berlin, 1994.
+(38) Allen, J. P.; Feher,G.; Yeates,T. O.; Rees,D. C.; Deisenhofer,J.;
+Michael, H.; Huber, R. Proc. Natl. Acad. Sci. U.SA. 1986, 83, 8589—
+8593.
+(39) Omata, T.; Murata, N. Plant Cell Physiol.1983, 24, 1093-1100.
+(40) Fuhrhop,J. H.; Mauzerall, D. J. Am. Chem.Soc.1969, 91, 4174—
+4181.
+(41) (a) Holczer, K.; Schmalbein,D.; Barker, P. Bruker Rep.1988, 1,
+4-8. (b) Hofer, P. Bruker Rep.1989, 2, 4-6.
+(42) Fauth, J.-M.; Schweiger,A.; Braunschweiler,L.; Forrer, J.; Ernst,
+R. R J. Magn.Reson.1986, 66, 74-85.
+(43) Thiele, H.; Erstling, J.; Hofer, P.; Such,P. BrukerRep.1992,138/
+92, 42-45.
+(44) Zweygart, W.; Thanner, R.; Lubitz, W. J. Magn.Reson.A 1990,
+109,172—176. The cavity usedfor the work presentedin this paperdiffers
+from the TMno resonatorin the cited reference. The cylindrical body was
+madefrom brass,not from quartz. An antennawasemployedfor microwave
+coupling insteadof a waveguide/iris.
+(45) (a) Plato, M.; Mobius, K.; Lubitz, W. In Chlorophylls, CRC
+Handbook;Scheer,H., Ed.; CRC Press: Boca Raton,FL, 1991;pp 1015—
+1046. (b) Plato, M.; Trankle, E.; Lubitz, W.; Lendzian, F.; Mobius, K.
+Chem.Phys.1986, 107, 185-196.
+(46) Pople, J. A.; Beveridge, D. L. ApproximateMolecular Orbital
+Theory;McGraw-Hill: New York, 1970.
+(47) Dewar, M. J. S.; Hashmall, J. A.; Venier, C. G. J. Am. Chem.Soc.
+1968, 90, 1953-1957.
+(48) Plato, M.; Lendzian, F.; Lubitz, W.; Mobius, K. In ThePhotosyn-
+theticBacterialReactionCenterII; Structure,SpectroscopyandDynamics;
+Breton, J., Vermeglio, A., Eds.; PlenumPress: New York, 1992;pp 109—
+118.
+(49) Beveridge, D. L.; Mclver, J. W. J. Chem.Phys.1971, 54, 4681—
+4690.
+(50) Kass,H.; Rautter,R.; Zweygart, W.; Struck,A.; Scheer,H.; Lubitz,
+W. J. Phys.Chem.1994, 98, 354-363.
+(51) Hofer, P. Doctoral Thesis, Universitat Stuttgart, 1988.
+(52) In addition to the hyperfme transition frequenciesva,; and vp,,of
+thedifferent nuclei i, thestimulatedechoexperimentyields only combination
+frequenciesvaj ± vaj and vp%l± vpj arising from eachindividual electron
+spin manifold. In the primary echoESEEM also the combinations va±
+vpj between the spin manifolds are occurring. Therefore primary echo
+ESEEM data are more difficult to interpret than results derived from
+stimulated echo ESEEM.
+(53) The featuresof the primary echo ESEEM spectrumof [15N]BChl
+a*+ shown in ref 15 can be explainedby using the hfc tensorsdetermined
+in this work. Our discussionfollows ref 28,alsoin terminology. All tensors
+given in Table 1 (models A and B) belong to the regime of dominating
+isotropic hyperfme interaction and show stronghyperfme coupling, i.e. |An
++ Ai| > 4vo. The condition |An+ AJ = 4vois never fulfilled. Therefore
+the ‘/9 line shape’ of the spectra is weighted toward the perpendicular
+canonicalposition. Combination lines will appearat differencefrequencies
+va —vp,and no singularity at |A| - AJ/4 will occur. The vj,0 transitions
+of tensors1and2 fulfill the cancellationcondition to a goodapproximation.
+This results in v±j lines at 2.91and 2.86MHz. In addition, combination
+lines at 2.47and 2.50MHz will show up. The v±p frequenciesof tensors
+3 and 4 are 2.51 and 2.44 MHz. They do not fulfill the cancellation
+condition and will lead to rather broad and unstructuredline patterns. All
+the spectralcontributionsdiscussedabovewill not be separatedinto resolved
+features but merge into one broad line centered around 2.7 MHz. This
+
+
+
+--- PAGE 13 ---
+448 J. Phys.Chem.,Vol. 99, No. 1, 1995 Kasset al.
+explains the Fourier-transformedspectrumreportedin ref 15. The authors
+usedthe autoregression(AR) methodin the calculationof asecondspectrum
+shown in this paper which enhancesthe contributions of tensors 1 and 2
+relative to the less structured onesof tensors3 and 4.
+(54) There is clearly no evidencefor a hfc of about 3.75 MHz visible
+in the experimentalENDOR spectrum,which would leadto a distinct peak
+at about 3.4 MHz. In caseof the secondnonaxial tensor given in ref 18,
+ENDOR cannot help becauseits contribution will coincide with lines from
+the other tensors.
+(55) Feher, G. J. Chem. Soc., Perkin Trans. 2 1992, 11, 1861-1874.
+(56) Komiya, H.; Yeates,T. O.; Chirino, J.; Rees,D. C.; Allen, J. P.;
+Feher, G. The coordinatesare registeredat the Brookhaven Protein Data
+Bank, preliminary entry P4RCR (09-Sep-91).
+(57) The diagonal peaksaredue to nonideal microwave pulsesandwill
+appearat (va, va) and (vp, vb); The peaksat (0.8 MHz, 0.8 MHz) and (2.3
+MHz, 2.3 MHz) in quadrant(++) are causedby a hfc of about 1.4 MHz,
+which is assignedto both tensors 3 and 4. From the modulation factor
+spectrait can be seen(Appendix) that the diagonal peak at (0.8 MHz, 0.8
+MHz) shouldbe very intense. Exactly this is observedin the experimental
+spectrum.
+(58) Rautter, J.; Gessner,Ch.; Lendzian, F.; Lubitz, W.; Williams, J.
+C.; Murchison, H. A.; Wang, S.; Woodbury, N. W.; Allen, J. P. In The
+PhotosyntheticBacterial Reaction Center II; Structure, Spectroscopyand
+Dynamics;Breton,J., Vermeglio, A., Eds.;PlenumPress: New York, 1992;
+pp 99-107.
+(59) It has to be noted that simulation of the ESEEM spectrawas not
+possible when the 15Nhfc tensorsfrom the cw-ENDOR experiment near
+room temperaturewere used(Table 3).
+(60) Rautter, J.; Lendzian, F.; Lubitz, W.; Wang, S.; Allen, J. P.
+Biochemistry 1994, 33, 12077-12084.

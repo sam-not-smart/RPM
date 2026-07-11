@@ -1,0 +1,1004 @@
+
+
+--- PAGE 1 ---
+Two Distinct Conformations of the Primary Electron Donor in Reaction Centers
+from Rhodobacter sphaeroides Revealed by ENDOR/TRIPLE-Spectroscopy †
+Frank Mu¨h, Joachim Rautter, and Wolfgang Lubitz*
+Max-Volmer-Institut fu¨r Biophysikalische Chemie und Biochemie, Technische Uni Versita¨t Berlin, Strasse des 17.
+Juni 135, D-10623 Berlin, Germany
+ReceiVed NoVember 19, 1996; Re Vised Manuscript Recei Ved January 22, 1997 X
+ABSTRACT: The effect of solubilization of photosynthetic reaction centers (RCs) from Rhodobacter
+sphaeroides with different detergents on the electronic structure of the oxidized primary donor, P •+,i s
+investigated. Electron paramagnetic resonance spectroscopy and related multiple resonance techniques
+(ENDOR/Special TRIPLE) show that two distinct conformations of P
+•+ can be obtained, depending on
+the detergent properties, the detergent/RC ratio, and the temperature. The two states correspond to different
+positions of the long-wavelength Q
+y-band of the neutral state, P ( λ1 ) 866 nm and λ2 ) 850 nm at room
+temperature) and therefore are called P 866•+ and P850•+, respectively. P 866•+ is found in chromatophores
+and in RCs solubilized with nonionic detergents and bile salts. P 850•+ is induced by zwitterionic and
+ionic detergents with aliphatic hydrophobic chains. The TRIPLE resonance spectra reveal that both states
+coexist in the range λ
+2 < λmax < λ1. The main property of the detergent that determines the ability to
+induce P 850•+ is the polarity of the head group. A simple phenomenological model is presented that
+relates the standard Gibbs free energy difference between the two conformations to the detergent/RC
+ratio and the temperature. Of special interest is the observation that the widely used detergent LDAO
+can induce P
+850•+ upon freezing the RCs without cryoprotectants. The spectroscopic properties of the
+two states are compared and their possible roles in RC function are discussed.
+The primary photochemical reactions of bacterial photo-
+synthesis occur in a specialized membrane-bound pigment-
+protein complex, called the reaction center (RC 1). In the
+last decade, high-resolution X-ray structures of RCs from
+two different species of purple nonsulfur bacteria, i.e.,
+Rhodopseudomonas Viridis and Rhodobacter sphaeroides
+[reviewed by Lancaster et al. (1995)], became available.
+Protocols were developed to manipulate the RC structure
+either chemically (Scheer & Struck, 1993) or through site-
+directed mutagenesis [for a recent review, see Williams and
+Taguchi (1995)]. Owing to these advances, the bacterial RC
+has become the ideal system for the elucidation of electron
+transfer mechanisms in proteins.
+Light absorption by the RC results in the formation of the
+excited singlet state of the primary electron donor P, an
+excitonically coupled dimer of bacteriochlorophylls. Within
+∼4 ps, an electron is transferred from P via a monomeric
+BChl to a BPh, and subsequently in about 200 ps to one of
+two quinone acceptors, Q
+A. Finally a stable charge separated
+state, P •+QB•-, is formed in ∼0.1 ms (Feher et al., 1989;
+Zinth & Kaiser, 1993; Woodbury & Allen, 1995).
+Studies of RCs in membrane fragments (chromatophores)
+using optical techniques are hampered by the presence of
+LH pigments and therefore are most often performed on
+isolated, detergent solubilized RC complexes. It has been
+noticed very early that the optical and photochemical
+properties of isolated RCs depend on experimental condi-
+tions. In particular, the exact peak position of the long-
+wavelength near-IR absorption (Q
+y-band) of P varies by up
+to 15 nm (Clayton, 1978; Debus et al., 1985). Wang et al.
+(1994) observed that in purified RCs from different species
+of BChl a-containing purple bacteria the Q
+y-band of P is
+located either at∼865 or∼850 nm, if the RCs are solubilized
+with the commonly used detergent N-lauryl-N,N-dimethy-
+lamine-N-oxide (LDAO). However, it is possible to convert
+the RCs from one state to the other by addition of certain
+detergents (Wang et al., 1994). Recently, it was demon-
+strated that removal of the detergent also causes a blueshift
+of the Q
+y-band of P down to 846 nm in RCs from R.
+sphaeroides (Gast et al., 1996).
+One of the most sensitive probes for small changes of the
+pigment-protein interactions in RCs is the electronic
+structure of the cation radical of the primary donor, P•+. The
+reason for this sensitivity is that the distribution of the
+unpaired electron within the dimer strongly depends on the
+electronic coupling and geometry of the two BChl moieties
+as well as the interactions with single amino acid residues
+(Plato et al., 1992; Rautter et al., 1994, 1995). The electronic
+structure of P
+•+ can be obtained by determining the electron-
+nuclear hfcs with EPR methods like ENDOR or TRIPLE.
+The assignment of the hfcs to specific molecular positions
+then yields a map of the spin density distribution of the
+† This work was supported by DFG (Sfb 312, TP A4), Schering AG
+Berlin, Fonds der Chemischen Industrie to W. L. and NaFo¨G to F. M.
+* Author to whom correspondence should be addressed.
+X Abstract published in AdVance ACS Abstracts, March 15, 1997.
+1 Abbreviations and symbols: R, Coulomb integral; â, resonance
+integral;ϵ, extinction coefficient; œ, detergent/RC ratio in units of 103;
+λ, wavelength; ν, frequency; F, spin density; A, hyperfine coupling
+constant; BChl, bacteriochlorophyll; BPh, bacteriopheophytin; c,
+concentration; ENDOR, electron nuclear double resonance; EPR,
+electron paramagnetic resonance; G, Gibbs free energy; hfc, hyperfine
+coupling; HOMO, highest occupied molecular orbital; IR, infrared; K,
+equilibrium constant; LH, light harvesting complex; MO, molecular
+orbital; OD, optical density; P, primary electron donor; Q
+A,B, quinones
+in the RC; Qx,y, optical transitions in BChls; R, ideal gas constant; RC,
+reaction center; rf, radio frequency; T, temperature; TRIPLE, electron-
+nuclear-nuclear triple resonance; X, mole fraction.
+4155Biochemistry 1997, 36, 4155-4162
+S0006-2960(96)02859-0 CCC: $14.00 © 1997 American Chemical Society
+Downloaded via COLORADO SCHOOL OF MINES on June 29, 2026 at 02:21:43 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+
+--- PAGE 2 ---
+unpaired valence electron in the molecule under investigation
+[for reviews, see Mo¨bius et al. (1989), Lubitz (1991), Lubitz
+& Lendzian (1996)]. The great advantage of these tech-
+niques is the possibility to selectively observe the radical
+ions formed in the charge separation process. Hence, the
+experiments are not perturbed by the presence of LH
+complexes and can also be performed on intact chromato-
+phores (Feher et al., 1975; Norris et al., 1975; Rautter et al.,
+1994). Solubilized RCs are used in ENDOR experiments
+solely because of the higher resolution obtained in the
+spectra. This is due to the faster tumbling of these complexes
+in liquid solution which leads to an averaging of hyperfine
+anisotropies (Lendzian et al., 1981; Rautter et al., 1994). The
+most extensive ENDOR investigations of P
+•+ in R. sphaeroi-
+des have been performed by Lendzian et al. (1993) on RC
+single crystals and revealed an unequal distribution of the
+π-spin density in the dimer with a ratio of approximately
+2:1 in favor of P
+L, i.e., the dimer half that is associated with
+the L-subunit of the RC-protein. The same spin density
+distribution is found for P
+•+ in chromatophores from several
+purple bacterial species that contain BChl a (Rautter et al.,
+1994). However, the situation is different for isolated RCs.
+In addition to the conformation observed in chromatophores,
+a second distinct state of the primary donor can be stabilized
+in detergent-solubilized complexes, which shows a stronger
+asymmetry of the spin density distribution (Rautter et al.,
+1994; Ka¨ss et al., 1995; Lubitz et al., 1995). Interestingly,
+the appearance of the second conformation is correlated with
+a∼15-nm blueshift of the Q
+y-band of P (Rautter et al., 1994;
+Wang et al., 1994; Mu ¨h et al., 1996). In addition to the
+ENDOR results there is experimental evidence for two forms
+of P in RCs of R. sphaeroides (Lous & Hoff, 1986) and R.
+Viridis (Gast et al., 1995) from magneto-optical difference
+spectroscopy. In the case of R. Viridis even two long-
+wavelength absorption bands are observed at 4.2 K (Ver-
+me´glio & Paillotin, 1982). Two RC conformations were also
+considered by Parot et al. (1987) to explain the complex
+kinetics of charge recombination in RCs of R. sphaeroides
+and Rhodospirillum rubrum at low temperatures measured
+near 800 nm.
+In this paper, we present further evidence that solubilized
+RCs from R. sphaeroides exhibit two distinct conformations
+of the primary donor, depending on detergent properties and
+experimental conditions. In particular, we demonstrate that
+an equilibrium between the two conformations exists that
+can be shifted by changing the detergent/RC ratio and the
+temperature. The nature of both states of P and their possible
+relevance to RC function are discussed.
+MATERIALS AND METHODS
+RCs from photoheterotrophically grown cells of R.
+sphaeroides 2.4.1 were prepared according to Buchanan et
+al. (1993) with slight modifications. The buffer used
+throughout (TE) contained 10 mM Tris/Cl (pH 8.0) and 1
+mM EDTA. Isolated RCs were finally solubilized in 0.1%
+(4.3 mM) LDAO. For detergent exchange, a stock solution
+of the respective detergent in TE was added to the RC
+samples and the LDAO was removed by repeated dialysis.
+Samples were reconcentrated to OD
+805 ≈100 by spinning
+in centricon 30 tubes (Amicon). The following detergents
+were tested. (1) nonionic: n-alkylpolyoxyethylene ethers
+(Brij series: C
+12E10,C 16E10,C 16E20,C 18E20,C 18:1E20; Sigma),
+tert-octylphenyl polyoxyethylene ether (Triton X-100; Fluka
+Biochemika), ethylphenyl polyoxyethylene ether (Nonidet
+P-40; Boehringer), polyoxyethylenesorbitan monolaurate
+(Tween 20; Boehringer), n-octyl-â-
+D-glucopyranoside ( â-
+OG; Boehringer), and n-dodecyl-â-D-maltoside ( â-DM;
+Boehringer). (2) zwitterionic: N-(n-alkyl)-N,N-dimethyl-3-
+ammonio-1-propane sulfonates (sulfobetaines: SB8, SB10,
+SB12, SB14, SB16; Sigma), and N-(3-Cholamidopropyl)-
+N,N-dimethyl-3-ammonio-1-propane sulfonate (CHAPS; Boe-
+hringer). (3) ionic: sodium cholate (Boehringer), sodium
+deoxycholate (DOC; Merck), and N-cetyl-N,N,N-trimethy-
+lammonium bromide (CTAB; Fluka Chemika).
+Optical spectra were recorded using a Cary 05E spectro-
+photometer (Varian) equipped with a thermostated sample
+holder of local design. P
+•+ was generated by cross illumina-
+tion of the samples with red light (λ > 600 nm) from a Schott
+KL 1500 light source via an 8-mm light guide. The
+extinction coefficient used for the determination of RC
+concentrations was ϵ
+805 ) 288 mM-1 cm-1 (Straley et al.,
+1973).2
+The EPR and ENDOR experiments were performed by
+using a Bruker ESP 300E spectrometer equipped with home-
+built ENDOR/TRIPLE accessories and a Bruker nitrogen gas
+cooling system [for details, see Rautter et al. (1994)]. The
+EPR measurements were carried out in a standard rectangular
+cavity (Bruker ER 4102 ST). For the ENDOR and TRIPLE
+experiments a TM
+110 cavity of local design similar to the
+one described by Zweygart et al. (1994) was used. For the
+experiments in liquid solution ( T ) 278-298 K), P
+•+ was
+generated by continuous illumination of the sample inside
+the cavity with actinic light. Experiments on P
+•+ in RCs in
+frozen solution or in chromatophores ( T ) 160 K) were
+carried out by illuminating the samples for∼30 s at ambient
+temperatures prior to freezing in liquid nitrogen. Illumination
+was continued during the measurements.
+RESULTS
+In order to evaluate the conditions for the occurrence of
+the second conformation of P, we have tested the effects of
+various commercially available detergents on solubilized RCs
+from R. sphaeroides 2.4.1. Among these (see Materials and
+Methods), only the cationic detergent CTAB [cf. Wang et
+al. (1994)] and the zwitterionic sulfobetaines induce a
+pronounced blueshift of the ground state absorption maxi-
+mum, λ
+max, of the long-wavelength Qy-band of P. In all other
+cases λmax is located at 866 ( 2 nm at room temperature.
+The magnitude of the induced blueshift for a given detergent
+depends on the detergent/RC ratio as well as on the
+temperature. At room temperature, λ
+max varies between 850
+and 862 nm for the sulfobetaines. 3 LDAO is also able to
+induce a blueshift of λmax, but at much higher detergent/RC
+ratios than the sulfobetaines (Mu¨h et al. 1996). Usually λmax
+) 865 ( 1 nm is found in LDAO at room temperature.
+Figure 1 shows the comparison of the near-IR region of the
+absorption spectra of RCs from R. sphaeroides 2.4.1 solu-
+bilized with 4.3 mM LDAO and 12.5 mM SB12, respec-
+tively, which represent the two extreme cases. The blueshift
+of λ
+max to 850 nm is correlated with a decrease of the
+2 Straley et al. (1973) actually determined ϵ802 ) 288 ( 14 mM-1
+cm-1 for strain R26.1. We used this value for the 805-nm band of RCs
+from strain 2.4.1.
+3 In the case of CTAB, we were not able to determine the whole
+range of λmax, since this detergent caused denaturation of the RCs.
+4156 Biochemistry, Vol. 36, No. 14, 1997 Mu¨h et al.
+
+
+
+--- PAGE 3 ---
+oscillator strength of the 805-nm band by∼20% and that of
+the characteristic absorption band of the cation radical of P
+near 1250 nm (insets to Figure 1) by ∼60%. These
+observations are in good agreement with the results obtained
+by Wang et al. (1994) for RCs from various species of purple
+bacteria.
+The Special TRIPLE spectra of the primary donor cation
+radical, P
+•+, in samples exhibiting the two extreme positions
+of λmax are shown in Figure 2 (top and bottom, respectively).
+The spectra clearly show that the different absorption maxima
+of P are correlated with two distinct spectroscopic species
+of P
+•+. These two conformations of the primary donor are
+referred to in the following as P866•+ and P850•+, respectively.
+This labeling is in accordance with the usual nomenclature
+of primary donor pigments in photosynthesis and refers to
+the positions of the Q
+y absorption maxima at room temper-
+ature. The hfcs (Table 1) were obtained by using a spectral
+deconvolution program for the evaluation of overlapping
+lines (Tra¨nkle & Lendzian, 1989).
+The state stabilized by LDAO at room temperature, P
+866•+,
+is also obtained by illumination of chromatophores with
+actinic light (Vide infra). Therefore, this state represents the
+conformation of the oxidized primary donor that is found in
+RCs embedded in their natural membrane environment
+4
+(Rautter et al. 1994). The EPR signal of P 866•+ is narrower
+(∆ Bpp ) 0.96 ( 0.02 mT) than that of monomeric BChl a•+
+in Vitro (∆ Bpp ) 1.40 ( 0.02 mT) because the unpaired spin
+density is spread over both dimer halves [cf. Figure 17 in
+Lendzian et al. (1993)]. P
+866•+ has also been observed in
+the ENDOR experiments on RC single crystals which
+allowed the unambigous assignment of the hfcs to specific
+molecular positions on P
+L and P M (Gessner et al., 1992;
+Lendzian et al., 1993). The most prominent hfcs arise from
+the â protons at positions 3, 4, 7, and 8 of rings II and IV
+and from the methyl protons at positions 1a and 5a of rings
+I and III (for numbering, see Figure 3). The detailed analysis
+of the spectra of P
+866•+ yields the asymmetric spin density
+distribution of approximately 2:1 in favor of P L (Gessner et
+al., 1992; Lendzian et al., 1993; Rautter et al., 1994). 5 In
+all other cases whereλmax≈866 nm, i.e., for RCs solubilized
+with nonionic detergents or bile salts, the EPR and ENDOR
+spectra of light-induced P•+ (not shown) are also character-
+istic for this state. 6
+The other extreme case with λmax ≈850 nm, which
+corresponds to the P 850•+ state, is characterized by an EPR
+linewidth ∆ Bpp of 1.12 ( 0.02 mT. This value is closer to
+that of monomeric BChl a•+ (Table 1), indicating a more
+asymmetric spin density distribution within the dimer in
+P
+850•+. The enhanced asymmetry is manifested by increased
+magnitudes of hfcs assigned to protons of PL and a decrease
+of those assigned to P M in the corresponding TRIPLE
+spectrum (Figure 2, bottom). The assignment of methyl
+proton hfcs is based on the assumption that the characteristic
+ratio A(5a)/A(1a) of each BChl moiety (Plato et al., 1988;
+Feher, 1992) is conserved in P
+850•+ and P866•+ (Table 1), in
+4 P866•+ is also found by ENDOR spectroscopy of antenna-deficient
+chromatophores of R. sphaeroides (Rautter et al., unpublished). Optical
+spectra of such chromatophores show λmax ) 866 nm (Beekman et al.,
+1995).
+5 A small overall shift of the spin density (3%) toward PL is observed
+for strain 2.4.1 as compared with R26.1, which was attributed to the
+presence of the carotenoid in the former species (Gessner et al., 1992).
+The spin density asymmetry of 2:1 in favor of P
+L is inferred from the
+methyl proton hfcs. Analysis of the â-proton hfcs yields 1.5:1 to 1.6:1
+in favor of P L, depending on the chosen assignment, which is not
+unambiguous for the â-protons (Lendzian et al., 1993).
+6 A small fraction of P 850 •+ seems to be present in liquid solution
+samples of RCs solubilized with Brij 36 T (C 12E10) as judged from
+signals in the Special TRIPLE spectra that are characteristic for the
+â-protons. However, this cannot be detected in the corresponding
+ENDOR spectra in frozen solution.
+FIGURE 1: Near-IR absorption spectra of dark-adapted (solid) and
+illuminated (dashed) RCs from R. sphaeroides 2.4.1 ( cRC ) 1.5
+µM) solubilized with either 4.3 mM LDAO ( λmax ) 866 nm, see
+vertical dotted line) or 12.5 mM SB12 ( λmax ) 850 nm) at T )
+298 K. The inserts show the characteristic absorption band of the
+cation radical P
+•+ at 1250 nm (scaled up 5-fold).
+FIGURE 2: Comparison of the 1H-Special TRIPLE spectra in liquid
+solution of light-induced P •+ in RCs from R. sphaeroides 2.4.1
+solubilized with either LDAO or SB12 at T ) 288 K. The spectra
+at the top and the bottom correspond to RCs exhibiting the two
+extreme positions of the Q
+y-band of P at 866 and 850 nm,
+respectively. All hyperfine couplings assigned to P L are larger in
+P850•+ than in P866•+, and Vice Versa for PM. For the assignment of
+signals to molecular positions, see text and Figure 3. The detergent
+concentrations given are those of the dialysis buffer used for
+detergent exchange (cf. Materials and Methods). For the spectra
+representing mixtures of states the line positions belonging to the
+two different conformations (cf. Table 1) are marked with full
+circles (P
+866•+) and open diamonds (P850•+), respectively. The arrows
+indicate the decrease of the fraction of P866•+ with increasing SB12
+concentration. Experimental conditions: microwave power 16 mW,
+rf power 2 ×150 W, rf modulation depths 200 kHz (frequency
+12.5 kHz), accumulation time 2 h.
+Two Distinct Conformations of Reaction Centers Biochemistry, Vol. 36, No. 14, 1997 4157
+
+
+
+--- PAGE 4 ---
+agreement with earlier studies (Rautter et al., 1992, 1994).
+This assignment was recently corroborated by ENDOR
+experiments on P
+850•+ in frozen, LDAO-containing RC single
+crystals (Lubitz et al., unpublished) and yields an asymmetric
+spin density distribution of approximately 5.5:1 in favor of
+P
+L. Furthermore the TRIPLE spectrum of P 850•+ is quite
+similar to that of P •+ in the heterodimer mutant HL(M202)
+of R. sphaeroides. In this mutant, P M is replaced by a BPh
+and the unpaired electron of P •+ is completely localized on
+PL (Rautter et al., 1995; Huber et al., 1996). However, the
+hfcs of P850•+ assigned to protons of P L are all smaller than
+those of P L•+ in the mutant (Table 1), indicating that the
+electron is not confined to one cofactor in the P 850•+ state.
+The dependence of λmax on the detergent/RC ratio raises
+the question of whether other states besides P 850 and P 866
+exist or only mixtures of both are present for 850 nm <
+λmax < 866 nm. We therefore performed EPR and TRIPLE
+measurements on samples with different SB12/RC ratios. The
+samples were prepared by varying the SB12 concentration
+in the dialysis buffer (see Materials and Methods), while
+keeping all other conditions constant. The corresponding
+series of Special TRIPLE spectra is shown in Figure 2
+together with the two extreme cases. The hfcs that can be
+identified are characteristic for either P
+850•+ or P866•+. Two
+spectroscopic species are sufficient to explain the spectra.
+No additional species can be detected. Furthermore, the
+spectra clearly show that the signals assigned to P
+866•+ are
+decreased with respect to those of P850•+ upon increasing the
+SB12 concentration. The measured linewidths ∆ Bpp of the
+corresponding EPR-spectra (not shown) increase with in-
+creasing SB12 concentration from 1.05 to 1.12 ( 0.02 mT.
+A rough estimate of the mole fraction, X,o fP
+850•+ can be
+obtained with the assumption that ∆ Bpp is a sigmoidal
+function of the SB12 concentration by analogy with the
+behavior of λ
+max in optical titration experiments [cf. Figure
+3i nM u¨h et al. (1996)]. Using the limiting values ∆ B1 )
+0.96 mT for P 866•+ and ∆ B2 ) 1.12 mT for P 850•+,w e
+determined X to be approximately 0.5, 0.6, 0.7, 0.8, and 1.0,
+respectively, with increasing SB12 concentration in Figure
+2( X≈0 for the LDAO sample).
+Figure 4 shows the TRIPLE spectra of the sample with
+the lowest SB12 concentration recorded at five different
+temperatures. The signals assigned to P
+866•+ are increased
+with respect to those assigned to P 850•+ upon raising the
+temperature from 278 to 298 K. This trend is reflected by
+the EPR linewidths, which are decreased correspondingly.
+We estimated X to be 0.60, 0.55, 0.50, 0.45, and 0.40,
+Table 1: 1H-hfcs (MHz), Ratios of hfcs and EPR Linewidths of the
+Two States of P •+ in Liquid RC Solution of R. sphaeroides
+Compared with Data of Monomeric BChl a•+ in Vitro and in the
+Mutant HL(M202)
+R. sphaeroides
+P866•+ b P850•+ c
+PL•+in
+HL(M202)d
+BChl a•+ e
+in Vitro
+A(5aL)a,f 5.70 6.86 7.44
+A(1aL) 3.96 5.04 5.75 9.50 (5a)
+A(5aM) 3.20 1.50 4.85 (1a)
+A(1aM) 1.37 0.65 g
+A(âL)a,h 9.70 13.50 13.70 16.43 (4)
+8.70 11.80 12.45 13.59 (3)
+6.25 7.75 8.10 13.00 (7)
+4.50 5.70 6.25 11.61 (8)
+[A(5a)/A(1a)]
+Li 1.44 1.36 1.29 1.90[A(5a)/A(1a)]Mi 2.34 2.31
+∑A(CH3) j 14.23 14.05 13.19 14.35
+FL/FMk 2.11 5.53
+∆ Bpp/mT (exp)l 0.96 1.12 1.22 1.40
+∆ Bpp/mT (sim)l 0.96 1.12 1.22 1.40
+a All hfcs were obtained from liquid solution spectra unless stated
+otherwise; errors of methyl hfcs (30 kHz and of â hfcs (50 kHz.
+b The state P 866•+ is observed in RCs solubilized with nonionic
+detergents, bile salts, and low LDAO/RC-ratios (see text). c The state
+P850•+ is observed in RCs solubilized with the cationic detergent CTAB
+and the zwitterionic sulfobetaines (see text). d Values from Rautter et
+al. (1995); see also Huber et al. (1996). In the mutant HL(M202) P M
+is replaced by a BPh. e Values from Lubitz et al. (1984). The
+assignments to molecular positions are given in parentheses (see Figure
+3).
+f For the numbering of molecular positions see Figure 3; for the
+assignment see text. g This hfc was obtained from frozen solution
+spectra (not shown), error (100 kHz. h âL proton hfcs (positions 3, 4,
+7, and 8 in Figure 3); for the assignment see text. i Ratio of methyl
+proton hfcs in positions 5a and 1a on PL and PM, respectively (see text).
+j Sum of all methyl proton hfcs. k Ratio of spin densities on PL and PM
+as determined from methyl proton hfcs in positions 1a and 5a; FL/FM
+) ∑A(CH3)L/∑A(CH3)M. l Experimental and simulated peak-to-peak
+Gaussian envelope EPR linewidth (spectra not shown); experimental
+error (0.02 mT.
+FIGURE 3: Structure of BChl a with the numbering scheme (R )
+phytyl).
+FIGURE 4: Temperature dependence of the 1H-Special TRIPLE
+spectrum in liquid solution of light-induced P •+ in RCs from R.
+sphaeroides 2.4.1 solubilized with 3.0 mM SB12. The line positions
+belonging to the two different conformations (cf. Table 1) are
+marked with full circles (P
+866•+) and open diamonds (P 850•+),
+respectively. The arrows indicate the increase of the fraction of
+P
+866•+ with increasing temperature. Experimental conditions see
+Figure 2.
+4158 Biochemistry, Vol. 36, No. 14, 1997 Mu¨h et al.
+
+
+
+--- PAGE 5 ---
+respectively, with increasing temperature. The values indi-
+cate that for this sample the state P 850•+ is preferred at 278
+K, while P 866•+ is more stable at 298 K.
+LDAO is also able to induce the P 850 state. Although the
+conversion of RCs to P 850 is difficult with LDAO at room
+temperature (Mu¨h et al., 1996), this can be achieved by
+freezing LDAO-containing samples (as well as RC single
+crystals; Lubitz et al., unpublished) without the addition of
+cryoprotectants. The ENDOR spectrum obtained at 160 K
+(Figure 5, bottom) is similar to that of P
+850•+ observed with
+sulfobetaines in frozen solution (not shown). The formation
+of P
+850•+ can be avoided by addition of glycerol. However,
+the fraction of P 850•+ induced by freezing depends on the
+amount of glycerol added (Figure 5). In the spectra
+representing mixtures of both conformations, the line pair
+assigned to position 5a
+L of P850•+ (indicated by dashed lines
+in Figure 5) is the best indicator for the presence of this
+state. Note that even with 70% (v/v) glycerol, traces of P
+850•+
+can be detected in the ENDOR spectrum, whereas this is
+not seen in the light-induced P •+ spectrum obtained with
+chromatophores (Figure 5, top). In some samples the
+induction of P
+850 by freezing seems to be at least partially
+irreversible, since the dimer band is observed atλmax ) 860-
+864 nm after thawing. In these cases storage of the samples
+at 278 K for days did not lead to a recovery of the band at
+λ
+max ) 866 nm.
+DISCUSSION
+In the present study we performed EPR, ENDOR, and
+Special TRIPLE measurements to characterize detergent
+effects on bacterial RCs by using the oxidized primary donor
+P
+•+ as probe. The motivation for such a study comes from
+the observation that the position of the maximum of the long-
+wavelength near-IR absorption of P, λmax, varies between
+850 and 866 nm in BChl a-containing RCs, depending on
+experimental conditions (Clayton, 1976; Debus et al., 1985;
+Wang et al., 1994). In earlier studies we found a correlation
+between these changes and the occurrence of certain hfcs
+observed in ENDOR experiments of light-induced P
+•+
+(Rautter et al., 1994; Lubitz et al., 1995; Mu¨h et al., 1996).
+The present study clearly demonstrates that only zwitterionic
+and ionic detergents are able to induce these changes, while
+RCs solubilized with nonionic detergents have the same
+spectroscopic properties as those embedded in chromato-
+phores.
+6 LDAO and the bile salts represent special cases.
+The two spectroscopic forms of P•+ that correspond to the
+two extreme values of λmax differ in the extent of delocal-
+ization of the unpaired spin density and hence their EPR
+linewidths and hfcs. From the assignment of the proton hfcs
+we can infer that the ratio of the spin densities on P
+L and PM
+is FL/FM ≈2i nP 866•+ and FL/FM ≈5.5 in P 850•+. This
+stronger localization of the electron on P L in P850•+ can be
+explained by using a simple MO-model that considers the
+interaction of the frontier orbitals of the two BChl moieties
+(Plato et al., 1992; Lendzian et al., 1993). Because of
+different interactions with the protein environment, the
+Coulomb energy of the HOMO of P
+L is higher than that of
+PM, the difference being denoted by ∆ R (Figure 6). The
+interaction of the two HOMOs, described by the resonance
+integral â
+D, then yields two orbitals of the dimer with an
+energy difference given by
+In the oxidized state the unpaired electron resides in the
+upper one of the two dimer orbitals, which has a larger
+contribution from P
+L than from PM. Consequently, the spin
+density is also larger on PL. Since the ratio of spin densities
+FL/FM is a function of∆ R/âD (Plato et al., 1992), the observed
+asymmetry enhancement in P850•+ with respect to P866•+ can
+be achieved both by an increase of ∆ R and/or by a decrease
+of âD (Rautter et al., 1994). MO calculations (RHF INDO/
+SP) predict that a change of ∆ R can for example be obtained
+by changing the hydrogen-bonding pattern to the 2-acetyl
+FIGURE 5: 1H-ENDOR spectra in frozen solution of light-induced
+P•+ in RCs from R. sphaeroides 2.4.1 solubilized with 0.1% (w/v)
+LDAO (bottom) and with different amounts of glycerol added as
+cryoprotectant (in percent volume/volume). The upper trace shows
+P
+866•+ generated in chromatophores. For the assignment of signals
+see Figure 3. In the spectra of the glycerol-containing samples the
+position of one pair of signals that is indicative for the presence of
+P
+850•+ (methyl proton hfc of position 5a L) is marked with dashed
+lines. Experimental conditions: T ) 160 K, microwave power 16
+mW, rf power 200 W, rf modulation depths 200 kHz (frequency
+12.5 kHz), accumulation time 1 h.
+FIGURE 6: Theoretical dependence of the spin density ratio FL/FM
+of P•+ on the ratio of the Coulomb to the resonance integral in the
+dimer, ∆ R/âD (for details see Plato et al., 1992). The interpretation
+of the corresponding Special TRIPLE spectra (see text and Figure
+2) indicates that the difference between the two distinct states P
+850•+
+and P866•+ (indicated by dotted and dashed lines, respectively) is
+mainly due to a change of âD. Inset: MO scheme describing the
+interaction of the HOMOs of P L and PM in the oxidized state P •+
+of the primary donor; ∆ R is the energy difference between the
+monomer orbitals and ∆ E that of the dimer orbitals, see eq 1.
+∆ E )x(∆ R)2 + (2âD)2 (1)
+Two Distinct Conformations of Reaction Centers Biochemistry, Vol. 36, No. 14, 1997 4159
+
+
+
+--- PAGE 6 ---
+and 9-keto groups of the BChls and/or rotating the 2-acetyl
+group with respect to the plane of the macrocycle (Plato et
+al., 1986, 1992). Charges in the vicinity of the macrocycles
+also influence the Coulomb energies (Plato et al., 1988). In
+wild-type RCs fromR. sphaeroides, only one hydrogen bond
+to P exists between histidine L168 and the 2-acetyl group
+of P
+L. Cleavage of this H-bond causes a symmetrization of
+the electronic structure of P•+, i.e., FL/FM ) 0.76 in the mutant
+HF(L168) (Rautter et al., 1995). Moreover, a rotation of
+the acetyl group would affect the ratio A(5a)/A(1a) of the
+respective BChl molecule more strongly than observed here
+(Ka¨ss, 1995; Rautter, 1995). The same is true for a change
+of the ring puckering (Feher, 1992). In contrast, a decrease
+of â
+D can simply be achieved by increasing the distance and/
+or changing the angle between the two macrocycles without
+major impact on either the molecular geometry or the
+orientation of the acetyl groups. We therefore think that the
+difference between P
+850 and P866 is mainly due to a change
+of âD. In particular, the hydrogen-bonding pattern should
+be the same in both states. However, a change of ∆ R due
+to reorientation of nearby polar side chains or of the protein
+backbone cannot be excluded. ∆ R could also be changed
+due to long-range electrostatic effects of amino acid residues
+in outer parts of the RC protein that act differently on P
+L•+
+and PM•+.
+Further insights can be gained by considering the optical
+properties of P•+. Parson et al. (1992) analyzed the transition
+at 1250 nm in RCs fromR. sphaeroides. Their MO treatment
+shows that the oscillator strength of this band is strongly
+affected by ∆ R, while the line position remains constant.
+More recently, Reimers and Hush (1995a,b) have suggested
+that the absorption band at 1250 nm is due to a triplet-coupled
+transition that is located on P
+M and actually spin-forbidden.
+The state P •+ is modeled by a monomeric cation P L•+
+interacting with a neutral BChl P M. The unpaired spin on
+PL induces the transition on P M, causing its intensity to be
+strongly dependent on the electronic coupling between the
+two moieties. Therefore, the reduction of the oscillator
+strength of the 1250-nm band for P
+850•+ by a factor of about
+3 could also be indicative for a decoupling of the two dimer
+halves in this state, i.e., a decrease of â
+D. On the basis of
+the assumption that the decoupling of the dimer is achieved
+by increasing the distance between the two macrocycle
+planes, the model calculations of Reimers and Hush (1995a,b)
+allow us to assess the magnitude of this distance change to
+be approximately 0.3 Å. It is conceivable that such slight
+changes can be induced by conformational reorientation of
+the protein environment without a major distortion of the
+geometries of the macrocycles as discussed above. It would
+be of great interest to investigate the effects of zwitterionic
+detergents on transitions of P
+•+ in the mid-IR region in order
+to further evaluate changes of ∆ R and/or âD [cf. Breton et
+al. (1992)]. As is also shown by semiempirical calculations
+(Warshel & Parson, 1987; Thompson & Zerner, 1991), the
+optical properties of the neutral states P
+850 and P866 are fully
+consistent with the interpretation that the distance between
+the dimer halves is changed.
+In principle it is possible to change the EPR linewidths
+continously, in a way similar to the position of the long-
+wavelength absorption maximum, by changing the detergent/
+RC ratio. Such a behavior could imply that a manifold of
+protein conformations exists and that one can adjust every
+value of F
+L/FM between 2 and 5.5 by addition of zwitterionic
+or charged detergents. Correspondingly, the hfcs should shift
+continously. However, the spectra of Figures 2 and 4 clearly
+show that this is not the case. In contrast one can identify
+two distinct sets of hfcs that are sufficient to fully explain
+the spectra. The two sets of hfcs are identical to the two
+extreme cases discussed above. Thus, there exist only two
+different conformations of P
+•+ that can clearly be distin-
+guished by their hfcs. This does not exclude the existence
+of subconformers in each of the two states. However, these
+subconformers cannot differ significantly in the electronic
+structure of P
+•+, but rather cause inhomogenous broadening
+of the observed resonance lines. For example, the signals
+of the â-protons at positions 3, 4, 7, and 8 are significantly
+broadened as compared with those of the methyl protons.
+This can be traced back to the conformational flexibility of
+the saturated rings II and IV.
+The coexistence of two distinct states in the range λ
+2 <
+λmax < λ1 implies that the optical bandshift must be
+interpreted as a transition between two states with displaced
+but fixed absorption maxima. A change of the detergent/
+RC ratio influences the relative amplitude of the bands, thus
+causing an apparent shift of λ
+max. Since the widths of the
+bands are larger than their displacement, no isosbestic point
+or shoulder can be seen.
+The main property that determines the ability of the
+detergent to induce P
+850 is the polarity of the head group.
+This can be inferred from a direct comparison of detergents
+with different head groups, but the same hydrophobic part,
+e.g., Brij 36 T, LDAO, and SB12 [for a recent discussion of
+detergent properties, see Laughlin (1994)]. Our experiments
+show that a lower detergent/RC ratio is required to stabilize
+P
+850 in SB12 than in LDAO. Similarly, nonionic detergents
+are not even able to shift λmax at all, while ionic detergents
+like CTAB or sodium dodecyl sulfate (Agalidis, 1987) have
+a strong impact on λ
+max. We therefore think that the electric
+field of the head group is the main cause of the conforma-
+tional change. This field could lead to a reorientation of
+polar side chains in the outer parts of the RC protein and/or
+a readjustment of R-helices, which in turn influences the
+protein environment of P. The behavior of the bile salts can
+be understood by considering their different molecular
+structure and aggregation behavior (Helenius & Simons,
+1975). It is conceivable that in these cases only a small
+number of molecules is bound to the RC, which is not
+sufficient to induce considerable amounts of P
+850. Another
+important factor that influences the relative stability of the
+two conformations could be steric constraints imposed on
+the protein by the detergent belt or by aggregation due to
+removal of the detergent. For example, detergent-free RCs
+prepared according to Gast et al. (1996) also exhibit the
+typical spectroscopic features of P
+850•+ (Rautter, 1995).
+In the present study, we used simple dialysis for detergent
+exchange. Gast et al. (1994) found that upon dialysis of
+RCs from R. Viridis in the absence of another detergent
+<20% of the LDAO remains bound to the protein. In
+contrast, a Bio-Beads treatment removes 95% of the deter-
+gent. We performed the dialysis in the presence of a high
+excess of another detergent, which should effectively com-
+pete with the LDAO for binding to the RC. Although we
+cannot exclude that traces of LDAO are present in our
+samples, we found no differences between the spectroscopic
+properties of the RCs, when performing the detergent
+exchange according to the two different methods. The main
+4160 Biochemistry, Vol. 36, No. 14, 1997 Mu¨h et al.
+
+
+
+--- PAGE 7 ---
+reason for applying simple dialysis was to maintain a high
+yield of intact RCs.
+In Figures 2 and 4, the detergent concentration before
+ultrafiltration (dialysis buffer) is given instead of the
+detergent/RC ratio of the actual concentrated sample. By
+concentrating the RCs using Centricon 30 tubes, a certain
+percentage of the detergent may pass the membrane. We
+have not analyzed quantitatively the dependence of the mole
+fraction of P
+850•+ on the SB12/RC ratio. This was done in
+our earlier optical titration experiments (Mu¨h et al., 1996).
+Nevertheless, we kept the RC concentration and all other
+conditions constant. The corresponding TRIPLE spectra
+show a clear correlation between the SB12 concentration in
+the original dialysis buffer and the amount of P
+850•+ in the
+actual sample. This indicates a quite uniform change of the
+SB12/RC ratio of all samples upon ultrafiltration. Therefore,
+we can qualitatively discuss the observed effects in analogy
+to the optical titration experiments.
+The equilibrium between the two conformations of the RCs
+is characterized by a standard Gibbs free energy difference
+where K ) X/(1 - X) is the equilibrium constant for the
+transition from P
+866 to P 850. For the sulfobetaines the
+experiments show that K depends on the detergent/RC ratio
+œ and the temperature T. The data imply that a certain value
+œ0 of the detergent/RC ratio exists, for which the free energy
+difference vanishes. From eq 2 and the equation for the
+titration curves published earlier (Mu¨h et al., 1996), i.e.,
+one obtains the simple relationship
+whereκhas the dimension of energy per mole. An increase
+of œ, which causes a more positive∆ œ, yields a more negative
+∆ G°. According to the definition of K, this in turn leads to
+a stronger preference for P
+850, as is confirmed by the
+experiment. The depth of the free energy gap that is caused
+by a certain value of ∆ œ is determined by the parameter κ.
+Both κand œ
+0 depend on the detergent properties. In
+particular, κshould be a function of the polarity of the
+detergent head group. According to this interpretation the
+number of detergent molecules that are bound to the RC
+determines ∆ G° (at least in the case of the sulfobetaines).
+Consequently, the change of K between 278 and 298 K can
+be interpreted as a slight decrease of the number of molecules
+in the detergent belt with increasing temperature. The
+corresponding increase of ∆ G° in favor of P
+866 could then
+be traced back to a temperature dependence of œ0 and/orκ
+in eq 4. Note that this simple model only applies when the
+phase behavior of the detergent does not change. In the case
+of SB12, even extremely concentrated (50%) solutions in
+water form a micellar liquid phase in the investigated
+temperature range (Nilsson et al., 1984).
+While freezing of RC solutions containing nonionic
+detergents or sulfobetaines appears to have no effect on the
+conformation of P
+•+, a complete switch from P866•+ to P850•+
+occurs upon freezing of LDAO containing solutions without
+cryprotectants. This indicates either a change of the deter-
+gent-RC interaction or a dramatic increase of the local
+LDAO concentration near the RC due to phase separation.
+In both cases, trioles like glycerol can in principle prevent
+the formation of P
+850•+ by either entering the detergent belt
+and disturbing the detergent-RC interaction or changing the
+phase behavior of the system. For example, it is known that
+heptanetriol reduces the number of LDAO molecules bound
+to the RC (Gast et al., 1994, 1996). Tiede et al. (1995)
+observed that aggregation of LDAO-solubilized RCs due to
+phase separation is not recovered immediately upon thawing,
+but can take several hours. This may be related to our
+observation of λ
+max < 866 nm under these conditions.
+It is noteworthy that the existence of two states of the
+primary donor is a conserved property of RCs from several
+species of nonsulfur purple bacteria. Rautter et al. (1994)
+found P
+850•+ in RCs from R. capsulatus and R. centenum .
+The possibility to interconvert the RCs between the two
+forms using detergents was demonstrated for R. capsulatus
+by Wang et al. (1994) and Rautter et al. (1994) and for R.
+sphaeroides in this work. A detergent-induced blueshift of
+λ
+max can also be observed in the Bchlb-containing RCs from
+R. Viridis (F. Mu¨h, unpublished). Although the exact
+experimental conditions for the occurrence of the second state
+differ from species to species, the spectroscopic character-
+istics of the two states are always the same. This suggests
+that the change of the electronic and spatial structure of the
+primary donor is not simply an artifact of the solubilization,
+but rather could play a role in RC function.
+Recently, we observed that the rate of charge recombina-
+tion from P
+•+QA•- in RCs from R. sphaeroides can be
+reduced by up to 40% by addition of SB12 (F. Mu ¨h, E.
+Schlodder, W. Lubitz, unpublished results). The second state
+of P could therefore possibly be involved in the stabilization
+of charge-separated states. Parot et al. (1987) found indica-
+tions for the presence of two RC conformations at 10 K in
+chromatophores, which could be related to the formation of
+P
+850. It is also possible that a conformational change like
+the one observed in this study plays a role in the fast
+unidirectional foward electron transfer and contributes to the
+complexity of the observed kinetics [see, e.g., Hamm & Zinth
+(1995) and Hartwich et al. (1996)]. Experiments are in
+progress in our laboratory to answer these open questions.
+ACKNOWLEDGMENT
+We thank I. Geisenheimer and R. Kunert for technical
+assistence as well as Drs. R. Bittl and W. Zweygart for
+writing the computer program used with the ENDOR/
+TRIPLE accessories. Stimulating discussions with Prof. Dr.
+R. J. Cogdell and Drs. K.-D. Irrgang and E. Schlodder are
+gratefully acknowledged. Furthermore, we wish to thank
+Prof. Dr. W. W. Parson for carefully reading and commenting
+on our manuscript.
+REFERENCES
+Agalidis, I. (1987) Eur. J. Biochem. 166 , 235-239.
+Beekman, L. M. P., Visschers, R. W., Monshouwer, R., Heer-
+Dawson, M., Mattioli, T. A., McGlynn, P., Hunter, C. N., Robert,
+B., van Stokkum, I. H. M., van Grondelle, R., & Jones, M. R.
+(1995) Biochemistry 34, 14712-14721.
+Breton, J., Nabedryk, E., & Parson, W. W. (1992) Biochemistry
+31, 7503-7510.
+Buchanan, S. K., Fritzsch, G., Ermler, U., & Michel, H. (1993) J.
+Mol. Biol. 230 , 1311-1314.
+Clayton, R. K. (1978) Biochim. Biophys. Acta 504 , 255-264.
+∆ G° )- RT lnK (2)
+œ ) œ0 + RT
+κlnK (3)
+-∆ G° )κ(œ - œ0) )κ∆ œ (4)
+Two Distinct Conformations of Reaction Centers Biochemistry, Vol. 36, No. 14, 1997 4161
+
+
+
+--- PAGE 8 ---
+Debus, R. J., Feher, G., & Okamura, M. Y. (1985) Biochemistry
+24, 2488-2500.
+Feher, G. (1992) J. Chem. Soc., Perkin Trans. 211 , 1861-1874.
+Feher, G., Hoff, A. J., Isaacson, R. A., & Ackerson, L. A. (1975)
+Ann. NY Acad. Sci. 244 , 239-259.
+Feher, G., Allen, J. P., Okamura, M. Y., & Rees, D. C. (1989)
+Nature 339, 111-116.
+Gast, P., Hemelrijk, P. W., & Hoff, A. J. (1994) FEBS Lett. 337 ,
+39-42.
+Gast, P., Lous, E. J., & Hoff, A. J. (1995) Chem. Phys. 194, 387-
+394.
+Gast, P., Hemelrijk, P. W., van Gorkom, H. J., & Hoff, A. J. (1996)
+Eur. J. Biochem. 239 , 805-809.
+Gessner, Ch., Lendzian, F., Bo¨nigk, B., Plato, M., Mo¨bius, K., &
+Lubitz, W. (1992) Appl. Magn. Reson. 3 , 763-777.
+Hamm, P., & Zinth, W. (1995) J. Phys. Chem. 99, 13537-13544.
+Hartwich, G., Lossau, H., Ogrodnik, A., & Michel-Beyerle, M. E.
+(1996) in The Reaction Center of Photosynthetic Bacteria.
+Structure and Dynamics (Michel-Beyerle, M. E., Ed.) pp 199 -
+215, Springer, Berlin.
+Helenius, A., & Simons, K. (1975) Biochim. Biophys. Acta 415 ,
+29-79.
+Huber, M, Isaacson, R. A., Abresch, E. C., Gaul, D., Schenck, C.
+C., & Feher, G. (1996) Biochim. Biophys. Acta 1273, 108-128.
+Ka¨ss, H. (1995) Doctoral Thesis, Technische Universita ¨t Berlin,
+Germany.
+Ka¨ss, H., Rautter, J., Bo¨nigk, B., Ho¨fer, P., & Lubitz, W. (1995)
+J. Phys. Chem. 99 , 436-448.
+Lancaster, C. R. D., Ermler, U., & Michel, H. (1995) inAnoxygenic
+Photosynthetic Bacteria (Blankenship, R. E., Madigan, M. T.,
+& Bauer, C. E., Eds.) pp 503-526, Kluwer Academic Publishers,
+Dordrecht, Netherlands.
+Laughlin, R. G. (1994)The Aqueous Phase BehaVior of Surfactants,
+Academic Press, London.
+Lendzian, F., Lubitz, W., Scheer, H., Bubenzer, C., & Mo¨bius, K.
+(1981) J. Am. Chem. Soc. 103 , 4635-4637.
+Lendzian, F., Huber, M., Isaacson, R. A., Endeward, B., Bo ¨nigk,
+B., Mo¨bius, K., Lubitz, W., & Feher, G. (1993)Biochim. Biophys.
+Acta 1183, 139-160.
+Lous, E. J., & Hoff, A. J. (1986) Photosynth. Res. 9 ,8 9-101.
+Lubitz, W. (1991) in Chlorophylls (Scheer, H., Ed.) pp 903 -944,
+CRC Press, Boca Raton.
+Lubitz, W., & Lendzian, F. (1996) in Biophysical Techniques in
+Photosynthesis (Amesz, J., & Hoff, A. J., Eds.) pp 255 -275,
+Kluwer Academic Publishers, Dordrecht, Netherlands.
+Lubitz, W., Lendzian, F., Scheer, H., Gottstein, J., Plato, M., &
+Mo¨bius, K. (1984) Proc. Natl. Acad. Sci. U.S.A. 81, 1401-1405.
+Lubitz, W., Mu¨h, F., Rautter, J., Lendzian, F., Allen, J. P., &
+Williams, J. C. (1995) in Photosynthesis: from Light to Bio-
+sphere, Vol. I (Mathis, P., Ed.) pp 413 -418, Kluwer Academic
+Publishers, Dordrecht, Netherlands.
+Mo¨bius, K., Lubitz, W., & Plato, M. (1989) inAdVanced EPR(Hoff,
+A. J., Ed.) pp 441 -499, Elsevier, Amsterdam.
+Mu¨h, F., Rautter, J., & Lubitz, W. (1996) Ber. Bunsen-Ges. Phys.
+Chem. 100, 1974-1977.
+Nilsson, P.-G., Lindman, B., & Laughlin, R. G. (1984) J. Phys.
+Chem. 88, 6357-6362.
+Norris, J. R., Scheer, H., & Katz, J. J. (1975) Ann. NY Acad. Sci.
+244, 260-280.
+Parot, P., Thiery, J., & Verme ´glio, A. (1987) Biochim. Biophys.
+Acta 893, 534-543.
+Parson, W. W., Nabedryk, E., & Breton, J. (1992) in The
+Photosynthetic Bacterial Reaction Center II: Structure, Function
+and Dynamics (Breton, J., & Verme´glio, A., Eds.) pp 79 -88,
+Plenum Press, New York.
+Plato, M., Lubitz, W., Lendzian, F., & Mo ¨bius, K. (1988) Isr. J.
+Chem. 28, 109-119.
+Plato, M., Tra¨nkle, E., Lubitz, W., Lendzian, F., & Mo ¨bius, K.
+(1986) Chem. Phys. 107 , 185-196.
+Plato, M., Lendzian, F., Lubitz, W., & Mo ¨bius, K. (1992) in The
+Photosynthetic Bacterial Reaction Center II: Structure, Function
+and Dynamics (Breton, J., & Verme´glio, A., Eds.) pp 109-118,
+Plenum Press, New York.
+Rautter, J. (1995) Doctoral Thesis, Technische Universita¨t Berlin,
+Germany.
+Rautter, J., Gessner, Ch., Lendzian, F., Lubitz, W., Williams, J.
+C., Murchison, H. A., Wang, S., Woodbury, N. W., & Allen, J.
+P. (1992) in The Photosynthetic Bacterial Reaction Center II:
+Structure, Spectroscopy and Dynamics(Breton, J., & Vermeglio,
+A., Eds.) pp 99 -108, Plenum Press, New York.
+Rautter, J., Lendzian, F., Wang, S., Allen, J. P., & Lubitz, W. (1994)
+Biochemistry 33, 12077-12084.
+Rautter, J., Lendzian, F., Schulz, C., Fetsch, A., Kuhn, M., Lubitz,
+W., Lin, X., Williams, J. C., & Allen, J. P. (1995) Biochemistry
+34, 8130-8143.
+Reimers, J. R., & Hush, N. S. (1995a) Inorg. Chim. Acta. 226 ,
+33-42.
+Reimers, J. R., & Hush, N. S. (1995b) J. Am. Chem. Soc. 117 ,
+1302-1308.
+Scheer, H., & Struck, A. (1993) in The Photosynthetic Reaction
+Center, Vol. I (Deisenhofer, J., & Norris, J. R., Eds.) pp 157 -
+192, Academic Press, San Diego.
+Straley, S. C., Parson, W. W., Mauzerall, D. C., & Clayton, R. K.
+(1973) Biochim. Biophys. Acta 305 , 597-609.
+Thompson, M. A., & Zerner, M. C. (1991) J. Am. Chem. Soc. 113,
+8210-8215.
+Tiede, D. M., Marone, P., Wagner, A. M., & Thiyagarajan, P.
+(1995) in Photosynthesis: from Light to Biosphere, Vol. I
+(Mathis, P., Ed.) pp 431 -436, Kluwer Academic Publishers,
+Dordrecht, Netherlands.
+Tra¨nkle, E., & Lendzian, F. (1989) J. Magn. Reson. 84, 537-547.
+Verme´glio, A., & Paillotin, G. (1982) Biochim. Biophys. Acta 681,
+32-40.
+Wang, S., Lin, S., Lin, X., Woodbury, N. W., & Allen, J. P. (1994)
+Photosynth. Res. 42 , 203-215.
+Warshel, A., & Parson, W. W. (1987) J. Am. Chem. Soc. 109 ,
+6152-6163.
+Williams, J. C., & Taguchi, A. K. W. (1995) in Anoxygenic
+Photosynthetic Bacteria (Blankenship, R. E., Madigan, M. T.,
+& Bauer, C. E., Eds.) pp 1029 -1065, Kluwer Academic
+Publishers, Dordrecht, Netherlands.
+Woodbury, N. W., & Allen, J. P. (1995) in Anoxygenic Photosyn-
+thetic Bacteria (Blankenship, R. E., Madigan, M. T., & Bauer,
+C. E., Eds.) pp 527 -557, Kluwer Academic Publishers, Dor-
+drecht, Netherlands.
+Zinth, W., & Kaiser, W. (1993) in The Photosynthetic Reaction
+Center, Vol. II (Deisenhofer, J., & Norris, J. R., Eds.) pp 71 -
+88, Academic Press, San Diego.
+Zweygart, W., Thanner, R., & Lubitz, W. (1994) J. Magn. Reson.,
+Ser. A 109 , 172-176.
+BI962859S
+4162 Biochemistry, Vol. 36, No. 14, 1997 Mu¨h et al.

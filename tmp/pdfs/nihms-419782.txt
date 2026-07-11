@@ -1,0 +1,679 @@
+
+
+--- PAGE 1 ---
+Applied
+Appl Magn Reson (2010) 37:339–352
+DOI 10.1007/s00723-009-0101-8 Magnetic Resonance
+The Electronic State of Flavoproteins: Investigations
+with Proton Electron–Nuclear Double Resonance
+Erik Schleicher • Ringo Wenzel • Margret Ahmad •
+Alfred Batschauer • Lars-Oliver Essen •
+Kenichi Hitomi • Elizabeth D. Getzoff • Robert Bittl •
+Stefan Weber • Asako Okafuji
+Received: 26 June 2009 / Published online: 17 November 2009
+(cid:1) Springer 2009
+Abstract Electron–nuclear double resonance (ENDOR) spectroscopy provides
+useful information on hyperfine interactions between nuclear magnetic moments
+and the magnetic moment of an unpaired electron spin. Because the hyperfine
+coupling constant reacts quite sensitively to polarity changes in the direct vicinity of
+the nucleus under consideration, ENDOR spectroscopy can be favorably used for
+the detection of subtle protein–cofactor interactions. A number of pulsed ENDOR
+studies on flavoproteins have been published during the past few years; most of
+them were designed to characterize the flavin cofactor by means of its protonation
+state, or to detect individual protein–cofactor interactions. The aim of this study is
+to compare the pulsed ENDOR spectra from different flavoproteins in terms of
+E. Schleicher (cid:1) S. Weber (&) (cid:1) A. Okafuji
+Institut fu¨r Physikalische Chemie, Albert-Ludwigs-Universita¨t Freiburg,
+Albertstr.21, 79104 Freiburg, Germany
+e-mail: Stefan.Weber@physchem.uni-freiburg.de
+R. Wenzel (cid:1) R. Bittl
+Institut fu¨r Experimentalphysik, Fachbereich Physik, Freie Universita¨t Berlin,
+Arnimallee 14, 14195 Berlin, Germany
+R. Bittl
+e-mail: Robert.Bittl@physik.fu-berlin.de
+M. Ahmad
+CNRS, University of Paris VI, Paris, France
+A. Batschauer
+Fachbereich Biologie, Philipps-Universita¨t Marburg, Marburg, Germany
+L.-O. Essen
+Fachbereich Chemie, Philipps-Universita¨t Marburg, Marburg, Germany
+K. Hitomi (cid:1) E. D. Getzoff
+Department of Molecular Biology, The Skaggs Institute for Chemical Biology,
+The Scripps Research Institute, La Jolla, CA, USA
+123
+
+
+--- PAGE 2 ---
+340 E. Schleicher et al.
+variations of characteristic proton hyperfine values. The general concept is to
+observe limits of possible influences on the cofactor’s electronic state by sur-
+rounding amino acids. Furthermore, we compare ENDOR data obtained from in
+vivo experiments with in vitro data to emphasize the potential of the method for
+gaining molecular information in complex media.
+1 Introduction
+Since their discovery in the beginning of the last century, flavins have been
+recognized as exceptionally versatile protein cofactors, which are involved in the
+catalysis of a wide range of biological processes, mostly acting as redox-active
+molecules [1]. They participate in one-electron transfer as well as in two-electron
+transfer reactions due to their intrinsic ability in adopting three different redox
+(cid:1)
+states. As the one-electron-reduced flavin molecule, either in its anionic (Fl -) or in
+(cid:1)
+its neutral (FlH ) form is an open-shell system, application of electron paramagnetic
+resonance (EPR) spectroscopy is a powerful and frequently applied tool to gain
+information on the protonation state of the flavin [2, 3] and on the mode of its
+binding to the protein surroundings; such information on flavin semiquinones is
+quite useful, because flavin radicals are often observed as transient reaction
+intermediates in flavoprotein-mediated catalysis. Traditionally, anionic and neutral
+flavin radicals are distinguished mainly based on their EPR line width. However, as
+hydrogen bonding of variable strength from surrounding amino acids to N(5) in
+(cid:1) (cid:1)
+Fl - and from H(5) in FlH contributes significantly to the spectral width, an
+unambiguous identification of anion and neutral flavin radicals is often difficult
+based on the EPR spectrum alone (see Fig. 1).
+By the EPR-derived electron-nuclear double resonance (ENDOR) technique,
+hyperfine interactions between nuclear magnetic moments and the magnetic
+moment of the unpaired electron spin are detected. Via hyperfine coupling constant
+(hfcs), the unpaired electron-spin density at the specific positions of magnetic nuclei
+can be evaluated [4, 5]. Moreover, hfcs respond quite sensitively to changes in the
+flavin’s immediate environment. The hfc of a particular nucleus can be directly read
+out from ENDOR spectra from pairs of resonance lines that are, according to the
+resonance condition m = |m ± A/2|, either equally spaced about the magnetic
+ENDOR n
+field-dependent nuclear Larmor frequency m and separated by the (orientation-
+n
+dependent) hfc A (for the case of m [ |A/2|), or about |A|/2 and separated by 2m (for
+n n
+Fig. 1 International Union of
+Pure and Applied Chemistry
+(IUPAC) nomenclature of the
+7,8-dimethyl isoalloxazine
+moiety of flavins. R denotes the
+ribityl side chain. ENDOR-
+visible protons are highlighted
+in red
+123
+
+
+--- PAGE 3 ---
+The Electronic State of Flavoproteins 341
+m \ |A/2|). Pulsed EPR and ENDOR methods became increasingly popular during
+n
+the last few years in investigations of flavoproteins [6–14]. Here, we focus on a
+discussion of spectra obtained from pulsed ENDOR. In contrast to ‘‘conventional’’
+continuous-wave (cw) ENDOR spectroscopy, the signal in the pulsed methodology
+is obtained by recording the electron spin echo intensity as a function of the
+frequency of a radio frequency pulse. Changes in the echo intensity occur when the
+radio frequency is on resonance with a nuclear magnetic resonance transition, thus,
+generating the ENDOR response [5, 15, 16]. Pulsed ENDOR generally yields more
+distortionless line shapes than cw-ENDOR, and is particularly useful when strongly
+anisotropic hyperfine interactions are of interest [7].
+The aim of this study is to compare pulsed ENDOR spectra from different
+flavoproteins in terms of variations of characteristic proton hfc values. The idea is to
+unravel the bandwidth of possible influences on the cofactor’s electronic state by
+surrounding amino acids. Furthermore, we compare these data to find general rules
+for distinguishing between protein-bound neutral and anionic flavin radical states.
+Here, we restrict ourselves on ENDOR data from chemically unmodified flavins as
+only very few data from chemically modified flavins is available up to now (see,
+e.g., Refs. [17–19]).
+2 Materials and Methods
+The investigated protein samples were recombinantly expressed and purified
+according to the published procedures [10, 13, 20–24]. To prepare the radical state
+of the flavin cofactor, purified protein samples were supplemented with 5 mM
+ethylenediaminetetraacetic acid or 5 mM dithiothreitol, illuminated with blue light
+(Halolux 30HL, Streppel, Wermelskirchen-Tente, Germany) filtered by a 420–470-
+nm band filter (Schott, Mainz) at 4(cid:2)C for times adequate for radical generation. The
+(cid:1)
+concentration of the resultant blue flavin radical (FlH ) was estimated on the basis
+of its strong absorbance at 580 nm (an e of 0.48 9 104 M-1 cm-1 was assumed).
+580
+Samples comprising intact cells were prepared as described previously [12, 20].
+The protein preparations were transferred into EPR quartz tubes (inner diameter,
+3 mm) under an argon inert gas atmosphere in the dark. The enzymes were frozen
+rapidly in liquid nitrogen and stored therein. No changes in the signal line shape and
+intensity have been observed over a storage period of several months.
+X-band pulsed ENDOR spectra were recorded on a commercial pulse EPR
+spectrometer Bruker E580 (Bruker BioSpin GmbH, Rheinstetten, Germany) in
+conjunction with a dielectric ring ENDOR resonator Bruker ER 4118X-MD5-EN.
+For Davies-type ENDOR, a microwave pulse sequence p–t–p/2–s–p using 64-ns
+and 128-ns p/2- and p-pulses, respectively, and a radio frequency pulse of 11 ls
+duration starting 1 ls after the first microwave pulse were used. The separation
+times t and s between the microwave pulses were set to 13 ls and 500 ns,
+respectively. To avoid the saturation effects due to long relaxation times of flavin
+radicals, the entire pulse pattern was repeated with a frequency of only 200 Hz. All
+ENDOR spectra were recorded at the center-field position of the EPR spectrum,
+respectively.
+123
+
+
+--- PAGE 4 ---
+342 E. Schleicher et al.
+For ENDOR spectral simulations, the signal amplitudes were normalized to the
+(cid:1)
+integral of the signal arising from the hfc of H(6) in FlH . This proton is non-
+exchangeable, and hence, the intensity of its ENDOR signal is expected to remain
+practically constant throughout different buffer conditions. To precisely extract the
+principal values of the hfcs of the H(8a), H(5) and H(10) protons from the ENDOR
+data, spectral simulations were performed using the EPR spectral simulation
+software toolbox EasySpin in conjunction with the MATLAB routine lsqcurvefit
+(The MathWorks, Natick, MA) [25]. This program calculates ENDOR powder
+spectra arising from overlapping hyperfine tensors and fits their principal values to
+achieve the best possible agreement with the experimental data.
+3 Results
+In Fig. 2, pulsed proton X-band ENDOR spectra from different flavoproteins are
+presented. More specifically, data from Xenopus laevis (6–4) photolyase (Xl64PL)
+[26], Synechocystis species cryptochrome-DASH (SsCry), Thermus thermophilus
+cyclobutane pyrimidine dimer (CPD) photolyase (TtCPDPL), Arabidopsis thaliana
+CPD photolyase (AtCPDPL), Arabidopsis thaliana cryptochrome 1 (AtCry1) [20],
+Drosophila melanogaster cryptochrome (DmCry) [13], Desulfovibrio vulgaris
+flavodoxin (DvFD) and Aspergillus niger glucose oxidase (AnGO) [10], the latter
+measured at two proton concentrations, at pH 5 and 10, have been compiled. On the
+left side of Fig. 2, the radio frequency range from 7.2 to 22.7 MHz, where most of
+the proton resonances of flavin radicals are expected, is shown, whereas on the right
+side of Fig. 2, the scaled-up ENDOR signals arising from the hfc of H(5) in neutral
+flavin radicals are displayed. This hfc from a flavin bound to a rigid protein
+environment is typically quite anisotropic and, therefore, of rather low intensity (see
+below).
+ENDOR resonances from protons in a flavoprotein are observed in a range
+between 0 and nearly 36 MHz. Hfcs in the weak-coupling limit, m [ |A/2|, are
+H
+symmetrically arranged in pairs centered around the free proton Larmor frequency,
+m . Riboflavin in its neutral radical state comprises 21 hydrogens, 10 of which are
+H
+located in the redox-active 7,8-dimethyl isoalloxazine ring that carries most of the
+unpaired electron spin density (see Fig. 1). Eleven protons are found in the ribityl
+chain. However, only two protons of this side chain experience sufficient spin
+density to exhibit hfcs of appreciable strength. These are the two magnetically
+inequivalent b-protons, H(10), attached to C(10). Owing to their proximity to N(10),
+which, according to quantum-chemical calculations, carries rather high electron spin
+density [27], the isotropic hfcs of these two protons can attain values of up to about
+10–12 MHz [28]. In proton ENDOR spectra recorded at X-band, the resonances of
+the two H(10) protons are normally found at around 9–10 and 19–20 MHz. The
+relative size of their hfcs depends, according to the Heller–McConnell relation [29],
+on the dihedral angle between the two H(10)–C(10) bonds and the direction defined
+by the p orbitals of the isoalloxazine’s p-electron system. Depending on the
+z
+geometry at C(10), very often the signal of only one of the two protons is observed in
+this region, and the one from the second H(10) proton overlaps with signals from
+123
+
+
+--- PAGE 5 ---
+The Electronic State of Flavoproteins 343
+Fig. 2 X-band frozen-solution pulsed ENDOR spectra of FADH/FMN (flavin mononucleotide) in their
+semiquinone states bound to various flavoproteins measured under comparable experimental conditions.
+Left pulsed proton ENDOR spectra showing the main part of the flavin’s hfcs between 7.3 and 22.7 MHz.
+Right pulsed ENDOR spectra showing the H(5) part of the flavin’s hfcs between 21 and 40 MHz. a
+Xl64PL, b SsCry, c TtCPDPL, d AnGO (pH 5), e AtCPDPL, f AtCry1, g DvFD, h AnGO (pH 10), i
+DmCry. For better visibility, resonances from the hyperfine couplings arising from protons H(8a), H(6)
+and H(10) are highlighted in (a). All spectra were measured at 80 K
+other protons with smaller hfcs. An analysis of the hfcs of both b-protons can yield
+accurate structural information on the geometry of the ribityl chain attached to
+N(10). This has, for example, been achieved for the neutral flavin radical of
+Escherichia coli CPD photolyase [28].
+H(3), H(9) and the three methyl group protons at C(7a) are only weakly coupled
+to the unpaired, delocalized p-electron–spin system. Therefore, these protons give
+rise to ENDOR signals in the central, so-called ‘‘matrix region’’ of the spectrum,
+123
+
+
+--- PAGE 6 ---
+344 E. Schleicher et al.
+which extends at X-band from about 13–16 MHz. This region comprises also hfcs
+from other weakly coupled protons, e.g., from the protein backbone in the cofactor-
+binding pocket and from protons of water molecules surrounding the flavin radical.
+In principle, the matrix-ENDOR region carries substantial structural information on
+the flavin-binding pocket, but unfortunately no general method has been developed
+for an efficient unambiguous deconvolution of its signal contributions so far.
+Therefore, these overlapping hyperfine resonances remain unassigned.
+When recording a proton-ENDOR spectrum of a flavin neutral radical, two
+prominent features in the 10–12 and 17–19-MHz radio frequency ranges are always
+apparent. The line shapes are frequently of nearly axial symmetry and arise from the
+hfcs of the three b-protons of the methyl group attached to C(8a). Even at very low
+temperatures, methyl groups usually rotate freely about their C–C bond.
+Consequently, an averaged hyperfine tensor for all three protons of the methyl
+group is observed, if this rotation is fast on the time scale of the ENDOR
+experiment. The signals of the H(8a) hyperfine tensor are considered to be sensitive
+probes of the electron spin density on the outer xylene ring of the flavin’s
+isoalloxazine ring. This is because the isotropic hfc of a b-proton is related to the
+spin density of the neighboring carbon or nitrogen atom in the p-plane [29–32].
+Furthermore, electronic structure calculations show that the size of this hfc responds
+sensitively to polarity changes of the cofactor’s protein surrounding [33].
+Features arising from the hfc of the H(6) proton are found at around 12 and
+17 MHz in proton ENDOR experiments at X-band. Unexpectedly, the H(6) hfc
+shows only a small hyperfine anisotropy when compared with other a-protons, such
+as H(5) (see below). It seems to be very insensitive towards changes in the protein
+environment and the electron spin density distribution [33].
+One broad feature extending from the matrix-ENDOR region up to about
+35 MHz is observed in pulsed ENDOR spectra, but escapes observation by the
+related cw-ENDOR technique [7]. By means of an H ? D buffer exchange, the
+signal can be assigned to the H(5) proton. Its counterpart spanning the correspond-
+ing low radio frequency range is usually not resolved due to the overlap with
+ENDOR signals from nitrogens and other protons. The symmetry of the underlying
+hfc is clearly rhombic (A = A = A ). Its contribution to the overall spectrum can
+x y z
+be easily discriminated from that of other protons in the isoalloxazine ring due to the
+exchangeability of H(5) in a deuterated buffer. The only other exchangeable proton
+in the isoalloxazine moiety of flavins is that attached to N(3). However, its hfc is
+considerably smaller than that of H(5) as stated earlier [27]. The amplitude and the
+anisotropy of the H(5) hfc has recently been shown to yield information on the
+strength of the hydrogen bonding of neighboring amino acids to H(5) [7]. The A
+z
+and A components of this coupling are easily extracted from the proton-ENDOR
+y
+signal’s peak position and the outer inflection point of the tensorial powder pattern,
+respectively. The value of the A component is more difficult to determine. It can be
+x
+obtained from deuteron-ENDOR experiments performed at high magnetic fields, as
+has been shown by us previously [34].
+For a comparison of proton hfcs from different flavoproteins, spectral simulations
+of parts of the individual ENDOR spectra were performed. The results are
+summarized in Table 1 and will be discussed for the specific proton positions below.
+123
+
+
+--- PAGE 7 ---
+The Electronic State of Flavoproteins 345
+(cid:1)
+Table 1 H(8a), H(5) and H(10) proton hfcs of the FADH cofactors obtained from simulations of the
+pulsed ENDOR spectra of various flavoproteins from the photolyase/cryptochrome class
+H(8a) H(10) H(5)
+AtCry1
+A 6.85 A = 7.91 A 8.99 A = 9.82 A –
+1 iso 1 iso 1
+A 7.90 A 8.99 A -25.00
+2 2 2
+A 9.00 A 11.49 A -37.02
+3 3 3
+DmCry
+A 9.93 A = 10.84 A nd A = nd A –
+1 iso 1 iso 1
+A 10.40 A nd A –
+2 2 2
+A 12.19 A nd A –
+3 3 3
+SsCry
+A 6.41 A = 7.23 A 7.84 A = 9.26 A –
+1 iso 1 iso 1
+A 7.01 A 8.55 A -25.53
+2 2 2
+A 8.26 A 11.39 A -38.36
+3 3 3
+TtCPDPL
+A 6.61 A = 7.36 A 6.41 A = 8.62 A –
+1 iso 1 iso 1
+A 6.99 A 8.70 A -25.30
+2 2 2
+A 8.47 A 10.75 A -37.49
+3 3 3
+AtCPDPL
+A 6.54 A = 7.38 A 8.41 A = 9.42 A –
+1 iso 1 iso 1
+A 7.21 A 8.50 A -24.60
+2 2 2
+A 8.40 A 11.34 A -37.02
+3 3 3
+Xl64PL
+A 6.24 A = 6.96 A 7.05 A = 8.85 A –
+1 iso 1 iso 1
+A 6.59 A 8.01 A -25.90
+2 2 2
+A 8.04 A 11.50 A -38.36
+3 3 3
+All values in MHz; signs of hfcs have not been determined
+The experimental errors are ±0.04 MHz for all components
+nd Not determined
+4 Discussion
+4.1 Comparison of the Hyperfine Couplings from the 8a Methyl
+Protons in Neutral and Anionic Flavin Radicals
+The axial tensorial line shapes arising from the methyl protons attached to C(8a)
+dominate proton ENDOR spectra of flavins and have been detected and assigned in
+numerous studies before [18, 26, 35–37]. The hfc of this methyl group reacts
+sensitively to changes in the electron spin density on the outer xylene ring and to
+micropolarity changes of the protein surroundings [33]. Moreover, as has been
+shown in a number of experimental [18, 19] and theoretical [38] studies on flavin
+radicals, the H(8a) hfcs of anion radicals, are in general, significantly larger when
+compared with those in neutral radicals. This is because deprotonation of N(5)
+123
+
+
+--- PAGE 8 ---
+346 E. Schleicher et al.
+results in a significant redistribution of the unpaired electron spin density from the
+pyrazine and pyrimidine rings of the isoalloxazine moiety towards the less polar
+xylene ring.
+The flavin radical in AnGO can be converted from its anionic to its neutral form
+by changing the buffer pH from pH 9 to 5. Therefore, this enzyme can serve as a
+model system for rationalizing how changes in the protonation state are reflected by
+the hfc values. Conformational changes of the binding pocket, which may also
+affect the spin density distribution, are supposed to be negligible. Dramatic changes
+in hfc values of the H(8a) methyl group are detected and are clearly visible in panels
+d and h of Fig. 2. The isotropic hfc increases from 7.36 to 10.45 MHz on generation
+of the anionic flavin radical. In addition, the values arising from the H(6) proton are
+nearly doubled in the anion radical when compared with those of the neutral radical
+(see Fig. 2, panels d and h). These findings are consistent with a significant increase
+in spin density on the xylene ring of the isoalloxazine moiety upon deprotonation of
+the flavin radical [38].
+Deoxyribonucleic acid (DNA) photolyases and cryptochromes are a class of
+structurally conserved flavoproteins where some ENDOR studies have been
+published recently [26, 28]. This protein class seems to be a good choice to
+evaluate ENDOR data to unravel the variability of their hyperfine values. When
+comparing the A values from different DNA photolyases and cryptochromes, it
+iso
+becomes obvious that the smallest value investigated in this study is the one from
+(cid:1)
+FADH of Xl64PL (see Table 1; Fig. 2a) [26]. Recent structural data revealed a
+substrate-binding pocket, which is small but deep, when compared with other
+photolyases. It contains a high proportion of aromatic amino acids, including two
+histidines located close to the FAD cofactor [39]. These render the environment of
+the 8a methyl protons less polar, thus, leading to this unique small hfc [26].
+Other members of the photolyase/cryptochrome protein family, namely
+AtCPDPL, TtCPDPL [21] and SsCry show quite similar hfc values A (8a) (see
+iso
+Table 1). The latter protein is a member of the so-called cryptochrome-DASH
+(CRY-DASH) subfamily. The function of CRY-DASH proteins has not been finally
+established; confirmed is its capacity in repairing ultraviolet light-generated CPD in
+single-stranded DNA and loop structures of duplex DNA [23, 40, 41]. AtCPDPL
+belongs to the yet incompletely characterized class-II subclass of CPD photolyases;
+its classification is based on an amino acid similarity alignment [42]. Detailed
+structural information is available for the TtCPDPL [43], and the SsCry protein [23].
+Only conserved aromatic amino acids are found in the close surroundings of the 8a
+protons in these two proteins (the pocket around the 8a methyl group consists of a
+Phe, one Trp, an Ala and one Arg residue). Although the binding pocket in SsCry is
+slightly wider and shallower than that in class-I CPD photolyases (TtCPDPL and E.
+coli CPD photolyase), the effect of this structural feature seems not to be reflected in
+the H(8a) hfc. As a further result, it can be concluded that the amino acids located
+close to the FAD cofactor in AtCPDPL should be very similar to the one in
+TtCPDPL and SsCry.
+AtCry1, a member of the plant cryptochrome class [44], differs in terms of its
+A (8a) value, which was determined to be 7.9 MHz. Structural data show distinct
+iso
+changes of the cavity when compared with other members of this protein class [45].
+123
+
+
+--- PAGE 9 ---
+The Electronic State of Flavoproteins 347
+The FAD-access cavity of AtCry1 is larger and has a unique chemical environment
+when compared with the cavities of the other structurally characterized members of
+the photolyase/cryptochrome superfamily. Moreover, the surface of AtCry1 is
+mostly negatively charged, with a small concentration of positive charge near to the
+FAD-access cavity, which is in clear contrast to all CPD photolyases. The lack of
+thymine-dimer repair activity of cryptochromes was explained with this finding.
+Besides, a different amino acid, an aspartate (compared with an asparagine in CPD
+photolyases), is located close to N(5) of the 7,8-dimethyl isoalloxazine moiety and
+is suggested to donate the proton forming H(5) in the neutral radical. It has been
+speculated that this alters the strength of the N(5)–H(5) bond, which is as well
+visible in optical spectroscopy as an approximately 50-nm downshift of the 600-nm
+radical band in the neutral flavin radical [46, 47]. As a consequence, the electron
+spin distribution in the isoalloxazine moiety should be altered to a certain extend.
+DvFD, on the other hand, shows a completely different hyperfine pattern
+although optical spectroscopy confirms the generation of a neutral flavin radical
+upon photoreduction. This can be explained in terms of a different flavin-binding
+situation. Whereas the flavin cofactor is deeply buried in the protein in photolyases,
+cryptochromes and in GO samples, it is located near the surface of the protein in
+flavodoxins, with the xylene ring protruding into the solvent [48]. Therefore, no
+amino acids are in close contact with the xylene ring and in particular, with the three
+methyl protons at C(8a). Therefore, the hfc of these protons reflects the extremely
+polar aqueous environment.
+The DmCry protein, at last, shows again a significantly different coupling pattern:
+its isotropic H(8a) hfc value is 10.8 MHz and differs from all other proteins of the
+photolyase/cryptochrome family investigated in this study. Following the discussion
+outlined previously [13, 49], DmCry forms an anion radical upon photoreduction.
+As no structural data and, therefore, no detailed information regarding the exact
+amino acid composition surrounding the FAD cofactor have been published as yet,
+no exact classification of DmCry with respect to other examples from the
+photolyase/cryptochrome class is possible. It has to be mentioned, however, that
+secondary structure models predict a conserved binding pocket, however, with a
+cysteine residue facing the N(5) position.
+As a first summary, a scheme with all measured A values for the 8a-methyl
+iso
+protons extracted from spectral simulations is shown in Fig. 3. It is apparent that
+most members of the photolyase/cryptochrome class show hfcs clustering in a range
+between 7.2 and 7.4 MHz. Exceptions are the Xl64PL on the lower end and AtCRY1
+at the opposite side with a significantly larger hfc. The A values of the two anion
+iso
+radicals in DmCRY and AnGO differ significantly as their spin density on the xylene
+ring is increased. Their values are found at 10.8 and 10.5 MHz, respectively. DvFD,
+on the other hand, shows an intermediate hfc value for A of H(8a), although it has
+iso
+been demonstrated in a number of publications [35, 50] that a neutral flavin radical
+is formed upon (photo)reduction. Therefore, we conclude that a comparison of
+H(8a) A values alone is insufficient for an unambiguous assignment of the
+iso
+resonances to a neutral or an anion flavin radical; such an approach appears only
+valid when flavoproteins are compared that bind their cofactor in a way so that it is
+shielded from the aqueous surroundings at the protein surface. On the other hand,
+123
+
+
+--- PAGE 10 ---
+348 E. Schleicher et al.
+Fig. 3 Isotropic hfcs of H(8a) protons obtained from spectral simulations of ENDOR data (for details,
+see Tables 1, 2)
+(cid:1) (cid:1)
+Table 2 H(8a), H(5) and H(10) proton hyperfine couplings of the FADH /FMN cofactors obtained
+from simulations of the pulsed ENDOR spectra of various flavoproteins
+H(8a) H(10) H(5)
+DvFD
+A 7.63 A = 8.70 A 7.98 A = 11.10 A –
+1 iso 1 iso 1
+A 8.40 A 11.11 A -25.96
+2 2 2
+A 10.08 A 14.20 A -38.68
+3 3 3
+AnGO (neutral)
+A 6.82 A = 7.36 A nd A = nd A –
+1 iso 1 iso 1
+A 6.82 A nd A -24.1
+2 2 2
+A 8.45 A nd A -34.7
+3 3 3
+AnGO (anionic)
+A 9.95 A = 10.45 A nd A = nd A –
+1 iso 1 iso 1
+A 9.95 A nd A –
+2 2 2
+A 11.45 A nd A –
+3 3 3
+All values in MHz; signs of hyperfine couplings have not been determined experimentally, but were taken
+from theoretical calculations
+The experimental errors are ±0.04 MHz for all components
+nd Not determined
+the results from DvFD undoubtedly show the potential of ENDOR spectroscopy in
+correlating hyperfine data to structural information.
+4.2 Hyperfine Couplings from the H(5) Proton in Neutral Flavin Radicals
+Hfcs from protons bound directly to p-conjugated systems, so-called a-protons, are
+typically strongly anisotropic (A = A = A ). If one subtracts the isotropic
+x y z
+coupling, A = (A ? A ? A )/3, from the tensor principal values, the traceless
+iso x y z
+anisotropic hyperfine contributions remain: T = A - A , with i [ {x, y, z}. These
+i i iso
+depend on the electron–nuclear dipolar interaction. Short N(5)–H(5) bond lengths
+lead, according to density functional theory (DFT) calculations, to a symmetric
+rhombic hyperfine tensor with T ? 0 and T = -T [7]. When the N–H bond
+z x y
+length is increased, e.g., as a result of hydrogen bonding of H(5) to a nearby amino
+acid in the protein backbone, the hyperfine tensor is expected to become more
+123
+
+
+--- PAGE 11 ---
+The Electronic State of Flavoproteins 349
+axially symmetric. Only the two large hfc components of the H(5) tensor can be
+extracted from proton ENDOR spectra at X-band. The third component is small and
+is, therefore, overlapping with other signals in the matrix region of the spectra. An
+exact determination of the A component is possible from the investigation of
+x
+deuterium-exchanged samples by deuterium-ENDOR, but this is beyond the scope
+of this contribution. All samples with a proposed neutral flavin radical clearly show
+the A and A resonances from the H(5) hfc. On the other hand, the DmCry and
+y z
+AnGO samples (measured at pH 10) show virtually no signal in the spectral region
+between 22 and 40 MHz. The presence of this hfc, therefore, provides unambiguous
+evidence for a neutral flavin radical.
+4.3 Proton ENDOR Spectroscopy on Cryptochromes in Intact Cell Samples
+Recently, we have investigated different cryptochrome blue-light photoreceptors
+under in vivo conditions and in comparison with purified samples [12, 13, 20]. The
+idea behind these experiments was to obtain information on the flavin cofactor
+redox state in vivo, and how this redox state is modulated under different light
+conditions. To this end, ENDOR spectroscopy turned out to be a very valuable
+method for obtaining such information in complex media, such as intact cells,
+because (1) other cell components, such as lipids or DNA, do not give rise to EPR or
+ENDOR signals as they are diamagnetic, (2) ENDOR signals arising from other
+paramagnetic cell compartments such as iron–sulfur clusters can be ruled out via a
+control of the temperature, and (3) the signal-to-noise ratios can be directly
+controlled via the expression rate of the protein under investigation. In Fig. 4,
+AtCRY samples in intact cells (spectra a) are compared with in vitro purified protein
+samples (spectra b). In contrast to recently published data [20], the quality of the
+ENDOR spectra has been significantly improved such that a direct comparison of
+in-cell samples with in vitro samples is now feasible. Qualitatively, both spectra
+look quite similar; the hyperfine values of the protons from H(8a) and H(6) are
+almost identical. Moreover, resonances from H(5) are clearly visible in both spectra.
+(cid:1)
+Fig. 4 X-band frozen-solution (80 K) pulsed proton ENDOR spectra of FADH bound to AtCry1
+samples measured under comparable experimental conditions. a Frozen intact Sf21 cells expressing
+AtCry1, b frozen purified AtCry1 protein solution
+123
+
+
+--- PAGE 12 ---
+350 E. Schleicher et al.
+It can finally be concluded that a neutral flavin radical is formed under illumination
+under physiological conditions. Interestingly, close inspection reveals small
+differences between the two ENDOR spectra. Although the signal-to-noise ratio
+obtained for the cell sample is still not as good as that for the protein preparation in
+Fig. 4 left, it seems that the A and A components of the H(5) coupling are smaller
+y z
+by about 1 MHz in the cell sample. Moreover, the resonance at 26 MHz is
+considerably broadened. This could be caused by an increased conformational
+flexibility of the Asp(cid:1)(cid:1)(cid:1)H(5)–N(5) hydrogen bond in the cell sample when compared
+with the purified protein in vitro. The observed broadening of the H(5) hfc would
+then be a result of hyperfine strain.
+Furthermore, the integral of the matrix region differs between both samples
+when normalized with respect to the H(8a) signal. As both samples have been
+recorded under exactly the same spectroscopic conditions, these differences can
+be rationalized in terms of the content of hydrogens in the flavin environment.
+The integral of the matrix region reflects the sum of all weakly coupled protons. It
+seems, therefore, as if the total number of protons interacting with the flavin
+radical under in-cell conditions is decreased. As resonances from close amino
+acids should not be altered, the number of protons must therefore be lowered. This
+could be explained if AtCry was membrane bound and not freely located in the
+cytosol of the cell. Another possibility is that due to an interaction with an as yet
+to be identified interaction partner that is bound via the pocket close to the 8a
+methyl group, the number of interacting water molecules is decreased, thus
+attenuating the matrix-ENDOR signal. Moreover, small but clearly visible
+additional features are observed in the 12–18 MHz region. Although no clear
+band can be observed, the minimum between H(8a) and H(6) coupling is less
+pronounced. At this stage, no conclusions can be drawn if this signal arises from a
+second, yet unidentified radical species in the cell, or if subtle changes in the
+protein-cofactor geometry are responsible for this observation. In conclusion,
+measuring ENDOR under biological ‘‘correct’’ conditions is a major improvement
+for assigning electronic structures of cofactors.
+5 Conclusions
+In the present study, we demonstrate that by determination of the hyperfine
+interactions of both the H(8a) and H(5) protons by pulsed ENDOR, the neutral
+radical form of a flavin semiquinone can be distinguished from its anionic radical
+form, as long as the cofactor is deeply buried in the protein. Partial exposure of the
+redox-active isoalloxazine ring, that carries the majority of the unpaired electron
+spin, to the aqueous protein surroundings can obscure the simple assignment based
+on the H(8a) hyperfine coupling alone. In such cases, unambiguous evidence for the
+neutral radical form is only obtained from a direct detection of the H(5) ENDOR
+resonance. Given the high detection sensitivity of modern pulsed EPR/ENDOR
+instrumentation that is commercially available, such experiments can nowadays be
+performed even on flavoproteins in their native cell environment.
+123
+
+
+--- PAGE 13 ---
+The Electronic State of Flavoproteins 351
+Acknowledgments This work was supported by the Deutsche Forschungsgemeinschaft (SFB-498,
+projects A2 and B7, and the Research Group ‘‘Blue light photoreceptors’’, FOR-526). We thank Prof.
+Stephen G. Mayhew and Dr. Mary Gallagher (both University College Dublin, Ireland) for providing us
+with Desulfovibrio vulgaris flavodoxin. It is a pleasure to thank Dr. Chris Kay (University College of
+London) for assistance during the initial experiments and for helpful discussions. We thank Gebhard
+Kaiser and Tobias Klar for AtCry1 and TtCPDPL protein preparations.
+References
+1. V. Massey, Biochem. Soc. Trans. 28, 283–296 (2000)
+2. D.E. Edmondson, Biochem. Soc. Trans. 13, 593–600 (1985)
+3. C.W.M. Kay, S. Weber, in Electron Paramagnetic Resonance, ed. by B.C. Gilbert, M.J. Davies,
+D.M. Murphy (Royal Society of Chemistry, Cambridge, UK, 2002), pp. 222–253
+4. D.M. Murphy, R.D. Farley, Chem. Soc. Rev. 35, 249–268 (2006)
+5. S. van Doorslaer, E. Vinck, Phys. Chem. Chem. Phys. 9, 4620–4638 (2007)
+6. R. Bittl, C.W.M. Kay, S. Weber, P. Hegemann, Biochemistry 42, 8506–8512 (2003)
+7. S. Weber, C.W.M. Kay, A. Bacher, G. Richter, R. Bittl, ChemPhysChem 6, 292–299 (2005)
+8. B. Barquera, L. Ramirez-Silva, J.E. Morgan, M.J. Nilges, J. Biol. Chem. 281, 36482–36491 (2006)
+9. C.W.M. Kay, H. El Mkami, G. Molla, L. Pollegioni, R.R. Ramsay, J. Am. Chem. Soc. 129, 16091–
+16097 (2007)
+10. A. Okafuji, A. Schnegg, E. Schleicher, K. Mo¨bius, S. Weber, J. Phys. Chem. B 112, 3568–3574
+(2008)
+11. H. Nagai, Y. Fukushima, K. Okajima, M. Ikeuchi, H. Mino, Biochemistry 47, 12574–12582 (2008)
+12. R. Banerjee, E. Schleicher, S. Meier, R. Mun˜oz Viana, R. Pokorny, M. Ahmad, R. Bittl, A. Batsc-
+hauer, J. Biol. Chem. 282, 14916–14922 (2007)
+13. N. Hoang, E. Schleicher, S. Kacprzak, J.-P. Bouly, M. Picot, W. Wu, A. Berndt, E. Wolf, R. Bittl,
+M. Ahmad, PLoS Biol. 6, e160.1559–e160.1569 (2008)
+14. M. Medina, R. Cammack, Appl. Magn. Reson. 31, 457–470 (2007)
+15. D. Goldfarb, D. Arieli, Annu. Rev. Biophys. Biomol. Struct. 33, 441–468 (2004)
+16. D. Goldfarb, Phys. Chem. Chem. Phys. 8, 2325–2343 (2006)
+17. N. Bretz, N. Henzel, H. Kurreck, F. Mu¨ller, Isr. J. Chem. 29, 49–55 (1989)
+18. H. Kurreck, M. Bock, N. Bretz, M. Elsner, H. Kraus, W. Lubitz, F. Mu¨ller, J. Geissler, P.M.H.
+Kroneck, J. Am. Chem. Soc. 106, 737–746 (1984)
+19. H. Kurreck, N.H. Bretz, N. Helle, N. Henzel, E. Weilbacher, J. Chem. Soc. Faraday Trans. 1 84,
+3293–3306 (1988)
+20. J.-P. Bouly, E. Schleicher, M. Dionisio-Sese, F. Vandenbussche, M. Ahmad, R. Bittl, P. Galland, A.
+Batschauer, S. Meier, N. Bakrim, D. Van der Straeten, J. Biol. Chem. 282, 9383–9391 (2007)
+21. T. Klar, G. Kaiser, U. Hennecke, T. Carell, A. Batschauer, L.-O. Essen, Chem. Biol. Chem. 7, 1798–
+1806 (2006)
+22. K. Hitomi, S.-T. Kim, S. Iwai, N. Harima, E. Otoshi, M. Ikenaga, T. Todo, J. Biol. Chem. 272,
+32591–32598 (1997)
+23. R. Brudler, K. Hitomi, H. Daiyasu, H. Toh, K.-i. Kucho, M. Ishiura, M. Kanehisa, V.A. Roberts, T.
+Todo, J.A. Tainer, E.D. Getzoff, Mol. Cell 11, 59–67 (2003)
+24. O. Kleiner, J. Butenandt, T. Carell, A. Batschauer, Eur. J. Biochem. 264, 161–167 (1999)
+25. S. Stoll, A. Schweiger, J. Magn. Reson. 178, 42–55 (2006)
+26. E. Schleicher, K. Hitomi, C.W.M. Kay, E.D. Getzoff, T. Todo, S. Weber, J. Biol. Chem. 282, 4738–
+4747 (2007)
+27. S. Weber, K. Mo¨bius, G. Richter, C.W.M. Kay, J. Am. Chem. Soc. 123, 3790–3798 (2001)
+28. C.W.M. Kay, R. Feicht, K. Schulz, P. Sadewater, A. Sancar, A. Bacher, K. Mo¨bius, G. Richter, S.
+Weber, Biochemistry 38, 16740–16748 (1999)
+29. C. Heller, H.M. McConnell, J. Chem. Phys. 32, 1535–1539 (1960)
+30. A. Carrington, A.D. McLachlan, Introduction to Magnetic Resonance (Harper & Row, New York,
+1967)
+31. E.W. Stone, A.H. Maki, J. Chem. Phys. 37, 1326–1333 (1962)
+32. E.L. Fasanella, W. Gordy, Proc. Natl. Acad. Sci. USA 62, 299–304 (1969)
+123
+
+
+--- PAGE 14 ---
+352 E. Schleicher et al.
+33. S. Weber, G. Richter, E. Schleicher, A. Bacher, K. Mo¨bius, C.W.M. Kay, Biophys. J. 81, 1195–1204
+(2001)
+34. C.W.M. Kay, E. Schleicher, K. Hitomi, T. Todo, R. Bittl, S. Weber, Magn. Reson. Chem. 43, S96–
+S102 (2005)
+35. I. C¸ inkaya, W. Buckel, M. Medina, C. Go´mez-Moreno, R. Cammack, Biol. Chem. 378, 843–849
+(1997)
+36. M. Medina, A. Lostao, J. Sancho, C. Go´mez-Moreno, R. Cammack, P.J. Alonso, J.I. Mart´ınez,
+Biophys. J. 77, 1712–1720 (1999)
+37. B. Barquera, J.E. Morgan, D. Lukoyanov, C.P. Scholes, R.B. Gennis, M.J. Nilges, J. Am. Chem. Soc.
+125, 265–275 (2003)
+38. J.I. Garc´ıa, M. Medina, J. Sancho, P.J. Alonso, C. Go´mez-Moreno, J.A. Mayoral, J.I. Mart´ınez,
+J. Phys. Chem. A 106, 4729–4735 (2002)
+39. M.J. Maul, T.R.M. Barends, A.F. Glas, M.J. Cryle, T. Domratcheva, S. Schneider, I. Schlichting, T.
+Carell, Angew. Chem. Int. Ed. 47, 10076–10080 (2008)
+40. C.P. Selby, A. Sancar, Proc. Natl. Acad. Sci. USA 103, 17696–17700 (2006)
+41. R. Pokorny, T. Klar, U. Hennecke, T. Carell, A. Batschauer, L.-O. Essen, Proc. Natl. Acad. Sci. USA
+105, 21023–21027 (2008)
+42. S. Kanai, R. Kikuno, H. Toh, H. Ryo, T. Todo, J. Mol. Evol. 45, 535–548 (1997)
+43. H. Komori, R. Masui, S. Kuramitsu, S. Yokoyama, T. Shibata, Y. Inoue, K. Miki, Proc. Natl. Acad.
+Sci. USA 98, 13560–13565 (2001)
+44. M. Ahmad, A.R. Cashmore, Nature 366, 162–166 (1993)
+45. C.A. Brautigam, B.S. Smith, Z. Ma, M. Palnitkar, D.R. Tomchick, M. Machius, J. Deisenhofer, Proc.
+Natl. Acad. Sci. USA 101, 12142–12147 (2004)
+46. T. Kottke, A. Batschauer, M. Ahmad, J. Heberle, Biochemistry 45, 2472–2479 (2006)
+47. C. Lin, D.E. Robertson, M. Ahmad, A.A. Raibekas, M.S. Jorns, P.L. Dutton, A.R. Cashmore, Science
+269, 968–970 (1995)
+48. W. Watt, A. Tulinsky, R.P. Swenson, K.D. Watenpaugh, J. Mol. Biol. 218, 195–208 (1991)
+49. A. Berndt, T. Kottke, H. Breitkreuz, R. Dvorsky, S. Hennig, M. Alexander, E. Wolf, J. Biol. Chem.
+282, 13011–13021 (2007)
+50. M. Medina, C. Gomez-Moreno, R. Cammack, Eur. J. Biochem. 227, 529–536 (1995)
+123

@@ -1,0 +1,238 @@
+
+
+--- PAGE 1 ---
+doi: 10.1038/nature06834
+SUPPLEMENTARY INFORMATION
+Chemical compass model of avian magnetoreception
+Kiminori Maeda, Kevin B. Henbest, Filippo Cintolesi, Ilya Kuprov,
+Christopher T. Rodgers, Paul A. Liddell, Devens Gust,
+Christiane R. Timmel & P. J. Hore
+Supplementary Information
+1. Supplementary Figures
+Fig. S1. Polar plots of the anisotropy of the magnetic field effect on the transient
+absorption of [C•+P F•− ] detected by photoselection (cf. Fig. 3). The experimental
+arrangement was as shown in Fig. 3a except that both the magnetic field and the
+polarization axis of the probe light (indicated here by the double headed arrows) lay in
+the XZ plane.
+www.nature.com/nature 1
+
+
+--- PAGE 2 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+Fig. S2. Magnetic field calibration. See Methods for details.
+www.nature.com/nature 2
+
+
+--- PAGE 3 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+2. Supplementary Calculations
+Calculation of C•+ absorption bands
+DFT calculations (Gaussian 03 [1]) of the optical transitions in C•+ (including both
+benzene rings and the amide bond between them) gave the following results (where f
+is the oscillator strength):
+Method Most prominent optical transitions
+881 nm (f = 1.01)
+TD-DFT B3LYP 6-31G(d,p) 821 nm (f = 1.62)
+808 nm (f = 1.28)
+876 nm (f = 1.23)
+TD-DFT B3LYP cc-pVTZ 822 nm (f = 2.33)
+739 nm (f = 0.40)
+TD-DFT mPW1PW91 cc-pVTZ in PCM
+967 nm (f = 4.41)
+water
+The transition dipole moments for all the transitions listed here are very nearly
+aligned along the long axis of the carotenoid chain (Fig. S3):
+Transition Transition electric dipole moment vector (X, Y, Z / a.u.)
+(TD-DFT mPW1PW91 cc-pVTZ in PCM water)
+967 nm (f = 4.41) −11.7856 −1.2100 0.2502
+www.nature.com/nature 3
+
+
+--- PAGE 4 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+Fig. S3. The molecular coordinate system of the carotenoid moiety. The XY plane is
+the plane of the conjugated system.
+[1] M. J. Frisch; G. W. Trucks; H. B. Schlegel; G. E. Scuseria; M. A. Robb; J. R. Cheeseman; J.
+A. Montgomery; Jr., T. V.; K. N. Kudin; J. C. Burant; J. M. Millam; S. S. Iyengar; J. Tomasi; V.
+Barone; B. Mennucci; M. Cossi; G. Scalmani; N. Rega; G. A. Petersson; H. Nakatsuji; M. Hada; M.
+Ehara; K. Toyota; R. Fukuda; J. Hasegawa; M. Ishida; T. Nakajima; Y. Honda; O. Kitao; H. Nakai; M.
+Klene; X. Li; J. E. Knox; H. P. Hratchian; J. B. Cross; C. Adamo; J. Jaramillo; R. Gomperts; R. E.
+Stratmann; O. Yazyev; A. J. Austin; R. Cammi; C. Pomelli; J. W. Ochterski; P. Y. Ayala; K.
+Morokuma; G. A. Voth; P. Salvador; J. J. Dannenberg; V. G. Zakrzewski; S. Dapprich; A. D. Daniels;
+M. C. Strain; O. Farkas; D. K. Malick; A. D. Rabuck; K. Raghavachari; J. B. Foresman; J. V. Ortiz; Q.
+Cui; A. G. Baboul; S. Clifford; J. Cioslowski; B. B. Stefanov; G. Liu; A. Liashenko; P. Piskorz; I.
+Komaromi; R. L. Martin; D. J. Fox; T. Keith; M. A. Al-Laham; C. Y. Peng; A. Nanayakkara; M.
+Challacombe; P. M. W. Gill; B. Johnson; W. Chen; M. W. Wong; C. Gonzalez; Pople, J. A. Gaussian
+03, Revision D.02, 2004.
+www.nature.com/nature 4
+
+
+--- PAGE 5 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+3. Supplementary theory
+Orientational averaging of the magnetic field effect on the CPF triad In the
+following, we relate the anisotropic signals measured in the liquid crystal and the
+photoselection experiments to the underlying radical pair magnetic field effect by
+considering the orientational averaging inherent in the two approaches.
+We define the molecular frame as the coordinate system in which the transition dipole
+moment of C•+ in [C•+P F•− ] lies along the z-axis. Note that this axis system, chosen
+here for convenience, differs from that used in calculating the direction of the
+transition dipole moment (Section S1.3). The laboratory frame is defined such that the
+(cid:4)
+applied magnetic field B , where the tilde denotes a vector in the laboratory frame, is
+directed along the z-axis and the polarization of the probe beam p(cid:4) is in the yz-plane
+⎛ 0 ⎞ ⎛ 0 ⎞
+B (cid:4) = ⎜ 0 ⎟ ; p(cid:4) = ⎜ sinε ⎟ (1)
+⎜ ⎟ ⎜ ⎟
+⎜ ⎟ ⎜ ⎟
+B cosε
+⎝ ⎠ ⎝ ⎠
+where ε is the angle between p(cid:4) and B (cid:4) . Note that, although geometrically equivalent,
+the (x, y, z) laboratory axis system used here differs from that used to describe the
+actual experiment (Fig. 3a).
+Photoselection experiment The molecular and laboratory frames are related by a
+rotation, which may be parameterised by the Euler angles (α,β,γ) . We deal first
+with isotropic samples, where photoselection is used to measure the anisotropic
+response to the applied magnetic field, so that all rotations are equally probable.
+Rotation by the Euler angles may be written in matrix form:
+R = R (γ)R (β)R (α)
+z − y z
+⎛ cosγ − sinγ 0 ⎞ ⎛ cosβ 0 sin β⎞ ⎛ cosα − sinα 0 ⎞
+(2)
+⎜ ⎟ ⎜ ⎟ ⎜ ⎟
+= sinγ cosγ 0 0 1 0 sinα cosα 0
+⎜ ⎟ ⎜ ⎟ ⎜ ⎟
+⎜ ⎟ ⎜ ⎟ ⎜ ⎟
+0 0 1 − sin β 0 cosβ 0 0 1
+⎝ ⎠ ⎝ ⎠ ⎝ ⎠
+www.nature.com/nature 5
+
+
+--- PAGE 6 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+In the molecular frame, the magnetic field is described by the vector
+⎛ B sin βcosγ⎞
+(cid:4) ⎜ ⎟
+B = RB = B sin βsinγ (3)
+⎜ ⎟
+⎜ ⎟
+B cos β
+⎝ ⎠
+which may be written in spherical polar coordinates as (B, β, γ). In the molecular
+frame, the probe polarization vector p is given by
+⎛ cosεcosγsin β− cosβcosγsinαsinε− cosαsinεsinγ⎞
+⎜ ⎟
+p = Rp(cid:4) = cosαcosγsinε− cosβsinαsinγsinε+ cosεsin βsinγ (4)
+⎜ ⎟
+⎜ ⎟
+cosβcosε+ sinαsin βsinε
+⎝ ⎠
+The probability that a molecule with orientation (α,β,γ) will be detected is
+2
+P (α,β,γ,ε) ∝ k p (5)
+i
+ex
+where k is the unit vector along the molecular frame z-axis (i.e. the direction of the
+transition dipole moment) and the constant of proportionality is chosen such that
+2π π 2π
+∫ ∫ ∫ P (α,β,γ,ε) sin βdαdβdγ = 1 (6)
+ex
+0 0 0
+The orientationally averaged singlet yield (i.e. the relative yield of the product formed
+by spin-selective recombination of the singlet state of the radical pair) is
+2π π 2π
+Φ (B,ε) = ∫ ∫ ∫ P (α,β,γ,ε) Φ (B,β,γ) sin βdαdβdγ (7)
+S ex S
+0 0 0
+where Φ (B,β,γ) is the singlet yield in a magnetic field B = (B, β, γ). Although we
+S
+discuss the product yield here, we expect essentially identical results for the radical
+pair lifetime. In general, Φ (B,β,γ) may be written as a sum of spherical harmonics
+S
+with field-dependent coefficients, a (B) :
+lm
+www.nature.com/nature 6
+
+
+--- PAGE 7 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+l
+Φ (B,β,γ) = ∑ ∑ a (B)Y m (β,γ) (8)
+S lm l
+l=0,2,4,... m=−l
+Note that the sum runs over even values of l because the singlet yield is invariant to
+inversion of the magnetic field ( Φ (B,β+π,γ) = Φ (B,β,γ) ).
+S S
+Combining Eqns (4), (5) and (7) and integrating with respect to α we obtain
+Φ (B,ε)
+S
+(9)
+3 2π π
+= ∫ ∫ ⎡sin2 ε+ cos2 β(3cos2 ε−1)⎤ Φ (B,β,γ) sin βdβdγ
+8π 0 0 ⎣ ⎦ S
+Noting that
+3 1 1
+⎡sin2 ε+ cos2 β(3cos2 ε−1)⎤ = Y 0 (β,γ) + ⎡3cos2 ε−1⎤ Y 0 (β,γ) (10)
+8π ⎣ ⎦ 2 π 0 2 5π ⎣ ⎦ 2
+and using
+2π π *
+∫ ∫ ⎡Y m (β,γ)⎤ Y m′ (β,γ) sin βdβdγ = δ δ (11)
+⎣ l ⎦ l′ ll′ mm′
+0 0
+*
+⎡Y m (β,γ)⎤ = (−1)mY −m (β,γ) (12)
+⎣ l ⎦ l
+we find:
+1 1
+Φ (B,ε) = a (B) + ⎡3cos2 ε−1⎤ a (B) (13)
+S 00 ⎣ ⎦ 20
+2 π 2 5π
+Thus, the orientational averaging inherent in the photoselection experiment leads to a
+dependence of the product yield on the direction of the probe polarization axis, ε , of
+the form
+www.nature.com/nature 7
+
+
+--- PAGE 8 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+Φ (B,ε) = b + b sin2 ε (14)
+S 0 2
+Liquid crystal experiment The orientational averaging for the triad molecule
+oriented in a liquid crystal is more straightforward. We assume that the molecular z-
+axis (the long axis of the molecule) is perfectly aligned with liquid crystal director and
+that the molecular x- and y-axes are randomly distributed. β is the angle between the
+molecular z-axis and the magnetic field direction, and γ specifies the rotation of the
+molecule around the z-axis. Averaging over γ gives
+1 2π 1 l 2π
+Φ (B,β) = ∫ Φ (B,β,γ) dγ = ∑ ∑ ∫ a (B)Y m (β,γ) dγ (15)
+S 2π 0 S 2π 0 lm l
+l=0,2,4,... m=−l
+and hence
+2l +1
+Φ (B,β) = ∑ a (B) P0 (cos β) (16)
+S l0 4π l
+l=0,2,4,...
+in which P0 (x) is the associated Legendre polynomial. Since P0 (x) is a polynomial
+l l
+in x with powers up to and including xl, Φ (B,β) has the form
+S
+Φ (B,β) = ∑ c sinl β (17)
+S l
+l=0,2,4,...
+By comparison with Eqn (14), it is clear that the orientational averaging of
+Φ (B,β) here is less extensive than it is for Φ (B,ε) in the photoselection
+S S
+measurement. However, if the anisotropy of the magnetic field effect is well described
+by second-order spherical harmonics, i.e. if a (B) = 0 for l > 2, then
+l0
+Φ (B,β) = c + c sin2 β (18)
+S 0 2
+www.nature.com/nature 8
+
+
+--- PAGE 9 ---
+doi: 10.1038/nature06834 SUPPLEMENTARY INFORMATION
+and Φ (B,β) shows the same dependence on β as does Φ (B,ε) on ε, as found
+S S
+experimentally (Fig. 3).
+www.nature.com/nature 9

@@ -1,0 +1,1133 @@
+
+
+--- PAGE 1 ---
+REVIEW
+published: 23 June 2022
+doi: 10.3389/fmolb.2022.890826
+OOP-ESEEM Spectroscopy:
+Accuracies of Distances of
+Spin-Correlated Radical Pairs in
+Biomolecules
+Tarek Al Said, Stefan Weber and Erik Schleicher *
+Institute of Physical Chemistry, University of Freiburg, Freiburg, Germany
+In addition to the commonly used electron–electron double resonance (ELDOR) technique,
+there are several other electron paramagnetic resonance (EPR) methods by which
+structure information can be obtained by exploiting the dipolar coupling between two
+radicals based on its characteristic r
+−3
+dependence. In this contribution, we explore the
+potential of out-of-phase-electron-spin echo envelope modulation (OOP-ESEEM)
+spectroscopy to collect accurate distance information in photo-sensitive (bio)
+Edited by: molecules. Although the method has already been applied to spin-correlated radical
+Alex Jones, pairs in several classes of light-active proteins, the accuracy of the information obtained
+National Physical Laboratory,
+has not yet been extensively evaluated. To do this in a system-independent fashion, OOP-
+United Kingdom
+ESEEM time traces simulated with different values of the dipolar and exchange couplings
+Reviewed by:
+Yasuhiro Kobori, were generated and analyzed in a best-possible way. Excellent agreement between
+Kobe University, Japan calculated and numerically fitted values over a wide range of distances (between 15
+Sergei Dzuba,
+and 45 Å) was obtained. Furthermore, the limitations of the method and the dependence
+Institute of Chemical Kinetics and
+Combustion (RAS), Russia on various experimental parameters could be evaluated.
+Hiroki Nagashima,
+Saitama University, Japan Keywords: EPR spectroscopy, coupled radical pair, distance determination, dipolar coupling, OOP-ESEEM
+*Correspondence:
+Erik Schleicher
+INTRODUCTION
+Erik.Schleicher@physchem.uni-
+freiburg.de
+One of the most fundamental goals of protein studies is to obtain a mechanistic understanding of
+biological function at a molecular level. Data on protein structure, the dynamics of structure elements
+Specialty section:
+and reaction kinetics are typically collected for this purpose. During the last decades, robust
+This article was submitted to
+Structural Biology, technological developments in the fields of X-ray crystallography, NMR, and cryogenic electron
+a section of the journal microscopy (cryo-EM) have contributed to the wealth of solved protein structures in the RCSB
+Frontiers in Molecular Biosciences Protein Data Bank. X-ray crystallography remains the standard for obtaining crystal structure data at
+Received: 06 March 2022 atomic resolution, although conclusions on the protein dynamics on various time scales in the
+Accepted: 05 May 2022 protein’s physiological state may not directly be drawn. Cryo-EM, with its advantage of simpler
+Published: 23 June 2022 sample preparation, is the currently most evolving method (Fernandez-Leiro and Scheres, 2016).
+Citation: Although this technique provides snapshots of a protein, dynamic properties that govern the
+Al Said T, Weber S and Schleicher E protein’s functional output are still lacking. Solution NMR is potentially the best tool to study protein
+(2022) OOP-ESEEM Spectroscopy: dynamics and structure; however, the technique is limited to smaller proteins or protein complexes
+Accuracies of Distances of Spin-
+and demands expensive stable-isotope-labeling strategies. Thus, biophysical methods are desired
+Correlated Radical Pairs
+which provide structure data on the nanometer scale and dynamic information of biomolecules
+in Biomolecules.
+without extensive sample manipulation and preparation. Fluorescence-based methods, such as
+Front. Mol. Biosci. 9:890826.
+doi: 10.3389/fmolb.2022.890826 fluorescence resonance energy transfer (FRET), have proven quite powerful in this respect as they are
+Frontiers in Molecular Biosciences | www.frontiersin.org 1 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 2 ---
+Al Said et al. Accuracy of OOP-ESEEM
+sensitive down to the single-molecule level and provide real-time of the strong coupling, only a distance estimation becomes
+dynamics over several time scales (Loura and Prieto, 2011). possible for pure triplets.
+However, FRET lacks precision and applicability when it In case the two electron spins are more distant from each
+comes to quantifying distances or distance changes. Therefore, other, the exchange interaction and zero-field splitting are much
+other spectroscopic methods such as EPR are applied to obtain weaker; one may speak of a spin pair or a radical pair. If radical
+structure (and also dynamic) information on biomolecules. pairs are formed by fast light-induced electron transfer, in which
+The most commonly used EPR method for determining at least one electronically excited moiety acts as an electron
+distances from dipolar couplings between radicals in acceptor or donor, a charge-separated state with two unpaired
+biomolecules is pulsed electron–electron double-resonance correlated electron spins is formed because the precursor spin
+(abbreviated PELDOR or DEER) (Pannier et al., 2000; multiplicity is transferred to the charge-separated state due to the
+Schiemann and Prisner, 2007; Jeschke, 2012), and to a lesser conservation of spin-angular momentum. In this context, the
+extent, relaxation-induced dipolar modulation enhancement distinction between a spin-correlated radical pair and an
+(RIDME) spectroscopy (Kulik et al., 2001), or the more (uncorrelated) biradical needs to be made. Spin-correlation of
+recently devised laser-DEER or laser-IMD techniques (Hintze radical pairs manifests itself in EPR spectra as electron-spin
+et al., 2016; Dal Farra et al., 2019). By these methods, the distance polarization that affects the intensities of resonant transitions.
+between magnetic momenta is measured, which are either In contrast to spectra of thermally equilibrated spin states, spin-
+intrinsically present in the (bio)molecule of interest or correlated radical pairs exhibit enhanced absorptive and emissive
+introduced via selective spin labeling (Klare, 2013). Since resonances provided the detection system is fast enough (Weber,
+several excellent reviews on the accuracy of the PELDOR 2017). This is because spin correlation has a limited lifetime. Its
+method are available [for example, (Edwards and Stoll, 2016, decay may be relatively slow as long as the distance and the
+Edwards and Stoll, 2018; Hustedt et al., 2018)], the focus of this relative orientation of the radical pair partners remain static. This
+study is on the applicability and accuracy of a further pulsed EPR is the case, for example, in some radical pairs formed between
+method for distance determination: pulsed out-of-phase electron- cofactors and/or amino acid residues within a protein framework,
+spin-echo envelope modulation (OOP-ESEEM) EPR (Salikhov in polymer compositions consisting of donor and acceptor
+et al., 1992). materials, or in synthetically prepared molecules with donor
+and acceptor moieties. Spin-correlated coupled radical pairs
+generated by light-induced electron transfer have thus been
+Distance Determination in Correlated
+observed in photosystems involved in photosynthesis (Harvey
+Radical Pairs and Wasielewski, 2021), in cryptochromes and photolyases
+If two (or more) unpaired electron spins are present in a system, (Biskup et al., 2009; Schleicher and Weber, 2012), in
+their interactions are described by the spin Hamiltonian which phototropins (Kay et al., 2003), in light-active decarboxylases
+comprises contributions from exchange interaction, zero-field (Sorigué et al., 2017), in biomimetic systems of artificial
+splitting, and dipolar coupling. If light-induced electron transfer photosynthesis (Hou et al., 2019), and in polymer-fullerene
+takes place between a donor and an acceptor moiety of the blends devised for organic photovoltaics (Niklas and
+system, a spin-correlated coupled radical pair is generated, Poluektov, 2017).
+which may be observed provided the EPR detection is With increasing distance r, the exchange interaction falls off
+sufficiently fast (Weber, 2017). Such a spin pair may be singlet exponentially—more strongly than the dipolar interaction,
+(spin quantum number S = 0) or triplet (S = 1) configured which follows an r −3 dependence. The exchange interaction
+depending on the multiplicity of the precursor state (see accounts for the quantum-mechanic indistinguishability of the
+below). It should be noted in this context that although a two electrons and thus depends on the overlap of the respective
+photogenerated triplet state is also paramagnetic and may be orbitals. The dipolar interaction depend not only on the
+considered as a very strongly coupled pair of spins within a distance but also on the orientation of the radical pair with
+molecular moiety, electron transfer is not needed for its respect to the direction of the external magnetic field.
+generation. Electron-spin polarization in spin-correlated coupled radical
+In case the spins are strongly coupled, that is, they are within a pairs may be understood with the coupled correlated radical
+very short distance with respect to each other, the exchange pair (CCRP) formalism (Adrian, 1972; Closs et al., 1987; Hore
+interaction describing the energy difference between the singlet et al., 1987). Such resonances can be directly detected using
+state and the triplet manifold becomes very large. Hence, the transient EPR spectroscopy (Weissman, 1982; Weber, 2017)
+triplet sublevels may be treated separately from the singlet level and pulsed EPR methods such as OOP-ESEEM spectroscopy
+for the purpose of detection of EPR resonances. As a result, the (Salikhov et al., 1992; Tang et al., 1994). All methods have their
+zero-field splitting becomes dominant, which can be described by strengths and weaknesses in the determination of the relevant
+the two so-called zero-field splitting parameters, D and E, for a interaction parameters. Transient EPR spectroscopy is not
+review see, e.g., Richert et al. (2017). These can be extracted from ideal for extracting distance information as the dipolar
+an EPR spectrum by spectral simulations. D and E depend on the interaction between the two radicals has little influence on
+average distance of the unpaired electrons, the delocalization of the spectral shape but affects the amplitude of a radical-pair
+the wave function across the molecule, and the rhombicity of the signature in cases of weaker couplings (Stehlik et al., 1989).
+interaction (Richert et al., 2017; Weber, 2017). However, because OOP-ESEEM, on the other hand, is a method that is ideal for
+Frontiers in Molecular Biosciences | www.frontiersin.org 2 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 3 ---
+Al Said et al. Accuracy of OOP-ESEEM
+TABLE 1 | Radical pair distances in various protein systems determined using OOP-ESSEM and comparison to the respective distances obtained from crystal structures or
+structure models.
+Protein and Organism Radical Pair Distance from OOP- Distance obtained by crystal structure (a) or by Reference
+ESEEM/Å calculation (b)/Å
+Rhodobacter sphaeroides [P865
+(cid:129)+
+QA
+(cid:129)–]
+28.4 28.3 (a) Zech et al. (1996); Bittl and Zech
+R26 RC (1997)
+Synechococcus elongatus [P700
+(cid:129)+
+A1
+(cid:129)–]
+25.4
+PS I
+Spinach PS I [P700
+(cid:129)+
+A
+(cid:129)–]
+25.3 ± 0.3 Dzuba et al. (1997)
+C. reinhardtii PS I [P700
+(cid:129)+
+A
+1(cid:129)–]
+25.4 ± 0.03 24.5 (a) Santabarbara et al. (2006)
+Spinach PS I [P700
+(cid:129)+
+A
+1(cid:129)–]
+25.4 ± 0.03 26.0 (a)
+Synechocystis sp. PS I [P700
+(cid:129)+
+A
+1(cid:129)–]
+25.5 ± 0.02 24.5 (a)
+Synechocystis sp. PS I [P700
+(cid:129)+
+A
+1(cid:129)–]
+26.1 ± 0.2 24.5 (a) Savitsky et al. (2013)
+1
+Artificial photosynthetic [BDX (cid:129)+ PI (cid:129)–] 25.0 ± 0.1 25.4 (b) Carmieli et al. (2009)
+systems [TTF
+(cid:129)+
+PI
+(cid:129)–]
+28.1 ± 0.1 27.3 (b)
+[DMJ
+(cid:129)+
+NI
+(cid:129)–]
+38.0 ± 0.2 37.6 (b)
+Spinach PS II [ [ Y P z 6 (cid:129) 8 + 0 Q
+(cid:129)+
+A (cid:129) Q –] A
+(cid:129)–]
+27 3 .4 4 ± ± 0 1 .3 2 3 7 4 ( ( a a ) ) Z H e a c ra h e e t t a a l l . . ( ( 1 1 9 9 9 9 7 7 ) )
+Drosophila cryptochrome [FAD
+(cid:129)–
+TrpD
+(cid:129)+]
+22.4 ± 0.5 21.6 (a) Nohr et al. (2017)
+E. coli photolyase [FAD
+(cid:129)–
+TrpC
+(cid:129)+]
+19.5 ± 0.5 20.5 (a)
+Pigeon cryptochrome 4 [FAD
+(cid:129)–
+TrpD
+(cid:129)+]
+21.2 ± 0.2 20.9 (a) Hochstoeger et al. (2020)
+[FAD
+(cid:129)–
+TrpC
+(cid:129)+]
+17.5 ± 0.1 17.5 (a)
+European robin cryptochrome [FAD
+(cid:129)–
+TrpD
+(cid:129)+]
+21 21.3 (a) Xu et al. (2021)
+[FAD
+(cid:129)–
+TrpC
+(cid:129)+]
+18 17.6 (a)
+measuring distances between radicals; the basics of this the resulting Pake doublets the dipolar and exchange couplings
+technique will be summarized in brief in the following section. can be extracted at high precision from turning and inflection
+points of spectral simulations (Hoff et al., 1998; Fursman and
+Basics of the OOP-ESEEM Method Hore, 1999; Santabarbara et al., 2006). They correspond to the
+The pulsed OOP-ESEEM EPR experiment (Salikhov et al., 1992; frequencies at which the dipolar axis is parallel and perpendicular
+Tang et al., 1997) is capable of directly measuring the strengths of to the magnetic field, respectively. These frequencies are given by
+exchange and dipolar interactions in short-lived radical pair states.
+] ⊥ (cid:1) ± (2D/3 + 2J) and ν (cid:3) (cid:1) ± ( − 4D/3 + 2J) (2)
+OOP-ESEEM has been previously applied to examine spin-
+correlated radical pairs in a number of proteins (see Table 1), Both parameters, D and J, can hence be extracted from the two
+composite materials designed for organic photovoltaic devices frequencies. By using the point-dipole approximation (PDA), the
+(Lukina et al., 2015), and labeled DNA hairpins (Olshansky et al., distance r between the radicals can be calculated based on the
+2019). In brief, this low-temperature EPR experiment comprises a relation (Hoff et al., 1998; Santabarbara et al., 2005)
+canonical two-microwave-pulse echo sequence
+[h]–t –(ξ ) –τ–(ξ ) –τ–echo] applied after a short laser pulse D/MHz (cid:1) −78.08 × 103(cid:4)(cid:1)r(cid:4)Å(cid:3)3 or D(cid:4)mT (cid:1) −2786(cid:5)(cid:1)r(cid:4)Å(cid:3)3
+DAF 1 x 2 x
+that initiates radical pair formation (Figure 1). In general, the (3)
+precise flip angles ξ of the pulses, which can differ significantly
+i
+from 90° (and 180°) (Tang et al., 1997; Krzystyniak, 2003), should Please note that there is a factor of 3/2 between Eq. 3 and the
+be optimized during the experimental setup. The maximum OOP- relation commonly used in PELDOR spectroscopy to extract
+ESEEM signal can be determined by adjusting the pulse length at distance information: ] ⊥ (cid:1) −52.16 × 103MHz/(r/Å)3 (Jeschke,
+constant microwave power or vice versa. The echo intensity in the 2012). The reason for this is that PELDOR is typically applied
+out-of-phase channel detected as a function of the separation time to systems containing spins at larger distances ( > 20Å); hence, J
+between the microwave pulses thus becomes modulated by is assumed zero and only one of the two frequencies (] ⊥) of the
+Pake pattern needs to be read out (Reginsson and Schiemann,
+ω (cid:1) 2J − 2D(cid:1)3 cos2 θ − 1(cid:3)(cid:4)3 (1) 2011). In this case Eq. 2 simplifies to |D| (cid:1) 3] ⊥/2.
+mod
+In comparison to other methods for distance determination,
+as a result of dipolar and exchange interactions, with θ being the such as PELDOR spectroscopy (Jeschke, 2012), OOP-ESEEM is
+orientation of the dipolar axis with respect to the direction of the conceptually more straightforward and requires only two pulses
+external magnetic field (Salikhov et al., 1992), and D and J are the of the same microwave frequency (instead of four or more pulses
+dipolar and exchange interaction, respectively, both in angular of different frequencies) (see below). Typically, the method is
+frequency units. This modulation can be converted by sine applied to the examination of short-lived spin pairs generated in
+Fourier transformation (SFT) into a frequency spectrum. From an unmodified protein system: hence, any potentially structure-
+Frontiers in Molecular Biosciences | www.frontiersin.org 3 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 4 ---
+Al Said et al. Accuracy of OOP-ESEEM
+magnetic field (Bittl et al., 1997). It is conceivable that such
+information may also be obtained using orientation selection
+effects at high magnetic fields (Savitsky et al., 2007; Savitsky et al.,
+2013; Harmer, 2016; Schnegg, 2017), oriented samples (Hasegawa
+et al., 2017), or by exploiting selective optical sample excitation
+using polarized light (Hamada et al., 2021). However, to the best
+of our knowledge, such techniques have not yet been applied to
+OOP-ESEEM.
+Theory predicts that not only singlet-configured radical pairs
+but also triplet-configured ones exhibit an OOP ESEEM effect.
+The echo amplitude of the latter is expected to assume opposite
+polarity and its intensity to be reduced by a factor of three (Tang
+et al., 1997). Thus, the sign of the echo modulation could, in
+principle, be used to assign the precursor multiplicity, singlet or
+triplet, of a given radical pair. A comparison of experimental
+OOP-ESEEM data from 1[P (cid:129)+ Q (cid:129)– ] and 3[P (cid:129)+ Q (cid:129)– ],
+865 A 865 A
+however, revealed almost identical time traces and no
+indication of any polarity change (Borovykh et al., 2002; Kulik
+et al., 2003).
+In principle, the OOP-ESEEM method benefits from the initial
+spin-correlation in a radical-pair generation that manifests itself
+in strongly polarized resonances, thereby significantly increasing
+the signal-to-noise ratio (SNR) of detected spin echoes and
+consequently of their modulation. Also, information on the
+FIGURE 1 | OOP-ESEEM pulse sequence. In the upper panels, the
+precursor spin multiplicity is obtained from such experiments,
+evolution of the in-phase and out-of-phase (OOP) echo components are
+thereby revealing traits of the photochemistry of a system. The
+depicted; the resulting time trace with respect to the pulse separation time is
+shown in the lower panel. Parameters: tDAF, time delay after the laser method thus complements the PELDOR technique, which is
+flash (h]); (ξ i)x, flip angles of microwave pulses with phase x; in-phase and out- widely applied to measure distances and their distributions in
+of-phase (OOP) signals denote the signals in the y- and x-channels during uncorrelated but coupled biradicals. The OOP-ESEEM
+quadrature detection. During the experiment, the time between the
+experiment requires only two pulses at one microwave
+microwave pulses is varied stepwise while tDAF is kept constant. The
+frequency, but a laser pulse, which is required for the
+amplitude of the OOP signal is recorded as a function of the microwave pulse
+separation time. generation of the radical pair by photoexcitation, needs to be
+applied and the microwave pulse sequence tied to it. With
+modern EPR instrumentation, this is nowadays
+disturbing effects, as they may occur upon site-directed spin straightforward. Photogeneration of radical pairs could be a
+labeling, are avoided. problem for the measurement of distances using OOP-ESSEM
+The anisotropies of the Zeeman interaction and the orientation of if a sample suffers from photodecomposition. In such a case, only
+the two radicals with respect to each other have only a minute a limited SNR can be reached, and the sample needs to be
+influence on the out-of-phase echo modulation (Bittl and Zech, renewed for increasing the SNR if available in larger
+2001) as long as the experiment is carried out at not too high quantities. Here, PELDOR has a clear advantage as the
+microwave frequencies and corresponding magnetic field strengths experiment can be repeated without sample loss until the
+so that orientation-selection effects (Harmer, 2016; Schnegg, 2017) desired SNR is reached. The fact that typically optical sample
+can be neglected. Furthermore, hyperfine couplings and their excitation is used for the generation of spin-correlated radial pairs
+anisotropies have only a minor effect on the shape of the OOP- (although other methods for generating a spin-correlated state are
+ESEEM time traces despite the fact that other ESEEM techniques are conceivable) is, however, limiting the application of the OOP-
+particularly sensitive to these (van Doorslaer, 2017). Theoretical ESEEM method. Intrinsically, very few proteins are eligible as
+studies treating the case of broadband microwave excitation in OOP- long as the addition of light-active labels and/or redox-active
+ESEEM corroborate this finding (Dzuba, 1997; Timmel et al., 1998): amino acids by biochemical and molecular biology methods is
+Anisotropic hyperfine couplings contribute only as a second-order still a conceptual challenge.
+effect to the echo modulation (Tang et al., 1995). In only a few
+experimental studies using the OOP-ESEEM technique slight
+distortions of the earliest echo modulations by hyperfine MATERIALS AND METHODS
+couplings were observed, although the obtained distances
+remained unaffected (Fursman and Hore, 1999; Nohr et al., 2017). We will evaluate the applicability of OOP-ESEEM in detail by
+Information on the orientation of the dipolar coupling tensor comparing distances derived from this method with those
+have been previously obtained by examination of single crystals obtained using other methods for structure determination,
+that have been rotated with respect to the direction of the external such as X-ray crystallography. In addition, the accuracy of the
+Frontiers in Molecular Biosciences | www.frontiersin.org 4 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 5 ---
+Al Said et al. Accuracy of OOP-ESEEM
+method will be evaluated by analyzing artificially generated echo corresponding frequency spectra were scaled to similar
+decay curves. Specifically, it shall be clarified how accurate the amplitudes for comparability. Reconstruction was performed
+information obtained by this method is, on which length scales using the autoregressive (AR) model described below. To do
+the method is applicable and which limitations are involved. this, the order p was increased until the reconstructed region was
+identified as noisy by visual inspection, and it was verified that the
+Calculation of OOP-ESEEM Spectra residuals were uncorrelated (Neumaier and Schneider, 2001). It
+Our calculations of OOP-ESEEM echo decay curves were has to be mentioned that this criterion could not be fulfilled for
+performed under the assumption of weak dipolar coupling certain signals with high SNR; in this case, the reconstruction was
+between the radicals and the validity of the point-dipole optimized manually. Fitting was performed by minimizing the
+approximation (a dipolar coupling tensor of axial symmetry). sum of the squares of the offsets of simulated and modeled curves
+We further assumed microwave pulses that are able to excite the using the “lsqcurvefit” routine with the trust region reflective
+entire range of spectral resonances. In addition, the following algorithm (options: maximum iterations: 200; termination
+simplifications were made: Both parts of the radical pair have an tolerance: 10 −10; maximum function evaluations: 10,000). The
+isotopic g-value of 2.0023. Hyperfine couplings were disregarded; squared norm of the residuals was calculated as a performance
+hence, it was assumed that the calculated echo trace from the criterion in cases where fits with different starting values were
+OOP channel was unaffected by additional nuclear ESEEM. compared. Boundary conditions are given in the Results and
+Furthermore, effects of zero-quantum coherence were ignored, Discussion section.
+which can be achieved experimentally by applying the microwave
+pulse sequence after a sufficiently long t (see Figure 1) (Hoff
+et al., 1998). The τ-dependent echo D i A n F tensity can then be Calculation of Mass and Spin Density
+determined for a disordered ensemble by Centers-of-Gravity
+Mass and spin density centers-of-gravity were calculated by DFT-
+2π π
+S(τ) (cid:1) A exp(−τ(cid:4)T ) (cid:6) (cid:6) sin(ω (θ)τ) sin(θ) dθ dϕ (4) optimized structures including all atoms of the respective
+d mod
+0 0 molecule and by the Mulliken spin densities from the output
+Here ω (θ) is the observed frequency modulation (see Eq. 1), θ of the respective calculation. 1-Ethyl-lumichrome and truncated
+mod
+and ϕ are the angles between the external magnetic field and the tryptophan were drawn with Avogadro (Hanwell et al., 2012)
+axis connecting the two magnetic point dipoles, A is the (Supplementary Figure S1) and used in DFT calculations with
+amplitude of the signal, and T is the relaxation time the Orca program package (Neese, 2012). Geometry
+d
+(Salikhov et al., 1992). This integral can be rewritten as the optimizations were carried out with the BP86 functional
+sum of Fresnel integrals (Perdew, 1986; Becke, 1988) in conjunction with the def2-
+TZVPP basis set (Weigend and Ahlrichs, 2005) using the RI
+(cid:11)(cid:7)(cid:7)(cid:7)
+S(τ) (cid:1)
+√2π
+(cid:7)
+D
+1
+(cid:7)
+.
+(cid:7)
+τ
+5
+H exp(cid:8)
+−
+T
+τ
+(cid:9)(cid:10)sin(cid:8)
+2(D +
+3
+3J)τ
+(cid:9)FrC (cid:8)2
+D
+π
+τ
+(cid:9)
+a
+o
+p
+b
+p
+ta
+r
+i
+o
+n
+x
+e
+i
+d
+m
+g
+a
+e
+t
+o
+io
+m
+n
+e
+.
+t
+E
+r
+P
+ie
+R
+s w
+pr
+it
+o
+h
+pe
+th
+rt
+e
+y
+B
+c
+3
+a
+L
+lc
+Y
+u
+P
+lat
+f
+i
+u
+o
+n
+n
+c
+s
+ti
+w
+o
+e
+n
+r
+a
+e
+l
+p
+(B
+er
+e
+f
+c
+o
+k
+r
+e
+m
+, 1
+e
+9
+d
+8
+o
+6
+n
+; L
+th
+e
+e
+e
+d (cid:11)(cid:7)(cid:7)(cid:7) et al., 1988) in conjunction with the EPR-II basis set (Barone,
+− cos(cid:8)
+2(D + 3J)τ
+(cid:9)FrS (cid:8)2
+Dτ
+(cid:9)(cid:12) (5) 1996) using the RICOSX approximation.
+3 π
+with the sine and cosine Fresnel functions
+RESULTS AND DISCUSSION
+z
+FrC(z) (cid:1) (cid:6) cos(cid:1)πu2(cid:4)2(cid:3)du and (6a) Published OOP-ESEEM Distances
+0
+z First, we analyzed the accuracy of previously published radical-
+FrS(z) (cid:1) (cid:6) sin(cid:1)πu2(cid:4)2(cid:3)du (6b)
+pair distances in proteins. For this purpose, previously
+0 published distances obtained by the OOP-ESEEM method
+and the amplitude factor H. All calculated spectra were generated were collected in Table 1 and compared with values from
+on the basis of the above-mentioned functions. Starting values other structure-determination methods. To date, OOP
+used for the simulations are noted in the respective Tables. Prior ESEEM has been applied to only a few protein systems.
+to the sine Fourier transformation to calculate the frequency Beginning in the mid-1990s, several reports were published
+spectrum, the signal was first multiplied by a Hamming window on light-induced radical pairs in photosystems (Zech et al.,
+and zero-filled to double its length. Error margins of all 1996; Bittl and Zech, 1997; Dzuba et al., 1997; Zech et al., 1997;
+parameters were obtained using the Cramér–Rao lower Santabarbara et al., 2006; Savitsky et al., 2013). Depending on
+bounds theorem (Fursman and Hore, 1999). the generated radical pair, distances of ≈25, ≈28 and ≈34 Å were
+obtained (Table 1). In this context, also oriented membranes
+Matlab Routine and Algorithm
+(Yoshii et al., 1999) and single crystals (Bittl et al., 1997) of
+All calculations were performed using Matlab R2019a (The photosystems have been investigated, which allowed the
+MathWorks, Natick, MA, United States). Unless otherwise determination of the orientation of the dipolar coupling axis
+noted, the used values were: T (cid:1) 0.35μs, H (cid:1) 1, probe pulse with respect to the crystallographic axes from the angular
+d
+step width = 2–10 ns. Simulated OOP ESEEM decays and dependence of the observed echo modulation.
+Frontiers in Molecular Biosciences | www.frontiersin.org 5 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 6 ---
+Al Said et al. Accuracy of OOP-ESEEM
+In recent years, radical pairs generated in a further family of
+light-active proteins were investigated by this method: the
+photolyases and cryptochromes. The question addressed in
+these studies was which redox-active amino acid acts as the
+final electron donor in the photoreduction of the light-excited
+flavin adenine dinucleotide (FAD) cofactor (Aubert et al., 2000)
+along a cascade of tryptophan (Trp) residues. Depending on the
+organism and variant, either the third (TrpC) or fourth Trp
+(TrpD) of a conserved chain of four Trp residues (TrpA, TrpB,
+TrpC, and TrpD) could be identified as electron donor (Table 1)
+(Nohr et al., 2017; Hochstoeger et al., 2020; Xu et al., 2021). All
+distances yet determined by this method were found to be in very
+good agreement with calculated or structure data. Hence, it is
+FIGURE 2 | Calculated distance dependences of |D(r)| (red curve) and
+evident that the method yields very good results in different
+J(r) (dashed blue curves) in a radical pair. The spin–spin couplings D and J
+systems. were calculated using Eqs. 3 and 7, respectively, using β = 1.4 Å–1, and the J0
+It should also be noted that the distance distributions extracted values indicated next to the respective curves.
+from OOP-ESEEM time traces are very narrow (see the
+experimental time traces in the publications listed in Table 1),
+which is quite different from typical distance distributions from J(r) (cid:1) J exp(cid:1)βr(cid:3) (7)
+0
+PELDOR studies of proteins (Schiemann et al., 2021). This result
+is unusual on first inspection because (nitroxide) spin labels, as An analogous relationship applies to the electronic
+commonly used in PELDOR spectroscopy, are rather small coupling V2, which is proportional to the exchange
+molecules with localized electron spin density, whereas the coupling and also plays a role in Marcus’ theory (Marcus
+radicals involved in the OOP-ESEEM publications are often and Sutin, 1985). For the electronic coupling, a value of β =
+larger and thus have a more extended spin density 1.4 Å
+–1
+was found for proteins (Moser et al., 1992). The
+distribution. The reason could be that all involved amino acids magnitude of J is per se unknown; however, it can be
+0
+and cofactor radicals are embedded inside a larger protein estimated using Eq. 7 for systems in which J has been
+(complex) and therefore have well-defined positions and determined experimentally (Table 1). For the FAD–TrpC
+orientations. In addition, their motional degrees of freedom radical pairs (J ≈ 0.05 MHz) in the photolyase/
+are rather restricted. On the other hand, site-directed spin cryptochrome protein family, J values of ≈1·109 MHz were
+0
+labeling of a protein is often restricted to its surface, where the determined, while for the FAD–TrpD radical pair (J ≈
+linking cysteine residues are more readily accessible. However, 0.03 MHz), J values are larger (≈1·1011 MHz) (Nohr et al.,
+0
+spin centers at protein surfaces have typically larger 2017; Hochstoeger et al., 2020; Xu et al., 2021). Although the
+conformational degrees of freedom, thus yielding broader radical pair composition is identical in both cases, the
+distance distributions. An additional reason for the observed different J values (Figure 2) indicate that other
+0
+narrow distance distributions of OOP-ESEEM is that in the parameters, in this case, differences in the protein
+protein systems studied so far, electron transfer after light environment, have an influence that should not be ignored.
+irradiation occurs stepwise via a chain of redox-active Furthermore, at larger distances, it becomes increasingly
+molecules, but the intermediate radical pairs formed in this difficult to determine J accurately: The small J value in case
+process have a lifetime too short to contribute to the OOP of the FAD–TrpD radical pair in cryptochromes contains a
+signal. Thus, only the terminal, longest-lived radical pair is larger uncertainty (Hochstoeger et al., 2020), which could
+detected and analyzed. alternatively explain the significant discrepancies between the
+abovementioned J values. As a comparison, a much larger J
+Distance Dependence of D and J value of ≈1·1013 M 0 Hz was estimated for the primary radica 0 l
+In a coupled radical pair, both exchange and dipolar pair of a photosynthetic reaction center (Efimova and Hore,
+interactions depend on the distance r (Figure 2): While the 2008), thus demonstrating that J can differ by several orders
+0
+dipolar interaction follows an r
+−3
+dependence, the exchange of magnitude, depending on the radical pair composition and
+interaction falls off more strongly with increasing distance r, the environment in which it is embedded.
+following an exponential relationship: J(r) ~ exp(βr). The D and J are of similar magnitude in a distance range of
+magnitude of D(r) can be easily estimated using Eq. 3. This ≈13–16 Å, Figure 2 (O’Dea et al., 2005). At distances larger
+is not so straightforward for J as the strength of the exchange than ≈17 Å, D becomes the dominant parameter that essentially
+coupling does not only depend on the distance but also on the reflects the modulation frequency of an OOP-ESEEM time trace.
+electronic structure of the radical pair partners and the In all yet published studies of weakly coupled radical pairs in
+medium in between. The latter is expressed by the factor β, proteins, distances between ≈17 Å (Nohr et al., 2017;
+which parametrizes the exponential decay of the exchange Hochstoeger et al., 2020; Xu et al., 2021) and ≈33 Å (Zech
+coupling with the distance for a given medium (De Kanter et al., 1999; Santabarbara et al., 2005) were obtained; D was
+et al., 1977): found to be at least one order of magnitude larger than J.
+Frontiers in Molecular Biosciences | www.frontiersin.org 6 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 7 ---
+Al Said et al. Accuracy of OOP-ESEEM
+Applicability of the Point-Dipole (both molecules and the corresponding electron spin density
+Approximation distributions are shown in Supplementary Figure S1). The
+molecules were rotated in 90°-steps with respect to each other
+From an OOP-ESEEM experiment, the effective distance r
+without altering the distance of their centers of gravity.
+between the two electron spins is, in general, determined via
+Depending on their respective orientation, the spin density
+the D value under the assumption of the validity of the point-
+distance varied by up to ±0.5 Å, that is, by up to 5%. This
+dipole approximation (Eq. 3). By comparing the calculated
+result shows that although there are only small differences
+distance with a distance extracted from a structure model or
+between the center of mass and the center of spin density in
+from an experimentally determined structure, it is then possible
+both molecules, the influence of the orientation on the accuracy of
+to assign the involved amino acids that take place in radical pair
+the determined distance should not be neglected. This is
+formation. It is thus important that the applied approximation
+especially relevant for molecules with very asymmetric spin
+describes the structure of the molecule as accurately as possible, in
+density distributions.
+particular, if two (or even more) amino acids with similar
+distances could potentially be a part of the coupled radical
+pair. Often, r is determined by measuring the distance
+The Influence of Dipolar and Exchange
+between the respective atom of the highest electron spin
+density (“point-dipole model”) in the two radicals. For Interaction on the OOP-ESEEM Time Trace
+instance, in an [FAD
+(cid:129)–···Trp (cid:129)+]
+radical pair, these are the To determine the accuracy of the OOP-ESEEM method on
+center between N(5) and C(4a) of the FAD (cid:129)– and the C(3) spin-correlated radical pairs in proteins, first, the parameter
+atom of the Trp
+(cid:129)+
+(Nohr et al., 2017); in a protein with two space of D and J was probed (in the subsequent Figures, time
+nitroxyl radicals, this would be the center of each of the two NO traces are always depicted on the left-hand side and the
+bonds. Alternatively, the center of gravity of the electron spin corresponding spectra obtained by SFT on the right).
+density distributions of the respective radicals can be determined Calculations with altered D parameters (−2, −6, −10, and
+either experimentally by hyperfine spectroscopy (Harmer, 2016) −14 MHz) and a fixed small J value of +0.01 MHz were
+or theoretically, for example, via calculations at the DFT level of performed (Supplementary Figure S2). As expected, an
+theory, and the distance between the two centers of gravities can increase in the absolute D value leads to an increase in the
+then be determined (“center-of-gravity model”). modulation frequency. The corresponding frequencies ] (cid:3) and
+These two models were compared with a refined “distributed ] ⊥ in the SFT spectra are clearly separated from each other and
+point–dipole model” (Bertrand et al., 1996), which takes the local can be easily read out. Two different relaxation times T , 0.35
+d
+dipoles of all pairs of atoms into account, and furthermore, with a and 0.1 μs, were used in each case. The corresponding SFT
+quantum mechanical solution (Riplinger et al., 2009). Aromatic spectra reveal that fast relaxation only causes difficulties if it is
+and non-aromatic nitroxides connected via different linker much shorter than one oscillation period of the time traces,
+groups served as model systems; the distances between such that is, if T < 2/ω . This is the case only for very small
+d eff
+biradical systems were determined via X-ray crystallography. absolute D values (|D| < 2MHz), which correspond to large
+Short distances and strongly delocalized electron spins lead to distances (>33 Å). Here the relaxation time is so short that the
+a failure of all point-dipole approximation models as J, and the first maximum is shifted relative to the signal with the more
+quantum mechanical exchange part of D then play major roles. J inefficient relaxation. A fit and, in particular, an SFT-based
+depends on the orientation of the two radical moieties with analysis would lead to an incorrect result, as demonstrated by
+respect to each other, as this strongly influences the overlap of the altered frequency ] (cid:3). Such an effect can be counteracted if a
+the respective SOMOs. While the point-dipole approximation realistic T value can be estimated (based on data from other
+d
+fails for unsaturated linkers between the two molecules even at methods) and used as a fitting parameter. The situation
+larger distances, such models become more accurate with improves considerably for larger absolute D values: As long
+increasing distances for saturated linkers; in particular, the as at least one full oscillation period can be analyzed, inflection
+center-of-gravity approximation leads to very good results. points appear at identical positions in the SFT spectra but are
+In principle, the distance between two coupled radicals also less pronounced at shorter relaxation times due to the smaller
+depends on their mutual orientation. Different orientations may number of detected modulations. This could, in principle, lead
+result in an incorrect assignment, especially if no structure to larger uncertainties in experimental data with low SNRs.
+information on a system is available. The reason is that OOP- The influence of the parameter J at a constant D value of
+ESEEM measures the distance between the centers of the −8 MHz is shown in Supplementary Figure S3. An increase of J
+respective electron spin density distributions, which may not from 0.01 to 0.1 MHz has hardly any effect on the time trace and
+coincide with the centers of gravities of the two radical-pair on the frequency spectra. J values that are in the order of the
+halves. How large this error could be can only be estimated, as the magnitude of |D| (in this case: J = 0.5 and 1 MHz), however, show
+uncertainty depends on the differences in the centers of gravity a clear decrease in the modulation frequency, and an increasingly
+with respect to their spin density distributions. As an example, a strong initial rise of the signal can be detected. The reason for the
+[Flavin
+(cid:129)–···Trp (cid:129)+]
+radical pair with a distance of 20 Å was studied. frequency decrease can be explained by the different signs of J and
+Both radicals are unsymmetric, and hence, the respective centers D, as the two interactions cancel each other out to some extent
+of gravity and centers of spin density distribution do not coincide (Efimova and Hore, 2008).
+Frontiers in Molecular Biosciences | www.frontiersin.org 7 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 8 ---
+Al Said et al. Accuracy of OOP-ESEEM
+Constraints in Experimental OOP-ESEEM 0, which per definition has zero intensity. This method can be
+Time Traces and Corresponding Spectra extended by using a polynomial extrapolation. 2) A least-squares
+A number of difficulties can complicate a straightforward spectral fitting of the truncated time trace can be performed. Here, Eq. 5,
+which contains the parameters H, T , D, and J, is fitted to the
+analysis of experimental data sets: 1) Observation of only a few d
+measured time trace, and the resulting optimal fitting function is
+modulations due to fast relaxation and/or a weak spin-echo signal
+then extrapolated back to the point at t = 0. 3) Some studies have
+can obscure a proper analysis. 2) ESEEM signals caused by
+used the “maximum entropy method” to reconstruct the missing
+nuclear spins are often superimposed, thus leading to
+time points (Bittl and Zech, 1997). 4) Precise predictions can be
+additional frequencies in the OOP time trace. Fortunately,
+obtained using an autoregressive (AR) model (Neumaier and
+they typically have a much smaller amplitude than the dipolar
+Schneider, 2001). Here, an m-dimensional AR model of order p is
+modulations. If such additional frequencies preclude an
+unambiguous analysis, increasing the magnetic field and applied, which is composed of vectors v] measured at discrete
+time points ] according to the following equation:
+correspondingly the microwave detection frequency can be a
+simple solution (Savitsky et al., 2013; Nohr et al., 2017) as p
+modulation depths of nuclear ESEEM frequencies depend on
+]
+v
+(cid:1) w + (cid:13)
+l(cid:1)1
+A
+l
+]
+]−l
++ ε
+]
+(8)
+the magnetic field (van Doorslaer, 2017). 3) The adjustment of the
+proper microwave-detection phase is often rather difficult. This is A 1 to A p are the coefficient matrices, ε v (cid:1) noise(C) are
+uncorrelated m-dimensional vectors with a covariance matrix C
+due to the fact that in the vast majority of cases, no dark-stable
+that has a mean of zero, and w is a vector of y-axis terms that is
+EPR signal can be detected due to the lack of any paramagnetic
+set to zero because the mean of the time signal should also be zero. The
+species prior to sample irradiation. Improper phasing, however,
+may lead to nuclear ESEEM frequencies “leaking” from the in- parameters (A, C, w) are assessed with a stepwise least-square fit to the
+(here one-dimensional) discrete time trace, with p as the optimization
+phase channel into the OOP channel. This effect has been
+criterion (Neumaier and Schneider, 2001). The reconstruction of the
+extensively studied previously (Fursman and Hore, 1999):
+data point S(k) within the experimental deadtime then takes place
+Nuclear frequencies become visible in the SFT spectrum.
+T SF h T es s e p c e a c n tr , u t m o , s t o h m us e m ex a t k e i n n t g , t “ h w e a r s e h ad o - u o t u ” t t o h f e ] o (cid:3) u d t i e f r fic r u eg lt i . o H ns ow of ev t e h r e , b (cid:14) a p l c (cid:1) k 1 w A a l ( rd l) s S(k vi − a l) th u e ntil la th st e p k o — int l at p t oi = nt 0 s is a r c e c a o c r h d e in d g . to S(k) (cid:1)
+Figure 3 displays time traces with identical D and J values (D =
+it has been shown that the superposition of nuclear frequencies
+−11 MHz and J = 2 MHz), including Gaussian noise (SNR = 50),
+does not lead to large errors in the determination of D (Fursman
+which were reconstructed by different reconstruction methods. The
+and Hore, 1999). 4) The typical deadtime of a pulsed EPR
+complete time trace (without an experimental deadtime) is shown
+spectrometer (Stoll, 2017) precludes detection of the early
+for comparison. Additional signals appear in the SFT spectra for the
+response to the application of the OOP ESEEM pulse
+sequence (typically ≈100 ns after the last microwave pulse). time traces without reconstruction and with linear reconstruction.
+Hence, one has to cope with a “truncated” time trace. In the Linear reconstruction can additionally lead to an underestimation of
+following sections, the influence of the missing data due to the the reconstructed oscillation amplitude and can cause additional
+modulations in the SFT spectrum due to the discontinuity of the
+spectrometer deadtime and the reconstruction of these on the
+time trace. On the other hand, the time trace reconstructed by the
+frequency spectrum obtained by SFT will be investigated.
+AR model and its respective SFT spectrum shows only minor
+differences compared to the deadtime-free spectrum.
+It is worth mentioning that in all scenarios described above,
+Reconstruction of the Early Time Points of the frequency ] ⊥ remains virtually unchanged. On the other
+the Time Trace hand, the frequency ] (cid:3) can only be read out accurately if the signal
+Truncation of the early part of the OOP time trace can have a was reconstructed by the AR method, so the latter is the only one
+certain impact on the resulting SFT spectrum. Fortunately, of the methods presented here that is suitable to determine the
+information on D and J is still present in the echo modulation inflection point and thus ] (cid:3), which is crucial for an exact
+of the later parts of the time trace, but the first part should be determination of both D and J parameters. A linear
+determined by reconstruction for a proper analysis. The influence reconstruction is only justified if the earliest minimum or
+of the spectrometer deadtime and the reconstruction of the early maximum can still be detected, that is, the signal falls or rises
+time trace on the SFT spectrum will be analyzed in more detail monotonically from the zero point to the first detected point. This
+below (Figure 3). For a reasonable reconstruction, it is helpful to is the case either if the deadtime is short enough or the oscillation
+have a rough estimate of the exchange interaction J, as larger period is long enough [see the reconstructed signals in (Dzuba
+values of this parameter define the initial rise of the time trace. If J et al., 1995)].
+is much smaller than |D|, the shape of the signal is analogous to For a best-possible reconstruction, it is beneficial to have a
+that depicted in Supplementary Figure S2. If J is expected to be in rough estimate of how the signal behaves within the experimental
+the range of |D|, initial shapes, as exemplified in the upper panel deadtime. If structure data on the radical pair of interest is
+of Supplementary Figure S3, can be assumed. The OOP-ESEEM available, D can be determined via the point-dipole
+time trace can now be reconstructed using a number of different approximation, and J at least indirectly either by using the
+methods: 1) A linear extrapolation can be used by plotting a distance dependence shown in Figure 2 or via electronic
+straight line from the first measured point to the time point at t = coupling within the framework of Marcus’ theory (Marcus and
+Frontiers in Molecular Biosciences | www.frontiersin.org 8 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 9 ---
+Al Said et al. Accuracy of OOP-ESEEM
+FIGURE 3 | Calculated OOP-ESEEM time traces (A), including noise (SNR = 50) with a spectrometer deadtime of 100 ns, and the corresponding SFT spectra (B).
+The missing first 100 ns were either not reconstructed (second panel), reconstructed with a linear model (third panel), or reconstructed with an AR model (lowest panel).
+The untruncated time trace is depicted in the upper panel. The vertical dashed lines in the SFT spectra depict the frequencies ] ⊥ and ] (cid:3). Differences between calculated
+and reconstructed values of ] (cid:3) are highlighted in green.
+Sutin, 1985). These estimates can then be used as initial values of are in the range of typical experimental SNRs. The first 100 ns of
+D and J. each time trace were first truncated to mimic the spectrometer
+deadtime and then reconstructed using the AR model. The
+chosen D and J value pairs provide a good estimation of
+Calculated Examples of OOP-ESEEM Time
+different distance ranges. At the short end, around 15 Å, J
+Traces and |D| assume comparable values. Results based on the
+To evaluate the accuracy of the distance determination at point-dipole approximation become invalid, thus making the
+various distances, a series of time traces using different distance determination less accurate. At the other end, at
+combinations of D and J values were calculated and distances larger than 45 Å, the dipolar coupling becomes very
+compared with the results of numerical simulations small so that modulations can only be detected in case of very
+(Figure 4 and Supplementary Figure S4). To the calculated long relaxation times, which was reflected by using two T
+d
+time traces, Gaussian noise of varying intensity was added to values, 0.35 and 0.10 µs. To account for the entire distance range
+ensure that these data sets resemble those typically obtained under investigation, distances of 16.5, 17.6, 19.2, 21.4, 34, and
+from experiments. With an SNR of 100, the time trace differs 43.7 Å, respectively, were used, which correspond to D values of
+only slightly from a noise-free data set. However, an SNR of 5 −17.5, −4.5, −1, −8, −2, and −1 MHz. The respective J values
+renders a time trace in which the modulation is only barely were estimated using Eq. 7 with J = 1·1011 MHz, resulting in
+0
+visible. Additional SNR values of 10 and 20 were chosen, which values of 10.0, 2.0, 0.2, 0.01, 0.00, and 0.00 MHz.
+Frontiers in Molecular Biosciences | www.frontiersin.org 9 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 10 ---
+Al Said et al. Accuracy of OOP-ESEEM
+FIGURE 4 | Calculated OOP-ESEEM time traces (A) and corresponding SFT spectra (B). Calculated time trace (D = −14.5 MHz and J = 2 MHz), including
+reconstruction with the AR model (circles) and various SNR levels, are depicted in blue, and results from numerical simulations are depicted in red. The vertical dashed
+lines in the SFT spectra are the correct frequencies ] (cid:3) and ] ⊥. Please note that calculated and simulated frequency ] (cid:3) are only identical in case of an SNR ≥20, and
+differences are highlighted in green. Other parameters are summarized in Table 3.
+TABLE 2 | Comparisons of calculated OOP-ESEEM time traces using different D and J value combinations with results from numerical simulations using Eq. 5. Starting
+values for least-squares fittings were T = 0.25 µs and H = 1. D, J, T , and H were allowed by the fitting routine to be varied in the intervals –20 MHz ≤ D ≤ 0, 0 ≤ J ≤
+d d
+10 MHz, 0 ≤ T ≤ 10 µs, and 0 ≤ H < ∞. The distance r was calculated using Eq. 3. Obtained distances with increased error margin (>10%) or incorrect values are highlighted
+d
+in orange.
+Distance and T SNR Simulation Starting Fit results/MHz Distance
+d
+parameters/MHz values/MHz
+D J D J D J r/Å
+r = 34.0 Å Td = 0.35 μs 100 –2.0 0.00 –3.5 0.1 –1.997(4) <0.01 33.94(6)
+20 –2.00(2) <0.01 33.9(3)
+10 –2.01(3) <0.01 33.9(5)
+5 –1.96(6) 0.00(2) 34(1)
+r = 34.0 Å Td = 0.10 μs 100 –2.0 0.00 –3.5 0.1 –1.96(2) <0.01 34.2(4)
+20 –1.96(5) <0.01 34(1)
+10 –2.10(9) <0.01 33(1)
+5 –1.3(7) <0.01 39(22)
+r = 42.7 Å Td = 0.35 μs 100 –1.0 0.00 –2.5 0.1 –1.001(1) <0.01 42.72(6)
+20 –1.001(7) <0.01 42.7(3)
+10 –0.99(2) <0.01 42.8(6)
+5 –1.02(3) <0.01 42(12)
+r = 42.7 Å Td = 0.10 μs 100 –1.0 0.00 –2.5 0.1 –0.97(2) <0.01 43.1(8)
+20 –0.95(9) <0.01 44(4)
+10 –1.0(2) <0.01 42(6)
+5 –0.2(13) <0.01 61(229)
+After deadtime reconstruction, the time traces were fitted by values of D and J were obtained by the fit, and the respective SFT
+numerical simulation to obtain optimized values for D, J, and T spectrum was calculated from the “experimental” data and from
+d
+using starting values that were ±15% off the correct values. The the optimal fit results. The calculated “correct” frequencies ] ⊥ and
+Frontiers in Molecular Biosciences | www.frontiersin.org 10 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 11 ---
+Al Said et al. Accuracy of OOP-ESEEM
+TABLE 3 | Comparisons of calculated OOP-ESEEM time traces using different D and J value combinations with results from numerical simulations using Eq. 5. Starting
+values for least-squares fittings were Td = 0.25 µs and H = 1. The starting values for D and J were 15% off the theoretical values. D, J, Td, and H were allowed by the fitting
+routine to be varied in the intervals –20 MHz ≤ D ≤ 0, 0 ≤ J ≤ 15 MHz, 0 ≤ Td ≤ 10 µs, and 0 ≤ H < ∞. The distance r was calculated using Eq. 3. Obtained distances with
+increased error margin (>10%) or incorrect values are highlighted in orange.
+Distance SNR Simulation Starting Fit results/MHz Distance from PDA
+parameters/MHz values/MHz
+D J D J D J r/Å
+r = 21.4 Å 20 –8.0 0.01 –8.5 0.0 –8.00(5) 0.00(1) 21.41(5)
+10 –8.2(2) 0.00(4) 21.2(3)
+5 –8.2(6) 0.04(7) 21.2(5)
+r = 19.2 Å 20 –11.0 0.20 –8.5 0.1 –10.5(1) 0.00(3) 19.5(2)
+10 –10.5(1) 0.00(4) 19.5(2)
+5 –10.2(3) 0.00(7) 19.6(4)
+r = 17.6 Å 100 –14.5 2.00 –12.5 1.0 –14.41(6) 1.96(2) 17.56(7)
+20 –14.5(8) 2.00(2) 17.53(9)
+10 –11.6(1) 1.04(4) 18.8(2)
+5 –11.2(1) 0.89(5) 19.1(3)
+r = 16.5 Å 100 –17.5 10.00 –15.5 8.0 –17.4(1) 9.98(4) 16.4(1)
+20 –17.8(1) 10.11(5) 16.4(1)
+10 –17.2(2) 9.89(7) 16.6(2)
+5 –13.9(2) 8.83(7) 17.3(3)
+] (cid:3) are labeled by vertical dashed lines in the respective Figures in capable of reconstructing even small-amplitude oscillations with
+order to judge the accuracy of the SFT spectra of the reconstituted high accuracy. Therefore, good fit results were obtained for time
+and fitted time-domain signals. The distance between the two traces with smaller J values (≤0.2 MHz) as long as the SNR ≥5. The
+radicals was then determined using the fitted D values and Eq. 3. fitting procedure of time traces with larger J values renders
+The corresponding results are summarized in Table 2 (for longer increasingly inaccurate distance data for low SNRs, as seen
+distances) and Table 3 (for shorter distances); exemplary time from the data of the combinations SNR ≤10 and J = 2.0 MHz
+traces and corresponding SFT spectra are shown in Figure 4 for and SNR ≤5 and J = 10.0 MHz (Table 3 and Figure 4). 3) The
+the combination D = −14.5 MHz and J = 2 MHz and in threshold SNR below which the fit yields inaccurate or even wrong
+Supplementary Figure S4 (for the combination D = distance data varies for each individual experimental data set and
+−2.0 MHz and J = 0 MHz). depends, for instance, on the choice of the starting values and the
+Several conclusions can be drawn from such numerical algorithm used for data reconstruction. However, it becomes
+simulations (Tables 2, 3): 1) At the rather long distance of evident that the accuracy of the distance determination
+34 Å, correct distances with small error margins are obtained as decreases as soon as J is of the order of |D|. Furthermore,
+long as SNR ≥5 and the relaxation time is sufficiently long reconstruction at poor SNRs can lead to additional oscillation
+(≥0.35 μs) (see Table 2). This is not surprising as J was assumed artifacts that actually belong to the noise. This trend is confirmed in
+zero. Hence, the modulation of the time trace is governed solely the frequency spectra (Figure 4B). While at SNRs ≥20, both
+by D, and consequently, the number of fitted parameters is frequencies ] (cid:3) and ] ⊥ can be determined correctly, incorrect
+reduced by one. In the SFT spectrum, one frequency is sufficient for values of ] (cid:3) are extracted at lower SNRs. This finding is not
+an unambiguous assignment as ] ⊥ is now ± (2/3) |D| (see above). unexpected for Pake patterns as the amplitude of the SFT at ] ⊥
+Consequently, even at lower SNRs, the distance can be determined is much larger than that at ] (cid:3) (Weil et al., 1994), which allows an
+precisely from ] ⊥. Making relaxation more efficient (0.1 μs) affects unambiguous readout of only ] ⊥ even at low SNRs.
+the accuracy of the simulation results. In this case, the obtained To examine artifacts of fitting in more detail, OOP-ESEEM
+distance is trustworthy only at an SNR ≥10. Increasing the distance time traces (SNR = 20) with D = −14.5 MHz, J = 2 MHz, and
+to 42.7 Å in combination with a relaxation time of 0.1 μs leads to truncated at 100 ns were calculated and then reconstructed using
+values being trustworthy only at an SNR ≥20 (Supplementary the AR model (see Supplementary Table S4 and Supplementary
+Figure S4). This clearly shows that the relaxation time is the Figure S5). Three different sets of starting values of D and J were
+limiting factor for the accuracy of the distance determination at used. Depending on those, ambiguous values for ] (cid:3) were obtained
+longer distances. 2) For shorter distances (Table 3), the situation in the SFT spectra that resulted in incorrect D and J values. This
+becomes more complicated as J typically assumes non-zero values, result raises the question of whether and if a quantitative
+which can be of the same order as |D|. The time traces in Figure 4 distinction can be made between good and bad fit results. The
+(D = −14.5 MHz and J = 2 MHz) show that the reconstruction at analysis of the residual sum of squares (RSS) shows that in this
+t = 0 does not always approach exactly zero, but the AR model is example, the lowest value indeed corresponds to the best fit
+Frontiers in Molecular Biosciences | www.frontiersin.org 11 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 12 ---
+Al Said et al. Accuracy of OOP-ESEEM
+(Supplementary Table S4). Unfortunately, this cannot be further information from independent methods. This
+generalized as such validation parameters are strongly significantly increases the uncertainty of determining distances.
+influenced by the SNR of the measurement. Nevertheless, In principle, the method can provide excellent accuracy even in
+there are some ways to avoid ambiguous fit results: 1) The this distance range, provided good start values for the numerical
+SNR of the experimental time trace can be increased as much simulations are available. This holds for most proteins as either
+as economically possible. However, this strongly depends on the crystal structure data or at least a structure model is available.
+used sample and its parameters, such as photostability and Moreover, only a few amino acids are intrinsic candidates for the
+quantum yield of electron transfer. 2) The number of formation of spin-correlated radical pairs, and the number of
+parameters to be fitted can be reduced manually by reading amino acids potentially involved can usually be narrowed down,
+out ] ⊥ from the SFT spectrum; a procedure that is reliable leaving only a few possibilities. Thus, realistic starting values of D
+even at lower SNRs (Figure 4, SNR = 5), and subsequently (Eq. 3) and J, either from Figure 2 or Eq. 7, can be estimated.
+numerically fitting the SFT spectrum using this ] ⊥ value. 3) A Figure 4 clearly demonstrates that, with good starting values,
+global fitting algorithm can be used for the simultaneous analysis trustworthy distance data can be obtained even at low SNRs.
+of the OOP-ESEEM time trace and its SFT spectrum. Hence, the Because of the title of the special “research topic,” we have
+limiting factor for the accuracy of distance determination at limited this study to distance determinations in proteins; however,
+shorter distances is typically the determination of ] (cid:3). it should be made clear that the OOP-ESEEM method, as well as its
+accuracy and limitations described here, can be applied just as well
+to all other types of molecular systems as long as they form spin-
+SUMMARY AND OUTLOOK correlated radical pairs. However, due to the typically less defined
+structure of such systems, broader distance distributions may be
+In this study, we evaluated the accuracy and applicability of the expected (Popov et al., 2017; Beletskaya et al., 2020). Accordingly,
+OOP-ESEEM method in terms of published distance the method has great potential, which has not yet been fully
+determinations and investigated the influence of different exploited due to the few examples investigated so far. We hope
+parameters on the analysis of experimental data in more that this will improve in the near future, especially if new labeling
+detail. By numerical fitting of calculated model time traces, methods become available that can be applied to both the protein
+limitations of the method were derived as a function of the and to binding partners such as DNA (Olshansky et al., 2019). It
+SNR and the distance of a spin-correlated radical pair. Some of may be even possible to generate new donor-acceptor molecules
+the difficulties encountered in experiments, such as (Reece et al., 2007; Weng et al., 2020) or even de novo designed
+contributions from nuclear ESEEM, incorrect phase settings, proteins (Keller et al., 2017; Liu et al., 2018; Zollitsch et al., 2018)
+or partial orientation selection due to the limited bandwidth of that can be used to perform light-induced electron transfer.
+applied microwave pulses, which can lead to distortions of the Finally, it has been suggested recently that the effect of chiral-
+time traces, were not included in the calculated time traces. induced spin selectivity, which, among other things, enhances the
+Therefore, we attempted to take these effects into account by anisotropy of the reaction yield of magnetic field effects, may be
+considering strongly different SNRs. By evaluating the detected in the in-phase channel of an OOP-ESEEM signal if
+distances and their respective uncertainties obtained by applied on oriented samples (Luo and Hore, 2021). If this could
+spectral simulation, information on the accuracy of the be confirmed experimentally, another exciting area of application
+method at different distance regions was obtained. could be added to the method.
+At large distances, above ≈22 Å, the analysis of OOP-ESEEM
+time traces is rather straightforward, as in such cases, J
+approaches 0, and the modulation of the time trace is solely AUTHOR CONTRIBUTIONS
+governed by D. Therefore, only the frequency ] ⊥ needs to be
+determined, which can be achieved even at limited SNRs and after ES and TA designed the study. TA performed all calculations. ES,
+non-perfect deadtime reconstruction of the OOP-ESEEM time SW, and TA wrote the manuscript.
+trace (Table 2 and Supplementary Figure S4). The only
+constricting parameter is the relaxation time, which should be
+long enough so that at least one modulation can be detected and ACKNOWLEDGMENTS
+analyzed. At shorter radical pair distances, around 20 Å, the
+method still yields reliable distance data even with lower SW and ES thank the DFG (235777276/GRK1976) for financial
+SNRs, and distances can be determined with an uncertainty of support. ES would like to thank Hans-Fischer Gesellschaft for
+less than 0.5 Å. The reason is that J is still orders of magnitude continuous support.
+smaller than |D|, and therefore the spectrum is still dominated by
+the D parameter. In addition, the relaxation time is, in most cases,
+long enough with respect to the modulation period to not limit SUPPLEMENTARY MATERIAL
+the analysis. However, the accuracy of the method decreases
+when J and |D] are similar in size, which could be, depending on The Supplementary Material for this article can be found online at:
+the value of J , the case for distances of less than ≈18 Å. Here, https://www.frontiersin.org/articles/10.3389/fmolb.2022.890826/
+0
+unambiguous values for D and J cannot be determined without full#supplementary-material
+Frontiers in Molecular Biosciences | www.frontiersin.org 12 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 13 ---
+Al Said et al. Accuracy of OOP-ESEEM
+REFERENCES Quinone-Reconstituted Plant Photosystem I Reaction Centers. Chem. Phys.
+Lett. 264, 238–244. doi:10.1016/s0009-2614(96)01302-4
+Dzuba, S. A. (1997). Spin-correlated Radical Pairs in Photosynthetic Reaction
+Adrian, F. J. (1972). Singlet-Triplet Splitting in Diffusing Radical Pairs and the Centers: Role of Anisotropic Hyperfine Interaction as Revealed by
+Magnitude of Chemically Induced Electron Spin Polarization. J. Chem. Phys. 57 Computational Modeling. Chem. Phys. Lett. 278, 333–340. doi:10.1016/
+(12), 5107–5113. doi:10.1063/1.1678196 s0009-2614(97)01044-0
+Aubert, C., Vos, M. H., Mathis, P., Eker, A. P. M., and Brettel, K. (2000). Edwards, T. H., and Stoll, S. (2016). A Bayesian Approach to Quantifying
+Intraprotein Radical Transfer during Photoactivation of DNA Photolyase. Uncertainty from Experimental Noise in DEER Spectroscopy. J. Magnetic
+Nature 405, 586–590. doi:10.1038/35014644 Reson. 270, 87–97. doi:10.1016/j.jmr.2016.06.021
+Barone, V. (1996). “Structure, Magnetic Properties and Reactivities of Open-Shell Edwards, T. H., and Stoll, S. (2018). Optimal Tikhonov Regularization for DEER
+Species from Density Functional and Self-Consistent Hybrid Methods,” in Spectroscopy. J. Magnetic Reson. 288, 58–68. doi:10.1016/j.jmr.2018.01.021
+Recent Advances in Density-Functional Methods. Editor D. P. Chong Efimova, O., and Hore, P. J. (2008). Role of Exchange and Dipolar Interactions in
+(Singapore: World Scientific Publishing), 287–334. the Radical Pair Model of the Avian Magnetic Compass. Biophysical J. 94,
+Becke, A. D. (1986). Density Functional Calculations of Molecular Bond Energies. 1565–1574. doi:10.1529/biophysj.107.119362
+J. Chem. Phys. 84, 4524–4529. doi:10.1063/1.450025 Fernandez-Leiro, R., and Scheres, S. H. W. (2016). Unravelling Biological
+Becke, A. D. (1988). Density-functional Exchange-Energy Approximation with Macromolecules with Cryo-Electron Microscopy. Nature 537, 339–346.
+Correct Asymptotic Behavior. Phys. Rev. A 38, 3098–3100. doi:10.1103/ doi:10.1038/nature19948
+physreva.38.3098 Fursman, C. E., and Hore, P. J. (1999). Distance Determination in Spin-Correlated
+Beletskaya, E. A., Lukina, E. A., Uvarov, M. N., Popov, A. A., and Kulik, L. V. Radical Pairs in Photosynthetic Reaction Centres by Electron Spin Echo
+(2020). Geminate Recombination in Organic Photovoltaic Blend PCDTBT/ Envelope Modulation. Chem. Phys. Lett. 303, 593–600. doi:10.1016/s0009-
+PC71BM Studied by Out-of-phase Electron Spin Echo Spectroscopy. J. Chem. 2614(99)00185-2
+Phys. 152 (4), 044706. doi:10.1063/1.5131855 Hamada, M., Iwata, T., Fuki, M., Kandori, H., Weber, S., and Kobori, Y. (2021).
+Bertrand, P., Camensuli, P., More, C., and Guigliarelli, B. (1996). A Local Spin Orientations and Water Dynamics of Photoinduced Secondary Charge-
+Model to Describe the Magnetic Interactions in Biological Molecules Separated States for Magnetoreception by Cryptochrome. Commun. Chem.
+Containing [4Fe−4S]+ Clusters. Application to Ni−Fe Hydrogenases. J. Am. 4, 141. doi:10.1038/s42004-021-00573-4
+Chem. Soc. 118 (6), 1426–1434. doi:10.1021/ja951981w Hanwell, M. D., Curtis, D. E., Lonie, D. C., Vandermeersch, T., Zurek, E., and
+Biskup, T., Schleicher, E., Okafuji, A., Link, G., Hitomi, K., Getzoff, E. D., et al. Hutchison, G. R. (2012). Avogadro: an Advanced Semantic Chemical Editor,
+(2009). Direct Observation of a Photoinduced Radical Pair in a Cryptochrome Visualization, and Analysis Platform. J. Cheminform 4, 17. doi:10.1186/1758-
+Blue-Light Photoreceptor. Angew. Chem. Int. Ed. 48, 404–407. doi:10.1002/ 2946-4-17
+anie.200803102 Hara, H., Dzuba, S. A., Kawamori, A., Akabori, K., Tomo, T., Satoh, K., et al. (1997).
+Bittl, R., Zech, S. G., Fromme, P., Witt, H. T., and Lubitz, W. (1997). Pulsed EPR The Distance between P680 and QA in Photosystem II Determined by ESEEM
+Structure Analysis of Photosystem I Single Crystals: Localization of the Spectroscopy. Biochimica Biophysica Acta (BBA) - Bioenergetics 1322, 77–85.
+Phylloquinone Acceptor. Biochemistry 36, 12001–12004. doi:10.1021/ doi:10.1016/s0005-2728(97)00081-9
+bi971645n Harmer, J. R. (2016). Hyperfine Spectroscopy - ENDOR. eMagRes 5, 1493–1514.
+Bittl, R., and Zech, S. G. (2001). Pulsed EPR Spectroscopy on Short-Lived doi:10.1002/9780470034590.emrstm1515
+Intermediates in Photosystem I. Biochimica Biophysica Acta (BBA) - Harvey, S. M., and Wasielewski, M. R. (2021). Photogenerated Spin-Correlated
+Bioenergetics 1507, 194–211. doi:10.1016/s0005-2728(01)00210-9 Radical Pairs: from Photosynthetic Energy Transduction to Quantum
+Bittl, R., and Zech, S. G. (1997). Pulsed EPR Study of Spin-Coupled Radical Pairs in Information Science. J. Am. Chem. Soc. 143, 15508–15529. doi:10.1021/jacs.
+Photosynthetic Reaction Centers: Measurement of the Distance between and in 1c07706
+Photosystem I and between and in Bacterial Reaction Centers. J. Phys. Chem. B Hasegawa, M., Nagashima, H., Minobe, R., Tachikawa, T., Mino, H., and Kobori, Y.
+101, 1429–1436. doi:10.1021/jp962256q (2017). Regulated Electron Tunneling of Photoinduced Primary Charge-
+Borovykh, I. V., Kulik, L. V., Dzuba, S. A., and Hoff, A. J. (2002). Out-of-Phase Separated State in the Photosystem II Reaction Center. J. Phys. Chem. Lett.
+Stimulated Electron Spin−Echo Appearing in the Evolution of Spin-Correlated 8, 1179–1184. doi:10.1021/acs.jpclett.7b00044
+Photosynthetic Triplet-Radical Pairs. J. Phys. Chem. B 106, 12066–12071. Hintze, C., Bücker, D., Domingo Köhler, S., Jeschke, G., and Drescher, M. (2016).
+doi:10.1021/jp0213912 Laser-induced Magnetic Dipole Spectroscopy. J. Phys. Chem. Lett. 7,
+Carmieli, R., Mi, Q., Ricks, A. B., Giacobbe, E. M., Mickley, S. M., and Wasielewski, 2204–2209. doi:10.1021/acs.jpclett.6b00765
+M. R. (2009). Direct Measurement of Photoinduced Charge Separation Hochstoeger, T., Al Said, T., Maestre, D., Walter, F., Vilceanu, A., Pedron, M., et al.
+Distances in Donor−Acceptor Systems for Artificial Photosynthesis Using (2020). The Biophysical, Molecular, and Anatomical Landscape of Pigeon
+OOP-ESEEM. J. Am. Chem. Soc. 131, 8372–8373. doi:10.1021/ja902864h CRY4: A Candidate Light-Based Quantal Magnetosensor. Sci. Adv. 6,
+Closs, G. L., Forbes, M. D. E., and Norris, J. R. (1987). Spin-polarized Electron eabb9110. doi:10.1126/sciadv.abb9110
+Paramagnetic Resonance Spectra of Radical Pairs in Micelles: Observation of Hoff, A. J., Gast, P., Dzuba, S. A., Timmel, C. R., Fursman, C. E., and Hore, P. J.
+Electron Spin-Spin Interactions. J. Phys. Chem. 91, 3592–3599. doi:10.1021/ (1998). The Nuts and Bolts of Distance Determination and Zero- and Double-
+j100297a026 Quantum Coherence in Photoinduced Radical Pairs. Spectrochimica Acta Part
+Dal Farra, M. G., Richert, S., Martin, C., Larminie, C., Gobbo, M., Bergantino, E., A Mol. Biomol. Spectrosc. 54, 2283–2293. doi:10.1016/s1386-1425(98)00211-x
+et al. (2019). Light-induced Pulsed EPR Dipolar Spectroscopy on a Hore, P. J., Hunter, D. A., McKie, C. D., and Hoff, A. J. (1987). Electron
+Paradigmatic Hemeprotein. ChemPhysChem 20, 931–935. doi:10.1002/cphc. Paramagnetic Resonance of Spin-Correlated Radical Pairs in Photosynthetic
+201900139 Reactions. Chem. Phys. Lett. 137, 495–500. doi:10.1016/0009-2614(87)80617-6
+De Kanter, F. J. J., Kaptein, R., and Van Santen, R. A. (1977). Magnetic Field Hou, Y., Zhang, X., Chen, K., Liu, D., Wang, Z., Liu, Q., et al. (2019). Charge
+Dependent Biradical CIDNP as a Tool for the Study of Conformations of Separation, Charge Recombination, Long-Lived Charge Transfer State
+Polymethylene Chains. Chem. Phys. Lett. 45, 575–579. doi:10.1016/0009- Formation and Intersystem Crossing in Organic Electron Donor/acceptor
+2614(77)80093-6 Dyads. J. Mat. Chem. C 7, 12048–12074. doi:10.1039/c9tc04285g
+Dzuba, S. A., Gast, P., and Hoff, A. J. (1995). ESEEM Study of Spin-Spin Hustedt, E. J., Marinelli, F., Stein, R. A., Faraldo-Gómez, J. D., and McHaourab, H.
+Interactions in Spin-Polarised P+QA− Pairs in the Photosynthetic Purple S. (2018). Confidence Analysis of DEER Data and its Structural Interpretation
+Bacterium Rhodobacter Sphaeroides R26. Chem. Phys. Lett. 236, 595–602. with Ensemble-Biased Metadynamics. Biophysical J. 115, 1200–1216. doi:10.
+doi:10.1016/0009-2614(95)00259-7 1016/j.bpj.2018.08.008
+Dzuba, S. A., Hara, H., Kawamori, A., Iwaki, M., Itoh, S., and Tsvetkov, Y. D. Jeschke, G. (2012). DEER Distance Measurements on Proteins. Annu. Rev. Phys.
+(1997). Electron Spin Echo of Spin-Polarised Radical Pairs in Intact and Chem. 63, 419–446. doi:10.1146/annurev-physchem-032511-143716
+Frontiers in Molecular Biosciences | www.frontiersin.org 13 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 14 ---
+Al Said et al. Accuracy of OOP-ESEEM
+Kay, C. W. M., Schleicher, E., Kuppig, A., Hofner, H., Rüdiger, W., Schleicher, M., Reece, S. Y., Seyedsayamdost, M. R., Stubbe, J., and Nocera, D. G. (2007). Direct
+et al. (2003). Blue Light Perception in Plants. J. Biol. Chem. 278, 10973–10982. Observation of a Transient Tyrosine Radical Competent for Initiating Turnover
+doi:10.1074/jbc.m205509200 in a Photochemical Ribonucleotide Reductase. J. Am. Chem. Soc. 129,
+Keller, S. G., Pannwitz, A., Mallin, H., Wenger, O. S., and Ward, T. R. (2017). 13828–13830. doi:10.1021/ja074452o
+Streptavidin as a Scaffold for Light-Induced Long-Lived Charge Separation. Reginsson, G. W., and Schiemann, O. (2011). Pulsed Electron-Electron Double
+Chem. Eur. J. 23, 18019–18024. doi:10.1002/chem.201703885 Resonance: beyond Nanometre Distance Measurements on
+Klare, J. P. (2013). Site-directed Spin Labeling EPR Spectroscopy in Protein Biomacromolecules. Biochem. J. 434, 353–363. doi:10.1042/bj20101871
+Research. Biol. Chem. 394, 1281–1300. doi:10.1515/hsz-2013-0155 Richert, S., Tait, C. E., and Timmel, C. R. (2017). Delocalisation of Photoexcited
+Krzystyniak, M. (2003). Anomalous Pulse Angle Dependence of the Single and Triplet States Probed by Transient EPR and Hyperfine Spectroscopy.
+Double Quantum Echoes in a Photoinduced Spin-Correlated Coupled Radical J. Magnetic Reson. 280, 103–116. doi:10.1016/j.jmr.2017.01.005
+Pair. Appl. Magn. Reson. 24, 447–465. doi:10.1007/bf03166948 Riplinger, C., Kao, J. P. Y., Rosen, G. M., Kathirvelu, V., Eaton, G. R., Eaton, S. S.,
+Kulik, L. V., Borovykh, I. V., Gast, P., and Dzuba, S. A. (2003). Selective Excitation et al. (2009). Interaction of Radical Pairs Through-Bond and Through-Space:
+in Pulsed EPR of a Spin-Correlated Triplet-Radical Pair. J. Magnetic Reson. 162, Scope and Limitations of the Point−Dipole Approximation in Electron
+423–428. doi:10.1016/s1090-7807(03)00052-1 Paramagnetic Resonance Spectroscopy. J. Am. Chem. Soc. 131,
+Kulik, L. V., Dzuba, S. A., Grigoryev, I. A., and Tsvetkov, Y. D. (2001). Electron 10092–10106. doi:10.1021/ja901150j
+Dipole-Dipole Interaction in ESEEM of Nitroxide Biradicals. Chem. Phys. Lett. Salikhov, K. M., Kandrashkin, Y. E., and Salikhov, A. K. (1992). Peculiarities of Free
+343, 315–324. doi:10.1016/s0009-2614(01)00721-7 Induction and Primary Spin Echo Signals for Spin-Correlated Radical Pairs.
+Lee, C., Yang, W., and Parr, R. G. (1988). Development of the Colle-Salvetti Appl. Magn. Reson. 3, 199–216. doi:10.1007/bf03166790
+Correlation-Energy Formula into a Functional of the Electron Density. Phys. Santabarbara, S., Kuprov, I., Fairclough, W. V., Purton, S., Hore, P. J., Heathcote, P.,
+Rev. B 37, 785–789. doi:10.1103/physrevb.37.785 et al. (2005). Bidirectional Electron Transfer in Photosystem I: Determination
+Liu, X., Kang, F., Hu, C., Wang, L., Xu, Z., Zheng, D., et al. (2018). A Genetically of Two Distances between P700+ and A1- in Spin-Correlated Radical Pairs.
+Encoded Photosensitizer Protein Facilitates the Rational Design of a Miniature Biochemistry 44, 2119–2128. doi:10.1021/bi048445d
+Photocatalytic CO2-reducing Enzyme. Nat. Chem. 10, 1201–1206. doi:10.1038/ Santabarbara, S., Kuprov, I., Hore, P. J., Casal, A., Heathcote, P., and Evans, M. C.
+s41557-018-0150-4 W. (2006). Analysis of the Spin-Polarized Electron Spin Echo of the [P700+A1-
+Loura, L. M., and Prieto, M. (2011). FRET in Membrane Biophysics: an Overview. ] Radical Pair of Photosystem I Indicates that Both Reaction Center Subunits
+Front. Physiol. 2, 82. doi:10.3389/fphys.2011.00082 Are Competent in Electron Transfer in Cyanobacteria, Green Algae, and
+Lukina, E. A., Popov, A. A., Uvarov, M. N., and Kulik, L. V. (2015). Out-of-phase Higher Plants. Biochemistry 45, 7389–7403. doi:10.1021/bi060330h
+Electron Spin Echo Studies of Light-Induced Charge-Transfer States in P3HT/ Savitsky, A., Dubinskii, A. A., Flores, M., Lubitz, W., and Möbius, K. (2007).
+PCBM Composite. J. Phys. Chem. B 119, 13543–13548. doi:10.1021/acs.jpcb. Orientation-resolving Pulsed Electron Dipolar High-Field EPR Spectroscopy
+5b02142 on Disordered Solids: I. Structure of Spin-Correlated Radical Pairs in Bacterial
+Luo, J., and Hore, P. J. (2021). Chiral-induced Spin Selectivity in the Formation and Photosynthetic Reaction Centers. J. Phys. Chem. B 111, 6245–6262. doi:10.
+Recombination of Radical Pairs: Cryptochrome Magnetoreception and EPR 1021/jp070016c
+Detection. New J. Phys. 23, 043032. doi:10.1088/1367-2630/abed0b Savitsky, A., Niklas, J., Golbeck, J. H., Möbius, K., and Lubitz, W. (2013).
+Marcus, R. A., and Sutin, N. (1985). Electron Transfers in Chemistry and Biology. Orientation Resolving Dipolar High-Field EPR Spectroscopy on Disordered
+Biochimica Biophysica Acta (BBA) - Rev. Bioenergetics 811, 265–322. doi:10. Solids: II. Structure of Spin-Correlated Radical Pairs in Photosystem I. J. Phys.
+1016/0304-4173(85)90014-x Chem. B 117, 11184–11199. doi:10.1021/jp401573z
+Moser, C. C., Keske, J. M., Warncke, K., Farid, R. S., and Dutton, P. L. (1992). Schiemann, O., Heubach, C. A., Abdullin, D., Ackermann, K., Azarkh, M.,
+Nature of Biological Electron Transfer. Nature 355, 796–802. doi:10.1038/ Bagryanskaya, E. G., et al. (2021). Benchmark Test and Guidelines for
+355796a0 DEER/PELDOR Experiments on Nitroxide-Labeled Biomolecules. J. Am.
+Neese, F. (2012). The ORCA Program System. WIREs Comput. Mol. Sci. 2, 73–78. Chem. Soc. 143, 17875–17890. doi:10.1021/jacs.1c07371
+doi:10.1002/wcms.81 Schiemann, O., and Prisner, T. F. (2007). Long-range Distance Determinations in
+Neumaier, A., and Schneider, T. (2001). Estimation of Parameters and Eigenmodes Biomacromolecules by EPR Spectroscopy. Quart. Rev. Biophys. 40, 1–53. doi:10.
+of Multivariate Autoregressive Models. ACM Trans. Math. Softw. 27, 27–57. 1017/s003358350700460x
+doi:10.1145/382043.382304 Schleicher, E., and Weber, S. (2012). Radicals in Flavoproteins. Top. Curr. Chem.
+Niklas, J., and Poluektov, O. G. (2017). Charge Transfer Processes in OPV 321, 41–65. doi:10.1007/128_2011_301
+Materials as Revealed by EPR Spectroscopy. Adv. Energy Mater., 7. Art. No. Schnegg, A. (2017). Very-high-frequency EPR. eMagRes 6, 115–132. doi:10.1002/
+1602226. doi:10.1002/aenm.201602226 9780470034590.emrstm1526
+Nohr, D., Paulus, B., Rodriguez, R., Okafuji, A., Bittl, R., Schleicher, E., et al. (2017). Sorigué, D., Légeret, B., Cuiné, S., Blangy, S., Moulin, S., Billon, E., et al. (2017). An
+Determination of Radical-Radical Distances in Light-Active Proteins and Their Algal Photoenzyme Converts Fatty Acids to Hydrocarbons. Science 357,
+Implication for Biological Magnetoreception. Angew. Chem. Int. Ed. 56, 903–907.
+8550–8554. doi:10.1002/anie.201700389 Stehlik, D., Bock, C. H., and Petersen, J. (1989). Anisotropic Electron Spin
+O’Dea, A. R., Curtis, A. F., Green, N. J. B., Timmel, C. R., and Hore, P. J. (2005). Polarization of Correlated Spin Pairs in Photosynthetic Reaction Centers.
+Influence of Dipolar Interactions on Radical Pair Recombination Reactions J. Phys. Chem. 93, 1612–1619. doi:10.1021/j100341a084
+Subject to Weak Magnetic Fields. J. Phys. Chem. A 109, 869–873. doi:10.1021/ Stoll, S. (2017). Pulse EPR. eMagRes 6, 23–38. doi:10.1002/9780470034590.
+jp0456943 emrstm1510
+Olshansky, J. H., Krzyaniak, M. D., Young, R. M., and Wasielewski, M. R. (2019). Tan, J., Thurnauer, M. C., and Norris, J. R. (1994). Electron Spin Echo Envelope
+Photogenerated Spin-Entangled Qubit (Radical) Pairs in DNA Hairpins: Modulation Due to Exchange and Dipolar Interactions in a Spin-Correlated
+Observation of Spin Delocalization and Coherence. J. Am. Chem. Soc. 141, Radical Pair. Chem. Phys. Lett. 219, 283–290. doi:10.1016/0009-2614(94)
+2152–2160. doi:10.1021/jacs.8b13155 87059-4
+Pannier, M., Veit, S., Godt, A., Jeschke, G., and Spiess, H. W. (2000). Dead-Time Tang, J., Thurnauer, M. C., Kubo, A., Hara, H., and Kawamori, A. (1997).
+Free Measurement of Dipole-Dipole Interactions between Electron Spins. Anomalous Pulse-Angle and Phase Dependence of Hahn’s Electron Spin
+J. Magnetic Reson. 142, 331–340. doi:10.1006/jmre.1999.1944 Echo and Multiple-Quantum Echoes in a Photoinduced Spin-Correlated
+Perdew, J. P. (1986). Density-functional Approximation for the Correlation Energy Radical Pair. J. Chem. Phys. 106, 7471–7478. doi:10.1063/1.473752
+of the Inhomogeneous Electron Gas. Phys. Rev. B 33, 8822–8824. doi:10.1103/ Tang, J., Thurnauer, M. C., and Norris, J. R. (1995). Abnormal Electron Spin Echo
+physrevb.33.8822 and Multiple-Quantum Coherence in a Spin-Correlated Radical Pair System.
+Popov, A. A., Lukina, E. A., Rapatskiy, L., and Kulik, L. V. (2017). Time-domain Shape Appl. Magn. Reson. 9, 23–31. doi:10.1007/bf03162343
+of Electron Spin Echo Signal of Spin-Correlated Radical Pairs in Polymer/fullerene Timmel, C. R., Fursman, C. E., Hoff, A. J., and Hore, P. J. (1998). Spin-correlated
+Blends. J. Magnetic Reson. 276, 86–94. doi:10.1016/j.jmr.2017.01.016 Radical Pairs: Microwave Pulse Effects on Lifetimes, Electron Spin Echo
+Frontiers in Molecular Biosciences | www.frontiersin.org 14 June 2022 | Volume 9 | Article 890826
+
+
+--- PAGE 15 ---
+Al Said et al. Accuracy of OOP-ESEEM
+Envelope Modulations, and Optimum Conditions for Detection by Electron Zech, S. G., Kurreck, J., Renger, G., Lubitz, W., and Bittl, R. (1999). Determination
+Spin Echo Spectroscopy. Chem. Phys. 226, 271–283. doi:10.1016/s0301- of the Distance between Yox Z and Q− A in Photosystem II by Pulsed EPR
+0104(97)00283-8 Spectroscopy on Light-Induced Radical Pairs. FEBS Lett. 442, 79–82. doi:10.
+van Doorslaer, S. (2017). Hyperfine Spectroscopy: ESEEM. eMagRes 6, 51–70. 1016/s0014-5793(98)01628-7
+doi:10.1002/9780470034590.emrstm1517 Zech, S. G., Lubitz, W., and Bittl, R. (1996). Pulsed EPR Experiments on Radical
+Weber, S. (2017). Transient EPR. eMagRes 6, 255–270. doi:10.1002/ Pairs in Photosynthesis: Comparison of the Donor-Acceptor Distances in
+9780470034590.emrstm1509 Photosystem I and Bacterial Reaction Centers. Berichte Bunsenges. für Phys.
+Weigend, F., and Ahlrichs, R. (2005). Balanced Basis Sets of Split Valence, Triple Chem. 100, 2041–2044. doi:10.1002/bbpc.19961001220
+Zeta Valence and Quadruple Zeta Valence Quality for H to Rn: Design and Zollitsch, T. M., Jarocha, L. E., Bialas, C., Henbest, K. B., Kodali, G., Dutton, P.
+Assessment of Accuracy. Phys. Chem. Chem. Phys. 7, 3297–3305. doi:10.1039/ L., et al. (2018). Magnetically Sensitive Radical Photochemistry of Non-
+b508541a natural Flavoproteins. J. Am. Chem. Soc. 140, 8705–8713. doi:10.1021/jacs.
+Weil, J. A., Bolton, J. R., and Wertz, J. E. (1994). Electron Paramagnetic Resonance. 8b03104
+Elementary Theory and Practical Applications. New York, NY: John Wiley &
+Sons, Inc. Conflict of Interest: The authors declare that the research was conducted in the
+Weissman, S. I. (1982). Recent Developments in Electron Paramagnetic absence of any commercial or financial relationships that could be construed as a
+Resonance: Transient Methods. Annu. Rev. Phys. Chem. 33, 301–318. doi:10. potential conflict of interest.
+1146/annurev.pc.33.100182.001505
+Weng, Y., Song, C., Chiang, C.-W., and Lei, A. (2020). Single Electron Transfer- Publisher’s Note: All claims expressed in this article are solely those of the authors
+Based Peptide/protein Bioconjugations Driven by Biocompatible Energy Input. and do not necessarily represent those of their affiliated organizations, or those of
+Commun. Chem. 3, 171. doi:10.1038/s42004-020-00413-x the publisher, the editors, and the reviewers. Any product that may be evaluated in
+Xu, J., Jarocha, L. E., Zollitsch, T., Konowalczyk, M., Henbest, K. B., Richert, S., et al. this article, or claim that may be made by its manufacturer, is not guaranteed or
+(2021). Magnetic Sensitivity of Cryptochrome 4 from a Migratory Songbird. endorsed by the publisher.
+Nature 594, 535–540. doi:10.1038/s41586-021-03618-9
+Yoshii, T., Hara, H., Kawamori, A., Akabori, K., Iwaki, M., and Itoh, S. (1999). Copyright © 2022 Al Said, Weber and Schleicher. This is an open-access article
+ESEEM Study of the Location of Spin-Polarized Chlorophyll-Quinone Radical distributed under the terms of the Creative Commons Attribution License (CC BY).
+Pair in Membrane-Oriented Spinach Photosystems I and II Complexes. Appl. The use, distribution or reproduction in other forums is permitted, provided the
+Magn. Reson. 16, 565–580. doi:10.1007/bf03161952 original author(s) and the copyright owner(s) are credited and that the original
+Zech, S. G., Kurreck, J., Eckert, H.-J., Renger, G., Lubitz, W., and Bittl, R. (1997). publication in this journal is cited, in accordance with accepted academic practice.
+Pulsed EPR Measurement of the Distance between P +
+(cid:129)
+and Q
+–(cid:129)
+in No use, distribution or reproduction is permitted which does not comply with
+680 A
+Photosystem II. FEBS Lett. 414, 454–456. these terms.
+Frontiers in Molecular Biosciences | www.frontiersin.org 15 June 2022 | Volume 9 | Article 890826

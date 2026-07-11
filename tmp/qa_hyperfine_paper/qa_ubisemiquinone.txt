@@ -1,0 +1,410 @@
+
+--- PAGE 1 ---
+13 March 1998
+.Chemical Physics Letters 285 1998 99±104
+Density functional calculated
+13
+C and
+17
+O hyperfine couplings for
+the ubisemiquinone anion radical in an alcohol solvent model and
+in a model of the Q binding site of Rb sphaeroidesa
+Patrick J. O'Malley
+Department of Chemistry, UMIST, Manchester M60 1QD, UK
+Received 22 September 1997; in final form 11 December 1997
+Abstract
+Hybrid density functional calculations are used to calculate the spin density distribution and the 17O and 13C hyperfine
+coupling constants for the ubisemiquinone anion radical in model complexes simulating the radical's environment in alcohol
+solvents and in the Q binding site of Rb sphaeroides . Good agreement is observed between the alcohol solvent model
+a
+calculated couplings and experimental determinations. For the Q site model, best agreement is observed for a Q site modelaa
+containing a positively charged imidazole hydrogen bonding interaction at the O4 atom of the semiquinone. This may
+suggest that the asymmetry observed for the Q site of Rb sphaeroides is due to strong hydrogen bonding by the O4 oxygena
+atom of the semiquinone to an imidazole carrying a partial positive charge. The obvious candidate to fulfil this role in the
+.reaction centre is the HIS M219 ligand of an Fe II complex. q 1998 Elsevier Science B.V.
+1. Introduction
+Quinones are ubiquitous to living systems and
+represent important cofactors for electron transfer in
+wxphotosynthesis and respiration 1 . In photosynthesis,
+for example, quinones act as electron acceptors in
+the initial charge separation. For both bacterial and
+higher plant Photosystem 2, two quinones termed Q
+a
+and Q act in concert to enable efficient chargeb
+wxseparation to take place 2 . Q is initially reduced toa
+form the semiquinone anion radical. This then for-
+wards its electron to Q forming the Q semiquinonebb
+anion radical. On further charge separation Q ac-a
+cepts another electron to form the semiquinone anion
+radical again. This electron is then passed on to the
+already reduced Q which accepts two protons to
+b
+form quinol QH and leaves the protein site to be2
+replaced by another quinone molecule from a quinone
+pool nearby.
+Q and Q are often identical quinones; plasto-
+ab
+quinone in higher plants and ubiquinone in bacterial
+systems. A variety of spectroscopic methods most
+notably, EPR, ENDOR, FTIR and NMR have been
+used to investigate differences between the Q and
+a
+wxQ ubiquinones 3±5 . Differences in the hydrogenb
+bonding ability of both ubiquinones is generally put
+forward for the differing functions observed, i.e.
+specific hydrogen bonds to nearby amino acid
+residues are able to tailor the quinone to perform a
+specific function. EPR and ENDOR studies have
+afforded a detailed look at the electronic structure of
+the semiquinone anion radical formed in the Q and
+a
+Q sites. Differences in the nature of the hydrogenb
+bonding interactions of both semiquinones have been
+0009-2614r98r$19.00 q 1998 Elsevier Science B.V. All rights reserved.
+.PII S0009-2614 97 01456-5
+
+--- PAGE 2 ---
+()P.J. O'Malley rChemical Physics Letters 285 1998 99±104100
+put forward to explain the different spectroscopic
+manifestations observed.
+In this study we use modern density functional
+methods to examine the structure, spin density distri-
+bution and hyperfine couplings of the ubisemi-
+quinone anion radical both in vitro and an in vivo
+model of the Q binding site of Rb sphaeroides. Our
+a
+previous studies have demonstrated the excellent data
+concerning spin densities and hyperfine couplings
+that can be obtained for semiquinone anion radicals
+wxusing hybrid density functional methods 6,7 . The
+ubisemiquinone anion radical has been studied ex-
+tensively by EPR and ENDOR methods both in the
+wxliquid and frozen alcohol solutions 8±10 . The ubi-
+semiquinone radical generated in the Q and Q
+ab
+binding sites of Rb sphaeroides has been investi-
+wxgated by EPR and ENDOR 3,10,11 .
+Hybrid density functional methods, particularly
+the B3LYP functional, are increasingly being shown
+to provide excellent electronic structures for non-
+. .Fig. 1. Molecular complexes used to model the semiquinone environment. a USQ±4CH OH. b Model A of the Rb sphaeroides Q site.3a
+. .c Model B of the Rb sphaeroides Q site. The semiquinone numbering scheme used for all is shown for a . The long isoprenoid chain ofa
+the native ubiquinone has been truncated down to three carbon lengths.
+
+--- PAGE 3 ---
+()P.J. O'Malley rChemical Physics Letters 285 1998 99±104 101
+wxradicals and radicals alike 6,13 . They are uniquely
+capable of giving highly accurate descriptions of free
+radical properties such as isotropic and anisotropic
+wxhyperfine coupling constants 13 .
+2. Methods
+The complexes studied are shown in Fig. 1. The
+ubisemiquinone anion radical in hydrogen bonding
+contact with four methanol molecules, USQ±
+4CH OH, is represented in Fig. 1a. This is our
+3
+model for the ubisemiquinone anion radical in an
+alcohol solvent. Fig. 1b,c represents the model used
+to model the ubisemiquinone anion radical in the Q
+a
+site of Rb sphaeroides. The initial heavy atom coor-
+dinates for this model were taken from the Rb
+wxsphaeroides crystal structure coordinates of Ref. 15 .
+In addition to the quinone the coordinates for the
+hydrogen bonding residues HIS M219 and
+ALA M260 were initially used. The histidine residue
+was truncated down to the methyl imidazole unit
+Fig. 2. Spin density surfaces for the complexes of Fig. 1 contoured at 0.01 e rau3. UB3LYPr6-31G.
+
+--- PAGE 4 ---
+()P.J. O'Malley rChemical Physics Letters 285 1998 99±104102
+shown in Fig. 1b, and the peptide linkage for
+ALA M260 was retained as again shown in Fig. 1b.
+These represent the key hydrogen bonding interac-
+tions for the quinone in the Q site revealed by the
+a
+wxcrystal structure determination 15 . Hydrogens were
+then added to fulfil the atomic valences.
+For the USQ±4CH OH model all atom positions3
+were fully optimised to give the lowest energy struc-
+ture. For the USQ±Q models the truncated peptide
+a
+linkage and the methyl imidazole were fixed at their
+crystallographically determined positions and only
+the semiquinone atoms and the hydrogen bond donor
+hydrogens were allowed to optimise their positions.
+This is we believe a realistic model for the Q site
+a
+interactions where the positions of the hydrogen
+bonding residues HIS M219 and ALA M260 peptide
+NH group can be expected to remain in their posi-
+tions on reductions of the quinone in the Q site. The
+a
+.two USQ±Q models Fig. 1b,c differ in the proto-a
+nation state of the hydrogen bonding imidazole
+residue. In one case, model A, a singly protonated
+.imidazole residue is used Fig. 1b . For the other
+situation, model B, a doubly protonated imidazole
+.moiety is used Fig. 1c . In the in vivo system the
+HIS M219 residue is a ligand to an octahedrally
+.coordinated Fe II ion. The main body of evidence
+suggests that this ion plays a passive role in electron
+transfer from Qa to Qb. The main requirement ap-
+pears to be an oxidation state II ion as the Fe can be
+substituted by other transition metal divalent ions
+.such as Zn II without modifying electron transfer.
+The formal positive charge of q2 on the ion will
+clearly be delocalised onto its ligands including
+HIS M219. Whether it imparts a full positive charge
+on the histidine ligand as our model B implies is not
+known. The real situation may lie somewhere inter-
+mediate between model A and model B. The radical
+geometries were first optimised at the semiempirical
+Table 1
+Ê.Selected optimised bond distances A for the complexes of Fig. 1
+Bond USQ±4CH OH Q 3a
+Model A Model B
+C1±O1 1.26 1.25 1.24
+C4±O4 1.26 1.26 1.28
+.O1±H hb 1.79 1.81 1.93
+.O4±H hb 1.79 1.77 1.64
+wxPM3 level using SPARTAN 15 and the carbonyl
+and hydrogen bonding distances obtained are pre-
+sented in Table 1. Graphical spin density surfaces
+wxwere generated using SPARTAN 15 . All hyperfine
+coupling calculations were performed using the
+B3LYP functional as implemented on GAUSSIAN 94
+wx wx16 using the EPR-II basis set 13 .
+3. Results and discussion
+The spin density surfaces in Fig. 2 qualitatively
+show the effect of hydrogen bonding on the spin
+density distribution. For the alcohol complex Fig.
+.2a a symmetrical spin density distribution is ob-
+served. For the reaction centre site model A Fig.
+.2b , a symmetrical spin density distribution is also
+.predicted while for model B Fig. 2c an asymmetri-
+cal spin density distribution is predicted. We note
+that this pronounced asymmetrical spin distribution
+is brought about by having a positive charge on the
+imadazole hydrogen bonding residue. In the reaction
+.centre a non-heme Fe II ion is the ligand to the
+non-hydrogen bonded imadazole nitrogen atom of
+.HIS M219. For the ENDOR studies of Q this Fe II
+a
+. .is replaced by Zn II . The Fe II is also ligated by
+three other histidines and a glutamic acid bidentate
+ligand. Preliminary PM3 calculations in this labora-
+.tory on a Zn II complex containing four imidazole
+and one formate ligand suggests that the overall
+positive charge on the imidazole ligand is 0.5 e. As
+such model B overestimates the positive charge on
+the hydrogen bonding imidazole ligand but by com-
+paring with model A gives us an indication of the
+effect of this charge on the semiquinone radical spin
+density distribution. The effect is to strengthen the
+hydrogen bonding ability of the NH of the imadazole
+leading to a stronger hydrogen bond at the O4
+oxygen atom. The optimised geometries for the com-
+.plexes of Fig. 1 Table 1 show that the O4 hydrogen
+bond is considerably shorter than the O1 hydrogen
+bond in the model B reaction centre site. These data
+indicate that on reduction of Q to form the
+a
+semiquinone anion radical the ubisemiquinone anion
+moves down in the site to more closely associate
+.with the HIS M219±Fe II complex, thereby creating
+the asymmetry in the spin density distribution ob-
+served.
+
+--- PAGE 5 ---
+()P.J. O'Malley rChemical Physics Letters 285 1998 99±104 103
+Table 2
+Comparison of calculated and experimental total principal hyper-
+.fine tensor values A , A , A for the ubisemiquinone anion,11 22 33
+Q , radicala
+Position Principal hyperfine tensor values
+Calculated Experimental
+Model A Model B
+aO1 y93 y95 94
+16 19 y
+17 19 y
+aO4 y90 y80 75
+15 13 y
+16 14 y
+bCl 12 y20 22
+y15 y16 18
+y18 y11 5
+bC4 19 41 36
+y14 y9 -7
+y17 y11 -7
+Values in MHz. UB3LYP rEPR-II. Absolute values for experi-
+mental determinations.
+a wxRef. 10 .
+b wxRef. 3 . In the experimental studies it has been assumed that the
+principal hyperfine directions for the C1 and C4 atoms lie along
+the principal g tensor axes of the semiquinone. While this is likely
+to be the case for the C4 high-spin density position it may not be
+true for low-spin density C1. This should be borne in mind when
+making direct comparison between experimental and theoretical
+values for the C1 position.
+Comparison between experimental and calculated
+hyperfine couplings puts our hypothesis on firmer
+ground. For the USQ radical in the Q site of Rb
+a
+.sphaeroides the total isotropic plus anisotropic
+principal hyperfine coupling values for the O1, O4,
+C1 and C4 atom positions have been determined
+.Table 2 . For the USQ radical in the isopropanol
+alcohol solvent the C1 and C4 total hyperfine tensors
+.have been determined Table 3 . We have calculated
+these tensors theoretically for the USQ radicals ac-
+cording to the procedure detailed previously by us
+wx6,7 . These theoretical hyperfine coupling values are
+compared with the experimental values in Tables 2
+and 3. The symmetrical spin density distribution
+described above is reflected in the similar tensor
+values obtained for the C1, C4 and O1, O4 positions
+for both USQ±4CH OH and model A for the Q site
+3a
+.Tables 2 and 3 . The different absolute values ob-
+tained for these two models, USQ±4CH OH and3
+model A can be ascribed to the different number of
+hydrogen bond donors for both: one for each car-
+bonyl oxygen in model A and two in USQ±4CH OH.3
+For example similar values to model A can be ob-
+tained by having just one methanol per carbonyl
+.oxygen unpublished data . As previously described
+wxby us 7 hydrogen bonding leads to a redistribution
+of spin density from the carbonyl oxygen atom to the
+carbonyl carbon of the semiquinone. This redistribu-
+tion is substantially greater for two as opposed to
+one hydrogen bonding donor. This is indeed re-
+flected in the spin density contours of Fig. 2 where
+the extent of the 0.01 e rau
+3 contour around the C1
+and C4 atoms is smaller for model A Fig. 1a,
+.compared with USQ±4CH OH, Fig. 1a . For3
+model B of Q the asymmetric spin density distribu-a
+tion shown above manifests itself with a decreased
+absolute value of the O4 17O hyperfine coupling and
+an increase in the C4 13C hyperfine coupling when
+compared with the alcohol solvent values. This is a
+direct result of the increase in hydrogen bonding
+strength to the O4 oxygen by the positively charged
+imidazole residue which results in an increased spin
+redistribution from the O4 to the C4 atom as empha-
+sised by the large amplitude of the spin density
+contour around the C4 atom in Fig. 2c. From Table 2
+we can see that the agreement between the experi-
+mentally determined hyperfine tensors for the Q site
+a
+Table 3
+Comparison of calculated and experimental total principal hyper-
+.fine tensor values A , A , A for the USQ±4CH OH,11 22 33 3
+radical
+Position Principal hyperfine tensor values
+aCalculated Experimental
+O1 y85 y
+15 y
+16 y
+O4 y81
+15 y
+15 y
+C1 22 31
+y14 10
+y17 12
+C4 26 32
+y13 10
+y16 11
+Absolute values for the experimental determinations. Values in
+MHz. UB3LYPrEPR-II.
+a wxRef. 3 .
+
+--- PAGE 6 ---
+()P.J. O'Malley rChemical Physics Letters 285 1998 99±104104
+semiquinone in Rb sphaeroides and calculated val-
+ues for model B is very good lending strong support
+to the role of the positively charged hydrogen bond
+donor in creating an asymmetric spin density distri-
+bution in the semiquinone. Assuming that the non-
+. .heme Fe II or Zn II complex conveys a similar
+.although probably smaller, see above positive
+charge on the HIS M219 residue of Rb sphaeroides
+in vivo we can propose this as a possible reason for
+the asymmetric spin density distribution observed
+experimentally at the Q site. Although hydrogen
+a
+bonding interactions with HIS M219 and ALA M260
+have been the only ones proposed based on the
+wxX-ray data 12 we cannot rule out the possibility
+that extra hydrogen bonds are formed on semiquinone
+formation. For the durosemiquinone anion radical we
+have recently shown that an unequal number of
+hydrogen bonds to each carbonyl could also result in
+wxan asymmetric spin density distribution 17 . Our
+data suggest that if the hydrogen bonding interac-
+tions revealed by the crystal structure data of Ref.
+wx14 are also retained in the semiquinone Q state
+a
+then to create the asymmetry observed from electron
+paramagnetic resonance techniques it is necessary to
+invoke strong hydrogen bonding to HIS M219. A
+likely source of this increased hydrogen bond strength
+is the presence of a partial positive charge on the
+imidazole moiety of HIS M219.
+For the Q site the experimental hyperfine cou-
+b
+plings for O1, O4, C1 and C4 have been shown to be
+wxsimilar to the frozen alcohol values 12 . These
+values are best reproduced by two as opposed to one
+neutral hydrogen bond donors for each semiquinone
+.carbonyl oxygen see Table 3 .
+Our conclusion therefore is that on initial reduc-
+tion of Q to the semiquinone anion radical in Rb
+a
+sphaeroides it moves in closer contact to the
+HIS M219 residue. The resultant stronger hydrogen
+bond formed with the histidine residue causes an
+asymmetrical spin density distribution for Q giving
+a
+rise to the hyperfine coupling asymmetry observed
+experimentally.
+References
+wx .1 B.L. Trumpower Ed. , Functions of Quinones in Energy
+.Conserving Systems Academic Press, New York, 1986 .
+wx .2 M.Y. Okamura, G. Feher, Annu. Rev. Biochem. 61 1992
+861.
+wx3 J.S. Van den Brink, A.P. Spoyalov, P. Gast, W.B.S. van
+Liemt, J. Raap, J. Lugtenburg, A.J. Hoff, FEBS Lett. 353
+.1994 272.
+wx4 J. Breton, J.-R. Burie, C. Boullais, G. Berger, E. Nabedryck,
+.C. Mioskowski, Biochemistry 33 1994 14378.
+wx5 W.B. Van Liemt, S. Boender, G.J. Gast, A.J. Hoff, J.
+.Lugtenberg, H.M.J. de Groot, Biochemistry 34 1995 10229.
+wx .6 P.J. O'Malley, Chem. Phys. Lett. 262 1996 797.
+wx .7 P.J. O'Malley, J. Phys. Chem. A 101 1997 6334.
+wx8 P.J. O'Malley, T.K. Chandrashekar, G.T. Babcock, Springer
+.Ser. Chem. Phys. 42 1985 339.
+wx9 R.I. Samoilova, W. van Liemt, W.F. Steggerda, J. Lugten-
+burg, A.J. Hoff, A.P. Spoyalov, A.M. Tyryshkin, N.P.
+Gritzan, Y.D. Tsvetkov, J. Chem. Soc. Perkin Trans. 2
+.1994 609.
+wx10 T.N. Kropacheva, W.B.S. van Liemt, J. Raap, J. Lugtenburg,
+.A.J. Hoff, J. Phys. Chem. 100 1996 10433.
+wx11 W. Lubitz, E.C. Abresch, R.J. Debus, R.A. Isaacson, M.Y.
+.Okamura, G. Feher, Biochim. Biophys. Acta 808 1985 464.
+wx12 G. Feher, R.A. Isaacson, M.Y. Okamura, W. Lubitz, Springer
+.Ser. Chem. Phys. 42 1985 174.
+wx13 V. Barone, Recent Advances in Density Functional Methods,
+. in: D.P. Chong Ed. , World Scientific Publ., Singapore,
+.1995 .
+wx14 U. Erlmer, G. Fritzsch, S. Buchanan, H. Michel, Structure 2
+.1994 925.
+wx .15 SPARTAN 4.1.1 Wavefunction Inc., California, 1995 .
+wx16 M.J. Frisch, G.W. Trucks, H.B. Schlegel, P.W. Gill, B.G.
+Johnson, M.W. Wong, J.B. Foresman, M.A. Robb, M.
+Head-Gordon, E.S. Replogle, R. Gomperts, J.L. Andres, K.
+Raghvachari, J.S. Binkley, C. Gonzalez, R.L. Martin, D.J.
+Fox, D.J. Defrees, J. Baker, J.J.P. Stewart, J.A. Pople,
+.GAUSSIAN94 Gaussian Inc., Pittsburgh, PA .
+wx17 P.J. O'Malley, J. Phys. Chem., in press.

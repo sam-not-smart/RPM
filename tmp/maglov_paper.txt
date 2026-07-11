@@ -1,0 +1,1257 @@
+
+
+--- PAGE 1 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Quantum Spin Resonance in Engineered
+Magneto-Sensitive Fluorescent Proteins Enables
+Multi-Modal Sensing in Living Cells
+Gabriel Abrahams1*, Ana S ˇ tuhec2†, Vincent Spreng1,3†,
+Robin Henry1, Idris Kempf1, Jessica James1, Kirill Sechkar1,
+Scott Stacey1, Vicente Trelles-Fernandez1, Lewis M. Antill2,4,
+Christiane R. Timmel2, Jack J. Miller5, Maria Ingaramo6,
+Andrew York6, Jean-Philippe Tetienne7, Harrison Steel1*
+1*Department of Engineering, University of Oxford, Parks Road,
+Oxford, OX14PJ, Oxfordshire, United Kingdom.
+2Department of Chemistry, University of Oxford, Chemistry Research
+Laboratory, 12 Mansfield Road, Oxford, OX1 3TA, Oxfordshire, United
+Kingdom.
+3 Faculty of Engineering Sciences, Heidelberg University, Heidelberg,
+Germany .
+4Institute of Quantum Biophysics, Department of Biophysics,
+Sungkyunkwan University, Suwon, 16419, Republic of Korea.
+5The MR Research Centre, Aarhus University, Aarhus, Denmark.
+6Calico Life Sciences, 1170 Veterans Blvd, South San Francisco, 94080,
+California, United States.
+7School of Science, RMIT University, Melbourne, VIC 3001, Australia.
+*Corresponding author(s). E-mail(s): gabriel.abrahams@eng.ox.ac.uk;
+harrison.steel@eng.ox.ac.uk;
+†These authors contributed equally to this work.
+Abstract
+Quantum mechanical phenomena have been identified as fundamentally signifi-
+cant to an increasing number of biological processes. Simultaneously, quantum
+sensing is emerging as a cutting-edge technology for diverse applications across
+1
+
+--- PAGE 2 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+materials and biological science. However, until recently, biological based candi-
+dates for quantum sensors have been limited to in vitro systems, were prone to
+light induced degradation, and the experimental setups involved are typically not
+amenable to high-throughput study as would enable further engineering e.g. via
+directed evolution. We recently created a new class of magneto-sensitive fluores-
+cent proteins (MFPs), which we show overcome these challenges and represent a
+new form of engineered biological quantum sensors that function both at physio-
+logical conditions and in living cells. Through directed evolution, we demonstrate
+the possibility of engineering these proteins to alter properties of their response
+to magnetic fields and radio frequencies. These effects are explained in terms
+of the radical pair mechanism (RPM), involving the protein backbone and a
+bound flavin cofactor. Using this engineered system we demonstrate the first
+observation of a fluorescent protein exhibiting Optically Detected Magnetic Res-
+onance (ODMR) in living bacterial cells at room temperature, at sufficiently high
+signal-to-noise to be detected in a single cell. These magnetic resonance and mag-
+netic field effects measured via fluorescence enable novel technologies; examples
+we demonstrate include spatial localisation of fluorescence signals using gradi-
+ent fields (i.e. Magnetic Resonance Imaging (MRI) using a genetically encoded
+probe), sensing of the molecular microenvironment, multiplexing of bio-imaging,
+and lock-in detection, overcoming typical fluorescence imaging challenges of light
+scattering and autofluorescence. Taken together, our results represent a new
+range of sensing modalities for engineered biological systems, based on and
+designed around understanding the quantum mechanical properties of MFPs.
+Keywords: Biosensing, Quantum, ODMR, ESR, RYDMR, Magnetic Field Effects,
+Quantum Sensing, Radical Pairs, MRI
+2
+
+--- PAGE 3 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+1 Introduction
+Coupling electromagnetic fields with biological processes through fluorescence has
+revolutionised quantitative biology [1, 2]. Meanwhile, quantum sensing tools (i.e.
+those whose function arises from spin-dependent processes) have been developed
+for their unique advantages in biological applications, but have until recently been
+limited to realisations using non-biological probes [3–5] or measurements under
+ex-vivo conditions [6–8]. We previously reported the development of a library of
+magneto-responsive fluorescent protein (MFP) variants derived from the LOV2
+domain (broadly termed MagLOV), which exhibit fluorescence signals with large
+magnetic field effects (MFEs) [Fig. 1 A] [9]. With this work, we demonstrate that
+at room temperature, we can detect optically detected magnetic resonance (ODMR)
+[10–19] in living cells expressing these fluorescent proteins, including at single cell
+level. The ODMR signature implies a quantum system whose properties and dynam-
+ics sensitively depend on the local environment, opening up a broad range of novel
+possibilities for cellular biosensing [3]. The ODMR arises from electron spin resonance
+(ESR) that we hypothesise originates from a spin-correlated radical pair (SCRP)
+[20, 21] [Fig. 1 B] involving the LOV2 domain non-covalently bound flavin cofactor
+chromophore. This theory is based on prior evidence [22] and supported by the MFE,
+ODMR, and spectral studies we present.
+Both MFE and ODMR signals are straightforward to detect in cells on a standard
+wide-field fluorescence microscope, supporting further development and application of
+this discovery. Beyond the ease of detecting MFP’s magnetic resonance via emission,
+MFPs are advantageous over other candidate spin sensors for biological uses because
+they can be expressed directly in the host organism (e.g. allowing direct coupling and
+regulation by biological processes) and because their performance can be engineered
+genetically, such as through rational design or directed evolution. This engineerability
+is demonstrated through a selection approach previously reported [9] and here used
+to generate novel protein variants specialised for sensing applications.
+We demonstrate applications of MFPs as reporters that can be used for lock-in
+signal amplification in noisy measurement environments (as often encountered in
+biological applications [26]), and to enable signal multiplexing by engineering variants
+with differing dynamic responses. We also show that the MagLOV MFE is attenu-
+ated by interaction with Magnetic Resonance Imaging (MRI) contrast agents, with a
+dose-dependent effect consistent with spin relaxation, implying MagLOV’s ability to
+sense the surrounding environment. Finally, we realise applications to spatial imag-
+ing; because the ODMR resonance condition depends on the static magnetic field at
+the location of the protein, it is possible to use gradient fields (as in MRI) to deter-
+mine the spatial distribution of MFPs with scattering-independent measurements of
+a sample’s fluorescence. We demonstrate this by building a novel fluorescence-MRI
+instrument based on a small-animal MRI coil with a 1-dimensional magnetic gradi-
+ent, which we apply to simultaneously localise the depth position of multiple bands
+of bacterial cells embedded in a ∼40 cm3 volume.
+3
+
+--- PAGE 4 ---
+A B
+Modulated
+LED
+Fluorescence RF
+Magnetic RF
+Field
+N
+RF S
+C D E
+noitaticxE
+Fluorescence
+Excited Radical
+State Pair
+Charge
+transfer
+Ground Spin Dependent
+State Recombination
+MagLOV 2 ODMR
+Single Cell MagLOV 2 MFE Single Cell MagLOV 2 ODMR Magnetic Field Dependence
+2 um
+gb
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Fig. 1 Observation of MFE and ODMR in magneto-sensitive fluorescent proteins. A.
+Structure of AsLOV2 PDB 2V1A[23] with mutations resulting in MagLOV 2 highlighted. Spin transitions
+driven by radio-frequency (RF) fields in the presence of a static magnetic field are optically detected
+via fluorescence measurements on an otherwise standard widefield microscope. B. Simplified photocycle
+diagram in the case of a large external magnetic field. The radical pair is born in a triplet state |T ⟩ with
+spin projections |T0⟩, |T+⟩ and |T−⟩[24, 25] and undergoes field-dependent singlet-triplet interconversion
+to the singlet state, |S⟩, driven by nuclear-electron spin-spin interactions. C. A single cell expressing
+MagLOV 2 displaying an MFE of ∼ 50% (measured as a change in fluorescence intensity I in the presence
+of an applied field). For MFE measurements, the magnetic field was switched between 0 mT and 10 mT,
+here with a period of 20 s. The intensity over time is integrated over pixels covering the single cell, with
+a background photobleaching trendline removed. Contrast is calculated as (I − I off)/I off = ∆I/I off.
+D. Black dots: data from a single cell expressing MagLOV 2 displaying an ODMR signal with ∼ 10 %
+contrast. The static field B0 is ∼21.6 mT. Blue line (shade): the mean (std) of all single cell data in a
+field of view (∼1000 cells). Inset: microscope image cropped to a single cell expressing MagLOV 2 with
+a 2 µm scalebar. E. The static magnetic field B0 was varied by adjusting the magnet’s position, and
+ODMR spectra recorded. The red-lines are Lorentzian fits. The blue line is a theoretical prediction (i.e.
+is not a fit) of the expected resonance frequency of an electron spin with γ¯e = 28 MHz/mT or ge = 2.00
+with the shaded region representing uncertainty in the magnetic field strength (as determined by a Hall
+probe) at the sample position.
+The future potential for optimisation and application of MFPs is vast. For example,
+through high-throughput screening it is feasible to perform selection based on magnetic
+response, ODMR response, or biological factors such as protein stability. Down the
+line, the possibility of controlling charge state transfers within a protein raises the
+potential for developing 3D spatially-localised magneto-genetic actuators. Ultimately,
+the development of these systems may lead to a new paradigm of quantum-based tools
+for biological sensing, measurement, and actuation.
+4
+
+--- PAGE 5 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+2 Optically Detected Magnetic and Resonant Field
+Effects in Fluorescent Living Cells
+Reaction yield detected magnetic resonance, RYDMR (a form of ODMR) is both a
+diagnostic test for the existence of the proposed spin-correlated radical pair (discussed
+below) [27] and, due to its relative simplicity, an effective measurement modality for
+performing readout from quantum sensing devices in biological and materials appli-
+cations [3, 4, 28–32]. ODMR studies the spin dynamics of such systems through the
+application of oscillating magnetic fields, B , resonant with spin transition energies,
+1
+and facilitates optical readouts through emission or absorption. Here we employ this
+technique to study the coherent spin dynamics of light-generated radical pairs whose
+photocycle contains a field-sensitive fluorophore, namely the flavin FMN.
+Previous studies have reported MFEs arising from interactions between a flavin
+cofactor and protein in terms of the SCRP mechanism [33–41], with the most promi-
+nent example being cryptochromes implicated in avian magnetoreception [42–45].
+Furthermore, radical pair intermediates are known to form in the LOV2 domain Avena
+sativa phototropin 1 (AsLOV2) variant C A (the precursor protein to MagLOV)
+450
+[46], as well as in related LOV domains [47–49]. Parallel with our results, ODMR has
+recently been reported in purified EYFP at room temperature, and in mammalian
+cells at cryogenic temperature [50]. Furthermore, subsequent preprints have reported
+ODMR in purified protein solutions of DmCry, mScarlet-flavin, and MagLOV at room
+temperature, as well as mScarlet-flavin in nematodes at room temperature [45, 51].
+Spin-correlated radical pairs are transient reaction intermediates, often generated
+by photoinitiated, rapid electron transfer from a donor (in biological systems, often
+an aromatic amino acid) to an acceptor (here the FMN). As electron transfer occurs
+under conservation of total spin angular momentum, the total spin of the radical
+pair is defined by that of its molecular precursor (either a singlet |S⟩ (S = 0) or a
+triplet state |T⟩ (S = 1), where S is the total spin quantum number). If the radicals
+in the pair are weakly coupled the spin system is created in a superposition of the
+uncoupled states, consequently coherent interconversion occurs between the |S⟩ and
+|T⟩ states, driven by the interactions between electron and nuclear spins (such as
+1H and 14N), [Fig. 1 B]. At zero and low static magnetic fields, this interconversion
+occurs rapidly involving all four states, but at higher fields, singlet-triplet mixing
+is restricted to |S⟩ and |T ⟩ with |T ⟩ energetically isolated from |S⟩ and |T ⟩ by
+0 ± 0
+Zeeman splitting [24, 25]. Importantly, singlet and triplet radical pairs have different
+fates; whilst the singlet pair is able to recombine to yield the ground state donor and
+acceptor, the triplet cannot do so but instead forms other forward photoproducts
+(e.g., by protonation/deprotonation), a route also and additionally open to the sin-
+glet pair. Under continuous illumination, the impact of the field on the singlet-triplet
+interconversion can be detected conveniently if either donor or acceptor or both form
+fluorescent excited states. In this case, a drop in fluorescence with applied magnetic
+field is expected for a triplet-born pair (impeded to mix into the recombining sin-
+glet state). Conversely, a resonant field reconnects the |S⟩/|T ⟩ manifold with |T ⟩,
+0 ±
+5
+
+--- PAGE 6 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+leading to an increase in fluorescence intensity. Therefore, we undertook MFE and
+ODMR measurements to test these hypotheses and hence to confirm the radical pair
+mechanism of MagLOV is triplet-born [24].
+Both MFE and ODMR imaging were performed using a wide-field epifluorescence
+microscope (see S1.6, S1.7). Cells were grown in liquid culture, then washed and
+diluted into (non-autofluorescent) PBS buffer allowing us to image fields of single cells
+(S1.14). Samples were confined between two glass coverslips atop a stripline antenna
+printed circuit board (PCB) (see S1.13). The antenna PCB was placed inverted on the
+microscope stage and either an electromagnet (for MFE) or a permanent magnet (for
+ODMR) was positioned above. For MFE experiments, the electromagnet supplied a
+static field of 0 mT or 10 mT at the sample. For ODMR experiments, the permanent
+magnet supplied a static field (B ∼ 20 mT) in the z-direction (S1.8), perpendicular
+0
+to the radio-frequency (RF) field (B ∼ 0.2 mT) supplied by the stripline antenna
+1
+(S1.10). First, we measured the MagLOV MFE (see an example trace in Fig. 1 C),
+confirming that MagLOV exhibits a large MFE of ∆I/I = −50% where I is the
+off
+fluorescence intensity, I is the fluorescence intensity immediately prior to switching
+off
+the magnet on, and ∆I = I − I . In Fig. 1 D, we show the ODMR resonance of a
+off
+single cell and the ODMR resonance averaged over many (∼ 1000) single cells. For
+ODMR measurements, the detrended signal is ∆I/I , where I is a background
+bg bg
+curve fit to the data as described in S1.15.2, and ∆I = I − I . As expected, the
+bg
+signal-to-noise is significantly improved by averaging over many cells in a field of
+view; however, it is also possible to extract an ODMR signal from a single cell, with
+an ODMR contrast of 10% [Fig. 1 D]. The remarkable per-cell magnetic sensitivity of
+η = 26 µT Hz−1/2 (see S1.12) is afforded by a combination of optical detection and
+0
+the high spin polarisation of the radical pair system [3]. Next, we recorded ODMR
+spectra at various static (B ) fields by adjusting the z-position of the static magnet
+0
+[Fig. 1 E]. The central ODMR resonance follows the expected ESR relationship
+f = γ¯ B , confirming the RF field is driving spin transitions of a spin- 1 electron
+RF e 0 2
+[52, 53]. Finally, we performed additional control experiments confirming the ODMR
+signal’s source, verifying against negative controls that an ODMR signal is present
+only when the MagLOV protein is expressed in S1.9.
+3 Magnetic Field Effect can be Engineered by
+Directed Evolution
+The AsLOV2 domain has been widely used as a starting point for engineering optoge-
+netic and other light-dependent protein functionalities [54, 55]. For MFPs, depending
+on a target application (such as lock-in signal detection, multiplexing, or sensing)
+one could choose to optimise for metrics including MFE size, saturation rate (speed
+at which maximum MFE size is reached), ODMR contrast, ODMR saturation rate,
+and others; here we demonstrate this potential by performing selection to improve
+MFE contrast and saturation rate, generating variants specialised for applications
+demonstrated later in our work.
+6
+
+--- PAGE 7 ---
+Selected for MFE size Select for MFE saturation rate
+MFE
+ODMR
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Fig. 2 MFE and ODMR Dynamics of Engineered Variants. A. MFP variants were engineered
+by mutagenesis and directed evolution; from AsLOV2 R2 to MagLOV2 selection was performed to
+increase the MFE at saturation, while MagLOV 2 fast was selected for increased rate (i.e. reduced τ
+when the MFE step is modelled as e−t/τ [39], as shown in red). In these measurements a magnetic field
+of B0 = 10 mT was switched on and off with a period of 20 s. The traces shown are the average (and
+standard deviation, shaded) over multiple periods - as a result, some of the error in the standard deviation
+results from the background curve fit which attempts to match the true background curve (see S1.15.2 for
+details). B. A similar experiment was performed using ODMR on resonance, with a constantly applied
+static field of B0 = 21.6 mT and corresponding resonant field B1 frequency of ωRF = 604 MHz switched
+on and off with a 20 s period, averaged as above. Both sets of experiments were performed in identical
+imaging setups (with the sample on the RF antenna for A. to ensure the same lighting conditions as B.)
+with an illumination intensity of ∼ 800 mW/cm2 at 450 nm. Note that B0 in A. is half that of B0 in
+B., explaining why the ODMR contrast is in some instances larger than the MFE.
+Starting from ancestor variant AsLOV2 C A [9, 56] we used directed evolution
+450
+to create variants of MFPs (summarised in S1.24). This engineering process (S1.3)
+involved successive rounds of mutagenesis (introducing all single amino acid changes
+to a given variant), followed by screening of samples from this variant library to select
+for increased MFE magnitude, eventually yielding MagLOV 2. To demonstrate the
+possibility of selecting on another metric using the same methodology, we further
+engineered MagLOV 2 by selecting for maximisation of saturation rate (rather than
+magnitude) of MFE, producing MagLOV 2 fast. We chose four variants to charac-
+terise in detail, which was done both using our microscope setup as described above
+[Fig. 2 A], and measurement of bulk cell suspensions [Fig. 3 and SI Fig. S11 A].
+The observed differences in MFE can be interpreted based on past work investi-
+gating flavin magnetic field-sensitive photochemistry: MFE enhancement kinetics (i.e.
+time to MFE saturation) are determined by the ratio between the rates that donor
+and acceptor free radicals return to the ground state [39]. With the mutations intro-
+duced in MagLOV 2 fast, the time constant of the response is decreased, which may
+indicate the acceptor return rate increases relatively to the donor. Interestingly, we
+observe the ODMR contrast and rates of each variant differ significantly [Fig. 2 B],
+7
+
+--- PAGE 8 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+but not necessarily in simple correlation with MFE magnitude. This raises the possi-
+bility of engineering orthogonal fluorescent signatures, expanding again the number of
+tags available for multiplexing - for instance, with further engineering the total might
+be (number of emission colours)×(number of resolvable MFE signatures)×(number of
+resolvable ODMR signatures).
+4 Bound Flavin Radical Pair Model supported by
+MFE Spectroscopy
+Adopting the SCRP model prompts consideration of the electron donor and acceptor
+identities. Both previous studies [46, 48], and our spectral data in [Fig. 3], support
+identifying the acceptor molecule as the FMN cofactor. For all variants of MFPs
+expressed in cells, we find that the wavelength-resolved fluorescence intensity modu-
+lated by the applied magnetic field (∆I) in [Fig 3 A, B] matches the FMN emission
+spectrum [56, 60], supporting that both MFE and ODMR are detected on the flavin
+emission. The excitation spectrum shows vibrational fine structure [Fig 3 C] and is in
+excellent agreement with the dark-state absorption spectrum of AsLOV2 C A [57],
+450
+confirming the emission originates from bound FMN. Furthermore, this corroborates
+control experiments (SI S1.9) that show observed ODMR signatures are not a result of
+cellular autofluorescence. The absorption spectrum of purified MagLOV 2 fast, before
+and after continuous irradiation with blue light, is shown in Fig. 3 D (full temporal
+evolution is provided in Fig. S11 D). The slow formation of the stable radical FMNH•
+after several minutes of illumination is characterised by the appearance of a broad
+band featuring two peaks centred around 575 nm and 615 nm, as observed for AsLOV
+C A, and accompanied by the expected decrease in ground state absorption, centred
+450
+around 450 nm [57]. At later times, most of the flavin is converted to the fully reduced
+form, FMNH−, resulting in a rise in absorption around 325 nm, while some remains
+present as FMN and FMNH•. The blue shift in MagLOV-bound FMN absorption rel-
+ative to AsLOV C A, evident both in the excitation and absorption spectra, may
+450
+indicate a change in polarity of the flavin binding pocket. The observed photostabil-
+ity of MagLOV (Figure S11 B) correlates with the slow formation of FMNH• on a
+minutes timescale in these conditions. In comparison, related flavoproteins, such as
+cryptochrome, are reduced to the semiquinone state within seconds even under much
+weaker irradiation intensities [61]. Unlike the recently reported MFE in mScarlet3 and
+FMN mixtures, which rely on a bimolecular reaction between the excited state mScar-
+let3 and a fully reduced flavin in solution [41], MagLOV requires no pre-illumination
+or additives for an MFE to develop as the FMN is non-covalently bound.
+The formation of FMNH• from the excited triplet state, 3FMN*, likely proceeds
+via initial formation of FMN•− in a SCRP on a nanosecond timescale as in AsLOV
+C A [46], followed by slow protonation. Alternatively, FMNH• could be formed by
+450
+proton-coupled electron transfer. A proposed photoscheme is given in Figure 3 E,
+and a model based on this photoscheme is simulated in SI S1.18, which successfully
+fits both the experimental MFE and ODMR data. In cryptochrome, the SCRP is
+formed by a cascade of ETs along a tryptophan tetrad [43], however, a single donor
+aromatic amino acid can be sufficient, as demonstrated by the magnetosensitivity of
+8
+
+--- PAGE 9 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+1 1
+A B C
+AsLOV R2
+0.8 MagLOV 0.8
+).u M
+M
+a
+a
+g
+g
+L
+L
+O
+O
+V
+V
+2
+2 fast
+).u
+.a0.6 .a0.6
+(
+y
+(
+y
+tis
+n0.4
+tis
+n0.4
+e e
+tn AsLOV R2 tn AsLOV R2
+I 0.2 MagLOV I 0.2 MagLOV
+MagLOV 2 MagLOV 2
+MagLOV 2 fast MagLOV 2 fast
+0 0
+500 550 600 650 700 300 350 400 450 500
+Wavelength (nm) Wavelength (nm)
+D 0 .4 0 .0 4 E 1FMN* + DH ISC 3FMN* + DH
+0.03
+)D 0.3
+O 0.02 RP1?
+(
+e c 0.01 1[FMN•- + DH•+] 3[FMN•- + DH•+]
+n a b
+ro
+s b
+A
+0
+0
+.
+.
+1
+2 0 500 600 700 kExc kF
+FMNH• +
+R
+D
+P2
+•
+? kH/Dep
+0
+300 400 500 600 700 800
+Wavelength (nm) FMN + DH
+Fig. 3 Spectroscopic characterisation evidences bound flavin-based radical pair. A.
+Normalised emission spectra with 450 nm excitation acquired for cell suspensions in PBS buffer. The
+spectra have been smoothed with a moving average filter over a ∼ 1 nm bandwidth. B. Wavelength
+dependence of magnetic field-induced change of emission intensity where ∆I = I(B0 = 10 mT)−I(B0 =
+0 mT). Note that here we display the absolute intensity change as division by I(B0 = 0 mT) obscures
+the wavelength dependence. A moving average filter over a ∼ 1 nm bandwidth was applied to the
+spectra. C. Normalised excitation spectra for 510 nm emission also acquired for bulk MagLOV cell
+suspensions in PBS buffer. Vibrational fine structure in the S0 → S1 and S0 → S2 bands (where Sn is
+the nth excited singlet state) centred at ∼ 450 nm and ∼ 350 nm, respectively, indicates the emitting
+flavin is bound. D. UV-Vis absorption spectrum of purified MagLOV 2 fast at different times after
+the onset of blue LED illumination. Inset shows a zoomed-in wavelength region with the characteristic
+absorption of FMNH• (green). Literature reference spectra are shown in dashed lines [57–59]. E. Proposed
+photoscheme. Following photoexcitation (kExc), the excited singlet flavin (1FMN*) can either emit a
+photon (kF) or undergo intersystem crossing (ISC) to the excited triplet state (3FMN*). The primary
+radical pair (RP1) is formed by electron transfer (ET) from a nearby donor, and can undergo singlet-
+triplet interconversion, which is altered in the presence of an applied magnetic field (B). Only the overall
+singlet RP can undergo back-electron transfer (BET) to reform the ground state, while either RP can
+form secondary (perhaps spin uncorrelated) radicals (RP2) through protonation and/or deprotonation
+reactions (k ). These long-lived secondary radicals return to the ground through slow redox reactions
+H/Dep
+(kFMNH, kD).
+cryptochrome-mimicking flavomaquettes [62, 63] and FMN bound inside the bovine
+serum albumin (BSA) protein[64]. Regarding the donor species, single point mutations
+in AsLOV2 C A leading to quenching of the emissive NMR signal suggest W as
+450 491
+the electron donor [65], which was corroborated by isotopic labelling of Trp residues
+[66]. However, given the extent of mutations in the variants studied here, we can-
+not confirm W is still the counter-radical. In the structurally related iLOV-Q ,
+491 489
+9
+
+--- PAGE 10 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+derived from A. thaliana phototropin-2 (AtPhot2) LOV2 domain, transient absorp-
+tion spectra revealed a neutral tryptophan radical, Trp•, is formed in conjunction
+with FMNH•, and photoinduced flavin reduction in single-point mutations of selected
+tyrosine and tryptophan residues suggested several amino acids might be involved in
+SCRP formation [67].
+5 Applications of Magneto-Sensitive Fluorescent
+Proteins
+5.1 Demonstration of Multiplexing and Signal Lock-in
+Our library of MFP variants exhibits differences in the rate and magnitude of response
+across both MFE and ODMR characterisation [Fig. 2]. Where such differences can be
+engineered orthogonally between variants, they open the possibility of using libraries
+of MFP reporters as a multiplexing tool to extract several signals from a single
+measurement modality. To demonstrate this potential in fluorescence microscopy, we
+first cloned strains of AsLOV R5 (one of the variants evolved between AsLOV R2
+and MagLOV, see S1.24) and MagLOV 2 into high constitutive expression strains
+(SI S1.1). We initially characterised each variant in isolation, measuring fluorescence
+traces for ∼ 2000 cells in a field-of-view [Fig. 4 A]. The same processing was per-
+formed as in Fig. 2 but to individual cells, yielding a value of τ (the MFE saturation
+timescale) for each cell, which allows measurement of each sample’s intrapopulation
+variability [Fig. 4 B]. We then characterised a mixture of these variants (again ∼ 2000
+cells) [Fig. 4 C], for which parameter values fit to single cells show strong bi-modality,
+enabling the population to be decomposed into sub-populations identified by which
+magneto-sensitive fluorescent variant is expressed. To perform the decomposition,
+we trained the machine learning classifier XGBoost [68] on the dynamic data (i.e.
+fluorescence versus time) used to generate Fig. 4 B, and (without further training)
+this was used to classify the cells in Fig. 4 B. The ratio of the two variants by classi-
+fication was R5 : ML2 = 0.9 : 1, which likely differs from the anticipated 1 : 1 ratio
+both due to classifier accuracy as well as typical measurement errors expected from
+use of OD600 to quantify cell counts [69]. Unlike the data shown in Fig. 2, here all
+single cell MFE traces were normalised (on a per-cell basis), meaning the classifier
+only utilises the relative shape of the curves and not the magnitude of the MFE,
+and so is robust to noise or offset in the absolute brightness of the signal, as might
+be caused by scattering or autofluorescence (which pose practical limits on many
+sensing applications as described in S1.22). Future application of this sub-population
+labelling technique would benefit from engineering of variants with greater variation
+in dynamics such that the separation of histograms (as in Fig. 4 B,C) is significantly
+greater than each population’s intracellular variability.
+Using a microfluidic setup (see S1.5), we further investigated the intracellular vari-
+ability of MFP variants, and demonstrate the possibility of lock-in detection in weak
+signal environments. Cells expressing EGFP [70], and cells co-expressing mCherry [71]
+with very weak MagLOV expression (predicted MagLOV expression levels ∼ 0.04%
+10
+
+--- PAGE 11 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+A D 450nm Illumination 565nm Illumination H
++
+B
+E F G
+C
+Fig. 4 Multiplexing and Lock-in Applications using MFE. A. Illustration of the preparation
+of multiple variants on a coverslip. For this application, AsLOV R5 and MagLOV 2 were expressed in
+MG1655 cells using a strong RBS and constitutive promoter (see SI S1.1). B. Exponential curves with
+timescale parameter τ were fit to the MFE of each cell in each field-of-view. In B measurement of separate
+populations illustrates MagLOV 2 has a greater MFE saturation timescale τ than that of an earlier
+variant AsLOV R5. C. Next, the populations were mixed in an equal ratio (determined by OD600). A
+classifier (XGBoost [68]) was trained on the time-series data used to create B, and then used to classify
+the data in C. Prior to training, and for classification, the MFE response (∆I/I off) curves (sketched in
+A) of each cell were normalised to range from 0 to 1. D. Schematic illustration of the microfluidic setup.
+For the purpose of demonstrating the utility of lock-in in this experiment, cells were engineered to weakly
+express MagLOV and to co-express mCherry as a control. These cells were mixed with cells expressing
+only EGFP, such that we could demonstrate isolating MagLOV cells from other, non-magnetic responsive
+fluorescent reporters in the same spectral range, and under conditions where MagLOV produces only a
+small signal. The microfluidic chip is composed of two rows of trenches (vertical lines) fed by a central
+channel bringing fresh media into the system and carrying excess cells out. E. Cropped view of single
+trenches, with cells circled in red as identified by a cell-segmentation algorithm (S1.16). F. Time-series
+of the 450 nm illumination fluorescence response for the individual cells depicted in E over time, as a
+magnetic field B0 = 10 mT is switched on and off (red line). Both the traces for each cell in the trench
+(grey lines), and the average trace over all the cells in the trench (black line) are shown. G. Confusion
+scatter plots for classifying whether cells express MagLOV or EGFP based on magnetic response, taking
+the mCherry 565 nm fluorescence (red) as ground-truth and using the MFE lock-in value (S1.16) (green)
+as the predictor. Top left quadrant are false negatives, top right quadrant are true positives, bottom
+left quadrant are true negatives, and bottom right quadrant are false positives. The balanced accuracy
+by cells and by trenches is 0.99, see S1.23 for classification data. H. The standard deviation σ of the
+lock-in values in G is calculated between cells in each trench (blue histogram) and between all cells in
+all trenches (mean value in red dashed line).
+of that in multiplexing experiments above, SI S1.4 for details) were mixed and loaded
+into a microfluidic “mother machine” chip consisting of evenly spaced trenches, which
+after a few hours of growth are each filled only with cells whose ancestor is the cell at
+the closed end of the trench (i.e. they may be considered clonal) [Fig. 4 D]. The cells
+11
+
+--- PAGE 12 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+were imaged using the same widefield fluorescence microscopy setup as described pre-
+viously. Using MFE-based lock-in detection [64], we found that MagLOV cells could be
+identified distinctly from EGFP with balanced accuracy ∼ 0.99 (using mCherry as a
+ground truth), with accuracy improving when averaging over a trench compared to dis-
+tinguishing single cells [Fig. 4 E-G]. This approach allows variability to be attributed
+to inter-clonal or intra-clonal sources; we observe that mean intra-trench variability
+(quantified by standard deviation over 5-8 cells in the trench) is approximately half
+that of the variability over all MagLOV-positive cells [Fig. 4 H]. This suggests approx-
+imately one quarter of the total variance arises from intra-clonal noise sources (e.g.
+phenotypic variability over 2-3 generations, camera and accompanying measurement
+noise), with inter-clonal sources (longer term phenotypic variability, variation in local
+environment) contributing the remaining three quarters.
+5.2 Spatial Localisation
+Methods for the spatial localisation of fluorescent signals in biological samples such
+as cell cultures and tissue samples are of significant interest for both diagnostics
+and treatment development [72, 73]. However, techniques based on localisation using
+fluorescence, for example fluorescent modulated tomography (FMT), are challenging
+due to the inherent scattering and absorbing nature of tissue, and the requirement
+to localise the fluorescence via detailed modelling and inversion of the optical signal
+[74, 75]. As such, we sought to explore whether MagLOV could be employed as a
+fluorescent marker localised by optically detected magnetic resonance imaging.
+First, we tested localising MagLOV in the widefield microscope setup, using a
+permanent magnet to vary the resonance condition across the field of view [Fig. 5 A].
+The sequence of images acquired during a RF B frequency sweep was subsequently
+1
+integrated over cross-sections in which the B field is approximately constant, yield-
+0
+ing an image [Fig. 5 B] where the frequency of peak response (y-axis) denotes the
+position in space along the z-axis, which varies across a 0.5 mm field-of-view as
+anticipated for a field gradient of 1 mT/mm.
+Next, we converted a preclinical MRI 28 mm diameter “Birdcage” RF coil, used
+for creating a spatially highly homogeneous B RF field at 500 MHz, into a novel
+1
+optically detected fluorescence MRI instrument via integration of a fibre-coupled
+illumination system and imaging using a photodiode ([Fig. 5 C,D] and S1.20). Note
+that the photodiode is in effect a ‘single-pixel’ detector, meaning it collects no
+spatial information and directional scattering of light would cause no reduction in
+information of final signal (apart from a possible decrease in absolute brightness).
+We used a permanent neodymium rare-earth magnet to impose a static magnetic
+field, B , which varied linearly along the z-axis with a gradient strength of approxi-
+0
+mately 0.95 T m−1 at the RF isocentre of the coil used. The imaging isocentre is both
+spatially the centre of the RF coil’s sensitive area and was chosen to be at 17.8 mT
+corresponding to an ESR Larmor frequency of f ∼ 500 MHz, the coil’s resonant
+frequency. The magnetic field was modulated axially by a Helmholtz coil such that
+B = Bmagnet(z) + BHelmholtz(t) where t is time. By varying the Helmholtz coil
+z z z
+12
+
+--- PAGE 13 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+A C Longpass filter x2 Quartz rod 40 cm3 PDMS E
+z
+Magnet
+S N
+Photodiode
+MagLOV cells
+Antenna
+embedded
+Sample
+LED Shortpass filter Optical fibers
+B
+Helmholtz coil
+D
+Birdcage
+coil
+F
+z
+Permanent
+magnet
+z-position (mm)
+Fig. 5 Spatial Localisation using ODMR. A. Schematic of the widefield setup for demonstrating
+localisation of cells in a 2D plane. The permanent magnet creates an approximately linear gradient field
+B0 oriented in the z-axis, that is perpendicular to the radio-frequency B1 field (which rotates at the
+Larmor frequency radially around z) generated by the RF coil. The radiofrequency of B1 is scanned while
+the entire field-of-view is imaged. B. Subsequently, the images are divided into regions (e.g. highlighted
+in red in A.) and integrated over that region. The integrated brightness vs. frame number (i.e. frequency)
+forms a 1-dimensional spatial map - in this case the sample is present in the entire field of view thus we
+see a diagonal line, shifting by ∼ 14 MHz over the 0.5 mm field of view as anticipated for the 1 mT/mm
+field gradient. C, D. Schematic of the custom-built MRI setup illustrating the optical illumination and
+collection paths (C.), and the magnetic field gradient inside the resonant MRI coil (D.). See Fig. S17
+for photographs. E, F. We embedded cells expressing MagLOV 2 fast (chosen for its ODMR contrast,
+fast saturation, and low overall brightness to make detection challenging) into a PDMS sample at two
+different positions along the coil axis, separately (E.) and simultaneously (F.). Lock-in ODMR detection
+was used to locate the samples along the coil axis. The red and blue curves are the measured data, and
+grey shaded regions are after processing that data with a de-convolution. The location of the samples
+is clearly identifiable on their own, and resolvable via deconvolution together. Against a ground truth
+separation of 7.5 mm, and assuming the measured field gradient of 0.95 mT/mm is uniform within
+the coil, deconvolved individual samples had a calculated peak separation of 6.6 mm and the combined
+sample 6.1 mm. Using the individual sample data to calibrate this measurement yields a two-sample
+distance estimate of ∼6.9 mm. Note that the de-convolution makes no assumptions about the number
+or location of peaks, only an estimated point spread function is required as input – which is the known
+ESR linewidth here.
+current between ±1 A, we were able to shift the effective magnetic field by ±5.87 mT
+around the resonant condition, providing a total field-of-view of approximately 12 mm
+along the gradient direction (see S1.20 for a detailed calculation). The device is
+therefore able to scan spatially in one dimension as the Larmor frequency remains
+fixed at f = γ¯ B (z, t), where different spatial positions are brought into resonance
+e z
+through current modulation while maintaining fixed RF excitation.
+13
+
+--- PAGE 14 ---
+As the B field is swept, the B field is switched on and off such that the ODMR
+0 1
+contrast can be detected via lock-in detection. To simulate a 3D volumetric sam-
+ple, we cast a 40 cm3 volume of PDMS (matching the region of uniformity of the
+RF coil) with empty cylinders of 0.4 mm diameter embedded in it perpendicular
+to the B gradient and separated in z by 7.5 mm. We filled these cylinders with
+0
+cells expressing MagLOV 2 fast, measuring both at different depths individually and
+together; we found that good localisation could be achieved when isolating a sin-
+gle sample (Fig. 5 E), and despite an increase in noise, deconvolution of the signal
+enabled two cylinders at different depths to be simultaneously localised (Fig. 5 F)
+to within ∼ 0.6 mm of a calibrated ground truth. We note that the generation of
+homogeneous RF fields at ∼ 500 MHz within living systems (including humans) is an
+active area of research with known working designs for different species and anatomies
+[76–78], and that the continuous-wave nature of this experiment avoids the need to
+undertake a pulsed ESR experiment within the short relaxation lifetimes inherent to
+spin-correlated radical pairs at high temperature. In this way, our approach forms a
+novel alternative method for spatially-resolved and scattering-insensitive sensing of
+genetically-encodable fluorescent proteins.
+5.3 Microenvironment Sensing
+A B
+Gd Gd
+B
+Data
+Gd
+[Gadobutrol] (M)
+|
+|
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Fig. 6 Local Spin Environment Sensing using MFE. A. The MFE contrast of purified
+MagLOV 2 fast is measured at varying concentrations of the paramagnetic contrast agent Gadobutrol
+(see S1.21 for experimental setup), demonstrating an reciprocal dependence on concentration, consistent
+with spin relaxation and indicating that MagLOV is sensitive to its surrounding spin environment. B.
+The MFE time trace is shown for three points on the dose dependence curve of A. In general, we observed
+significantly lowered MFE for purified protein than in cells, see SI S1.12 for further data.
+We next sought to determine whether MagLOV could function as a quantum
+sensor of its local environment. Although FMN is bound within the protein scaf-
+fold, we hypothesised that it might exhibit magneto-optical properties that depend
+acutely on nearby paramagnetic species, analogous to nitrogen-vacancy (NV) centres
+in nanodiamond-based sensing approaches [4, 79, 80]. To test this we diluted puri-
+fied MagLOV 2 fast samples to 3.7 µM in solutions containing the paramagnetic
+contrast agent Gadolinium (total spin S = 7/2; Gd3+ chelated as the MRI contrast
+14
+
+--- PAGE 15 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+agent Gadobutrol). We anticipated that these freely diffusing paramagnetic species
+would act like diffusing point dipoles, modulate the dipolar interactions of the radical
+pair, and lead to enhanced relaxation and characteristic attenuation of the MFE con-
+trast. This hypothesis was confirmed by our measurements which show that, despite
+the constrained cofactor geometry, MagLOV exhibits a clear dose-dependent reduc-
+tion in MFE signal with increasing paramagnetic ion impurity concentration. We
+note that there was no visual change in the microscopy images, nor any Gadobutrol
+concentration-dependent difference in absolute brightness of the sample, indicating the
+chelated Gadolinium did not cause protein denaturation or aggregation, or FMN dis-
+sociation. More quantitatively, paramagnetic impurities can be modelled as stochastic
+point dipoles that modify the T or T relaxation rates in radical pair kinetics [81],
+1 2
+thereby changing the contrast. We therefore anticipated that a characteristic timescale
+for this process, τ , would scale as τ ≈ 1 + (cid:0) 1 + R[Gd3+] (cid:1)−1 where k is a
+kSTD T STD
+stochastic decoherence rate, T is a semiempirical T or T relaxation time, and R the
+1 2
+effective relaxivity of the paramagnetic impurity. For a freely diffusing paramagnetic
+impurity, we expect the normalised spectral density function to contain a molecular
+rotational contribution term ∼ k T /8πd3η from Stoke’s law, and therefore, we expect
+B
+contrast to fit a functional form ∼ (a[x] + b)−1+c, and indeed this is matched in Fig. 6.
+Overall these results imply MagLOV can be used as an in situ, in vivo quantum sen-
+sor which, analogous to other quantum sensing modalities, opens possible applications
+as a sensor of the cellular microenvironment.
+6 Discussion
+Directed evolution, enabled by straightforward fluorescence screening, has proved to
+be a powerful technique to engineer proteins exhibiting magneto-sensitive responses.
+The advent of stable, highly responsive magneto-sensitive proteins represents a
+paradigm shift; transitioning from quantum biological systems studied primarily for
+scientific interest toward engineerable tools with potential for widespread application.
+Previously existing natural and engineered proteins (typically designed as model
+representatives of the cryptochrome) exhibited comparatively small responses to
+magnetic fields, typically required sophisticated experimental apparatus for study,
+did not exhibit measurable MFEs in living cells, were prone to rapid light-induced
+degradation, and were therefore unsuitable for biotechnological applications or high-
+throughput setups required for directed evolution [37, 40, 62]. Furthermore, compared
+with other candidates for quantum biological sensing, two unique advantages of a
+protein-based system are (a) that it is configurable: significant engineering improve-
+ments can be made (relatively simply) by changing the DNA encoding the protein,
+and (b) that it can be endogenously expressed, enabling coupling of their expression
+to diverse genetic or chemical signals. MFPs therefore are the best of both worlds,
+enabling sensitive quantum measurements while also being highly amenable to engi-
+neering and cellular integration.
+Using this system for magnetic resonance measurements enables a host of applica-
+tions. First, modulating MagLOV fluorescence by applying a time-varying magnetic
+15
+
+--- PAGE 16 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+field enables multiplexing and lock-in detection. Multiplexing can enable dramatic
+expansion in the number of fluorescent reporters that can be distinguished in a single
+experiment. Meanwhile, lock-in could enable fluorescent protein measurements to be
+performed where previously not possible due to poor signal quality, for example if only
+small quantities of a fluorescent marker can be produced, or in tissue measurements
+where autofluorescence and scattering are limiting factors [26, 64, 82, 83]. Second, we
+demonstrate that using ODMR it is possible to spatially localise fluorescence signals
+in a three-dimensional volume, utilising the fact that resonance only occurs when the
+required conditions are met by (orthogonally controllable and tissue-penetrating) RF
+and magnetic fields. Finally, magnetic resonance sensing can be used to determine
+the presence of molecular species creating local magnetic noise in our protein’s envi-
+ronment. This could be used to measure the presence of free radicals or paramagnetic
+metalloproteins, both critical to a number of physiological processes [80].
+While the properties of the MFPs we generated are far superior to previously stud-
+ied proteins that exhibit MFEs (S1.17.4), their optimisation is by no means complete.
+Much like fluorescent proteins, we expect MFPs may be engineered to make general
+improvements, such as to solubility, photostability, spectral response, and quantum-
+yield (see S1.17.4), as well as further improving their MFE/ODMR properties. There
+also remains significant opportunity for mechanistic investigation utilising the wide
+array of techniques previously applied to biological systems exhibiting MFEs and ESR
+[40, 44, 47, 55, 84, 85]. Crucially, mechanistic understanding and high throughput bio-
+engineering (similar to and more advanced than we demonstrate here) can go hand in
+hand - for instance, enabling the creation of rational design tools that can optimise
+MFE/ODMR properties for a specific application. Finally, we hope that the devel-
+opment of MFPs can serve as the starting point for a novel class of magnetically
+controlled biological actuators, whereby application of a local magnetic field can be
+be coupled to downstream cellular effects – such a technology would be of significant
+biomedical and biotechnological interest.
+Supplementary information.
+•
+SI.pdf
+Acknowledgements. The authors would like to thank Kevin Henbest, Emil Vatai
+and Luca Gerhards for helpful discussions, Daniel Cubbin for help with the UV-Vis
+characterisation, and Islay Robertson and Phillip Reineck for assistance with proof of
+concept experiments. Carolyn Carr and Greg Mazur graciously lent us RF equipment.
+The protein structure in Fig. 1 was rendered using ChimeraX [86].
+The EcoFlex kit was a gift from Paul Freemont (Addgene kit #1000000080) [87].
+Declarations
+GA and SS were supported by funding from the Biotechnology and Biological Sci-
+ences Research Council (UKRI-BBSRC) [grant number BB/T008784/1]. JJ and VTF
+were supported by funding from the Engineering and Physical Sciences Research
+16
+
+--- PAGE 17 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Council (UKRI-EPSRC) [grant number EP/W524311/1]. IK and HS are supported in
+part by the UKRI-EPSRC under the EEBio Programme Grant, EP/Y014073/1, and
+EP/X017982/1. RH is supported by funding from the UKRI-EPSRC [grant number
+EP/Y034791/1] ASˇ, LMA and CRT are supported by the European Research Council
+under the European Union’s Horizon 2020 Research and innovation programme, Grant
+Agreement No. 810002, Synergy Grant: ‘QuantumBirds’, CRT thanks the US Army.
+JJM would like to acknowledge support from the Novo Fonden (NNF21OC0068683).
+HS recognises support from the Philip Leverhulme Prize.
+Data availability. The experimental data and that support the findings of this
+study are available in Zenodo with the identifier 10.5281/zenodo.14500235. Plasmid
+sequencing data have been made available on the European Nucleotide Archive (ENA)
+with the identifier PRJEB83586. Protein sequences have been submitted to UniProt
+and will be made available pending review.
+Unique biological materials. All biological materials (bacterial cells, plasmids)
+are available upon request.
+Author contribution.
+• Gabriel Abrahams - conceptualisation, development of ODMR setup, development
+of widefield MFE setup, experimental measurements, analysis, interpretation
+• Vincent Spreng - sample preparation, widefield MFE measurements, cloning plas-
+mids and strains (post directed evolution) strategy and execution
+• Ana Sˇtuhec - photochemical and spectroscopic characterisation, bulk MFE mea-
+surements, analysis, interpretation
+• Robin Henry - sample preparation, widefield MFE and ODMR measurements,
+cloning plasmids and strains(post directed evolution) strategy and execution,
+purified protein sample quantification
+• Idris Kempf - microscope platform development, performing microfluidics experi-
+ments, analysis for microfluidics experiments
+• Jessica James - microscope platform development, carried out performing microflu-
+idics experiments, analysis for microfluidics experiments
+• Kirill Sechkar - microfluidics platform development, performing microfluidics exper-
+iments
+• Scott Stacey - cloning plasmids and strains (post directed evolution) strategy and
+execution, figure preparation
+• Vicente Trelles-Fernandez - cloning plasmids and strains (post directed evolution)
+strategy and execution
+• Lewis M. Antill - spin dynamics simulations, analysis, interpretation
+• Christiane R. Timmel - project co-ordination, analysis, supervision
+• Jack J. Miller - design and development of imaging experiments, MRI hardware,
+analysis, interpretation.
+• Maria Ingaramo - variant generation by directed evolution
+• Andrew York - conceptualisation of MFE experiment, project co-ordination
+• Jean-Philippe Tetienne - preliminary experiments, analysis
+• Harrison Steel - project co-ordination and conceptualisation, development of
+microscopy setup, supervision
+17
+
+--- PAGE 18 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+References
+[1] Sukumar, U.K., Natarajan, A., Massoud, T.F., Paulmurugan, R.: Applications of
+fluorescent protein-based sensors in bioimaging. In: Cheng, Z. (ed.) Fluorescent
+Imaging in Medicinal Chemistry, pp. 149–183. Springer, Cham (2020). https:
+//doi.org/10.1007/7355 2019 90
+[2] Crone, D.E., Huang, Y.-M., Pitman, D.J., Schenkelberg, C., Fraser, K., Macari,
+S., Bystroff, C., Crone, D.E., Huang, Y.-M., Pitman, D.J., Schenkelberg, C.,
+Fraser, K., Macari, S., Bystroff, C.: GFP-Based Biosensors. In: State of the Art in
+Biosensors - General Aspects. IntechOpen, ??? (2013). https://doi.org/10.5772/
+52250
+[3] Simpson, D.A.: Quantum probes for biology: Unlocking single molecule dynamics.
+Nano Today 24, 7–9 (2019) https://doi.org/10.1016/j.nantod.2018.12.001
+[4] Segawa, T.F., Igarashi, R.: Nanoscale quantum sensing with Nitrogen-Vacancy
+centers in nanodiamonds – A magnetic resonance perspective. Progress in Nuclear
+Magnetic Resonance Spectroscopy 134–135, 20–38 (2023) https://doi.org/10.
+1016/j.pnmrs.2022.12.001
+[5] Ishiwata, H., Song, J., Shigeno, Y., Nishimura, K., Yanai, N.: Molecular Quantum
+Nanosensors Functioning in Living Cells. ChemRxiv (2025). https://doi.org/10.
+26434/chemrxiv-2025-k7db1-v2
+[6] Braun, T., Drescher, M., Summerer, D.: Expanding the Genetic Code for Site-
+Directed Spin-Labeling. International Journal of Molecular Sciences 20(2), 373
+(2019) https://doi.org/10.3390/ijms20020373
+[7] Kerpal, C., Richert, S., Storey, J.G., Pillai, S., Liddell, P.A., Gust, D., Macken-
+zie, S.R., Hore, P.J., Timmel, C.R.: Chemical compass behaviour at microtesla
+magnetic fields strengthens the radical pair hypothesis of avian magnetore-
+ception. Nature Communications 10(1), 3707 (2019) https://doi.org/10.1038/
+s41467-019-11655-2
+[8] Chauvir´e, T., Chandrasekaran, S., Dunleavy, R., Freed, J.H., Crane, B.R.:
+Flavoproteins as native and genetically encoded spin probes for in cell ESR spec-
+troscopy. Nature Communications 16(1), 5406 (2025) https://doi.org/10.1038/
+s41467-025-60623-6
+[9] Hayward, R.F., Lazzari-Dean, J.R., York, A.G., Ingaramo, M.: GFP Magnetoflu-
+orescence
+[10] Moore, T.A., Kwiram, A.L.: Investigation of the triplet state of flavines and
+flavoproteins by optical detection of magnetic resonance. Biochemistry 13(26),
+5403–5407 (1974) https://doi.org/10.1021/bi00723a025
+18
+
+--- PAGE 19 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+[11] Moehl, K.W., Lous, E.J., Hoff, A.J.: Low-power, low-field RYDMAR of the pri-
+mary radical pair in photosynthesis. Chemical Physics Letters 121(1), 22–27
+(1985) https://doi.org/10.1016/0009-2614(85)87147-5
+[12] Smith, J.P., Trifunac, A.D.: Optically detected time-resolved electron param-
+agnetic resonance. Excited states and radical ion kinetics in pulse radiolysis of
+aromatics in cyclohexane solutions. The Journal of Physical Chemistry 85(12),
+1645–1653 (1981) https://doi.org/10.1021/j150612a010
+[13] Smith, J.P., Trifinac, A.D.: Effect of solute deuteration on time-resolved optically
+detected EPR of radical ion pairs in pulse radiolysis. Chemical Physics Letters
+83(1), 195–198 (1981) https://doi.org/10.1016/0009-2614(81)80318-1
+[14] Melekhov, V.I., Anisimov, O.A., Saik, V.O., Molin, Yu.N.: On optically detected
+ESR spectra from radical cations of liquid hydrocarbon solvents. Chemical
+Physics Letters 112(2), 106–110 (1984) https://doi.org/10.1016/0009-2614(84)
+85002-2
+[15] Grant, A.I., McLauchlan, K.A., Nattrass, S.R.: An experimental method for
+the study of the effects of magnetic and microwave fields on radical recombina-
+tion reactions. Molecular Physics 55(3), 557–569 (1985) https://doi.org/10.1080/
+00268978500101541
+[16] Desrosiers, M.F., Trifunac, A.D.: Detection of aromatic radical cation aggre-
+gates in pulse radiolysis in alkane solutions. Time-resolved fluorescence detected
+magnetic resonance. Chemical Physics Letters 121(4), 382–385 (1985) https:
+//doi.org/10.1016/0009-2614(85)87198-0
+[17] Stass, D.V., Woodward, J.R., Timmel, C.R., Hore, P.J., McLauchlan, K.A.:
+Radiofrequency magnetic field effects on chemical reaction yields. Chemical
+Physics Letters 329(1), 15–22 (2000) https://doi.org/10.1016/S0009-2614(00)
+00980-5
+[18] Woodward, J.R., Timmel, C.R., Hore, P.J., McLAUCHLAN, K.A.: Low field
+RYDMR: Effects of orthogonal static and oscillating magnetic fields on radical
+recombination reactions. Molecular Physics 100(8), 1181–1186 (2002) https://
+doi.org/10.1080/00268970110109961
+[19] Batchelor, S.N., McLauchlan, K.A., Shkrob, I.A.: Radical Pair Phenomena in
+Exciplex and Excited Radical Systems*. Zeitschrift fu¨r Physikalische Chemie
+180(1-2), 9–31 (1993) https://doi.org/10.1524/zpch.1993.180.Part 1 2.009
+[20] Atkins, P.W., Dobbs, A.J., McLauchlan, K.A.: Electron spin emission spectra
+from pairs of radicals. Chemical Physics Letters 22(1), 209–211 (1973) https:
+//doi.org/10.1016/0009-2614(73)80572-X
+19
+
+--- PAGE 20 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+[21] Buckley, C.D., Hunter, D.A., Hore, P.J., McLauchlan, K.A.: Electron spin reso-
+nance of spin-correlated radical pairs. Chemical Physics Letters 135(3), 307–312
+(1987) https://doi.org/10.1016/0009-2614(87)85162-X
+[22] Matysik, J., Gerhards, L., Theiss, T., Timmermann, L., Kurle-Tucholski, P., Mus-
+abirova, G., Qin, R., Ortmann, F., Solov’yov, I.A., Gulder, T.: Spin Dynamics
+of Flavoproteins. International Journal of Molecular Sciences 24(9), 8218 (2023)
+https://doi.org/10.3390/ijms24098218
+[23] Halavaty, A.S., Moffat, K.: N- and C-Terminal Flanking Regions Modulate Light-
+Induced Signal Transduction in the LOV2 Domain of the Blue Light Sensor
+Phototropin 1 from Avena sativa,. Biochemistry 46(49), 14001–14009 (2007)
+https://doi.org/10.1021/bi701543e
+[24] Timmel, C.R., Henbest, K.B.: A Study of Spin Chemistry in Weak Mag-
+netic Fields. Philosophical Transactions: Mathematical, Physical and Engineering
+Sciences 362(1825), 2573–2589 (2004) 4142313
+[25] Finkler, A., Dasari, D.: Quantum Sensing and Control of Spin-State Dynamics
+in the Radical-Pair Mechanism. Physical Review Applied 15(3), 034066 (2021)
+https://doi.org/10.1103/PhysRevApplied.15.034066
+[26] Marriott, G., Mao, S., Sakata, T., Ran, J., Jackson, D.K., Petchprayoon, C.,
+Gomez, T.J., Warp, E., Tulyathan, O., Aaron, H.L., Isacoff, E.Y., Yan, Y.: Optical
+lock-in detection imaging microscopy for contrast-enhanced imaging in living cells.
+Proceedings of the National Academy of Sciences 105(46), 17789–17794 (2008)
+https://doi.org/10.1073/pnas.0808882105
+[27] Henbest, K.B., Kukura, P., Rodgers, C.T., Hore, P.J., Timmel, C.R.: Radio
+Frequency Magnetic Field Effects on a Radical Recombination Reaction: A Diag-
+nostic Test for the Radical Pair Mechanism. Journal of the American Chemical
+Society 126(26), 8102–8103 (2004) https://doi.org/10.1021/ja048220q
+[28] Scholten, S.C., Abrahams, G.J., Tetienne, J.-P.: Magnetic photocurrent imag-
+ing of open-circuit current paths in silicon photovoltaic devices with a widefield
+nitrogen-vacancy microscope. Manuscript in preparation (2021)
+[29] Levine, E.V., Turner, M.J., Kehayias, P., Hart, C.A., Langellier, N., Trubko,
+R., Glenn, D.R., Fu, R.R., Walsworth, R.L.: Principles and techniques of the
+quantum diamond microscope. Nanophotonics 8(11), 1945–1973 (2019) https:
+//doi.org/10.1515/nanoph-2019-0209
+[30] Aslam, N., Zhou, H., Urbach, E.K., Turner, M.J., Walsworth, R.L., Lukin, M.D.,
+Park, H.: Quantum sensors for biomedical applications. Nature Reviews Physics
+5(3), 157–169 (2023) https://doi.org/10.1038/s42254-023-00558-3
+[31] Ishiwata, H., Watanabe, H.C., Hanashima, S., Iwasaki, T., Hatano, M.: Label-Free
+20
+
+--- PAGE 21 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Phase Change Detection of Lipid Bilayers Using Nanoscale Diamond Magnetom-
+etry. Advanced Quantum Technologies 4(4), 2000106 (2021) https://doi.org/10.
+1002/qute.202000106
+[32] McCloskey, D.J., Dontschuk, N., Stacey, A., Pattinson, C., Nadarajah, A., Hall,
+L.T., Hollenberg, L.C.L., Prawer, S., Simpson, D.A.: A diamond voltage imaging
+microscope. Nature Photonics 16(10), 730–736 (2022) https://doi.org/10.1038/
+s41566-022-01064-1
+[33] Antill, L.M., Woodward, J.R.: Flavin Adenine Dinucleotide Photochemistry Is
+Magnetic Field Sensitive at Physiological pH. The Journal of Physical Chemistry
+Letters 9(10), 2691–2696 (2018) https://doi.org/10.1021/acs.jpclett.8b01088
+[34] Antill, L.M., Beardmore, J.P., Woodward, J.R.: Time-resolved optical absorption
+microspectroscopy of magnetic field sensitive flavin photochemistry. Review of
+Scientific Instruments 89(2), 023707 (2018) https://doi.org/10.1063/1.5011693
+[35] Dodson, C.A., Wedge, C.J., Murakami, M., Maeda, K., Wallace, M.I., Hore,
+P.J.: Fluorescence-detected magnetic field effects on radical pair reactions from
+femtolitre volumes. Chemical Communications 51(38), 8023–8026 (2015) https:
+//doi.org/10.1039/C5CC01099C
+[36] Evans, E.W., Li, J., Storey, J.G., Maeda, K., Henbest, K.B., Dodson, C.A., Hore,
+P.J., Mackenzie, S.R., Timmel, C.R.: Sensitive fluorescence-based detection of
+magnetic field effects in photoreactions of flavins. Physical Chemistry Chemical
+Physics 17(28), 18456–18463 (2015) https://doi.org/10.1039/C5CP00723B
+[37] Bialas, C., Barnard, D.T., Auman, D.B., McBride, R.A., Jarocha, L.E., Hore, P.J.,
+Dutton, P.L., Stanley, R.J., Moser, C.C.: Ultrafast flavin/tryptophan radical pair
+kinetics in a magnetically sensitive artificial protein. Physical chemistry chemical
+physics : PCCP 21(25), 13453 (2019) https://doi.org/10.1039/c9cp01916b
+[38] Antill, L.M., Takizawa, S.-y., Murata, S., Woodward, J.R.: Photoinduced flavin-
+tryptophan electron transfer across vesicle membranes generates magnetic field
+sensitive radical pairs. Molecular Physics 117(19), 2594–2603 (2019) https://doi.
+org/10.1080/00268976.2018.1524525
+[39] Kattnig, D.R., Evans, E.W., D´ejean, V., Dodson, C.A., Wallace, M.I., Mackenzie,
+S.R., Timmel, C.R., Hore, P.J.: Chemical amplification of magnetic field effects
+relevant to avian magnetoreception. Nature Chemistry 8(4), 384–391 (2016)
+https://doi.org/10.1038/nchem.2447
+[40] Evans, E.W., Dodson, C.A., Maeda, K., Biskup, T., Wedge, C.J., Timmel, C.R.:
+Magnetic field effects in flavoproteins and related systems. Interface Focus 3(5),
+20130037 (2013) https://doi.org/10.1098/rsfs.2013.0037
+[41] Xiang, K.M., Lampson, H., Hayward, R.F., York, A.G., Ingaramo, M., Cohen,
+21
+
+--- PAGE 22 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+A.E.: Mechanism of giant magnetic field effect in a red fluorescent protein. Journal
+of the American Chemical Society 147(21), 18088–18099 (2025) https://doi.org/
+10.1021/jacs.5c03997
+[42] Gravell, J., Murton, P.D.F., Pitcher, T.L., Henbest, K.B., Schmidt, J., Buffett,
+M.M., Moise, G., Gehrckens, A.S., Cubbin, D.R., Sˇtuhec, A., Antill, L.M., Par´e-
+Labrosse, O., Bassetto, M., Saberamoli, G., Xu, J., Langebrake, C., Liedvogel,
+M., Schleicher, E., Weber, S., Bart¨olke, R., Mouritsen, H., Hore, P.J., Mackenzie,
+S.R., Timmel, C.R.: Spectroscopic characterization of radical pair photochemistry
+in nonmigratory avian cryptochromes: Magnetic field effects in ggcry4a. Journal
+of the American Chemical Society (2025) https://doi.org/10.1021/jacs.4c14037
+[43] Xu, J., Jarocha, L.E., Zollitsch, T., Konowalczyk, M., Henbest, K.B., Richert, S.,
+Golesworthy, M.J., Schmidt, J., D´ejean, V., Sowood, D.J.C., Bassetto, M., Luo,
+J., Walton, J.R., Fleming, J., Wei, Y., Pitcher, T.L., Moise, G., Herrmann, M.,
+Yin, H., Wu, H., Bart¨olke, R., K¨asehagen, S.J., Horst, S., Dautaj, G., Murton,
+P.D.F., Gehrckens, A.S., Chelliah, Y., Takahashi, J.S., Koch, K.-W., Weber, S.,
+Solov’yov, I.A., Xie, C., Mackenzie, S.R., Timmel, C.R., Mouritsen, H., Hore,
+P.J.: Magnetic sensitivity of cryptochrome 4 from a migratory songbird. Nature
+594(7864), 535–540 (2021) https://doi.org/10.1038/s41586-021-03618-9
+[44] D´ejean, V., Konowalczyk, M., Gravell, J., Golesworthy, M.J., Gunn, C., Pompe,
+N., Elst, O.F.V., Tan, K.-J., Oxborrow, M., Aarts, D.G.A.L., Mackenzie, S.R.,
+Timmel, C.R.: Detection of magnetic field effects by confocal microscopy. Chem-
+ical Science 11(30), 7772–7781 (2020) https://doi.org/10.1039/D0SC01986K
+[45] Meng, K., Nie, L., Berger, J., Grafenstein, N.R., Einholz, C., Rizzato, R., Schle-
+icher, E., Bucher, D.B.: Optically Detected and Radio Wave-Controlled Spin
+Chemistry in Cryptochrome. bioRxiv (2025). https://doi.org/10.1101/2025.04.
+16.649006
+[46] Richter, G., Weber, S., R¨omisch, W., Bacher, A., Fischer, M., Eisenreich, W.:
+Photochemically Induced Dynamic Nuclear Polarization in a C450A Mutant of
+the LOV2 Domain of the Avena sativa Blue-Light Receptor Phototropin. Journal
+of the American Chemical Society 127(49), 17245–17252 (2005) https://doi.org/
+10.1021/ja053785n
+[47] Schleicher, E., Kowalczyk, R.M., Kay, C.W.M., Hegemann, P., Bacher, A., Fis-
+cher, M., Bittl, R., Richter, G., Weber, S.: On the Reaction Mechanism of
+Adduct Formation in LOV Domains of the Plant Blue-Light Receptor Pho-
+totropin. Journal of the American Chemical Society 126(35), 11067–11076 (2004)
+https://doi.org/10.1021/ja049553q
+[48] Kothe, G., Lukaschek, M., Link, G., Kacprzak, S., Illarionov, B., Fischer, M.,
+Eisenreich, W., Bacher, A., Weber, S.: Detecting a new source for photochemi-
+cally induced dynamic nuclear polarization in the LOV2 domain of phototropin
+by magnetic-field dependent (13)C NMR spectroscopy. The Journal of Physical
+22
+
+--- PAGE 23 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+Chemistry. B 118(40), 11622–11632 (2014) https://doi.org/10.1021/jp507134y
+[49] Brosi, R., Illarionov, B., Heidinger, L., Kim, R.-R., Fischer, M., Weber, S., Bacher,
+A., Bittl, R., Schleicher, E.: Coupled Methyl Group Rotation in FMN Radicals
+Revealed by Selective Deuterium Labeling. The Journal of Physical Chemistry
+B, 9–11331 (2020) https://doi.org/10.1021/acs.jpcb.9b11331
+[50] Feder, J.S., Soloway, B.S., Verma, S., Geng, Z.Z., Wang, S., Kifle, B., Riendeau,
+E.G., Tsaturyan, Y., Weiss, L.R., Xie, M., Huang, J., Esser-Kahn, A., Gagliardi,
+L., Awschalom, D.D., Maurer, P.C.: A Fluorescent-Protein Spin Qubit. arXiv
+(2025). https://doi.org/10.48550/arXiv.2411.16835
+[51] Burd, S.C., Bagheri, N., Ingaramo, M., Condon, A.F., Mondal, S., Dowlat-
+shahi, D.P., Summers, J.A., Mukherjee, S., York, A.G., Wakatsuki, S., Boxer,
+S.G., Kasevich, M.: Magnetic Resonance Control of Reaction Yields through
+Genetically-Encoded Protein:Flavin Spin-Correlated Radicals in a Live Animal.
+Biophysics (2025). https://doi.org/10.1101/2025.02.27.640669
+[52] Wedge, C.J., Lau, J.C.S., Ferguson, K.-A., Norman, S.A., Hore, P.J., Timmel,
+C.R.: Spin-locking in low-frequency reaction yield detected magnetic resonance.
+Physical Chemistry Chemical Physics 15(38), 16043–16053 (2013) https://doi.
+org/10.1039/C3CP52019F
+[53] Fan, X., Myers, T.G., Sukra, B.A.D., Gabrielse, G.: Measurement of the Electron
+Magnetic Moment. Physical Review Letters 130(7), 071801 (2023) https://doi.
+org/10.1103/PhysRevLett.130.071801
+[54] Lungu, O.I., Hallett, R.A., Choi, E.J., Aiken, M.J., Hahn, K.M., Kuhlman, B.:
+Designing Photoswitchable Peptides Using the AsLOV2 Domain. Chemistry &
+Biology 19(4), 507–517 (2012) https://doi.org/10.1016/j.chembiol.2012.02.006
+[55] Maity, S., Price, B.D., Wilson, C.B., Mukherjee, A., Starck, M., Parker, D., Wil-
+son, M.Z., Lovett, J.E., Han, S., Sherwin, M.S.: Triggered Functional Dynamics
+of AsLOV2 by Time-Resolved Electron Paramagnetic Resonance at High Mag-
+netic Fields. Angewandte Chemie International Edition 62(13), 202212832 (2023)
+https://doi.org/10.1002/anie.202212832
+[56] Petrenˇc´akov´a, M., Varhaˇc, R., Koˇz´ar, T., Nemergut, M., Jancura, D., Schwer,
+M.-S., Sedl´ak, E.: Conformational properties of LOV2 domain and its C450A
+variant within broad pH region. Biophysical Chemistry 259, 106337 (2020) https:
+//doi.org/10.1016/j.bpc.2020.106337
+[57] Kay, C.W.M., Schleicher, E., Kuppig, A., Hofner, H., Ru¨diger, W., Schleicher,
+M., Fischer, M., Bacher, A., Weber, S., Richter, G.: Blue Light Perception in
+Plants: DETECTION AND CHARACTERIZATION OF A LIGHT-INDUCED
+NEUTRAL FLAVIN RADICAL IN A C450A MUTANT OF PHOTOTROPIN
+*. Journal of Biological Chemistry 278(13), 10973–10982 (2003) https://doi.org/
+23
+
+--- PAGE 24 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+10.1074/jbc.M205509200
+[58] Sakai, M., Takahashi, H.: One-electron photoreduction of flavin mononucleotide:
+time-resolved resonance raman and absorption study. Journal of Molecular
+Structure 379(1–3), 9–18 (1996) https://doi.org/10.1016/0022-2860(95)09176-9
+[59] Song, S.-H., Dick, B., Penzkofer, A.: Photo-induced reduction of flavin mononu-
+cleotide in aqueous solutions. Chemical Physics 332(1), 55–65 (2007) https:
+//doi.org/10.1016/j.chemphys.2006.11.023
+[60] Song, S.-H., Dick, B., Zirak, P., Penzkofer, A., Schiereis, T., Hegemann, P.:
+Absorption and emission spectroscopic characterisation of combined wildtype
+lov1–lov2 domain of phot from chlamydomonas reinhardtii. Journal of Photo-
+chemistry and Photobiology B: Biology 81(1), 55–65 (2005) https://doi.org/10.
+1016/j.jphotobiol.2005.06.003
+[61] Zoltowski, B.D., Chelliah, Y., Wickramaratne, A., Jarocha, L., Karki, N., Xu, W.,
+Mouritsen, H., Hore, P.J., Hibbs, R.E., Green, C.B., Takahashi, J.S.: Chemical
+and structural analysis of a photoactive vertebrate cryptochrome from pigeon.
+Proceedings of the National Academy of Sciences 116(39), 19449–19457 (2019)
+https://doi.org/10.1073/pnas.1907875116
+[62] Bialas, C., Jarocha, L.E., Henbest, K.B., Zollitsch, T.M., Kodali, G., Timmel,
+C.R., Mackenzie, S.R., Dutton, P.L., Moser, C.C., Hore, P.J.: Engineering an
+Artificial Flavoprotein Magnetosensor. Journal of the American Chemical Society
+138(51), 16584–16587 (2016) https://doi.org/10.1021/jacs.6b09682
+[63] Zollitsch, T.M., Jarocha, L.E., Bialas, C., Henbest, K.B., Kodali, G., Dutton, P.L.,
+Moser, C.C., Timmel, C.R., Hore, P.J., Mackenzie, S.R.: Magnetically Sensitive
+Radical Photochemistry of Non-natural Flavoproteins. Journal of the Ameri-
+can Chemical Society 140(28), 8705–8713 (2018) https://doi.org/10.1021/jacs.
+8b03104
+[64] Antill, L.M., Kohmura, M., Jimbo, C., Maeda, K.: Introduction of magneto-
+fluorescence fluctuation microspectroscopy for investigating quantum effects
+in biology. Nature Photonics 19(2), 178–186 (2025) https://doi.org/10.1038/
+s41566-024-01593-x
+[65] Eisenreich, W., Joshi, M., Weber, S., Bacher, A., Fischer, M.: Natural Abundance
+Solution 13C NMR Studies of a Phototropin with Photoinduced Polarization.
+Journal of the American Chemical Society 130(41), 13544–13545 (2008) https:
+//doi.org/10.1021/ja805856r
+[66] Eisenreich, W., Fischer, M., R¨omisch-Margl, W., Joshi, M., Richter, G., Bacher,
+A., Weber, S.: Tryptophan 13C nuclear-spin polarization generated by intrapro-
+tein electron transfer in a LOV2 domain of the blue-light receptor phototropin.
+Biochemical Society Transactions 37(2), 382–386 (2009) https://doi.org/10.1042/
+24
+
+--- PAGE 25 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+BST0370382
+[67] Kopka, B., Magerl, K., Savitsky, A., Davari, M.D., R¨ollen, K., Bocola, M., Dick,
+B., Schwaneberg, U., Jaeger, K.-E., Krauss, U.: Electron transfer pathways in a
+light, oxygen, voltage (LOV) protein devoid of the photoactive cysteine. Scientific
+Reports 7(1), 13346 (2017) https://doi.org/10.1038/s41598-017-13420-1
+[68] Chen, T., Guestrin, C.: XGBoost: A Scalable Tree Boosting System. In: Proceed-
+ings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery
+and Data Mining, pp. 785–794 (2016). https://doi.org/10.1145/2939672.2939785
+[69] Beal, J., Farny, N.G., Haddock-Angelli, T., Selvarajah, V., Baldwin, G.S.,
+Buckley-Taylor, R., Gershater, M., Kiga, D., Marken, J., Sanchania, V., Sison,
+A., Workman, C.T., Interlab Study Contributors: Robust estimation of bacterial
+cell count from optical density. Communications Biology 3 (2020)
+[70] Cormack, B.P., Valdivia, R.H., Falkow, S.: FACS-optimized mutants of the green
+fluorescent protein (GFP). Gene 173(1), 33–38 (1996) https://doi.org/10.1016/
+0378-1119(95)00685-0
+[71] Shaner, N.C., Campbell, R.E., Steinbach, P.A., Giepmans, B.N.G., Palmer, A.E.,
+Tsien, R.Y.: Improved monomeric red, orange and yellow fluorescent proteins
+derived from Discosoma sp. red fluorescent protein. Nature Biotechnology 22(12),
+1567–1572 (2004) https://doi.org/10.1038/nbt1037
+[72] Dang, X., Bardhan, N.M., Qi, J., Gu, L., Eze, N.A., Lin, C.-W., Kataria, S.,
+Hammond, P.T., Belcher, A.M.: Deep-tissue optical imaging of near cellular-
+sized features. Scientific Reports 9(1), 3873 (2019) https://doi.org/10.1038/
+s41598-019-39502-w
+[73] Kim, S.J., Lee, H.-Y.: In vivo molecular imaging in preclinical research.
+Laboratory Animal Research 38(1), 31 (2022) https://doi.org/10.1186/
+s42826-022-00142-3
+[74] Stuker, F., Ripoll, J., Rudin, M.: Fluorescence Molecular Tomography: Principles
+and Potential for Pharmaceutical Research. Pharmaceutics 3(2), 229–274 (2011)
+https://doi.org/10.3390/pharmaceutics3020229
+[75] Zhao, Y., Li, S., He, X., Yu, J., Zhang, L., Zhang, H., Wei, D., Wang, B., Li,
+J., Guo, H., He, X.: Liver injury monitoring using dynamic fluorescence molec-
+ular tomography based on a time-energy difference strategy. Biomedical Optics
+Express 14(10), 5298–5315 (2023) https://doi.org/10.1364/BOE.498092
+[76] Boulant, N., Mauconduit, F., Gras, V., Amadon, A., Le Ster, C., Luong, M.,
+Massire, A., Pallier, C., Sabatier, L., Bottlaender, M., Vignaud, A., Le Bihan, D.:
+In vivo imaging of the human brain with the Iseult 11.7-T MRI scanner. Nature
+Methods 21(11), 2013–2016 (2024) https://doi.org/10.1038/s41592-024-02472-7
+25
+
+--- PAGE 26 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+[77] Seo, J.-H., Chung, J.-Y.: A Preliminary Study for Reference RF Coil at 11.7 T
+MRI: Based on Electromagnetic Field Simulation of Hybrid-BC RF Coil Accord-
+ing to Diameter and Length at 3.0, 7.0 and 11.7 T. Sensors 22(4), 1512 (2022)
+https://doi.org/10.3390/s22041512
+[78] Chu, S., Gras, V., Mauconduit, F., Massire, A., Boulant, N., Gunamony, S.:
+Electromagnetic and RF pulse design simulation based optimization of an eight-
+channel loop array for 11.7T brain imaging. Magnetic Resonance in Medicine
+90(2), 770–783 (2023) https://doi.org/10.1002/mrm.29654
+[79] Steinert, S., Ziem, F., Hall, L.T., Zappe, A., Schweikert, M., G¨otz, N., Aird,
+A., Balasubramanian, G., Hollenberg, L., Wrachtrup, J.: Magnetic spin imaging
+under ambient conditions with sub-cellular resolution. Nature Communications
+4(1), 1607 (2013) https://doi.org/10.1038/ncomms2588
+[80] Radu, V., Price, J.C., Levett, S.J., Narayanasamy, K.K., Bateman-Price, T.D.,
+Wilson, P.B., Mather, M.L.: Dynamic Quantum Sensing of Paramagnetic Species
+Using Nitrogen-Vacancy Centers in Diamond. ACS Sensors 5(3), 703–710 (2020)
+https://doi.org/10.1021/acssensors.9b01903
+[81] Antill, L.M., Vatai, E.: RadicalPy: A Tool for Spin Dynamics Simulations. Journal
+of Chemical Theory and Computation 20(21), 9488–9499 (2024) https://doi.org/
+10.1021/acs.jctc.4c00887
+[82] Yang, N., Cohen, A.E.: Optical imaging through scattering media via mag-
+netically modulated fluorescence. Optics Express 18(25), 25461–25467 (2010)
+https://doi.org/10.1364/OE.18.025461
+[83] Jablonski, A.E., Hsiang, J.-C., Bagchi, P., Hull, N., Richards, C.I., Fahrni, C.J.,
+Dickson, R.M.: Signal Discrimination Between Fluorescent Proteins in Live Cells
+by Long-wavelength Optical Modulation. The journal of physical chemistry letters
+3(23), 3585–3591 (2012) https://doi.org/10.1021/jz3016414
+[84] Brosi, R., Illarionov, B., Mathes, T., Fischer, M., Joshi, M., Bacher, A., Hege-
+mann, P., Bittl, R., Weber, S., Schleicher, E.: Hindered Rotation of a Cofactor
+Methyl Group as a Probe for Protein-Cofactor Interaction. Journal of the
+American Chemical Society 132(26), 8935–8944 (2010) https://doi.org/10.1021/
+ja910681z
+[85] Hore, P.J., Mouritsen, H.: The Radical-Pair Mechanism of Magnetoreception.
+Annual Review of Biophysics 45(1), 299–344 (2016) https://doi.org/10.1146/
+annurev-biophys-032116-094545
+[86] Meng, E.C., Goddard, T.D., Pettersen, E.F., Couch, G.S., Pearson, Z.J., Morris,
+J.H., Ferrin, T.E.: UCSF ChimeraX: Tools for structure building and analysis.
+Protein Science 32(11), 4792 (2023) https://doi.org/10.1002/pro.4792
+26
+
+--- PAGE 27 ---
+bioRxiv preprint doi: https://doi.org/10.1101/2024.11.25.625143; this version posted August 21, 2025. The copyright holder for this preprint
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is
+made available under aCC-BY-NC 4.0 International license.
+[87] Moore, S.J., Lai, H.-E., Kelwick, R.J.R., Chee, S.M., Bell, D.J., Polizzi, K.M.,
+Freemont, P.S.: EcoFlex: A Multifunctional MoClo Kit for E. coli Synthetic Biol-
+ogy. ACS synthetic biology 5(10), 1059–1069 (2016) https://doi.org/10.1021/
+acssynbio.6b00031
+27

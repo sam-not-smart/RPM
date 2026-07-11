@@ -1,0 +1,412 @@
+
+
+--- PAGE 1 ---
+ARTICLE
+Received 5 Jan 2011 | Accepted 2 mar 2011 | Published 5 Apr 2011 DOI: 10.1038/ncomms1263
+Quantum interference of large organic molecules
+stefan Gerlich1, sandra Eibenberger1, mathias Tomandl1, stefan nimmrichter1, Klaus Hornberger2, Paul J. Fagan3,
+Jens Tüxen4, marcel mayor4,5 & markus Arndt1
+The wave nature of matter is a key ingredient of quantum physics and yet it defies our classical
+intuition. First proposed by Louis de Broglie a century ago, it has since been confirmed with a
+variety of particles from electrons up to molecules. Here we demonstrate new high-contrast
+quantum experiments with large and massive tailor-made organic molecules in a near-field
+interferometer. our experiments prove the quantum wave nature and delocalization of
+compounds composed of up to 430 atoms, with a maximal size of up to 60 Å, masses up to
+m = 6,910 AMU and de Broglie wavelengths down to λ = h/mv1 pm. We show that even
+dB
+complex systems, with more than 1,000 internal degrees of freedom, can be prepared in
+quantum states that are sufficiently well isolated from their environment to avoid decoherence
+and to show almost perfect coherence.
+1 University of Vienna, Vienna Center for Quantum Science and Technology, VCQ, Faculty of Physics, Boltzmanngasse 5, Vienna 1090, Austria.
+2 Max Planck Institute for the Physics of Complex Systems, Nöthnitzer Street 38, Dresden D-01187, Germany. 3 Central Research and Development
+Department, E. I. DuPont de Nemours & Co. Inc., Experimental Station, PO Box 80328, Wilmington, Delaware 19880-0328, USA. 4 Department of
+Chemistry, University of Basel, St Johannsring 19, Basel CH-4056, Switzerland. 5 Karlsruhe Institute of Technology, Institute for Nanotechnology,
+PO Box 3640, Karlsruhe D-76021, Germany. Correspondence and requests for materials should be addressed to M.A. (email: markus.arndt@univie.ac.at).
+nATuRE CommunICATIons | 2:263 | DoI: 10.1038/ncomms1263 | www.nature.com/naturecommunications 
+© 2011 Macmillan Publishers Limited. All rights reserved.
+
+
+--- PAGE 2 ---
+ARTICLE
+nATuRE CommunICATIons | DoI: 10.1038/ncomms1263
+I
+n many discussions on the foundations of physics, single-particle
+diffraction at a double slit1–4 or grating5–12 is regarded as a para-
+digmatic example for a highly non-classical feature of quantum
+mechanics, which has never been observed for objects of our mac-
+roscopic world. The quantum superposition principle has become
+of paramount importance also for the growing field of quantum
+information science13. Correspondingly, research in many labora-
+tories around the world is focusing on our understanding of the
+role of decoherence for increasingly complex quantum systems and
+possible practical or truly fundamental limits to the observation of
+quantum dynamics14,15.
+Here we report on a new leap in quantum interference with
+large organic molecules. In contrast to earlier successful experi-
+ments with internal molecular wave packets,16 our study focuses on
+the wave evolution in the centre of mass motion of the molecule
+as a whole, that is, pure de Broglie interference. We do this with
+compounds that have been customized to provide useful molecu-
+lar beams at moderate temperatures17,18. Figure 1 compares the size
+of two perfluoroalkylated nanospheres, PFNS8 and PFNS10, with
+a single C fullerene19 and it relates a single tetraphenylporphyrin Figure 1 | Gallery of molecules used in our interference study. (a) The
+60
+molecule (TPP) to its complex derivatives TPPF84 and TPPF152. fullerene C (m = 720 AMU, 60 atoms) serves as a size reference and
+60
+We demonstrate the wave nature of all these molecules in a three- for calibration purposes; (b) The perfluoroalkylated nanosphere PFns8
+grating near-field interferometer20,21 of the Kapitza-Dirac-Talbot- (C [C F ] , m = 5,672 AMU, 356 atoms) is a carbon cage with eight
+60 12 25 8
+Lau type22,23, as shown in Figure 2. perfluoroalkyl chains. (c) PFns10 (C [C F ] , m = 6,910 AMU, 430
+60 12 25 10
+atoms) has ten side chains and is the most massive particle in the set.
+Results (d) A single tetraphenylporphyrin TPP (C H n , m = 614 AMU, 78
+44 30 4
+Experimental setup. The particles are evaporated in a thermal atoms) is the basis for the two derivatives (e) TPPF84 (C H F n s ,
+84 26 84 4 4
+source. Their velocity is selected using the gravitational free-fall m = 2,814 AMU, 202 atoms) and (f) TPPF152 (C H F o n s ,
+168 94 152 8 4 4
+through a sequence of three slits. The interferometer itself consists m = 5,310 AMU, 430 atoms). In its unfolded configuration, the latter is the
+of three gratings G , G and G in a vacuum chamber at a pressure largest molecule in the set. measured by the number of atoms, TPPF152
+1 2 3
+of p < 10 − 8 mbar. The first grating is a SiN membrane with 90-nm and PFns10 are equally complex. All molecules are displayed to scale. The
+x
+wide slits arranged with a periodicity of d = 266 nm. Each slit of G scale bar corresponds to 10 Å.
+1
+imposes a constraint onto the transverse molecular position that,
+following Heisenberg’s uncertainty relation, leads to a momentum y Detector
+uncertainty. The latter turns into a growing delocalization and
+transverse coherence of the matter wave with increasing distance X
+from G . The second grating, G , is a standing laser light wave with a
+1 2
+wavelength of λ = 532 nm. The interaction between the electric laser Z G 3
+light field and the molecular optical polarizability creates a sinusoidal
+G
+potential, which phase-modulates the incident matter waves. The 2
+distance between the first two gratings is chosen such that quantum
+G S
+1 3
+interference leads to the formation of a periodic molecular density
+pattern 105 mm behind G . This molecular nanostructure is sampled
+2
+by scanning a second SiN grating (G , identical to G ) across the Lens
+x 3 1
+molecular beam while counting the number of the transmitted S 2
+particles in a quadrupole mass spectrometer (QMS).
+In extension to earlier experiments, we have added various tech- S
+1
+nological refinements: the oven was adapted to liquid samples, a
+Oven Laser
+liquid-nitrogen-cooled chamber became essential to maintain the
+source pressure low, a new mass analyser allowed us to increase
+the detected molecular flux by a factor of four and many optimi-
+Figure 2 | Layout of the Kapitza-Dirac-Talbot-Lau (KDTL) interference
+zation cycles in the interferometer alignment were needed to meet
+experiment. The effusive source emits molecules that are velocity-selected
+all requirements for high-contrast experiments with very massive
+by the three delimiters s , s and s . The KDTL interferometer is composed
+particles. 1 2 3
+of two sin gratings G and G , as well as the standing light wave G . The
+x 1 3 2
+optical dipole force grating imprints a phase modulation ϕ(x)∝α ·P/(v·w )
+Observed interferograms. We recorded quantum interferograms opt y
+onto the matter wave. Here α is the optical polarizability, P the laser
+for all molecules of Figure 1, as shown in Figure 3. In all cases the opt
+power, v the molecular velocity and w the laser beam waist perpendicular
+measured fringe visibility V, that is, the amplitude of the sinusoidal y
+to the molecular beam. The molecules are detected using electron impact
+modulation normalized to the mean of the signal, exceeds the maxi-
+ionization and quadrupole mass spectrometry.
+mally expected classical moiré fringe contrast by a significant multi-
+ple of the experimental uncertainty. This is best shown for TPPF84
+and PFNS8, which reached the highest observed interference con- for TPPF152 (see Figure 3), in which our classical model predicts
+trast in our high-mass experiments so far, with individual scans V = 1%. This supports our claim of true quantum interference for
+class
+up to V = 33% for TPPF84 (m = 2,814 AMU) and V = 49% for all these complex molecules.
+obs obs
+PFNS8 at a mass of m = 5,672 AMU. In addition, we have observed The most massive molecules are also the slowest and therefore
+a maximum contrast of V = 17 ± 4% for PFNS10 and V = 16 ± 2% the most sensitive ones to external perturbations. In our particle
+obs obs
+
+nATuRE CommunICATIons | 2:263 | DoI: 10.1038/ncomms1263 | www.nature.com/naturecommunications
+© 2011 Macmillan Publishers Limited. All rights reserved.
+
+
+--- PAGE 3 ---
+ARTICLE
+nATuRE CommunICATIons | DoI: 10.1038/ncomms1263
+with the full quantum calculation and in clear discrepancy with the
+classical prediction. The abscissa scaling of the V(P) curve is a good
+indicator for that. The quantum prediction mimics the classical
+curve qualitatively, but it is stretched in the laser power by a factor
+of about six (see Methods).
+The laser power can be calibrated with an accuracy of ± 1%
+but the abscissa also scales in proportion to the optical molecular
+polarizability and inversely with the vertical laser waist. The theo-
+retical curves of Figure 4 are plotted assuming α = 200 Å3×4πε
+opt 0
+for TPPF84 and α = 190 Å3×4πε for PFNS8. These numbers have
+opt 0
+to be compared with the static polarizabilities computed using
+Gaussian09 (ref. 24). These are α = 155 Å3×4πε for TPPF84 and
+stat 0
+α = 200 Å3×4πε for PFNS8. A variation in the polarizability
+stat 0
+changes the horizontal scale of the plot as does a different laser
+set, these are PFNS10 and TPPF152, which, in addition, exhibited waist. Both are bound by a relative uncertainty of less than 30%.
+the smallest count rates and therefore the highest statistical fluc- A classical explanation is therefore safely excluded as an explanation
+tuations. To record the interferograms, we had to open the vertical for the experiments.
+beam delimiter S and accept various imperfections: an increased The quantitative agreement of the experimental and expected
+2
+velocity spread, a higher sensitivity to grating misalignments and contrast is surprisingly good, given the high complexity of the
+also an averaging over intensity variations in the Gaussian-shaped particles. Various factors contribute to the remaining small discrep-
+diffraction laser beam G . In addition, we had to enhance the QMS ancies. The interference visibility is highly sensitive to apparatus
+2
+transmission efficiency at the expense of transmitting a broader vibrations, variations in the grating period on the level of 0.5 Å and
+mass range. The recorded signals associated with PFNS10 and a misalignment below 100 µrad in the grating roll angle.
+TPPF152 covered a mass window of ∆m = 500 AMU around
+FWHM
+their nominal masses. Although all samples were well characterized Discussion
+before the evaporation process, we can therefore not exclude some PFNS10 and TPPF152 contain 430 atoms covalently bound in
+contamination with adducts or fragments in this high mass range. one single particle. This is ~350% more than that in all previous
+But even if there were a relative mass spread of 10%, this would only experiments25 and it compares well with the number of atoms in
+influence the wavelength distribution ∆λ /λ the same way as does small Bose–Einstein condensates26 (BEC), which, of course, oper-
+dB dB
+the velocity spread. Owing to the inherent design of the Kapitza- ate in a vastly different parameter regime: The molecular de Broglie
+Dirac-Talbot-Lau interferometer22, these experimental settings are wavelength λ is about six orders of magnitude smaller than that
+dB
+still compatible with sizeable quantum interference, even under of ultracold atoms and the internal molecular temperature exceeds
+such adverse conditions. typical BEC values (T < 1 µK) by about nine orders of magnitude.
+Although matter wave interference of BECs relies on the de Broglie
+Comparison of theory and experiment. The experimental values wavelength of the individual atoms, our massive molecules always
+have to be compared with the theoretical predictions based on a clas- appear as single entities.
+sical and a quantum model23. The measured interference visibility is One can find various definitions in the literature for what a true
+plotted as a function of the diffracting laser power P in Figure 4 for Schrödinger cat27 should be and a number of intriguing experiments
+TPPF84 (4a) and PFNS8 (4b). Our data are in very good agreement have reported the generation of photonic28 or atomic cat-states29,30.
+nATuRE CommunICATIons | 2:263 | DoI: 10.1038/ncomms1263 | www.nature.com/naturecommunications 
+© 2011 Macmillan Publishers Limited. All rights reserved.
+s2/stnuoC
+1,400
+1,200
+1,000
+800
+600
+400
+200
+0
+s8/stnuoC
+500
+400
+300
+200
+100
+0
+0 200 400 600 800 1,000
+400
+300
+200
+100
+0
+s2/stnuoC
+2,000
+1,500
+1,000
+500
+0
+0 200 400 600 800 1,000
+x3 Position (nm) x3 Position (nm)
+0 200 400 600 800 1,000 0 200 400 600 800 1,000
+x3 Position (nm) x3 Position (nm)
+s8/stnuoC
+60
+50
+40
+30
+20
+10
+0
+0 1 2 3 4 5 6 7 8 9
+Figure 3 | Quantum interferograms of tailor-made large organic
+molecules. Quantum interference well beyond the classical expectations
+has been observed for all molecules in the set. In all panels, the black
+circles represent the experimental result, the blue line is a sinusoidal
+fit to the data and the shaded area indicates the detector dark rate.
+(a) The beam of perfluoroalkylated nanospheres, PFns8, is characterized
+by a mean velocity of v = 63 m s − 1 with a full width ∆v = 13 m s − 1.
+FWHm
+The observed contrast of V = 49 ± 6% is in good agreement with the
+obs
+expected quantum contrast of V = 51% and is clearly discernible from
+quant
+the classically expected visibility of V < 1%. The stated uncertainty is
+class
+the standard deviation of the fit to the data. (b) For PFns10, the signal
+was too weak to allow a precise velocity measurement and quantum
+calculation. The oven position for these particles, however, limits the
+molecular velocity to v < 80 m s − 1 and therefore allows us to define an upper
+bound to the classical visibility. (c) For TPPF84, we measure v = 95 m s − 1
+with ∆v = 34 m s − 1. This results in V = 33 ± 3% with V = 30% and
+FWHm obs quant
+V < 1%. (d) The signal for TPPF152 is equally low compared with that
+class
+of PFns10. For this compound we find V = 16 ± 2%, V = 45% and
+obs quant
+V = 1%.
+class
+)%(
+ytilibisiV
+60
+50
+40
+30
+20
+10
+0
+0 1 2 3 4 5
+Power (W)
+)%(
+ytilibisiV
+Power (W)
+Figure 4 | Quantum interference visibility as a function of the diffracting
+laser power. The best distinction between quantum and classical behaviour
+is made by tracing the interference fringe visibility as a function of the laser
+power, which determines the phase imprinted by the second grating. Each
+of the two experimental runs per molecule is represented by full circles
+and the error bar provides the 68% confidence bound of the sinusoidal fit
+to the interference fringe. The thick solid line is the quantum fit in which
+the shaded region covers a variation of the mean molecular velocity by
+∆v = ± 2 m s − 1. (a) The TPPF84 data are well reproduced by the quantum
+model (see text) and completely missed by the classical curve (thin line
+on the left). (b) The same holds for PFns8. The following parameters
+were used for the models: TPPF84: v = 95 m s − 1 ± 16%, α = 200 Å3×4πε
+0
+(fit), σ = 10 − 21 m − 2, w = 34 ± 3 µm and w = 500 ± 50 µm. PFns8:
+opt x y
+v = 75 m s − 1 ± 10%, α = 190 Å3×4πε (fit), σ = 10 − 21m − 2, w = 27 ± 3 µm and
+0 opt x
+w = 620 ± 50 µm.
+y
+
+
+--- PAGE 4 ---
+ARTICLE
+nATuRE CommunICATIons | DoI: 10.1038/ncomms1263
+In as far as the term designates the quantum superposition of two 2. Carnal, O. & Mlynek, J. Young’s double-slit experiment with atoms: a simple
+macroscopically distinct states of a highly complex object, the atom interferometer. Phys. Rev. Lett. 66, 2689–2692 (1991).
+3. Zimmermann, B. et al. Localization and loss of coherence in molecular double-
+molecules in our new experimental series are among the fattest
+slit experiments. Nat. Phys. 4, 649–655 (2008).
+Schrödinger cats realized to date. Schrödinger reasoned whether it
+4. King, B., Di Piazza, A. & Keitel, C. H. A matterless double slit. Nat. Photonics 4,
+is possible to bring a cat into a superposition state of being ‘dead’ 92–94 (2010).
+and ‘alive’. In our experiment, the superposition consists of having 5. Hasselbach, F. Progress in electron- and ion-interferometry. Rep. Prog. Phys. 73,
+all 430 atoms simultaneously ‘in the left arm’ and ‘in the right arm’ 016101 (2010).
+6. Rauch, H. & Werner, A. Neutron Interferometry: Lessons in Experimental
+of our interferometer, that is, two possibilities that are macroscopi-
+Quantum Mechanics (Oxford University, 2000).
+cally distinct. The path separation is about two orders of magnitude
+7. Adams, C. S., Sigel, M. & Mlynek, J. Atom optics. Phys. Rep. 240, 143–210
+larger than the size of the molecules. (1994).
+Schrödinger’s thought experiment originally also required the 8. Keith, D. W., Schattenburg, M. L., Smith, H. I. & Pritchard, D. E.
+entanglement between a microscopic atom and the final state of Diffraction of atoms by a transmission grating. Phys. Rev. Lett. 61, 1580–1583
+(1988).
+the macroscopic cat. Such a mechanism is not needed to create
+9. Cronin, A. D., Schmiedmayer, J. & Pritchard, D. E. Optics and
+the molecular superposition state in our experiment. Entangle- interferometry with atoms and molecules. Rev. Mod. Phys. 81,
+ment between a molecule and a microscopic probe particle does, 1051–1129 (2009).
+however, occur in decoherence processes in which the quantum 10. Arndt, M. et al. Wave-particle duality of C 60 molecules. Nature 401, 680–682
+interaction with the environment reveals which-path informa- (1999).
+11. Hackermüller, L. et al. Wave nature of biomolecules and fluorofullerenes. Phys.
+tion14,15 and destroys the interference pattern. Collisions with
+Rev. Lett. 91, 090408 (2003).
+residual gas molecules31, the emission of heat radiation32 and the 12. Brühl, R et al. Diffraction of neutral helium clusters: evidence for ‘magic
+absorption of blackbody radiation are among the most impor- numbers’. Phys. Rev. Lett. 92, 185301 (2004).
+tant decoherence mechanisms for interferometry with massive 13. Ladd, T. D., Jelezko, F., Laflamme, R., Nakamura, Y., Monroe, C. & O’Brien, J. L.
+particles. We estimate that they lead to a visibility reduction of Quantum computers. Nature 464, 45–53 (2010).
+14. Zurek, W. H. Decoherence, einselection, and the quantum origins of the
+less than 1% under the conditions of the present experimental
+classical. Rev. Mod. Phys. 75, 715–775 (2003).
+arrangement, in spite of the high internal molecular tempera- 15. Joos, E. et al. Decoherence and the Appearance of the Classical World in
+tures and substantial dipole fluctuations. Quantum Theory (Springer, 1996).
+Specifically for PFNS8, a microscopically realistic account of 16. Ohmori, K. Wave-packet and coherent control dynamics. Annu. Rev. Phys.
+the decoherence processes31,32 predicts a visibility reduction of 10% Chem. 60, 487–511 (2009).
+17. Fagan, P. et al. Production of perfluoroalkylated nanospheres from
+only if the temperature of either the molecule or the radiation field
+buckminsterfullerene. Science 262, 404–407 (1993).
+exceeds 1,500 K, or if the residual nitrogen gas pressure exceeds 18. Deachapunya, S. et al. Slow beams of massive molecules. Eur. Phys. J. D. 46,
+2×10 − 7 mbar. 307–313 (2008).
+In conclusion, our experiments reveal the quantum wave nature 19. Kroto, H. W., Heath, J. R., O’Brian, S. C., Curl, R. F. & Smalley, R. E. C60:
+Buckminsterfullerene. Nature 318, 162–163 (1985).
+of tailor-made organic molecules in an unprecedented mass and size
+20. Clauser, J. F. in Experimental Metaphysics (eds Cohen, R.S., Home, M.
+domain. They open a new window for quantum experiments with
+& Stachel, J.) 1–11 (Kluwer Academic, 1997).
+nanoparticles in a complexity class comparable to that of small pro- 21. Brezger, B., Arndt, M. & Zeilinger, A. Concepts for near-field interferometers
+teins, and they demonstrate that it is feasible to create and maintain with large molecules. J. Opt. B 5, S82–S89 (2003).
+high quantum coherence with initially thermal systems consisting 22. Gerlich, S. et al. A Kapitza-Dirac-Talbot-Lau interferometer for highly
+polarizable molecules. Nature Physics 3, 711–715 (2007).
+of more than 1,000 internal degrees of freedom.
+23. Hornberger, K. et al. Theory and experimental verification of Kapitza-Dirac-
+Talbot-Lau interferometry. New J. Phys. 11, 043032 (2009).
+Methods 24. Frisch, M. J. et al. Gaussian 09, Revision A.1. (Gaussian, Inc., Wallingford CT,
+Chemical synthesis. The porphyrin derivatives were synthesized by the attach- 2009).
+ment of a highly fluorous thiol to meso-tetra(pentafluorophenyl)porphyrin in 25. Tüxen, J., Gerlich, S., Eibenberger, S., Arndt, M. & Mayor, M. Quantum
+a nucleophilic aromatic substitution reaction by applying a modified literature interference distinguishes between constitutional isomers. Chem. Comm. 46,
+procedure33. To assemble TPPF84, the commercially available 1H,1H,2H,2H- 4145–4147 (2010).
+perfluorododecane-1-thiol as nucleophilic fluorous part was introduced to the 26. Bradley, C. C., Sackett, C. A., Tollett, J. J. & Hulet, R. G. Evidence of Bose-
+porphyrin unit. The branched thiol building block for TPPF152 was synthesized Einstein condensation in an atomic gas with attractive interactions. Phys. Rev.
+in three reaction steps. A reaction sequence including mono-functionalization Lett. 79, 1170 (1997).
+of tris(bromomethyl)benzene with a protected thiol, introduction of two 27. Schrödinger, E. Die gegenwärtige Situation in der Quantenmechanik.
+fluorous ponytails and a final deprotection of the thiol functionality yielded the Naturwissenschaften 23, 844–849 (1935).
+desired fluorous thiol suitable for the envisaged substitution reaction. All 28. Brune, M. et al. Observing the progressive decoherence of the ‘meter’ in a
+target structures were purified by column chromatography and characterized quantum measurement. Phys. Rev. Lett. 77, 4887–4890 (1996).
+by nuclear magnetic resonance spectroscopy and mass spectrometry 29. Leibfried, D. et al. Creation of a six-atom ‘Schrödinger Cat’ state. Nature 438,
+(Supplementory Methods). 639–642 (2005).
+30. Monz, T. et al. Coherence of large-scale entanglement. arXiv:1009.6126v1
+Differences between the classical and quantum predictions. The func- [quant-ph] (2010).
+tional dependence of the interference fringe visibility on the laser power 31. Hornberger, K. et al. Collisional decoherence observed in matter wave
+is qualitatively similar in both a classical and a full quantum treatment. As interferometry. Phys. Rev. Lett. 90, 160401 (2003).
+observed from the treatment described in ref. 23 the abscissa scaling dif- 32. Hackermüller, L. et al. Decoherence of matter waves by thermal emission of
+fers, however, by the factor ξ/sin(ξ) with ξ = π·L/L , where L is the distance radiation. Nature 427, 711–714 (2004).
+T
+between two consecutive gratings and L = d2/λ is the Talbot length. For 33. Samaroo, D., Vinodu, M., Chen, X. & Drain, C. M. Meso-tetra(pentafluorophenyl)-
+T dB
+the case of Figure 4, we find ξ/sin(ξ)5.9. The experimental data are in porphyrin as an efficient platform for combinatorial synthesis and the selection
+clear agreement with the quantum model. of new photodynamic therapeutics using a cancer cell line. J. Comb. Chem. 9,
+998–1011 (2007).
+Equipment. The diffracting laser beam is generated by a Coherent Verdi V18 laser
+at 532 nm. The QMS is an Extrel CMS with a rod diameter of 9.5 mm, operated at a
+Acknowledgments
+radio frequency of 440 kHz. The SiN gratings in G and G were made by Dr Tim
+x 1 3
+Savas, nm2 LLC & MIT Cambridge. We thank Lucia Hackermüller (now University of Nottingham) for important
+contributions to the setup of a first version of this experiment until the end of 2006,
+and Hendrik Ulbricht (now University of Southampton) for his collaboration until
+References
+2008. We thank Anton Zeilinger for his role as an initiator of the ‘foundations of
+1. Zeilinger, A., Gähler, R., Shull, C. G., Treimer, W. & Mampe, W. Single- and quantum physics’ research programme in Vienna. The interference experiments were
+double-slit diffraction of neutrons. Rev. Mod. Phys. 60, 1067–1073 (1988). financed through the Austrian FWF Wittgenstein grant (Z149-N16), the doctoral
+
+nATuRE CommunICATIons | 2:263 | DoI: 10.1038/ncomms1263 | www.nature.com/naturecommunications
+© 2011 Macmillan Publishers Limited. All rights reserved.
+
+
+--- PAGE 5 ---
+ARTICLE
+nATuRE CommunICATIons | DoI: 10.1038/ncomms1263
+program CoQuS (Grant W1210-N16). The chemical synthesis in Basel was funded Additional information
+by the Swiss National Science Foundation and the NCCR ‘Nanoscale Science’. The Supplementary Information accompanies this paper at http://www.nature.com/
+groups in Vienna, Basel and Dresden were supported by the ESF EuroCore Program naturecommunications
+MIME (I146-N16).
+Competing financial interests: The authors declare no competing financial interests.
+Author contributions Reprints and permission information is available online at http://npg.nature.com/
+S.G. and S.E. performed all interference experiments as well as the analysis of the reprintsandpermissions/
+data with important contributions by M.T. M.A. contributed at various stages of the
+How to cite this article: Gerlich, S. et al. Quantum interference of large organic
+experiment. J.T. synthesized, purified and analysed the porphyrin derivatives based on a
+molecules. Nat. Commun. 2:263 doi: 10.1038/ncomms1263 (2011).
+design developed together with M.M. P.F. provided the perfluoroalkylated nanospheres.
+M.A. and M.M. initiated and coordinated the experiments. S.N. and K.H. participated in License: This work is licensed under a Creative Commons Attribution-NonCommercial-
+the interpretation of the data. M.A., S.G. and S.N. wrote the paper. All authors discussed NoDerivative Works 3.0 Unported License. To view a copy of this license, visit
+the results and commented on the manuscript. http://creativecommons.org/licenses/by-nc-nd/3.0/
+nATuRE CommunICATIons | 2:263 | DoI: 10.1038/ncomms1263 | www.nature.com/naturecommunications 
+© 2011 Macmillan Publishers Limited. All rights reserved.

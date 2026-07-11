@@ -1,0 +1,819 @@
+
+--- PAGE 1 ---
+Photosynthesis Research 55: 189–197, 1998.
+© 1998 Kluwer Academic Publishers. Printed in the Netherlands. 189
+Pulsed ENDOR of the photoexcited triplet states of bacteriochlorophylla
+and of the primary donor P865 in reaction centers of Rhodobacter
+sphaeroides R-26
+Friedhelm Lendzian, Robert Bittl & Wolfgang Lubitz
+Max-Volmer-Institut für Biophysikalische Chemie und Biochemie, Technische Universität Berlin, Str. d. 17. Juni
+135, D-10623 Berlin, Germany
+Received 11 September 1997; accepted in revised form 30 January 1998
+Key words: bacterial reaction center, charge transfer, excitation delocalization, ENDOR, primary donor, triplet
+states
+Abstract
+The photoexcited triplet states of bacteriochlorophyll a, 3BChl a, and of the primary donor in reaction centers
+of Rhodobacter sphaeroides R-26, 3P865, are investigated by pulsed EPR and ENDOR spectroscopy. In 3P865 a
+splitting of ENDOR lines and reduction of corresponding positive and negative hyperﬁne couplings as compared
+with the monomeric
+3BChl a is observed. This indicates an asymmetric distribution of the triplet excitation over
+the two BChl a moieties, P L and PM, forming 3P865. Based on the signs of the hyperﬁne couplings and on a
+comparison with the cation and anion radical of BChl a an assignment to nuclei in the different dimer halves is
+proposed. This yields an estimate for the extent of delocalization of the triplet excitation over P L and PM and for
+the charge transfer contribution of 3P865.
+Introduction
+The electron transfer processes in photosynthetic re-
+action centers (RCs) are controlled both by the spatial
+arrangement of the cofactors and by their electronic
+properties. The latter are determined by the wave func-
+tions and orbital energies of the respective states. In
+the primary processes the electron donor (P) is of
+particular importance, since it initiates from its ex-
+cited singlet state the electron transfer (ET) which
+proceeds via monomeric bacteriochlorophyll a (BChl
+a), bacteriopheophytin (BPh a) to the primary and
+secondary quinone acceptors Q
+A and Q B. The elec-
+tron spin density distribution of the highest occupied
+molecular orbital (HOMO) of the cation radical of
+the primary donor, P+.
+865, which remains after dona-
+tion of an electron to the chain of acceptor molecules,
+has been investigated in great detail by cw-EPR and
+ENDOR on RC single crystals of Rhodobacter (Rb.)
+sphaeroides (Lendzian et al. 1993; Huber et al. 1996).
+In this work an asymmetric spin density distribution
+over the two BChl a (see Scheme 1) molecules consti-
+tuting the donor has been found in favor of the dimer
+half, PL, bound to protein subunit L. Investigation of a
+series of mutants showed that the asymmetry is mainly
+caused by different hydrogen bonding of the dimer
+halves, P
+L and PM, to surrounding amino acid residues
+and that this asymmetry can be shifted by changing
+the number of hydrogen bonds to P L or PM (Rautter
+et al. 1995; Artz et al. 1997). Furthermore, a weak
+correlation between the spin density on PL and the rate
+of reduction of P+.
+865 by soluble cytochromec2 has been
+found (Rautter et al. 1996).
+For the forward electron transfer reactions knowl-
+edge of the spin density distribution of the lowest
+unoccupied molecular orbital (LUMO) is important.
+The distributions of both electrons in the HOMO
+and in the LUMO determine the electronic properties,
+e.g. the charge transfer character of the excited state,
+P
+∗865. Unfortunately, the excited singlet state is dia-
+magnetic and short-lived and not accessible by EPR
+techniques. However, information about orbital coef-
+ﬁcients of the HOMO and the LUMO can be obtained
+from the triplet state,
+3P865, which is formed by re-
+pres810.tex; 30/06/1998; 15:17; p.1
+PIPS NO.:162803 (M) (preskap:bio2fam) v.1.15
+
+--- PAGE 2 ---
+190
+Scheme 1. Molecular structure and IUPAC numbering scheme for
+BChl a.
+combination of the primary radical pair P +.
+865 BPh−.
+in prereduced RCs in which electron transfer to the
+quinone acceptors is blocked. Singlet-triplet mixing
+in the singlet-born primary radical pair, P +.
+865 BPh−.,
+leads to a high yield of 3P865 which exhibits a char-
+acteristic electron spin polarization (Thurnauer 1979).
+3P865 has been extensively investigated by zero-ﬁeld
+ODMR (Hoff 1996) and by X-band EPR (Thurnauer
+1979; Budil and Thurnauer 1991) yielding the zero-
+ﬁeld splitting tensor principal values including axes
+orientations in RC single crystals (Budil et al. 1988;
+Norris et al. 1989).
+Molecular orbital (MO) models (Plato et al. 1992)
+and semi-empirical MO calculations (Plato et al. 1988)
+predict for the LUMO of P
+865 a very different sym-
+metry compared with the HOMO. There is only little
+hyperﬁne data on
+3P865 available so far from cw-
+ENDOR experiments (Lendzian et al. 1985b; Huber
+et al. 1997); therefore, this prediction has not yet been
+experimentally proven. An interpretation of the cw-
+ENDOR data has also been hampered by the lack of
+hyperﬁne data for the triplet state of isolated bacte-
+riochlorophyll,
+3BChl a. The problems encountered
+with the detection of ENDOR on the triplet state
+3P865 are mainly due to its short lifetime (∼100µ sa t
+low temperatures). A better sensitivity for short-lived
+states is obtained in time-resolved experiments that
+make use of the transient strong spin polarization of
+3P865. Time-resolved transient ENDOR experiments
+have already been reported for photo reactions in liq-
+uid solutions (Lendzian et al. 1985a) and recently also
+for the triplet state, 3P680, in plant Photosystem II
+(DiValentin 1996).
+Here, we report the ﬁrst comparative pulsed EN-
+DOR study of the photoexcited triplet states 3BChl a
+in an organic solvent and 3P865 in frozen RC solution.
+Materials and methods
+Sample preparation
+BChl a was isolated from Rb. sphaeroides R-26 and
+puriﬁed by HPLC as described by Bönigk (1994). The
+solvent methyl-2-tetrahydrofuran (MTHF) was des-
+tilled under high vacuum conditions ( < 10−5 mbar)
+and deoxygenated by several freeze-pump-thaw cy-
+cles. A sample of an approximately 1 ×10
+−3 M
+solution of BChl a in MTHF was prepared on a high
+vacuum line, sealed and quickly frozen in a quartz tube
+(4 mm o.d., 3 mm i.d.) in liquid nitrogen to form an
+optically transparent glass.
+Rb. sphaeroides R-26 RCs were isolated and pu-
+riﬁed as described before (Feher et al. 1978). The
+detergent lauryldimethyl amine N-oxide (LDAO) was
+exchanged against 0.1% w/v Triton X-100 (10 mM
+Tris-HCl, pH8, 1 mM EDTA). 1 M Tris-HCl, pH8,
+0.5 M sodium dithionite solution was added to the
+deoxygenated RC solution (OD
+1cm
+865 ∼= 300) to yield a
+ﬁnal dithionite concentration of 50 mM in the sample
+thereby reducing the quinones Q A and QB (Lubitz et
+al. 1985, 1995). Glycerol was added to give OD 1cm
+865∼= 100. The sample was then frozen in liquid nitrogen
+forming an optically transparent glass.
+Pulsed ENDOR spectroscopy
+Pulsed EPR and ENDOR experiments were performed
+on a Bruker ESP 380E pulsed EPR spectrometer
+equipped with a Bruker ESP 360D-P pulsed ENDOR
+accessory, a 500 W ENI A500 radio frequency am-
+pliﬁer, and an Oxford CF935 cryostat for temperature
+control. Samples were excited with a frequency dou-
+bled Nd:Y AG laser (Spectra-Physics, GCR 130) with
+8 ns pulses at 532 nm and ∼10 mJ incident light en-
+ergy per pulse with a 10 Hz repetition rate. According
+to the Davies ENDOR scheme (see Schweiger 1991),
+weak selective microwave pulses synchronized with
+the laser pulses were used for preparation (ﬁrstπpulse
+pres810.tex; 30/06/1998; 15:17; p.2
+
+--- PAGE 3 ---
+191
+Figure 1. (A) Splitting of spin energy levels of an electronic triplet
+state (S=1) in an external magnetic ﬁeld, B, for the three canonical
+orientations; i.e., for B parallel to the principal axes y, x or z of
+the zero-ﬁeld splitting tensor D. The zero-ﬁeld splitting parameter
+D is positive. Tx, Ty, Tz are the triplet eigenstates in zero ﬁeld. In
+high ﬁeld, the states are labeled with the magnetic quantum numbers
++1, 0, –1 (high-ﬁeld limit). The respective low- and high-ﬁeld EPR
+transitions Y
+II,I, XII,I and ZI,II are indicated by arrows. Due to the
+recombination from the singlet-born radical pair P865+.BPh−. only
+the mS = 0 high-ﬁeld level |0> is populated in 3P865 (thick lines).
+(B) Spin energy level diagram (high ﬁeld) for S=1 with hyperﬁne
+splittings from a nuclear spin I=1/2. D>0 and external ﬁeld B par-
+allel to the z-axis of the ZFS tensor (Atherton 1993). The high-ﬁeld
+ZII EPR transitions (full arrows) and the ENDOR transitions (open
+arrows) are indicated for hyperﬁne couplings AZ > 0( l e f t )a n dAZ
+< 0 (right).
+1 µ s after the laser pulse) and for detection (echo
+sequence π/2, π,∼3 µ s after the end of the radio
+frequency πpulse, see Figures 2 and 3. The 56 ns
+and 112 ns microwaveπ/2 andπpulses, respectively,
+correspond to a rotating frame B1 ≈0.16 mT. The
+8 µ s RF pulse with B2 ≈1.5 mT is a πpulse for
+protons. A comprehensive description of pulsed EPR
+and ENDOR techniques has been given by (Schweiger
+1991).
+Figure 2. Pulse scheme and ﬁeld-swept echo EPR spectra of 3P865
+(A) at T=10 K and of 3BChl a (B) at T=5 K. A = absorption, E =
+emission.|D|and|E|are the zero-ﬁeld splitting (ZFS) parameters
+(Thurnauer 1979). Total accumulation time each spectrum∼15 min.
+Note the reduction of |D|a n d|E|o f 3P865 as compared with 3BChl
+a.
+Results
+Figure 1A shows the Zeeman splitting of the spin en-
+ergy levels for the three canonical orientations of a
+triplet state (electronic spin S = 1) with a zero-ﬁeld
+splitting parameter D>0. From spin-lattice relaxation
+studies a positive sign of D was concluded for 3P865
+(Thurnauer 1979) as expected for π-π∗triplet states
+of porphyrins (van Dorp et al. 1974; Kooter and van
+der Waals 1979). The thickness of the levels indi-
+cates the exclusive population of the sublevels of3P865
+with mS=0 in high ﬁeld. This is due to the formation
+of 3P865 by the recombination reaction from the pri-
+mary radical pair P+.
+865 BPh−. (Thurnauer 1979). From
+this scheme the spin polarization in the EPR spec-
+trum is expected to be AEEAAE (A = absorption, E
+= emission) with increasing B ﬁeld.
+pres810.tex; 30/06/1998; 15:17; p.3
+
+--- PAGE 4 ---
+192
+The pulsed EPR spectrum (ﬁeld swept echo) of
+3P865 obtained in frozen RC solution at 10 K is shown
+in Figure 2A. The signal amplitude represents the inte-
+grated echo intensity as function of the magnetic ﬁeld
+B. The spectrum clearly shows the predicted polariza-
+tion pattern. The obtained zero-ﬁeld splitting parame-
+ters|D|=188×10
+−4 cm−1 and|E|=33×10−4 cm−1
+agree well with data reported earlier (Levanon and
+Norris 1982).
+Figure 2B shows the pulsed EPR spectrum of
+3BChl a in MTHF glass. Experimental conditions
+were the same as for 3P865. Due to the selective triplet
+sublevel population of 3BChl a by intersystem cross-
+ing from the photoexcited singlet state, the observed
+polarization pattern (EAEAEA, from low-ﬁeld Z
+I to
+high-ﬁeld ZII) is different from that of 3P865.T h ev a l -
+ues|D|=226×10−4 cm−1 and|E|=57×10−4 cm−1
+obtained from the pulsed EPR spectrum agree well
+with those reported earlier (Thurnauer 1979; Levanon
+and Norris 1982).
+Pulsed ENDOR spectra of 3P865 and 3BChl a
+were recorded with ﬁeld settings corresponding to the
+respective Z
+I and ZII EPR transitions. Thereby orienta-
+tions of 3P865 and 3BChl a with their respective triplet
+z axis parallel to B were selected, yielding single
+crystal-like spectra. Figure 1B shows the spin energy
+levels for this case, including hyperﬁne interaction for
+S = 1 and one nuclear spin I = 1 /2 in the high-ﬁeld
+limit (Atherton 1993). The ZII EPR transition is indi-
+cated by a full arrow, the ENDOR transitions by open
+arrows. In contrast to a doublet state ( S =1 / 2 )t h e
+ENDOR transition frequencies are no longer symmet-
+rically spaced around the nuclear Zeeman frequency,
+ν
+H, instead, a strong line is expected from the mS =0
+manifold at the Larmor frequency νH , and hyperﬁne
+shifted lines are expected at νH + AZ and νH −AZ
+for AZ>0a n dAZ < 0, respectively. Hence, the sign of
+the hyperﬁne couplingAZ is directly obtained from the
+position of the corresponding ENDOR line relative to
+νH. Note that AZ is the respective hyperﬁne coupling
+along the triplet z-axis.
+The pulsed ENDOR spectrum of 3BChl a in Fig-
+ure 3C shows indeed a strong line atνH and, addition-
+ally, two strong and broad lines, one shifted to higher
+and one to lower frequencies. According to Figure 1B,
+the high-frequency ENDOR line 1 in the ZII spectrum
+results from a positive hyperﬁne coupling, the low-
+frequency ENDOR line 2 from a negative hyperﬁne
+coupling. As expected from Figure 1B the positions
+of the ENDOR lines 1 and 2 with respect to ν
+H are
+exchanged, when the ZI EPR transition connecting the
+Figure 3. Pulse scheme and pulsed (Davies) ENDOR spectra for
+the ZI EPR transition of 3P865 at T=10 K (A) and 3BChl a at T=5
+K (B). Note the shift and splittings of lines in 3P865 as compared
+with 3BChl a. Signs of the corresponding hyperﬁne coupling val-
+ues AZ and assignment to spin densities in the HOMO and LUMO
+are indicated (see ‘Discussion’ in text). RF pulse power ∼300 W,
+corresponding to an approximate πpulse of 8 µ s duration. Total
+accumulation time∼14 h for each spectrum. Note the mirror sym-
+metry of the ENDOR spectra forZI (trace B) andZII EPR transitions
+(trace C)o f 3BChl a (see text).
+mS=0 and mS=1 levels is selected (Figure 3B). Now
+the line of the positive hyperﬁne coupling is shifted
+to lower frequency and that of the negative hyperﬁne
+coupling to higher frequeny. Line 1, corresponding to
+a positive hyperﬁne coupling, is narrower than line
+2, see ‘Discussion’ below. The obtained hyperﬁne
+couplings A
+Z(i) are given in Table 1.
+There are two additional weak features in the
+pulsed ENDOR spectra of 3BChl a with smaller sep-
+arations from the strong narrow line at νH.T h e s e
+features could result from incomplete orientation se-
+lection. As can be seen from Figure 2B, the X and
+pres810.tex; 30/06/1998; 15:17; p.4
+
+--- PAGE 5 ---
+193
+Table 1. Proton hyperﬁne coupling AZ [MHz] of 3P865 and 3BChl a Compared with Isotropic
+aiso [MHz] of P+.
+865, BChl a+. and BChl a−.
+3P865a3 BChl ab P+.
+865
+c BChl a+. d BChl a−.e Molecularf
+position
+PL PM PL PM
++2.03 n.d. +2.35 –9.65 5–3.1 –4.5 –9.5
+
+
+
++1.48 n.d. +1.30 –6.91 10(3) (4) (2) +1.48 n.d. +1.30 –6.23 20
++3.95 +1.48 +4.93 +7.63 2 1
++5.61 +3.61 +9.62 +9.19 12 1
++4.6 +2.9 +8.5 +8.46 +5.61 +13.47 +0.50 7
+
+
+
+
+
+
+
+
+
+
+
+(1) (2) (1) +9.50 +6.08 +16.35 +0.95 8
++6.82 +4.51 +13.11 +0.95 17
++5.61 +4.51 +11.76 -1.60 18
+aAz values (out-of-plane hf tensor components, see text) from Pulsed ENDOR at 10 K, this
+work. ENDOR line numbers are given in brackets (compare Figure 3). Values are given only
+for the most intensive ENDOR lines (see Figure 3 and text). They compare well with earlier
+data from cw-ENDOR (–0.3, –1.4, –2.8, +0.45, +2.7 and +4.5 MHz). The largest negative
+coupling, –4.5 MHz was not detected in cw-ENDOR work (Lendzian et al. 1985; Huber et
+al. 1997) due to the low sensitivity of the applied modulation technique for broad lines. The
+pulsed ENDOR technique applied here is less sensitive to smaller couplings (≤1.5 MHz). For
+assignment of the couplings see text.
+bAz values (out-of-plane hf tensor components, see text) from Pulsed ENDOR at 5K, this
+work. Values are given only for the most intensive ENDOR lines (see Figure 3 and text). For
+assignment see text.
+cIsotropic hyperﬁne couping constants (hfcs) from Lendzian et al. (1993).
+dIsotropic hfcs from Lubitz et al. (1991) and Lubitz et al. (1997).
+eIsotropic hfcs from Lubitz et al. (1981) and Lubitz et al. (1991).
+fSee Scheme 1.
+Z EPR transitions are not well separated in 3BChl a.
+Therefore, the weak features are probably due to ori-
+entations with the magnetic ﬁeld B in the triplet X-Z
+plane. Alternatively, they could result from additional
+couplings for the mainly selected orientationZ parallel
+to B, in which case it is difﬁcult to explain their weak
+intensities. Generally, a reduction of pulsed-ENDOR
+line intensities is expected and observed when the line
+positions approach the proton Zeeman frequency,ν
+H.
+This is due to the spectral bandwidth of the weak se-
+lective ﬁrst microwave πpulse. However, the weak
+features in Figure 3B are well separated from νH,i n
+particular at the low frequency side. Furthermore, Fig-
+ure 3A shows that rather strong intensities – relative
+to the central line at νH – are obtained for compa-
+rable spectral positions under the same experimental
+conditions. Therefore, we assign these weak lines to
+orientations with B in the triplet X-Z plane and do not
+use them for a comparative discussion of the results
+for
+3BChl a and 3P865.
+The pulsed ENDOR spectrum of 3P865 for the ZI
+EPR transition is shown in Figure 3A. Here two strong
+lines (1 and 2) are detected on the low-frequency side
+ofνH and also two strong lines (3 and 4) on the high-
+frequency side ofνH.A sf o r3BChl a lines 1, 2 and 3, 4
+change sides with respect toνH when the ZII EPR tran-
+sition is selected (data not shown). The corresponding
+positive and negative A
+Z-values, which are consider-
+ably smaller than those for AZ(1) and AZ(2) in 3BChl
+a, are given in Table 1. Additional lines with much less
+intensity may be present in the vicinity of the free pro-
+ton line at νH , which correspond to additional small
+hyperﬁne couplings |AZ|≤1.5 MHz. They are however
+not used for the following comparative discussion of
+the results for 3BChl a and 3P865.
+pres810.tex; 30/06/1998; 15:17; p.5
+
+--- PAGE 6 ---
+194
+Discussion
+3BChl a
+The data measured here are the ﬁrst proton hyperﬁne
+data for 3BChl a. An assignment of AZ(1) and AZ(2)
+in 3BChl a can be achieved by comparison with the
+results for the cation radical and anion radical of BChl
+a. In the Hückel MO approximation the normalized
+π-spin density ρT(Ci) at a carbon position i is given
+by
+ρT(Ci)= 1
+2[ρC(Ci)+ρA(Ci)] (1)
+whereρC andρA are the spin densities of the cation
+and anion radical (Carrington and McLachlan 1969).
+In this approximation the spin density distribution of
+the HOMO and LUMO of the triplet state are those of
+the cation and anion radical, respectively. Assuming
+similar Q factors for corresponding molecular posi-
+tions in the cation, the anion, and the triplet state,
+Equation (1) can be used to estimate the isotropic hy-
+perﬁne couplings of the triplet state from those of the
+cation and anion radical.
+A comparison of the hyperﬁne couplings of the
+cation and anion radical of BChla (see Table 1) shows
+one important difference: in the cation radical there
+are only large positive hyperﬁne couplings from the
+β-protons at positions 7, 8, 17, 18 and from the CH
+3
+protons at 21 and 121 (see Scheme 1). The α-protons
+at positions 5,10 and 20 have only small positive cou-
+plings due to small negative π-spin densities at these
+carbon positions resulting from spin polarization from
+the neighboring carbon atoms (Lubitz 1991; Lubitz
+et al. 1997). In contrast, the anion radical exhibits
+large negative hyperﬁne couplings for the α-protons
+at positions 5,10 and 20 due to the large positive car-
+bonπ-spin densities at the adjacent carbon positions
+(Lubitz et al. 1981; Lubitz 1991). Therefore, the neg-
+ative coupling A
+Z(2) of 3BChl a is assigned to the
+α-protons 5, 10 and/or 20. This coupling is indicative
+of spin density in the LUMO since only the anion rad-
+ical (where the unpaired spin is in the LUMO) exhibits
+large spin densities at these positions.
+The ENDOR line 2 corresponding to AZ(2) of
+3BChl a is rather broad and asymmetric (see Figure 3).
+This could result from the contributions of several
+nuclei (protons 5, 10 and 20) having hyperﬁne cou-
+plings of similar magnitudes, as is expected from a
+comparison with the BChl a anion radical (Lubitz et
+al. 1981). Alternatively (or in addition) the observed
+line broadening may result from the remaining ori-
+entational distribution of the
+3BChl a molecules, i.e.
+from orientations where the magnetic ﬁeld B lies in the
+molecular Z-X plane. The observed value for AZ(2),
+–9.5 MHz, assigned to one or more of the methine
+protons, is surprisingly large. Since the z-axis of a
+planar π–π∗triplet state is perpendicular to the π
+plane, AZ(2) is expected to be the out-of-plane prin-
+cipal value of the hyperﬁne tensor of one or more of
+the methine protons. For an isolated C–H fragment
+this A
+Z-value is very close to its isotropic hyperﬁne
+coupling constant ( aiso) (Carrington and McLachlan
+1969). For the triplet state 3BChl a the values for aiso
+can be estimated from those of the BChl a cation and
+anion radical. When using the aiso values for the me-
+thine protons from the anion radical, BChl a−. (−6.2
+to−9.7 MHz, see Table 1) and considering the fact
+that in the cation radical the respective couplings are
+close to zero, values between –3.1 and –4.9 MHz are
+expected from Equation (1).
+The assignment of the large positive coupling
+AZ(1) in 3BChl a is less straight forward. It could orig-
+inate from the CH 3 protons at 2 1 and/or 121,w h i c h
+exhibit large positive couplings both in the cation
+and in the anion radical. In addition, there could be
+also contributions from the β-protons 7, 8, 17, 18,
+which have large couplings only in the cation radi-
+cal, and are therefore indicative of spin density in the
+HOMO. Both, the CH
+3 and the β-protons 7, 8, 17,
+18, are expected to have small hyperﬁne anisotropies.
+The observed value A
+Z(1) should therefore be close
+to the isotropic hyperﬁne coupling constant. Better
+spectral resolution and a more detailed assignment are
+expected from future single crystal experiments.
+3P865
+Attempts to elucidate the degree of delocalization and
+the charge transfer character of the dimeric triplet
+state, 3P865, have been based so far mainly on the
+evaluation of triplet- minus singlet-optical difference
+spectra (Scherer and Fischer 1987; Vrieze and Hoff
+1996) or on EPR experiments. Detailed data were
+obtained from the determination of the zero-ﬁeld split-
+ting tensor principal axes of 3P865 by EPR on RC
+single crystals of Rb. sphaeroides. The triplet z-axis
+of 3P865 was found to agree within 5 degrees with
+the normal vector on the average plane of P L and PM
+and contributions of triplet excitation delocalisation,
+55% 3PLPM, 32% PL3PM, and of charge transfer, 13%
+P−
+L P+
+M
+, have been concluded (Budil et al. 1988; Norris
+pres810.tex; 30/06/1998; 15:17; p.6
+
+--- PAGE 7 ---
+195
+et al. 1989). However, the zero-ﬁeld splitting tensor is
+an integral property of the triplet state of the primary
+donor, and the different contributions from excitation
+delocalization and charge transfer between PL and PM
+are not obtained separately. More detailed information
+is expected from the analysis of the hyperﬁne data.
+From the spin density distribution in the HOMO and
+in the LUMO of
+3P865 the degree of triplet excitation
+delocalization and charge transfer character are ob-
+tained directly. This requires, however, an assignment
+of the observed hyperﬁne couplings to the nuclei in P
+L
+and PM and a distinction between couplings stemming
+from spin density in the LUMO and the HOMO.
+Assignments to HOMO and LUMO
+A comparison of the pulsed ENDOR spectra of 3P865
+and 3BChl a for the ZI EPR transition is given in Fig-
+ure 3A and B. In both spectra, the magentic ﬁeld B is
+oriented approximately perpendicular to the planes of
+the respective BChl a molecules and the AZ values are
+the out-of-plane hyperﬁne tensor components of the
+respective protons. The two ENDOR lines observed
+for
+3BChl a, corresponding to the positive AZ(1) and
+the negative coupling AZ(2), are each shifted signiﬁ-
+cantly towardsνH and are split in 3P865. We assign the
+split lines to the individual dimer halves PL and PM in
+3P865 (see below).
+Based on the same arguments as for 3BChl a,t h e
+negative couplings AZ(3) and AZ(4) of 3P865 are as-
+signed to the methine protons (5,10,20) in P L and PM
+and are indicative of spin density in the LUMO. This
+is in agreement with earlier extensive ENDOR experi-
+ments on the cation radical P
++.
+865 in RC single crystals,
+in which the spin density distribution of the HOMO
+was probed, that showed that all larger proton hyper-
+ﬁne couplings arising from the unpaired spin in the
+HOMO are positive (Lendzian et al. 1993). Lines 3
+and 4 in
+3P865 have comparable intensities and are
+therefore assigned to the same molecular position(s)
+as line 2 in 3BChl a. The weak feature near 17 MHz
+in 3BChl a (center trace in Figure 3) is assigned to
+contributions from orientations where B lies in the
+molecular Z-X plane (see above). Due to the much
+better separation of the X-a n d Z-EPR transitions in
+3P865 (see Figure 2A) we do not expect to observe
+these features in 3P865. The splitting of line 2 in3BChl
+a into lines 3 and 4 in 3P865 and the reduction of the
+corresponding couplings AZ are hence attributed to an
+asymmetric distribution of the triplet state over PL and
+PM.T h es u mo fAZ(3) and AZ(4) in 3P865 is about 80%
+of the value ofAZ(2) in 3BChl a. This might indicate a
+redistribution of spin densities at the methine positions
+of PL and PM in 3P865 as compared with 3BChl a.T h e
+ratio of AZ(3) and AZ(4) is 2/3. This shows that the
+corresponding LUMO spin densities of carbon posi-
+tions 5, 10 and/or 20 in P M versus PL (or vice versa)
+have the same ratio. The methine carbons 5, 10, 15
+and 20 together carry the major fraction ( ∼= 50%) of
+the spin density in the BChl a anion radical, where
+the unpaired electron spin occupies the LUMO (Lub-
+itz 1991). We therefore conclude that the ratio of spin
+densities of these positions in P
+L and PM reﬂect the
+ratio of total LUMO spin densities, which is then 40%
+PL versus 60% PM (or vice versa). Interestingly, the
+same behavior is found when comparing the positive
+couplings A
+Z(1) in 3BChl a and AZ(1) and AZ(2) in
+3P865.A g a i n ,i n3P865, AZ(1) and AZ(2) have a ratio of
+3/2. The sum of these positive hyperﬁne couplings in
+3P865 is 88% of AZ(1) in 3BChl a. This again might
+indicate small shifts of the spin density distribution
+within the BChl a moieties PL and PM. When these
+couplings stem from the CH 3 protons at positions 2 1
+and/or 121, they represent spin densities for both the
+HOMO and the LUMO. If they stem from the βpro-
+tons at positions 7, 8, 17 and 18, then they respesent
+predominantly spin densities from the HOMO.
+Triplet excitation delocalization and charge transfer
+The triplet state, 3P865, can be described by a lin-
+ear combination of two local excitations, 3PLPM and
+PL3PM, and two charge transfer states, P L+ PM−and
+PL−PM+ . In frozen solution with randomly oriented
+RCs an experimental discrimination between the hy-
+perﬁne couplings from P L or P M is not possible.
+Therefore, based on the above assignment to spin den-
+sities in the HOMO and LUMO of3P865, two possible
+assignments remain:
+(A) The largest positive and largest negative coupling
+(AZ(1) and AZ(4)) of 3P865 are assigned to the
+same dimer half. In this case, this dimer half
+has 60% of the hyperﬁne couplings (and corre-
+sponding spin densities) in the HOMO and in the
+LUMO. This corresponds to 60% of local excita-
+tion on this side. The other dimer half then has
+40% of the spin density in the HOMO and in the
+LUMO. Consequently the contribution of charge
+transfer (P
+L+ PM−, or vice versa) is zero.
+(B) The largest positive and the smallest negative cou-
+pling (AZ(1) and AZ(3)) of 3P865 are assigned to
+one dimer half (P L) and the smallest positive and
+largest negative coupling to the other half (P M).
+In this case, each dimer half carries 40% of local
+pres810.tex; 30/06/1998; 15:17; p.7
+
+--- PAGE 8 ---
+196
+excitation; in addition, one half has 20% excess
+spin density in the HOMO, whereas the other half
+has 20% excess in the LUMO. This corresponds to
+20% charge transfer character.
+When considering only excitation delocalization
+the reduction of|D|should be less than 5% based on
+the P865 dimer X-ray structure, according to (Norris et
+al. 1989). The observed reduction of|D|is 27% and
+has been explained there by a signiﬁcant charge trans-
+fer contribution. Therefore, assignment (A) seems to
+be not in agreement with the observed reduction of
+|D|in 3P865 as compared with 3BChl a. However,
+as discussed in (Budil and Thurnauer 1991) there are
+other mechanisms like spin orbit coupling between the
+T
+1 and S1 states, which could explain the observed
+reduction of |D|in 3P865 without any charge trans-
+fer contribution. Therefore, assignment A cannot be
+excluded on the basis of our data.
+Assignment (B) is in qualitative agreement with
+the conclusions drawn from the determination of the
+zero-ﬁeld splitting tensor by EPR on RC single crys-
+tals of Rb. sphaeroides(Norris et al. 1989) where 55%
+3PLPM, 32% PL3PM, 13% P−
+L P+
+M
+was concluded. It is
+also in good agreement with interpretations of singlet-
+minus triplet-difference spectra which suggested 40%
+localization and 20% charge transfer (Scherer and Fis-
+cher 1989). Quantitatively, however, our results devi-
+ate from (Norris et al. 1989). Based on earlier ENDOR
+experiments on P
++.
+865 in RC single crystals (Lendzian et
+al. 1993) which showed∼30% excess spin density in
+the HOMO of P L, we prefer the charge transfer state
+PL+ PM−. However, this assignment implies that the
+positive couplings A2(1) and A2(2) represent spin den-
+sities solely from the HOMO. If they represent equal
+amounts of spin densities from HOMO and LUMO
+(i.e. when they are assigned to CH 3 protons 2 1 and
+121) charge transfer cannot account for the observed
+splitting of line 1 in 3BChl a into two lines in 3P865.
+The interpretation of the primary donor triplet
+state, 3P865, presented here is based on: i) the determi-
+nation of the signs of the observed hyperﬁne couplings
+of 3BChl a and 3P865 (relative to the sign of D), which
+allows us to assign the methine proton couplings and
+to relate them to spin densities in the LUMO, and ii)
+the observed reduction of the values and doubling of
+the number of hyperﬁne couplings in
+3P865 as com-
+pared with 3BChl a, which reﬂect the asymmetric spin
+density distribution in the HOMO and the LUMO.
+However, the data do not allow to decide between
+the two assignments A and B. Further experiments on
+3P865 in RC single crystals are underway to determine
+the magnitude and orientation of the hyperﬁne tensors
+of 3P865. This will allow us to distinguish experimen-
+tally between hyperﬁne tensors that belong to P L and
+PM and thereby yield reliable assignments. Further-
+more, we expect to obtain a more complete set of
+hyperﬁne tensors from the different nuclei in 3P865.
+Acknowledgments
+The authors are gratefull to F. Müh (TU Berlin) for
+preparing the prereduced RC solutions and to B.
+Bönigk (formerly TU Berlin) for isolating and puri-
+fying the BChl a. Financial support from DFG (SFB
+312, TP A 4) and Fonds der Chemischen Industrie (to
+WL) is gratefully acknowledged.
+References
+Artz K, Williams JC, Allen JP, Lendzian F, Rautter J and Lub-
+itz W (1997) Relationship between the oxidation potential and
+electron spin density of the primary electron donor in reaction
+centers from Rb. sphaeroides. Proc Natl Acad Sci. USA 94:
+13582–13587
+Atherton NM (1993) Principles of Electron Spin Resonance. Ellis
+Horwood PTR Prentice Hall, New York
+Bönigk B (1994) Isolation und Charakterisierung von nativen und
+isotopenmarkierten bakteriellen Reaktionszentren und ihren Pig-
+menten. PhD thesis, Technische Universität Berlin
+Budil DE and Thurnauer MC (1991) The chlorophyll triplet state
+as a probe of structure and function in photosynthesis. Biochim
+Biophys Acta 1057: 1–41
+Budil DE, Shariar S, Taremi SS, Gast P, Norris JR and Frank HA
+(1988) Single crystal electron spin resonance studies of the pho-
+tochemical reaction center from Rhodobacter sphaeroides wild
+type strain 2.4.1. Isr J Chem 28: 59–66
+Carrington A and McLachlan AD (1969) Introduction to Mag-
+netic Resonance with Applications to Chemistry and Chemical
+Physics. Harper & Row, New York
+DiValentin M, Kay CWM, Giacometti G and Möbius K (1996)
+A time-resolved Electron Nuclear Double Resonance (ENDOR)
+study of the photoexctied triplet state of P680 in isolated reaction
+centers of Photosystem II. Chem Phys Lett 824: 434–441
+Feher G and Okamura MY (1978) Chemical composition and prop-
+erties of reaction centers. In: Clayton RK and Sistrom WR (eds)
+The Photosynthetic Bacteria, pp 349–386. Plenum Press, New
+York
+Hoff AJ (1996) Optically detected magnetic resonance (ODMR) of
+triplet states in photosynthesis. In: Amesz J and Hoff AJ (eds)
+Biophysical Techniques in Photosynthesis, pp 277–298. Kluwer
+Academic Publishers, Dordrecht, The Netherlands
+Huber M, Doubinskii AA, Kay CWM and Möbius K (1997) EN-
+DOR on the triplet state of the primary electron donor in the
+photosynthetic bacterium Rhodobacter sphaeroides –O n es t e p
+forward in a still unﬁnished story. Appl Magn Res 13: 473–485
+Huber M, Isaacson RA, Abresch EC, Gaul D, Schenck CC and
+Feher G (1995) Electronic structure of the oxidized primary elec-
+tron donor of the HL(M202) and HL(L173) heterodimer mutants
+pres810.tex; 30/06/1998; 15:17; p.8
+
+--- PAGE 9 ---
+197
+of the photosynthetic bacterium Rhodobacter sphaeroides:E N -
+DOR on single crystals of reaction centers. Biochim Biophys
+Acta 1273: 108–128
+Kooter JA and van der Waals JH (1979) The metastable triplet state
+of zinc porphin and magnesium porphin: A study by E.S.R. in
+n-octane crystal at 1.4K. Mol Phys 37: 997–1013
+Lendzian F, Huber M, Isaacson RA, Endeward B, Plato M, Bönigk
+B, Möbius K, Lubitz W and Feher G (1993) The electronic
+structure of the primary donor cation radical in Rhodobacter
+sphaeroides R-26: ENDOR and TRIPLE resonance studies in
+single crystals of reaction centers. Biochim Biophys Acta 1183:
+139–160
+Lendzian F, Jaegermann P and Möbius K (1985 a) Time-resolved
+CIDEP-enhanced ENDOR on short-lived radicals. Chem Phys
+Lett 120: 195–200
+Lendzian F, van Willigen H, Sastry S, Möbius K, Scheer H and
+Feick R (1985 b) Proton ENDOR study of the photoexcited
+triplet state P
+T in Rps. sphaeroides R-26 photosynthetic reaction
+centres. Chem Phys Lett 118: 145–150
+Levanon H and Norris JR (1982) Triplet state and chlorophylls. In:
+Fong FK (ed) Light Reaction Path of Photosynthesis, pp 152–
+195. Springer-Verlag, Berlin
+Lubitz W, Lendzian F and Möbius K (1981)
+14Na n d 1H electron
+nuclear multiple resonance experiments on bacteriochlorophyll
+a anion radicals in solution. Chem Phys Lett 81: 235–241
+Lubitz W, Abresch EC, Debus RJ, Isaacson RA, Okamura MY
+and Feher G (1985) Electron nuclear double resonance of semi-
+nquinones in reaction centers of Rb. sphaeroides. Biochim Bio-
+phys Acta 808: 464–469 Lubitz W (1991) EPR and ENDOR
+studies of chlorophyll cation and anion radicals. In: Scheer H
+(ed) Chlorophylls, pp 903–944. CRC Press, Boca Raton, FL
+Lubitz W, Müh F, Rautter J, Lendzian F, Allen JP and Williams JC
+(1995) Magnetic resonance studies of bacterial reaction centers:
+Effects of hydrogen bonds on the electronic structure of P
++. and
+I−.. In: Mathis P (ed) Photosynthesis: From Light to Biosphere,
+V ol I, pp 413–418. Kluwer Academic Publishers, Dordrecht, The
+Netherlands
+Lubitz W, Lendzian F, Plato M, Scheer H and Möbius K (1997) The
+bacteriochlorophyll a cation radical revisited. An ENDOR and
+TRIPLE resonance study. Appl Magn Res 13: 531–551
+Norris JR, Budil DE, Gast P, Chang C-H, El-Kabbani O and
+Schiffer M (1989) Correlation of paramagnetic states and mole-
+cular structure in bacterial photosynthetic reaction centers: The
+symmetry of the primary electron donor in Rhodopseudomonas
+viridis and Rhodobacter sphaeroides R-26. Proc Natl Acad Sci
+USA 86: 4335–4339
+Okamura MY , Isaacson RA and Feher G (1979) Spectroscopic and
+Kinetic Properties of the Transient Intermediate Acceptor in
+Reaction Centers of Rhodopseudomonas sphaeroides. Biochim
+Biophys Acta 546: 394–417
+Plato M, Lendzian F, Lubitz W and Möbius K (1992) Molecu-
+lar orbital study of electronic asymmetry in primary donors of
+bacterial reaction centers. In: Breton J and Verméglio A (eds)
+The Photosynthetic Bacterial Reaction Center II, pp 109–118.
+Plenum Press, New York
+Plato M, Lendzian F, Lubitz W, Tränkle E and Möbius K (1988)
+Molecular orbital studies on the primary donor P
+960 in reac-
+tion centers of Rps. viridis. In: Breton J and Verméglio A (eds)
+The Photosynthetic Bacterial Reaction Center – Structure and
+Dynamics, pp 379–388. Plenum Press, New York
+Rautter J, Lendzian F, Schulz C, Fetsch A, Kuhn M, Lin X,
+Williams JC, Allen JP and Lubitz W (1995) ENDOR studies
+of the primary donor cation radical in mutant reaction cen-
+ters of Rb. sphaeroides with altered hydrogen-bond interactions.
+Biochemistry 34: 8130–8143
+Rautter J, Lendzian F, Lin X, Williams JC, Allen JP and Lubitz W
+(1996) Effect of orbital asymmetry in P
++. on electron transfer in
+reaction centers ofRb. sphaeroides. In: Michel-Beyerle M-E (ed)
+The Reaction Center of Photosynthetic Bacteria – Structure and
+Dynamics, pp 37–50. Springer-Verlag, Berlin
+Scherer POJ and Fischer SF (1987) Model studies to low-
+temperature optical transitions of photosynthetic reaction cen-
+ters. II. Rhodobacter sphaeroides and Chloroﬂexus aurantiacus.
+Biochim Biophys Acta 891: 157–164
+Schweiger A (1991) Pulsed electron spin resonance spectroscopy:
+Basic principles, techniques, and examples of applications.
+Angew Chem Int Ed Engl 30: 265–292
+Thurnauer MC (1979) ESR study of the photoexcited triplet state in
+photosynthetic bacteria. Rev Chem Intermed 3: 197–230
+van Dorp WG, Soma M, Kooter JA and van der Waals JH (1974)
+Electron spin resonance in the photo-excited triplet state of free
+base porphin in a single crystal of n-octaine. Mol Phys 28: 1551–
+1568
+Vrieze J and Hoff AJ (1996) Interactions between chromophores
+in reaction centers of purple bacteria. A reinterpretation of the
+triplet-minus-singlet spectra of Rhodobacter sphaeroides R-26
+and Rhodopseudomonas viridis. Biochim Biophys Acta 1276:
+210–220
+pres810.tex; 30/06/1998; 15:17; p.9
