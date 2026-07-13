@@ -71,6 +71,22 @@ The next standalone model is:
 Realistic system size\code\rpm_full_fad_trp_magnetosensitivity.py
 ```
 
+## Reproducing the 2016 quantum-needle benchmark
+
+The independent reproduction of Fig. 1B from Hiscock et al., *PNAS* 2016 is:
+
+```bash
+python "Realistic system size/code/rpm_quantum_needle_reproduction.py" --self-test
+python "Realistic system size/code/rpm_quantum_needle_reproduction.py" --quick --workers 1
+python "Realistic system size/code/rpm_quantum_needle_reproduction.py" --workers 32
+```
+
+It transcribes Tables S1-S2 and implements the radical-factorized correlation
+formula in Section S5 of the supplement, including the physical spin-1 nature
+of the three selected nitrogen nuclei. The production run recreates the 50-uT
+field-angle traces for radical-pair lifetimes of 1, 2, 5, 10, 20, and 100 us.
+Results are written under `outputs/quantum_needle_2016`.
+
 It uses the FAD-TrpC hyperfine tensor ordering and geometry from the broadband
 upper-bound/action-spectrum work. The current main production baseline is:
 
