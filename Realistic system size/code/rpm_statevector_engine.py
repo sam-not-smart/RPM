@@ -146,6 +146,26 @@ def two_spin_coupling_operator(
     return operator
 
 
+def quadrupole_operator(spin: float, tensor: np.ndarray) -> np.ndarray:
+    """Return the Hermitian single-spin operator sum_ab Q_ab {I_a,I_b}/2."""
+
+    coupling = np.asarray(tensor, dtype=float)
+    if coupling.shape != (3, 3):
+        raise ValueError("A quadrupole tensor must be 3x3.")
+    if not np.allclose(coupling, coupling.T, atol=1e-14, rtol=0.0):
+        raise ValueError("A quadrupole tensor must be symmetric.")
+    operators = spin_operators(spin)
+    dimension = operators[0].shape[0]
+    result = np.zeros((dimension, dimension), dtype=complex)
+    for a in range(3):
+        for b in range(3):
+            if coupling[a, b] != 0.0:
+                result += 0.5 * coupling[a, b] * (
+                    operators[a] @ operators[b] + operators[b] @ operators[a]
+                )
+    return result
+
+
 def build_quantum_needle_hamiltonian(
     theta_deg: float,
     field_microT: float = 50.0,
@@ -418,6 +438,7 @@ class AdaptiveLanczosPropagator:
             cursor = 1
         final_time = float(times[-1])
         step = min(self.initial_step_us, final_time) if final_time else 0.0
+        prefer_maximum_basis = False
 
         while cursor < times.size:
             remaining = final_time - current_time
@@ -425,12 +446,15 @@ class AdaptiveLanczosPropagator:
             if trial_step < self.minimum_step_us:
                 raise RuntimeError("Lanczos step fell below the configured minimum.")
             state_norm = float(np.linalg.norm(state))
-            basis, diagonal, off_diagonal = self._basis(state, self.minimum_dimension)
+            basis_target = (
+                self.maximum_dimension if prefer_maximum_basis else self.minimum_dimension
+            )
+            basis, diagonal, off_diagonal = self._basis(state, basis_target)
             local_budget = self.state_error_budget * trial_step / max(final_time, trial_step)
             selected_dimension = None
             endpoint_coefficients = None
             endpoint_error = math.inf
-            exact_subspace = diagonal.size < self.minimum_dimension
+            exact_subspace = diagonal.size < basis_target
             if exact_subspace:
                 # A true Lanczos breakdown closes an invariant subspace, so the
                 # projected exponential is exact apart from roundoff.
@@ -439,7 +463,7 @@ class AdaptiveLanczosPropagator:
                     diagonal, off_diagonal, trial_step
                 )
                 endpoint_error = 0.0
-            else:
+            elif not prefer_maximum_basis:
                 endpoint_coefficients, endpoint_error = self._candidate(
                     basis,
                     diagonal,
@@ -454,6 +478,7 @@ class AdaptiveLanczosPropagator:
                     basis, diagonal, off_diagonal = self._basis(
                         state, self.maximum_dimension
                     )
+                    prefer_maximum_basis = True
                     exact_subspace = diagonal.size < self.maximum_dimension
                     candidates = list(
                         range(
@@ -478,12 +503,31 @@ class AdaptiveLanczosPropagator:
                             if endpoint_error <= local_budget:
                                 selected_dimension = dimension
                                 break
+            else:
+                candidates = list(
+                    range(
+                        self.minimum_dimension,
+                        self.maximum_dimension + 1,
+                        self.dimension_increment,
+                    )
+                )
+                if candidates[-1] != self.maximum_dimension:
+                    candidates.append(self.maximum_dimension)
+                for dimension in candidates:
+                    endpoint_coefficients, endpoint_error = self._candidate(
+                        basis, diagonal, off_diagonal, dimension, trial_step, state_norm
+                    )
+                    if endpoint_error <= local_budget:
+                        selected_dimension = dimension
+                        break
             if selected_dimension is None or endpoint_error > local_budget:
                 rejected += 1
                 step = 0.5 * trial_step
                 continue
 
             maximum_dimension = max(maximum_dimension, selected_dimension)
+            if selected_dimension > self.minimum_dimension:
+                prefer_maximum_basis = True
             step_end = current_time + trial_step
             while cursor < times.size and times[cursor] <= step_end + 1e-13:
                 offset = float(times[cursor] - current_time)

@@ -95,33 +95,43 @@ The Hamiltonian includes explicit exchange and general electron-dipolar tensor
 machinery; the current baseline records (J=0) MHz and a zero dipolar tensor.
 Radical-factorized propagation is not available in this runner.
 
-Measure one full-space random-phase trajectory with the production Krylov
-tolerances using:
+The overnight validation runner answers a narrower question than the former
+publication-grade 199-angle convergence plan: does random-phase trace sampling
+plus direct full-pair Krylov evolution reproduce the exact J=D=0 dynamics and
+coarse magnetosensitivity well enough for exploratory work? Run it with:
 
 ```bash
-python "Realistic system size/code/rpm_quantum_needle_statevector.py" \
-  --benchmark-trajectory-us 100 --benchmark-theta-deg 90 --J-MHz 0 --D-MHz 0
+python "Realistic system size/code/rpm_quantum_needle_validation.py" \
+  --stage auto --walltime-hours 23.5 --target-hours 12
 ```
 
-The runner first uses a five-angle pilot to choose global nuclear and
-reaction-time sample counts.  It starts the complete 199-angle sweep only when
-the stochastic 95% half-width and Krylov error gates pass.  Every angle/sample
-cell is checkpointed under `outputs/quantum_needle_statevector`, so an
-interrupted run continues with:
+It benchmarks process counts, selects a workload projected to fit 12 hours,
+and refuses a central workload projected above 24 hours. The first fallback is
+the 7-angle grid; the second uses a 2-us lifetime and its corresponding survival
+horizon. Stage 1 uses five representative angles and one nested, paired seed
+bank with M=1,2,4,8,16. Stage 2 uses 13 angles at 15-degree spacing (or 7 at
+30-degree spacing) and M=4, increasing to M=8 only if justified and affordable.
+The yield horizon satisfies exp(-t_max/tau)=1e-4, and the 0.01-us integration
+grid is independently checked against the exact reference yield.
+
+Each completed full-space trajectory is checkpointed under
+`outputs/quantum_needle_fullspace_validation`; sweep-only checkpoints retain
+the yield and diagnostics rather than full traces. Continue an interrupted run
+with:
 
 ```bash
-python "Realistic system size/code/rpm_quantum_needle_statevector.py" --stage auto --resume
+python "Realistic system size/code/rpm_quantum_needle_validation.py" --stage auto --resume
 ```
 
-Pass `--workers 0` (the default) to benchmark 1, 2, 4, 8, 16, and 32 worker
-processes and select the smallest count within 5% of the best throughput.  Use
-`--stage pilot`, `--stage full`, or `--stage report` to run an individual phase.
-The runner stops launching new checkpoint cells at the configured wall-time;
-Danny launches should additionally use a hard 12-hour process limit.  Full
-sweeps must not be launched until an end-to-end full-space trajectory benchmark
-shows that the requested workload fits the approved wall-time budget.
-The exact reproduction CSV under `outputs/quantum_needle_2016` is used for final
-acceptance.  Generate it first with the exact runner above if it is absent.
+The exact factorized implementation is called only as a reference oracle. It is
+never used to propagate a sampled trajectory. A separate reduced `(2,2,3,2)`
+test compares exact density-matrix evolution, exhaustive nuclear averaging,
+random-phase sampling, and Krylov evolution with nonzero exchange, a full
+electron-dipolar tensor, and a spin-1 quadrupolar term.
+
+The older `rpm_quantum_needle_statevector.py` remains available for a single
+full-space trajectory benchmark, but its multi-angle publication-grade runner
+is not the current validation workflow.
 
 The shared physical model is in `rpm_quantum_needle_model.py`; the reusable
 mixed-spin local-term and adaptive Lanczos implementation is in

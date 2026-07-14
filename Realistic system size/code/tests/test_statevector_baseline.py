@@ -30,11 +30,19 @@ from rpm_quantum_needle_statevector import (  # noqa: E402
     save_cell,
     uncertainty_components,
 )
+from rpm_quantum_needle_validation import (  # noqa: E402
+    FALLBACK_SWEEP,
+    PREFERRED_SWEEP,
+    ValidationConfig,
+    choose_workload,
+    reduced_validation,
+)
 from rpm_statevector_engine import (  # noqa: E402
     AdaptiveLanczosPropagator,
     LocalTerm,
     MatrixFreeHamiltonian,
     build_quantum_needle_hamiltonian,
+    quadrupole_operator,
     random_phase_nuclear_state,
     singlet_initial_state,
     singlet_population,
@@ -112,6 +120,13 @@ class MatrixFreeTests(unittest.TestCase):
             )
         )
         np.testing.assert_allclose(electron_terms[0].operator, expected, atol=1e-14)
+
+    def test_quadrupole_operator_is_hermitian(self) -> None:
+        tensor = np.array([[-0.2, 0.03, 0.0], [0.03, -0.1, 0.02], [0.0, 0.02, 0.3]])
+        operator = quadrupole_operator(1.0, tensor)
+        np.testing.assert_allclose(operator, operator.conj().T, atol=1e-14)
+        with self.assertRaises(ValueError):
+            quadrupole_operator(1.0, np.array([[0.0, 1.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]]))
 
 
 class SamplingTests(unittest.TestCase):
@@ -224,6 +239,30 @@ class LanczosTests(unittest.TestCase):
         self.assertGreater(result.stats.rejected_steps, 0)
         self.assertGreater(result.stats.accepted_steps, 0)
 
+    def test_maximum_basis_is_reused_after_growth(self) -> None:
+        rng = np.random.default_rng(4)
+        values = rng.normal(size=(16, 16)) + 1j * rng.normal(size=(16, 16))
+        dense = 20.0 * (values + values.conj().T) / 2.0
+        hamiltonian = MatrixFreeHamiltonian(
+            (2, 2, 2, 2), (LocalTerm((0, 1, 2, 3), dense),)
+        )
+        state = rng.normal(size=16) + 1j * rng.normal(size=16)
+        state /= np.linalg.norm(state)
+        result = AdaptiveLanczosPropagator(
+            hamiltonian,
+            minimum_dimension=4,
+            maximum_dimension=12,
+            dimension_increment=4,
+            embedded_offset=2,
+            state_error_budget=1e-4,
+            initial_step_us=0.1,
+            maximum_step_us=0.1,
+            minimum_step_us=1e-8,
+        ).propagate(state, [0.2], lambda vector: float(abs(vector[0]) ** 2))
+        attempts = result.stats.accepted_steps + result.stats.rejected_steps
+        self.assertEqual(result.stats.maximum_krylov_dimension, 12)
+        self.assertLess(result.stats.matvecs, attempts * (4 + 12))
+
 
 class CheckpointTests(unittest.TestCase):
     def test_checkpoint_roundtrip_and_hash_validation(self) -> None:
@@ -295,6 +334,28 @@ class CheckpointTests(unittest.TestCase):
                 "certification.json",
             ):
                 self.assertTrue((output / name).exists(), name)
+
+
+class ExploratoryValidationTests(unittest.TestCase):
+    def test_budget_fallback_and_tail_horizon(self) -> None:
+        config = ValidationConfig()
+        self.assertAlmostEqual(
+            np.exp(-config.maximum_time_us / config.lifetime_us),
+            config.survival_tail_bound,
+            places=14,
+        )
+        preferred, _ = choose_workload(config, throughput=1.0)
+        self.assertEqual(preferred.sweep_angles_deg, PREFERRED_SWEEP)
+        fallback, _ = choose_workload(config, throughput=0.1)
+        self.assertEqual(fallback.sweep_angles_deg, FALLBACK_SWEEP)
+        self.assertEqual(fallback.lifetime_us, 2.0)
+
+    def test_reduced_nonfactorizable_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            summary = reduced_validation(Path(directory), seed=9917)
+        self.assertTrue(summary["passed"])
+        self.assertLess(summary["exact_vs_exhaustive_max_error"], 1e-12)
+        self.assertLess(summary["krylov_vs_dense_max_error"], 1e-8)
 
 
 if __name__ == "__main__":
