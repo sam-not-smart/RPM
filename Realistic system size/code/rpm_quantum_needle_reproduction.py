@@ -39,19 +39,17 @@ import scipy.linalg
 import scipy.sparse as sp
 from scipy.fft import fft, ifft, next_fast_len
 
-
-TWOPI = 2.0 * np.pi
-# The paper states that 1 mT corresponds to 28 MHz.
-GAMMA_E_MHZ_PER_MT = 28.0
-AXES = ("x", "y", "z")
-DEFAULT_LIFETIMES_US = (1.0, 2.0, 5.0, 10.0, 20.0, 100.0)
-
-
-@dataclass(frozen=True)
-class Nucleus:
-    name: str
-    spin: float
-    tensor_mT: np.ndarray
+from rpm_quantum_needle_model import (
+    DEFAULT_LIFETIMES_US,
+    FAD_NUCLEI,
+    GAMMA_E_MHZ_PER_MT,
+    TRP_NUCLEI,
+    TWOPI,
+    Nucleus,
+    field_vector_mT,
+    spin_operators,
+    theta_grid,
+)
 
 
 @dataclass
@@ -76,42 +74,6 @@ class Spectrum:
     @property
     def max_gap(self) -> float:
         return float(np.ptp(self.eigenvalues))
-
-
-FAD_NUCLEI = (
-    Nucleus("N5", 1.0, np.array([[-0.0989, 0.0039, 0.0], [0.0039, -0.0881, 0.0], [0.0, 0.0, 1.7569]])),
-    Nucleus("N10", 1.0, np.array([[-0.0190, -0.0048, 0.0], [-0.0048, -0.0196, 0.0], [0.0, 0.0, 0.6046]])),
-    Nucleus("H6", 0.5, np.array([[-0.2569, -0.1273, 0.0], [-0.1273, -0.4711, 0.0], [0.0, 0.0, -0.4336]])),
-    Nucleus("H8a", 0.5, 0.4399 * np.eye(3)),
-    Nucleus("H8b", 0.5, 0.4399 * np.eye(3)),
-    Nucleus("H8c", 0.5, 0.4399 * np.eye(3)),
-    Nucleus("Hbeta", 0.5, 0.4070 * np.eye(3)),
-)
-
-
-TRP_NUCLEI = (
-    Nucleus("N1", 1.0, np.array([[-0.0336, 0.0924, -0.1354], [0.0924, 0.3303, -0.5318], [-0.1354, -0.5318, 0.6680]])),
-    Nucleus("H1", 0.5, np.array([[-0.9920, -0.2091, -0.2003], [-0.2091, -0.2631, 0.2803], [-0.2003, 0.2803, -0.5398]])),
-    Nucleus("H2", 0.5, np.array([[-0.2843, 0.1757, 0.1525], [0.1757, -0.2798, 0.0975], [0.1525, 0.0975, -0.2699]])),
-    Nucleus("H4", 0.5, np.array([[-0.5596, -0.1956, -0.1657], [-0.1956, -0.4020, 0.0762], [-0.1657, 0.0762, -0.5021]])),
-    Nucleus("H5", 0.5, np.array([[0.0051, 0.0616, 0.0694], [0.0616, -0.0665, 0.0391], [0.0694, 0.0391, -0.0586]])),
-    Nucleus("H7", 0.5, np.array([[-0.4355, -0.1541, -0.1239], [-0.1541, -0.2777, 0.0864], [-0.1239, 0.0864, -0.3770]])),
-    Nucleus("Hbeta1", 0.5, np.array([[1.5808, -0.0453, -0.0506], [-0.0453, 1.5575, 0.0988], [-0.0506, 0.0988, 1.6752]])),
-)
-
-
-def spin_operators(spin: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    dimension = int(round(2.0 * spin + 1.0))
-    m_values = np.arange(spin, -spin - 0.5, -1.0)
-    raising = np.zeros((dimension, dimension), dtype=complex)
-    for column in range(1, dimension):
-        m = m_values[column]
-        raising[column - 1, column] = math.sqrt(spin * (spin + 1.0) - m * (m + 1.0))
-    lowering = raising.conj().T
-    sx = 0.5 * (raising + lowering)
-    sy = (raising - lowering) / (2.0j)
-    sz = np.diag(m_values.astype(complex))
-    return sx, sy, sz
 
 
 def embed(operator: np.ndarray, position: int, dimensions: tuple[int, ...]) -> sp.csr_matrix:
@@ -146,11 +108,6 @@ def build_radical(name: str, nuclei: Iterable[Nucleus]) -> RadicalModel:
         electron_ops=electron_ops,
         nuclear_dimension=math.prod(dimensions[1:]),
     )
-
-
-def field_vector_mT(theta_deg: float, field_microT: float) -> np.ndarray:
-    theta = np.deg2rad(theta_deg)
-    return 1e-3 * field_microT * np.array([np.sin(theta), 0.0, np.cos(theta)])
 
 
 def diagonalize_radical(model: RadicalModel, theta_deg: float, field_microT: float) -> Spectrum:
@@ -311,16 +268,6 @@ def run_self_test() -> None:
     print(f"maximum absolute error: {worst_error:.3e}")
     if worst_error > 2e-4:
         raise AssertionError("FFT spectral convolution did not meet the self-test tolerance.")
-
-
-def theta_grid(step_deg: float, fine_step_deg: float, fine_half_width_deg: float) -> np.ndarray:
-    coarse = np.arange(0.0, 180.0 + 0.5 * step_deg, step_deg)
-    fine = np.arange(
-        90.0 - fine_half_width_deg,
-        90.0 + fine_half_width_deg + 0.5 * fine_step_deg,
-        fine_step_deg,
-    )
-    return np.unique(np.round(np.concatenate([coarse, fine]), 10))
 
 
 def save_csv(rows: list[dict[str, float]], path: Path) -> None:

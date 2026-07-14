@@ -87,6 +87,39 @@ of the three selected nitrogen nuclei. The production run recreates the 50-uT
 field-angle traces for radical-pair lifetimes of 1, 2, 5, 10, 20, and 100 us.
 Results are written under `outputs/quantum_needle_2016`.
 
+### Matrix-free state-vector validation
+
+The sampled state-vector reproduction uses the same paper model but evolves the
+full 221,184-component mixed-spin state without assembling its Hamiltonian:
+
+```bash
+python "Realistic system size/code/rpm_quantum_needle_statevector.py" --stage auto
+```
+
+The runner first uses a five-angle pilot to choose global nuclear and
+reaction-time sample counts.  It starts the complete 199-angle sweep only when
+the stochastic 95% half-width and Lanczos error gates pass.  Every angle/sample
+cell is checkpointed under `outputs/quantum_needle_statevector`, so an
+interrupted run continues with:
+
+```bash
+python "Realistic system size/code/rpm_quantum_needle_statevector.py" --stage auto --resume
+```
+
+Pass `--workers 0` (the default) to benchmark 1, 2, 4, 8, 16, and 32 worker
+processes and select the smallest count within 5% of the best throughput.  Use
+`--stage pilot`, `--stage full`, or `--stage report` to run an individual phase.
+The exact reproduction CSV under `outputs/quantum_needle_2016` is used for final
+acceptance.  Generate it first with the exact runner above if it is absent.
+
+The shared physical model is in `rpm_quantum_needle_model.py`; the reusable
+mixed-spin local-term and adaptive Lanczos implementation is in
+`rpm_statevector_engine.py`.  Focused tests run with:
+
+```bash
+python -m unittest discover -s "Realistic system size/code/tests" -v
+```
+
 It uses the FAD-TrpC hyperfine tensor ordering and geometry from the broadband
 upper-bound/action-spectrum work. The current main production baseline is:
 
