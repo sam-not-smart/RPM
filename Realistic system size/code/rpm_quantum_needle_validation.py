@@ -9,7 +9,10 @@ from __future__ import annotations
 import os
 
 for _name in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
-    os.environ.setdefault(_name, "1")
+    # Multiprocessing provides the trajectory-level parallelism.  Force each
+    # numerical library to remain single-threaded so worker counts are real and
+    # reproducible even when the login shell exports a larger default.
+    os.environ[_name] = "1"
 
 import argparse
 import csv
