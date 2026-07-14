@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -23,10 +24,13 @@ from rpm_quantum_needle_model import (  # noqa: E402
 )
 from rpm_quantum_needle_statevector import (  # noqa: E402
     CellResult,
+    CellTask,
     RunConfig,
     create_report,
     load_cell,
     reaction_time_schedule,
+    run_cell_factorized,
+    run_cell_spectral,
     save_cell,
     uncertainty_components,
 )
@@ -34,6 +38,7 @@ from rpm_statevector_engine import (  # noqa: E402
     AdaptiveLanczosPropagator,
     LocalTerm,
     MatrixFreeHamiltonian,
+    factorized_singlet_populations,
     random_phase_nuclear_state,
     singlet_initial_state,
     singlet_population,
@@ -85,6 +90,33 @@ class MatrixFreeTests(unittest.TestCase):
         expected = float(np.vdot(state, projector @ state).real)
         self.assertAlmostEqual(singlet_population(state, dimensions), expected, places=13)
 
+    def test_factorized_projection_matches_explicit_pair_state(self) -> None:
+        rng = np.random.default_rng(44)
+        count = 3
+        nuclear_a = 2
+        nuclear_b = 3
+        trajectories = []
+        for dimension in (2 * nuclear_a, 2 * nuclear_a, 2 * nuclear_b, 2 * nuclear_b):
+            values = rng.normal(size=(count, dimension)) + 1j * rng.normal(
+                size=(count, dimension)
+            )
+            values /= np.linalg.norm(values, axis=1)[:, None]
+            trajectories.append(values)
+        a_up, a_down, b_up, b_down = trajectories
+        factorized = factorized_singlet_populations(
+            a_up, a_down, b_up, b_down, nuclear_a, nuclear_b
+        )
+        explicit = []
+        for index in range(count):
+            pair = (
+                np.kron(a_up[index], b_down[index])
+                - np.kron(a_down[index], b_up[index])
+            ) / np.sqrt(2.0)
+            tensor = pair.reshape(2, nuclear_a, 2, nuclear_b).transpose(0, 2, 1, 3)
+            amplitude = (tensor[0, 1] - tensor[1, 0]) / np.sqrt(2.0)
+            explicit.append(float(np.vdot(amplitude, amplitude).real))
+        np.testing.assert_allclose(factorized, explicit, atol=2e-14)
+
 
 class SamplingTests(unittest.TestCase):
     def test_random_phase_normalization_and_mixed_trace(self) -> None:
@@ -104,11 +136,13 @@ class SamplingTests(unittest.TestCase):
 
     def test_sobol_schedule_is_nested(self) -> None:
         config = RunConfig()
-        small = reaction_time_schedule(config, 32)
-        large = reaction_time_schedule(config, 64)
+        small = reaction_time_schedule(config, 32, sample_id=3)
+        large = reaction_time_schedule(config, 64, sample_id=3)
         np.testing.assert_allclose(small, large[:, :, :32], atol=0.0, rtol=0.0)
+        independent = reaction_time_schedule(config, 32, sample_id=4)
+        self.assertFalse(np.array_equal(small, independent))
 
-    def test_hierarchical_bootstrap_is_deterministic(self) -> None:
+    def test_random_effects_interval_is_deterministic(self) -> None:
         values = np.arange(32, dtype=float).reshape(4, 8) / 100.0
         first = uncertainty_components(values, 200, 99)
         second = uncertainty_components(values, 200, 99)
@@ -142,7 +176,10 @@ class LanczosTests(unittest.TestCase):
             maximum_step_us=0.4,
         )
         result = propagator.propagate(
-            state, times, lambda vector: singlet_population(vector, (2, 2, 2))
+            state,
+            times,
+            lambda vector: singlet_population(vector, (2, 2, 2)),
+            store_states=True,
         )
         expected = [
             singlet_population(scipy.linalg.expm(-1j * dense * time) @ state, (2, 2, 2))
@@ -150,6 +187,8 @@ class LanczosTests(unittest.TestCase):
         ]
         np.testing.assert_allclose(result.observable_values, expected, atol=2e-12)
         np.testing.assert_allclose(result.final_state, scipy.linalg.expm(-1j * dense * times[-1]) @ state, atol=2e-12)
+        self.assertIsNotNone(result.states)
+        np.testing.assert_allclose(result.states[-1], result.final_state, atol=2e-12)
         self.assertLess(result.stats.maximum_norm_error, 2e-12)
 
     def test_minimum_step_failure_is_reported(self) -> None:
@@ -260,6 +299,31 @@ class CheckpointTests(unittest.TestCase):
                 "certification.json",
             ):
                 self.assertTrue((output / name).exists(), name)
+
+
+class FactorizedRunnerTests(unittest.TestCase):
+    def test_short_physical_cell_runs_with_product_random_phases(self) -> None:
+        config = RunConfig(
+            backend="factorized",
+            lifetimes_us=(0.001,),
+            sobol_scrambles=2,
+            bootstrap_replicates=20,
+            lanczos_state_error_budget=1e-7,
+        )
+        task = CellTask(
+            theta_deg=45.0,
+            sample_id=0,
+            q_points=2,
+            include_trace=False,
+            config=config,
+        )
+        result = run_cell_factorized(task)
+        spectral = run_cell_spectral(replace(task, config=replace(config, backend="spectral")))
+        self.assertEqual(result.yields.shape, (2, 1))
+        self.assertTrue(np.all((result.yields >= 0.0) & (result.yields <= 1.0)))
+        self.assertLess(float(result.propagation_bounds.max()), 5e-5)
+        np.testing.assert_allclose(spectral.yields, result.yields, atol=1e-10)
+        self.assertLess(float(spectral.propagation_bounds.max()), 5e-5)
 
 
 if __name__ == "__main__":

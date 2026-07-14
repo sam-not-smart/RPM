@@ -14,6 +14,7 @@ from rpm_quantum_needle_model import (
     ALL_NUCLEI,
     FAD_NUCLEI,
     GAMMA_E_MHZ_PER_MT,
+    Nucleus,
     SYSTEM_DIMENSIONS,
     TWOPI,
     field_vector_mT,
@@ -176,6 +177,31 @@ def build_quantum_needle_hamiltonian(
     return MatrixFreeHamiltonian(SYSTEM_DIMENSIONS, terms)
 
 
+def build_radical_hamiltonian(
+    nuclei: Iterable[Nucleus],
+    theta_deg: float,
+    field_microT: float = 50.0,
+    *,
+    label: str = "radical",
+) -> MatrixFreeHamiltonian:
+    """Matrix-free Hamiltonian for one dynamically independent radical."""
+
+    nuclei = tuple(nuclei)
+    dimensions = (2,) + tuple(nucleus.dimension for nucleus in nuclei)
+    electron_ops = spin_operators(0.5)
+    field = field_vector_mT(theta_deg, field_microT)
+    zeeman = TWOPI * GAMMA_E_MHZ_PER_MT * sum(
+        component * operator for component, operator in zip(field, electron_ops)
+    )
+    terms: list[LocalTerm] = [LocalTerm((0,), zeeman, f"{label} electron Zeeman")]
+    for nucleus_axis, nucleus in enumerate(nuclei, start=1):
+        local = TWOPI * GAMMA_E_MHZ_PER_MT * two_spin_coupling_operator(
+            0.5, nucleus.spin, nucleus.tensor_mT
+        )
+        terms.append(LocalTerm((0, nucleus_axis), local, f"{label}:{nucleus.name} hyperfine"))
+    return MatrixFreeHamiltonian(dimensions, terms)
+
+
 def random_phase_nuclear_state(
     nuclear_dimension: int,
     rng: np.random.Generator,
@@ -196,6 +222,15 @@ def singlet_initial_state(
     return np.kron(singlet, nuclei)
 
 
+def electron_nuclear_initial_state(electron_index: int, nuclear_state: np.ndarray) -> np.ndarray:
+    if electron_index not in (0, 1):
+        raise ValueError("electron_index must be 0 (up) or 1 (down).")
+    electron = np.zeros(2, dtype=complex)
+    electron[electron_index] = 1.0
+    nuclei = np.asarray(nuclear_state, dtype=complex).reshape(-1)
+    return np.kron(electron, nuclei)
+
+
 def singlet_population(vector: np.ndarray, dimensions: Iterable[int]) -> float:
     dimensions = tuple(int(value) for value in dimensions)
     tensor = np.asarray(vector, dtype=complex).reshape(dimensions)
@@ -207,6 +242,37 @@ def singlet_population(vector: np.ndarray, dimensions: Iterable[int]) -> float:
 def state_error_to_population_bound(state_error: float) -> float:
     epsilon = max(0.0, float(state_error))
     return min(1.0, 2.0 * epsilon + epsilon * epsilon)
+
+
+def factorized_singlet_populations(
+    a_up_states: np.ndarray,
+    a_down_states: np.ndarray,
+    b_up_states: np.ndarray,
+    b_down_states: np.ndarray,
+    nuclear_dimension_a: int,
+    nuclear_dimension_b: int,
+) -> np.ndarray:
+    """Project a separable-radical singlet evolution without forming pair states."""
+
+    a_up = np.asarray(a_up_states, dtype=complex).reshape(-1, 2, nuclear_dimension_a)
+    a_down = np.asarray(a_down_states, dtype=complex).reshape(-1, 2, nuclear_dimension_a)
+    b_up = np.asarray(b_up_states, dtype=complex).reshape(-1, 2, nuclear_dimension_b)
+    b_down = np.asarray(b_down_states, dtype=complex).reshape(-1, 2, nuclear_dimension_b)
+    count = a_up.shape[0]
+    if any(array.shape[0] != count for array in (a_down, b_up, b_down)):
+        raise ValueError("All radical trajectories must contain the same number of times.")
+    a_components = np.stack(
+        (a_up[:, 0], a_down[:, 0], a_up[:, 1], a_down[:, 1]), axis=1
+    )
+    b_components = np.stack(
+        (b_down[:, 1], b_up[:, 1], b_down[:, 0], b_up[:, 0]), axis=1
+    )
+    gram_a = np.einsum("tki,tli->tkl", a_components.conj(), a_components, optimize=True)
+    gram_b = np.einsum("tki,tli->tkl", b_components.conj(), b_components, optimize=True)
+    coefficients = np.array([1.0, -1.0, -1.0, 1.0]) / 2.0
+    weights = coefficients[:, None] * coefficients[None, :]
+    values = np.einsum("kl,tkl,tkl->t", weights, gram_a, gram_b, optimize=True).real
+    return np.clip(values, 0.0, 1.0)
 
 
 @dataclass(frozen=True)
@@ -226,6 +292,8 @@ class PropagationResult:
     times_us: np.ndarray
     observable_values: np.ndarray
     observable_error_bounds: np.ndarray
+    state_error_estimates: np.ndarray
+    states: np.ndarray | None
     final_state: np.ndarray
     stats: PropagationStats
 
@@ -350,6 +418,8 @@ class AdaptiveLanczosPropagator:
         initial_state: np.ndarray,
         times_us: Iterable[float],
         observable: Callable[[np.ndarray], float],
+        *,
+        store_states: bool = False,
     ) -> PropagationResult:
         times = np.asarray(tuple(float(value) for value in times_us), dtype=float)
         if times.ndim != 1 or times.size == 0:
@@ -362,6 +432,10 @@ class AdaptiveLanczosPropagator:
 
         values = np.empty(times.size, dtype=float)
         bounds = np.empty(times.size, dtype=float)
+        state_errors = np.empty(times.size, dtype=float)
+        stored_states = (
+            np.empty((times.size, state.size), dtype=complex) if store_states else None
+        )
         cursor = 0
         current_time = 0.0
         accumulated_error = 0.0
@@ -374,6 +448,9 @@ class AdaptiveLanczosPropagator:
         if times[0] == 0.0:
             values[0] = observable(state)
             bounds[0] = 0.0
+            state_errors[0] = 0.0
+            if stored_states is not None:
+                stored_states[0] = state
             cursor = 1
         final_time = float(times[-1])
         step = min(self.initial_step_us, final_time) if final_time else 0.0
@@ -460,7 +537,10 @@ class AdaptiveLanczosPropagator:
                     )
                 point_state = state_norm * (basis[:, :selected_dimension] @ coefficients)
                 values[cursor] = observable(point_state)
-                bounds[cursor] = state_error_to_population_bound(accumulated_error + point_error)
+                state_errors[cursor] = accumulated_error + point_error
+                bounds[cursor] = state_error_to_population_bound(state_errors[cursor])
+                if stored_states is not None:
+                    stored_states[cursor] = point_state
                 cursor += 1
             assert endpoint_coefficients is not None
             state = state_norm * (basis[:, :selected_dimension] @ endpoint_coefficients)
@@ -484,4 +564,4 @@ class AdaptiveLanczosPropagator:
             accumulated_state_error=accumulated_error,
             maximum_norm_error=maximum_norm_error,
         )
-        return PropagationResult(times, values, bounds, state, stats)
+        return PropagationResult(times, values, bounds, state_errors, stored_states, state, stats)

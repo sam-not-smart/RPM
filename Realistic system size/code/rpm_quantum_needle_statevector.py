@@ -38,30 +38,40 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.stats import qmc
+import scipy.linalg
+from scipy.stats import qmc, t as student_t
 
 from rpm_quantum_needle_model import (
     DEFAULT_FIELD_MICROT,
     DEFAULT_LIFETIMES_US,
     DIAGNOSTIC_ANGLES_DEG,
+    FAD_NUCLEI,
     NUCLEAR_DIMENSION,
     PILOT_ANGLES_DEG,
     SPIN_ORDER,
     STATE_DIMENSION,
     SYSTEM_DIMENSIONS,
+    TRP_NUCLEI,
     diagnostic_time_grid_us,
     theta_grid,
 )
 from rpm_statevector_engine import (
     AdaptiveLanczosPropagator,
+    build_radical_hamiltonian,
     build_quantum_needle_hamiltonian,
+    electron_nuclear_initial_state,
+    factorized_singlet_populations,
+    random_phase_nuclear_state,
     singlet_initial_state,
     singlet_population,
+    state_error_to_population_bound,
 )
 
 
 @dataclass(frozen=True)
 class RunConfig:
+    backend: str = "spectral"
+    independent_sobol_by_nuclear_sample: bool = True
     field_microT: float = DEFAULT_FIELD_MICROT
     lifetimes_us: tuple[float, ...] = DEFAULT_LIFETIMES_US
     seed: int = 20260713
@@ -71,7 +81,7 @@ class RunConfig:
     propagation_bound_target: float = 5e-5
     pilot_start_m: int = 8
     pilot_start_q: int = 32
-    pilot_max_m: int = 256
+    pilot_max_m: int = 2048
     pilot_max_q: int = 256
     lanczos_minimum_dimension: int = 24
     lanczos_maximum_dimension: int = 64
@@ -134,12 +144,19 @@ class Uncertainty:
     nuclear_sample_std: float
 
 
+_SPECTRAL_CACHE: dict[tuple[float, float], tuple[object, ...]] = {}
+
+
 def _seed(base: int, *keys: int) -> int:
     sequence = np.random.SeedSequence([int(base), *(int(key) for key in keys)])
     return int(sequence.generate_state(1, dtype=np.uint32)[0])
 
 
-def reaction_time_schedule(config: RunConfig, q_points: int) -> np.ndarray:
+def reaction_time_schedule(
+    config: RunConfig,
+    q_points: int,
+    sample_id: int = 0,
+) -> np.ndarray:
     if q_points < 1 or q_points & (q_points - 1):
         raise ValueError("The Sobol point count Q must be a positive power of two.")
     exponent = int(math.log2(q_points))
@@ -150,7 +167,12 @@ def reaction_time_schedule(config: RunConfig, q_points: int) -> np.ndarray:
         engine = qmc.Sobol(
             d=1,
             scramble=True,
-            seed=_seed(config.seed, 0x50B01, scramble),
+            seed=_seed(
+                config.seed,
+                0x50B01,
+                sample_id if config.independent_sobol_by_nuclear_sample else 0,
+                scramble,
+            ),
         )
         uniform = engine.random_base2(exponent)[:, 0]
         uniform = np.minimum(uniform, np.nextafter(1.0, 0.0))
@@ -159,10 +181,10 @@ def reaction_time_schedule(config: RunConfig, q_points: int) -> np.ndarray:
     return schedule
 
 
-def run_cell(task: CellTask) -> CellResult:
+def run_cell_full(task: CellTask) -> CellResult:
     started = time.perf_counter()
     config = task.config
-    schedule = reaction_time_schedule(config, task.q_points)
+    schedule = reaction_time_schedule(config, task.q_points, task.sample_id)
     reaction_times = schedule.reshape(-1)
     trace_times = diagnostic_time_grid_us() if task.include_trace else np.empty(0)
     observation_times = np.unique(np.concatenate(([0.0], reaction_times, trace_times)))
@@ -189,8 +211,8 @@ def run_cell(task: CellTask) -> CellResult:
     reaction_indices = np.searchsorted(observation_times, reaction_times)
     populations = propagated.observable_values[reaction_indices].reshape(schedule.shape)
     bounds = propagated.observable_error_bounds[reaction_indices].reshape(schedule.shape)
-    yields = populations.mean(axis=2)
-    propagation_bounds = bounds.mean(axis=2)
+    yields = populations.mean(axis=2).T
+    propagation_bounds = bounds.mean(axis=2).T
     if task.include_trace:
         trace_indices = np.searchsorted(observation_times, trace_times)
         trace_population = propagated.observable_values[trace_indices]
@@ -218,6 +240,298 @@ def run_cell(task: CellTask) -> CellResult:
         maximum_norm_error=stats.maximum_norm_error,
         elapsed_seconds=time.perf_counter() - started,
     )
+
+
+def _radical_trajectory(
+    hamiltonian,
+    initial_state: np.ndarray,
+    observation_times: np.ndarray,
+    config: RunConfig,
+):
+    propagator = AdaptiveLanczosPropagator(
+        hamiltonian,
+        minimum_dimension=config.lanczos_minimum_dimension,
+        maximum_dimension=config.lanczos_maximum_dimension,
+        dimension_increment=config.lanczos_dimension_increment,
+        embedded_offset=config.lanczos_embedded_offset,
+        safety_factor=config.lanczos_safety_factor,
+        state_error_budget=config.lanczos_state_error_budget / 4.0,
+        initial_step_us=config.lanczos_initial_step_us,
+        maximum_step_us=config.lanczos_maximum_step_us,
+    )
+    return propagator.propagate(
+        initial_state,
+        observation_times,
+        lambda _: 0.0,
+        store_states=True,
+    )
+
+
+def run_cell_factorized(task: CellTask) -> CellResult:
+    """Random-phase Krylov evolution using the paper model's H_A + H_B structure."""
+
+    started = time.perf_counter()
+    config = task.config
+    schedule = reaction_time_schedule(config, task.q_points, task.sample_id)
+    reaction_times = schedule.reshape(-1)
+    trace_times = diagnostic_time_grid_us() if task.include_trace else np.empty(0)
+    observation_times = np.unique(np.concatenate(([0.0], reaction_times, trace_times)))
+
+    hamiltonian_a = build_radical_hamiltonian(
+        FAD_NUCLEI, task.theta_deg, config.field_microT, label="FAD"
+    )
+    hamiltonian_b = build_radical_hamiltonian(
+        TRP_NUCLEI, task.theta_deg, config.field_microT, label="TrpH"
+    )
+    nuclear_dimension_a = math.prod(hamiltonian_a.dimensions[1:])
+    nuclear_dimension_b = math.prod(hamiltonian_b.dimensions[1:])
+    phase_a = random_phase_nuclear_state(
+        nuclear_dimension_a,
+        np.random.default_rng(_seed(config.seed, 0xA11CE, task.sample_id, 0)),
+    )
+    phase_b = random_phase_nuclear_state(
+        nuclear_dimension_b,
+        np.random.default_rng(_seed(config.seed, 0xA11CE, task.sample_id, 1)),
+    )
+    a_up = _radical_trajectory(
+        hamiltonian_a,
+        electron_nuclear_initial_state(0, phase_a),
+        observation_times,
+        config,
+    )
+    a_down = _radical_trajectory(
+        hamiltonian_a,
+        electron_nuclear_initial_state(1, phase_a),
+        observation_times,
+        config,
+    )
+    b_up = _radical_trajectory(
+        hamiltonian_b,
+        electron_nuclear_initial_state(0, phase_b),
+        observation_times,
+        config,
+    )
+    b_down = _radical_trajectory(
+        hamiltonian_b,
+        electron_nuclear_initial_state(1, phase_b),
+        observation_times,
+        config,
+    )
+    trajectories = (a_up, a_down, b_up, b_down)
+    if any(result.states is None for result in trajectories):
+        raise RuntimeError("Factorized propagation did not retain radical states.")
+    populations = factorized_singlet_populations(
+        a_up.states,
+        a_down.states,
+        b_up.states,
+        b_down.states,
+        nuclear_dimension_a,
+        nuclear_dimension_b,
+    )
+    combined_state_error = sum(result.state_error_estimates for result in trajectories)
+    population_bounds = np.array(
+        [state_error_to_population_bound(error) for error in combined_state_error]
+    )
+    reaction_indices = np.searchsorted(observation_times, reaction_times)
+    sampled_population = populations[reaction_indices].reshape(schedule.shape)
+    sampled_bounds = population_bounds[reaction_indices].reshape(schedule.shape)
+    yields = sampled_population.mean(axis=2).T
+    propagation_bounds = sampled_bounds.mean(axis=2).T
+    if task.include_trace:
+        trace_indices = np.searchsorted(observation_times, trace_times)
+        trace_population = populations[trace_indices]
+        trace_bounds = population_bounds[trace_indices]
+    else:
+        trace_population = np.empty(0)
+        trace_bounds = np.empty(0)
+    stats = [result.stats for result in trajectories]
+    return CellResult(
+        theta_deg=task.theta_deg,
+        sample_id=task.sample_id,
+        q_points=task.q_points,
+        yields=yields,
+        propagation_bounds=propagation_bounds,
+        trace_times_us=trace_times,
+        trace_population=trace_population,
+        trace_bounds=trace_bounds,
+        accepted_steps=sum(item.accepted_steps for item in stats),
+        rejected_steps=sum(item.rejected_steps for item in stats),
+        matvecs=sum(item.matvecs for item in stats),
+        maximum_krylov_dimension=max(item.maximum_krylov_dimension for item in stats),
+        minimum_step_us=min(item.minimum_step_us for item in stats),
+        maximum_step_us=max(item.maximum_step_us for item in stats),
+        accumulated_state_error=sum(item.accumulated_state_error for item in stats),
+        maximum_norm_error=max(item.maximum_norm_error for item in stats),
+        elapsed_seconds=time.perf_counter() - started,
+    )
+
+
+def _radical_eigensystem(nuclei, theta_deg: float, config: RunConfig, label: str):
+    hamiltonian = build_radical_hamiltonian(
+        nuclei, theta_deg, config.field_microT, label=label
+    )
+    dense = hamiltonian.explicit_matrix()
+    norm = max(float(np.linalg.norm(dense)), np.finfo(float).tiny)
+    eigenvalues, eigenvectors = scipy.linalg.eigh(
+        dense, overwrite_a=False, check_finite=False, driver="evd"
+    )
+    residual = np.linalg.norm(
+        dense @ eigenvectors - eigenvectors * eigenvalues[None, :]
+    ) / norm
+    orthogonality = np.linalg.norm(
+        eigenvectors.conj().T @ eigenvectors - np.eye(eigenvalues.size)
+    )
+    error_estimate = 10.0 * float(residual + orthogonality)
+    return eigenvalues, eigenvectors, hamiltonian, error_estimate
+
+
+def _spectral_pair_populations(
+    eigenvalues_a: np.ndarray,
+    eigenvectors_a: np.ndarray,
+    phase_a: np.ndarray,
+    eigenvalues_b: np.ndarray,
+    eigenvectors_b: np.ndarray,
+    phase_b: np.ndarray,
+    times_us: np.ndarray,
+    *,
+    chunk_size: int = 512,
+) -> np.ndarray:
+    nuclear_dimension_a = phase_a.size
+    nuclear_dimension_b = phase_b.size
+    initial_a = np.column_stack(
+        (
+            electron_nuclear_initial_state(0, phase_a),
+            electron_nuclear_initial_state(1, phase_a),
+        )
+    )
+    initial_b = np.column_stack(
+        (
+            electron_nuclear_initial_state(0, phase_b),
+            electron_nuclear_initial_state(1, phase_b),
+        )
+    )
+    coefficients_a = eigenvectors_a.conj().T @ initial_a
+    coefficients_b = eigenvectors_b.conj().T @ initial_b
+    populations = np.empty(times_us.size, dtype=float)
+    for start in range(0, times_us.size, chunk_size):
+        stop = min(times_us.size, start + chunk_size)
+        times = times_us[start:stop]
+        phase_factors_a = np.exp(-1.0j * eigenvalues_a[:, None] * times[None, :])
+        phase_factors_b = np.exp(-1.0j * eigenvalues_b[:, None] * times[None, :])
+        evolved_a = eigenvectors_a @ (
+            coefficients_a[:, :, None] * phase_factors_a[:, None, :]
+        ).reshape(eigenvalues_a.size, -1)
+        evolved_b = eigenvectors_b @ (
+            coefficients_b[:, :, None] * phase_factors_b[:, None, :]
+        ).reshape(eigenvalues_b.size, -1)
+        count = stop - start
+        evolved_a = evolved_a.reshape(eigenvalues_a.size, 2, count).transpose(2, 1, 0)
+        evolved_b = evolved_b.reshape(eigenvalues_b.size, 2, count).transpose(2, 1, 0)
+        populations[start:stop] = factorized_singlet_populations(
+            evolved_a[:, 0],
+            evolved_a[:, 1],
+            evolved_b[:, 0],
+            evolved_b[:, 1],
+            nuclear_dimension_a,
+            nuclear_dimension_b,
+        )
+    return populations
+
+
+def _cached_radical_eigensystems(theta_deg: float, config: RunConfig):
+    key = (float(theta_deg), float(config.field_microT))
+    cached = _SPECTRAL_CACHE.get(key)
+    if cached is not None:
+        return cached
+    system_a = _radical_eigensystem(FAD_NUCLEI, theta_deg, config, "FAD")
+    system_b = _radical_eigensystem(TRP_NUCLEI, theta_deg, config, "TrpH")
+    if len(_SPECTRAL_CACHE) >= 2:
+        _SPECTRAL_CACHE.pop(next(iter(_SPECTRAL_CACHE)))
+    cached = (*system_a, *system_b)
+    _SPECTRAL_CACHE[key] = cached
+    return cached
+
+
+def run_cell_spectral(task: CellTask) -> CellResult:
+    """Exact block-spectral propagation for the separable validation Hamiltonian."""
+
+    started = time.perf_counter()
+    config = task.config
+    schedule = reaction_time_schedule(config, task.q_points, task.sample_id)
+    reaction_times = schedule.reshape(-1)
+    trace_times = diagnostic_time_grid_us() if task.include_trace else np.empty(0)
+    observation_times = np.unique(np.concatenate(([0.0], reaction_times, trace_times)))
+    (
+        eigenvalues_a,
+        eigenvectors_a,
+        hamiltonian_a,
+        error_a,
+        eigenvalues_b,
+        eigenvectors_b,
+        hamiltonian_b,
+        error_b,
+    ) = _cached_radical_eigensystems(task.theta_deg, config)
+    phase_a = random_phase_nuclear_state(
+        math.prod(hamiltonian_a.dimensions[1:]),
+        np.random.default_rng(_seed(config.seed, 0xA11CE, task.sample_id, 0)),
+    )
+    phase_b = random_phase_nuclear_state(
+        math.prod(hamiltonian_b.dimensions[1:]),
+        np.random.default_rng(_seed(config.seed, 0xA11CE, task.sample_id, 1)),
+    )
+    populations = _spectral_pair_populations(
+        eigenvalues_a,
+        eigenvectors_a,
+        phase_a,
+        eigenvalues_b,
+        eigenvectors_b,
+        phase_b,
+        observation_times,
+    )
+    spectral_bound = state_error_to_population_bound(error_a + error_b)
+    population_bounds = np.full(observation_times.size, spectral_bound)
+    population_bounds[observation_times == 0.0] = 0.0
+    reaction_indices = np.searchsorted(observation_times, reaction_times)
+    sampled_population = populations[reaction_indices].reshape(schedule.shape)
+    sampled_bounds = population_bounds[reaction_indices].reshape(schedule.shape)
+    yields = sampled_population.mean(axis=2).T
+    propagation_bounds = sampled_bounds.mean(axis=2).T
+    if task.include_trace:
+        trace_indices = np.searchsorted(observation_times, trace_times)
+        trace_population = populations[trace_indices]
+        trace_bounds = population_bounds[trace_indices]
+    else:
+        trace_population = np.empty(0)
+        trace_bounds = np.empty(0)
+    return CellResult(
+        theta_deg=task.theta_deg,
+        sample_id=task.sample_id,
+        q_points=task.q_points,
+        yields=yields,
+        propagation_bounds=propagation_bounds,
+        trace_times_us=trace_times,
+        trace_population=trace_population,
+        trace_bounds=trace_bounds,
+        accepted_steps=0,
+        rejected_steps=0,
+        matvecs=hamiltonian_a.matvec_count + hamiltonian_b.matvec_count,
+        maximum_krylov_dimension=0,
+        minimum_step_us=0.0,
+        maximum_step_us=0.0,
+        accumulated_state_error=error_a + error_b,
+        maximum_norm_error=error_a + error_b,
+        elapsed_seconds=time.perf_counter() - started,
+    )
+
+
+def run_cell(task: CellTask) -> CellResult:
+    if task.config.backend == "spectral":
+        return run_cell_spectral(task)
+    if task.config.backend == "factorized":
+        return run_cell_factorized(task)
+    if task.config.backend == "full":
+        return run_cell_full(task)
+    raise ValueError(f"Unknown backend: {task.config.backend}")
 
 
 def _angle_token(theta_deg: float) -> str:
@@ -354,7 +668,8 @@ def run_tasks(
     config: RunConfig,
     output_dir: Path,
     workers: int,
-) -> None:
+    deadline_epoch: float | None = None,
+) -> bool:
     angles_deg = tuple(float(theta) for theta in angles_deg)
     tasks: list[CellTask] = []
     for theta in angles_deg:
@@ -374,32 +689,42 @@ def run_tasks(
                 )
     if not tasks:
         print(f"All {len(angles_deg) * sample_count} requested cells are checkpointed.")
-        return
+        return True
     print(f"Running {len(tasks)} cells with {workers} worker(s), M={sample_count}, Q={q_points}")
     completed = 0
+    progress_interval = max(64, workers * 4)
+
+    def report_progress(task: CellTask, result: CellResult) -> None:
+        if completed == 1 or completed == len(tasks) or completed % progress_interval == 0:
+            print(
+                f"[{completed}/{len(tasks)}] theta={task.theta_deg:g}, "
+                f"sample={task.sample_id}, {result.elapsed_seconds:.1f}s, "
+                f"matvecs={result.matvecs}",
+                flush=True,
+            )
+
     if workers == 1:
         for task in tasks:
+            if deadline_epoch is not None and time.time() >= deadline_epoch:
+                return False
             result = run_cell(task)
             save_cell(result, output_dir, config.configuration_hash)
             completed += 1
-            print(
-                f"[{completed}/{len(tasks)}] theta={task.theta_deg:g}, sample={task.sample_id}, "
-                f"{result.elapsed_seconds:.1f}s, matvecs={result.matvecs}",
-                flush=True,
-            )
-        return
+            report_progress(task, result)
+        return True
     with ProcessPoolExecutor(max_workers=workers) as executor:
-        futures = {executor.submit(run_cell, task): task for task in tasks}
-        for future in as_completed(futures):
-            task = futures[future]
-            result = future.result()
-            save_cell(result, output_dir, config.configuration_hash)
-            completed += 1
-            print(
-                f"[{completed}/{len(tasks)}] theta={task.theta_deg:g}, sample={task.sample_id}, "
-                f"{result.elapsed_seconds:.1f}s, matvecs={result.matvecs}",
-                flush=True,
-            )
+        for batch_start in range(0, len(tasks), workers):
+            if deadline_epoch is not None and time.time() >= deadline_epoch:
+                return False
+            batch = tasks[batch_start : batch_start + workers]
+            futures = {executor.submit(run_cell, task): task for task in batch}
+            for future in as_completed(futures):
+                task = futures[future]
+                result = future.result()
+                save_cell(result, output_dir, config.configuration_hash)
+                completed += 1
+                report_progress(task, result)
+    return True
 
 
 def load_cells(
@@ -418,40 +743,39 @@ def load_cells(
     return yields, bounds, cells
 
 
-def _halfwidth(samples: np.ndarray, center: float) -> float:
-    lower, upper = np.percentile(samples, [2.5, 97.5])
-    return float(max(center - lower, upper - center))
-
-
 def uncertainty_components(
     values: np.ndarray,
     replicates: int,
     seed: int,
 ) -> Uncertainty:
-    """Two-level bootstrap for an M nuclear-state by S scramble table."""
+    """Random-effects 95% intervals for nested nuclear/time samples.
+
+    The large-M production regime uses independent Sobol scrambles within each
+    nuclear state.  A two-level variance decomposition is both much cheaper
+    than repeatedly materializing bootstrap cubes and asymptotically equivalent
+    for the precision-gated mean.
+    """
 
     values = np.asarray(values, dtype=float)
     if values.ndim != 2 or min(values.shape) < 2:
         raise ValueError("Uncertainty analysis needs at least two rows and columns.")
+    del replicates, seed
     nuclear_count, scramble_count = values.shape
     center = float(values.mean())
-    rng = np.random.default_rng(seed)
-    nuclear_indices = rng.integers(0, nuclear_count, size=(replicates, nuclear_count))
-    scramble_indices = rng.integers(0, scramble_count, size=(replicates, scramble_count))
     row_means = values.mean(axis=1)
-    column_means = values.mean(axis=0)
-    nuclear_samples = row_means[nuclear_indices].mean(axis=1)
-    time_samples = column_means[scramble_indices].mean(axis=1)
-    joint_samples = np.empty(replicates, dtype=float)
-    for replicate in range(replicates):
-        joint_samples[replicate] = values[
-            nuclear_indices[replicate][:, None], scramble_indices[replicate][None, :]
-        ].mean()
+    nuclear_variance = float(row_means.var(ddof=1) / nuclear_count)
+    within_variance = float(values.var(axis=1, ddof=1).mean())
+    reaction_time_variance = within_variance / (nuclear_count * scramble_count)
+    nuclear_factor = float(student_t.ppf(0.975, nuclear_count - 1))
+    time_degrees = nuclear_count * (scramble_count - 1)
+    time_factor = float(student_t.ppf(0.975, time_degrees))
+    joint_factor = float(student_t.ppf(0.975, min(nuclear_count - 1, time_degrees)))
     return Uncertainty(
         mean=center,
-        nuclear_halfwidth=_halfwidth(nuclear_samples, center),
-        reaction_time_halfwidth=_halfwidth(time_samples, center),
-        joint_halfwidth=_halfwidth(joint_samples, center),
+        nuclear_halfwidth=nuclear_factor * math.sqrt(max(0.0, nuclear_variance)),
+        reaction_time_halfwidth=time_factor * math.sqrt(max(0.0, reaction_time_variance)),
+        joint_halfwidth=joint_factor
+        * math.sqrt(max(0.0, nuclear_variance + reaction_time_variance)),
         nuclear_sample_std=float(row_means.std(ddof=1)),
     )
 
@@ -502,12 +826,25 @@ def run_pilot(
     config: RunConfig,
     workers: int,
     manifest: dict[str, object],
+    deadline_epoch: float | None = None,
 ) -> tuple[bool, int, int]:
     sample_count = int(manifest.get("selected_M", config.pilot_start_m))
     q_points = int(manifest.get("selected_Q", config.pilot_start_q))
     history = list(manifest.get("pilot_history", []))
     while True:
-        run_tasks(PILOT_ANGLES_DEG, sample_count, q_points, config, output_dir, workers)
+        completed = run_tasks(
+            PILOT_ANGLES_DEG,
+            sample_count,
+            q_points,
+            config,
+            output_dir,
+            workers,
+            deadline_epoch,
+        )
+        if not completed:
+            manifest["status"] = "walltime_limit_reached"
+            write_json_atomic(output_dir / "manifest.json", manifest)
+            return False, sample_count, q_points
         metrics = pilot_metrics(output_dir, sample_count, q_points, config)
         record = {"M": sample_count, "Q": q_points, **metrics}
         history.append(record)
@@ -536,7 +873,16 @@ def run_pilot(
             metrics["maximum_nuclear_halfwidth"] >= metrics["maximum_reaction_time_halfwidth"]
         )
         if (nuclear_dominates and can_grow_m) or not can_grow_q:
-            sample_count = min(config.pilot_max_m, 2 * sample_count)
+            if sample_count >= 256:
+                ratio = metrics["maximum_joint_halfwidth"] / config.stochastic_halfwidth_target
+                projected = math.ceil(sample_count * ratio * ratio * 1.10)
+                projected = 64 * math.ceil(projected / 64)
+                sample_count = min(
+                    config.pilot_max_m,
+                    max(sample_count + 64, projected),
+                )
+            else:
+                sample_count = min(config.pilot_max_m, 2 * sample_count)
         else:
             q_points = min(config.pilot_max_q, 2 * q_points)
 
@@ -610,39 +956,63 @@ def create_report(
     summary_columns = list(summary_rows[0])
     write_rows(output_dir / "quantum_needle_statevector_summary.csv", summary_rows, summary_columns)
 
-    cell_columns = [
-        "theta_deg", "sample_id", "scramble_id", "lifetime_us", "phi_s",
-        "propagation_bound", "Q", "matvecs", "accepted_steps", "rejected_steps",
-        "maximum_krylov_dimension", "maximum_norm_error", "elapsed_seconds",
-    ]
-    cell_path = output_dir / "quantum_needle_statevector_cells.csv"
-    temporary = cell_path.with_suffix(cell_path.suffix + f".{os.getpid()}.tmp")
-    with temporary.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=cell_columns)
-        writer.writeheader()
-        for theta in angles_deg:
-            yields, bounds, cells = all_cells[float(theta)]
-            for sample_id, cell in enumerate(cells):
-                for scramble in range(config.sobol_scrambles):
-                    for lifetime_index, lifetime in enumerate(config.lifetimes_us):
-                        writer.writerow(
-                            {
-                                "theta_deg": float(theta),
-                                "sample_id": sample_id,
-                                "scramble_id": scramble,
-                                "lifetime_us": lifetime,
-                                "phi_s": yields[sample_id, scramble, lifetime_index],
-                                "propagation_bound": bounds[sample_id, scramble, lifetime_index],
-                                "Q": q_points,
-                                "matvecs": cell.matvecs,
-                                "accepted_steps": cell.accepted_steps,
-                                "rejected_steps": cell.rejected_steps,
-                                "maximum_krylov_dimension": cell.maximum_krylov_dimension,
-                                "maximum_norm_error": cell.maximum_norm_error,
-                                "elapsed_seconds": cell.elapsed_seconds,
-                            }
-                        )
-    os.replace(temporary, cell_path)
+    cell_row_count = (
+        len(angles_deg)
+        * sample_count
+        * config.sobol_scrambles
+        * len(config.lifetimes_us)
+    )
+    if cell_row_count <= 2_000_000:
+        cell_columns = [
+            "theta_deg", "sample_id", "scramble_id", "lifetime_us", "phi_s",
+            "propagation_bound", "Q", "matvecs", "accepted_steps", "rejected_steps",
+            "maximum_krylov_dimension", "maximum_norm_error", "elapsed_seconds",
+        ]
+        cell_path = output_dir / "quantum_needle_statevector_cells.csv"
+        temporary = cell_path.with_suffix(cell_path.suffix + f".{os.getpid()}.tmp")
+        with temporary.open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=cell_columns)
+            writer.writeheader()
+            for theta in angles_deg:
+                yields, bounds, cells = all_cells[float(theta)]
+                for sample_id, cell in enumerate(cells):
+                    for scramble in range(config.sobol_scrambles):
+                        for lifetime_index, lifetime in enumerate(config.lifetimes_us):
+                            writer.writerow(
+                                {
+                                    "theta_deg": float(theta),
+                                    "sample_id": sample_id,
+                                    "scramble_id": scramble,
+                                    "lifetime_us": lifetime,
+                                    "phi_s": yields[sample_id, scramble, lifetime_index],
+                                    "propagation_bound": bounds[sample_id, scramble, lifetime_index],
+                                    "Q": q_points,
+                                    "matvecs": cell.matvecs,
+                                    "accepted_steps": cell.accepted_steps,
+                                    "rejected_steps": cell.rejected_steps,
+                                    "maximum_krylov_dimension": cell.maximum_krylov_dimension,
+                                    "maximum_norm_error": cell.maximum_norm_error,
+                                    "elapsed_seconds": cell.elapsed_seconds,
+                                }
+                            )
+        os.replace(temporary, cell_path)
+    else:
+        cell_path = output_dir / "quantum_needle_statevector_cells.npz"
+        temporary = cell_path.with_suffix(cell_path.suffix + f".{os.getpid()}.tmp")
+        with temporary.open("wb") as handle:
+            np.savez_compressed(
+                handle,
+                theta_deg=np.asarray(angles_deg, dtype=float),
+                sample_id=np.arange(sample_count, dtype=int),
+                scramble_id=np.arange(config.sobol_scrambles, dtype=int),
+                lifetime_us=np.asarray(config.lifetimes_us, dtype=float),
+                phi_s=np.stack([all_cells[float(theta)][0] for theta in angles_deg]),
+                propagation_bound=np.stack(
+                    [all_cells[float(theta)][1] for theta in angles_deg]
+                ),
+                Q=np.array(q_points),
+            )
+        os.replace(temporary, cell_path)
     save_diagnostic_traces(output_dir, all_cells, sample_count, config)
     save_curve_summary(output_dir, all_cells, angles_deg, sample_count, config)
     plot_report(output_dir, summary_rows, config)
@@ -658,6 +1028,7 @@ def create_report(
             "M": sample_count,
             "S": config.sobol_scrambles,
             "Q": q_points,
+            "cell_estimate_artifact": cell_path.name,
             "hostname": socket.gethostname(),
             "platform": platform.platform(),
             "python": sys.version,
@@ -682,12 +1053,10 @@ def save_diagnostic_traces(
         traces = np.stack([cell.trace_population for cell in cells])
         bounds = np.stack([cell.trace_bounds for cell in cells])
         times = cells[0].trace_times_us
-        rng = np.random.default_rng(_seed(config.seed, 0x7ACE, angle_index))
-        indices = rng.integers(0, sample_count, size=(config.bootstrap_replicates, sample_count))
-        bootstrap = traces[indices].mean(axis=1)
         mean = traces.mean(axis=0)
-        lower, upper = np.percentile(bootstrap, [2.5, 97.5], axis=0)
-        halfwidth = np.maximum(mean - lower, upper - mean)
+        halfwidth = float(student_t.ppf(0.975, sample_count - 1)) * traces.std(
+            axis=0, ddof=1
+        ) / math.sqrt(sample_count)
         for time_index, time_us in enumerate(times):
             rows.append(
                 {
@@ -720,20 +1089,22 @@ def save_curve_summary(
         )
         mean_curve = curves.mean(axis=(1, 2))
         rng = np.random.default_rng(_seed(config.seed, 0xC0A7E, lifetime_index))
-        anisotropies = np.empty(config.bootstrap_replicates)
-        minimum_angles = np.empty(config.bootstrap_replicates)
-        maximum_angles = np.empty(config.bootstrap_replicates)
-        for replicate in range(config.bootstrap_replicates):
-            nuclear_indices = rng.integers(0, sample_count, size=sample_count)
-            scramble_indices = rng.integers(
-                0, config.sobol_scrambles, size=config.sobol_scrambles
-            )
-            curve = curves[:, nuclear_indices][:, :, scramble_indices].mean(axis=(1, 2))
-            minimum = int(np.argmin(curve))
-            maximum = int(np.argmax(curve))
-            anisotropies[replicate] = curve[maximum] - curve[minimum]
-            minimum_angles[replicate] = angle_array[minimum]
-            maximum_angles[replicate] = angle_array[maximum]
+        row_curves = curves.mean(axis=2).T
+        counts = rng.multinomial(
+            sample_count,
+            np.full(sample_count, 1.0 / sample_count),
+            size=config.bootstrap_replicates,
+        )
+        bootstrap_curves = counts @ row_curves / sample_count
+        minimum_indices = np.argmin(bootstrap_curves, axis=1)
+        maximum_indices = np.argmax(bootstrap_curves, axis=1)
+        row_indices = np.arange(config.bootstrap_replicates)
+        anisotropies = (
+            bootstrap_curves[row_indices, maximum_indices]
+            - bootstrap_curves[row_indices, minimum_indices]
+        )
+        minimum_angles = angle_array[minimum_indices]
+        maximum_angles = angle_array[maximum_indices]
         minimum = int(np.argmin(mean_curve))
         maximum = int(np.argmax(mean_curve))
         anisotropy = float(mean_curve[maximum] - mean_curve[minimum])
@@ -781,7 +1152,7 @@ def plot_report(output_dir: Path, rows: list[dict[str, object]], config: RunConf
     labels = (
         ("nuclear_halfwidth_95", "nuclear sampling"),
         ("reaction_time_halfwidth_95", "reaction-time sampling"),
-        ("propagation_bound", "Lanczos propagation"),
+        ("propagation_bound", "numerical propagation"),
     )
     for axis, (column, title) in zip(axes, labels):
         for lifetime, color in zip(config.lifetimes_us, colors):
@@ -850,11 +1221,14 @@ def certify_report(rows: list[dict[str, object]], config: RunConfig) -> dict[str
 
 def _benchmark_task(_: int) -> float:
     started = time.perf_counter()
-    hamiltonian = build_quantum_needle_hamiltonian(90.0)
-    rng = np.random.default_rng(12345)
-    vector = singlet_initial_state(SYSTEM_DIMENSIONS, rng)
-    hamiltonian.matvec(vector)
-    hamiltonian.matvec(vector)
+    for nuclei, label in ((FAD_NUCLEI, "FAD"), (TRP_NUCLEI, "TrpH")):
+        hamiltonian = build_radical_hamiltonian(nuclei, 90.0, label=label)
+        scipy.linalg.eigh(
+            hamiltonian.explicit_matrix(),
+            eigvals_only=True,
+            overwrite_a=True,
+            check_finite=False,
+        )
     return time.perf_counter() - started
 
 
@@ -887,7 +1261,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--output-dir", type=Path, default=Path("outputs") / "quantum_needle_statevector")
     parser.add_argument("--seed", type=int, default=RunConfig.seed)
+    parser.add_argument(
+        "--backend", choices=("spectral", "factorized", "full"), default="spectral"
+    )
     parser.add_argument("--workers", type=int, default=0, help="Zero benchmarks 1-32 workers and selects automatically.")
+    parser.add_argument(
+        "--walltime-hours",
+        type=float,
+        default=12.0,
+        help="Stop launching new checkpoint cells after this total wall time.",
+    )
     parser.add_argument(
         "--reference-csv",
         type=Path,
@@ -898,8 +1281,11 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    config = RunConfig(seed=args.seed)
+    if args.walltime_hours <= 0.0:
+        raise ValueError("--walltime-hours must be positive.")
+    config = RunConfig(seed=args.seed, backend=args.backend)
     output_dir = args.output_dir
+    deadline_epoch = time.time() + args.walltime_hours * 3600.0
     manifest = ensure_manifest(
         output_dir,
         config,
@@ -920,10 +1306,13 @@ def main() -> None:
     q_points = int(manifest.get("selected_Q", config.pilot_start_q))
     if args.stage in {"auto", "pilot"} and not certified:
         certified, sample_count, q_points = run_pilot(
-            output_dir, config, workers, manifest
+            output_dir, config, workers, manifest, deadline_epoch
         )
         if not certified:
-            print("Pilot stopped uncertified; the full sweep was not launched.")
+            print(
+                f"Pilot stopped with status={manifest.get('status')}; "
+                "the full sweep was not launched."
+            )
             return
     if args.stage == "pilot":
         print(f"Pilot certified M={sample_count}, Q={q_points}.")
@@ -934,7 +1323,20 @@ def main() -> None:
         angles = theta_grid()
         manifest.update({"status": "full_running", "selected_M": sample_count, "selected_Q": q_points})
         write_json_atomic(output_dir / "manifest.json", manifest)
-        run_tasks(angles, sample_count, q_points, config, output_dir, workers)
+        complete = run_tasks(
+            angles,
+            sample_count,
+            q_points,
+            config,
+            output_dir,
+            workers,
+            deadline_epoch,
+        )
+        if not complete:
+            manifest["status"] = "walltime_limit_reached"
+            write_json_atomic(output_dir / "manifest.json", manifest)
+            print("Overnight wall-time limit reached; completed checkpoints are resumable.")
+            return
         manifest["status"] = "full_complete"
         write_json_atomic(output_dir / "manifest.json", manifest)
     else:
