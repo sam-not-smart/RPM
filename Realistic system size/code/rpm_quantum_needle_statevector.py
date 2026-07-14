@@ -976,7 +976,7 @@ def benchmark_full_trajectory(
         initial_step_us=config.lanczos_initial_step_us,
         maximum_step_us=config.lanczos_maximum_step_us,
     )
-    report_interval_us = max(runtime_us / 20.0, 0.1)
+    report_interval_us = max(runtime_us / 1000.0, 0.01)
     next_report_us = report_interval_us
 
     def report_progress(
