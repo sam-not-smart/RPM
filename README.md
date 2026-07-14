@@ -89,20 +89,23 @@ Results are written under `outputs/quantum_needle_2016`.
 
 ### Matrix-free state-vector validation
 
-The sampled state-vector reproduction uses the same paper model and random-phase
-nuclear states.  Its overnight production backend exploits the validation
-Hamiltonian's exact decomposition into independent 576-dimensional FAD and
-384-dimensional TrpH radical blocks, diagonalizes those blocks, and projects
-their evolved state-vector factors onto the singlet without forming the full
-221,184-component pair state:
+The sampled state-vector model always uses the complete 221,184-component
+radical-pair state, even when electron exchange and dipolar couplings are zero.
+The Hamiltonian includes explicit exchange and general electron-dipolar tensor
+machinery; the current baseline records (J=0) MHz and a zero dipolar tensor.
+Radical-factorized propagation is not available in this runner.
+
+Measure one full-space random-phase trajectory with the production Krylov
+tolerances using:
 
 ```bash
-python "Realistic system size/code/rpm_quantum_needle_statevector.py" --stage auto --walltime-hours 12
+python "Realistic system size/code/rpm_quantum_needle_statevector.py" \
+  --benchmark-trajectory-us 100 --benchmark-theta-deg 90 --J-MHz 0 --D-MHz 0
 ```
 
 The runner first uses a five-angle pilot to choose global nuclear and
 reaction-time sample counts.  It starts the complete 199-angle sweep only when
-the stochastic 95% half-width and Lanczos error gates pass.  Every angle/sample
+the stochastic 95% half-width and Krylov error gates pass.  Every angle/sample
 cell is checkpointed under `outputs/quantum_needle_statevector`, so an
 interrupted run continues with:
 
@@ -114,11 +117,9 @@ Pass `--workers 0` (the default) to benchmark 1, 2, 4, 8, 16, and 32 worker
 processes and select the smallest count within 5% of the best throughput.  Use
 `--stage pilot`, `--stage full`, or `--stage report` to run an individual phase.
 The runner stops launching new checkpoint cells at the configured wall-time;
-the Danny launch also uses a hard 12-hour process limit.  `--backend factorized`
-retains the slower radical-block Krylov diagnostic, while `--backend full`
-retains the direct full-state matrix-free propagator for short-time tests and
-future Hamiltonians with electron-electron interactions.  Those two diagnostic
-backends are not intended for the overnight Fig. 1B production sweep.
+Danny launches should additionally use a hard 12-hour process limit.  Full
+sweeps must not be launched until an end-to-end full-space trajectory benchmark
+shows that the requested workload fits the approved wall-time budget.
 The exact reproduction CSV under `outputs/quantum_needle_2016` is used for final
 acceptance.  Generate it first with the exact runner above if it is absent.
 

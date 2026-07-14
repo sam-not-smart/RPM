@@ -14,7 +14,6 @@ from rpm_quantum_needle_model import (
     ALL_NUCLEI,
     FAD_NUCLEI,
     GAMMA_E_MHZ_PER_MT,
-    Nucleus,
     SYSTEM_DIMENSIONS,
     TWOPI,
     field_vector_mT,
@@ -150,8 +149,17 @@ def two_spin_coupling_operator(
 def build_quantum_needle_hamiltonian(
     theta_deg: float,
     field_microT: float = 50.0,
+    *,
+    exchange_J_MHz: float = 0.0,
+    dipolar_tensor_MHz: np.ndarray | None = None,
 ) -> MatrixFreeHamiltonian:
-    """Paper Hamiltonian: electron Zeeman plus 14 full hyperfine tensors."""
+    """Full radical-pair Hamiltonian, including optional electron couplings.
+
+    The exchange convention matches the existing FAD--Trp model,
+    ``H_ex = -2 J S_A.S_B``.  ``dipolar_tensor_MHz`` is a general 3x3 tensor
+    in the shared molecular frame.  Both couplings default to explicit zeros,
+    but the Hamiltonian is always represented in the complete pair space.
+    """
 
     electron_ops = spin_operators(0.5)
     field = field_vector_mT(theta_deg, field_microT)
@@ -174,32 +182,27 @@ def build_quantum_needle_hamiltonian(
                 f"{nucleus.name} hyperfine",
             )
         )
-    return MatrixFreeHamiltonian(SYSTEM_DIMENSIONS, terms)
-
-
-def build_radical_hamiltonian(
-    nuclei: Iterable[Nucleus],
-    theta_deg: float,
-    field_microT: float = 50.0,
-    *,
-    label: str = "radical",
-) -> MatrixFreeHamiltonian:
-    """Matrix-free Hamiltonian for one dynamically independent radical."""
-
-    nuclei = tuple(nuclei)
-    dimensions = (2,) + tuple(nucleus.dimension for nucleus in nuclei)
-    electron_ops = spin_operators(0.5)
-    field = field_vector_mT(theta_deg, field_microT)
-    zeeman = TWOPI * GAMMA_E_MHZ_PER_MT * sum(
-        component * operator for component, operator in zip(field, electron_ops)
+    dipolar = (
+        np.zeros((3, 3), dtype=float)
+        if dipolar_tensor_MHz is None
+        else np.asarray(dipolar_tensor_MHz, dtype=float)
     )
-    terms: list[LocalTerm] = [LocalTerm((0,), zeeman, f"{label} electron Zeeman")]
-    for nucleus_axis, nucleus in enumerate(nuclei, start=1):
-        local = TWOPI * GAMMA_E_MHZ_PER_MT * two_spin_coupling_operator(
-            0.5, nucleus.spin, nucleus.tensor_mT
+    if dipolar.shape != (3, 3):
+        raise ValueError("dipolar_tensor_MHz must be a 3x3 tensor.")
+    electron_tensor_rad_per_us = TWOPI * (
+        dipolar - 2.0 * float(exchange_J_MHz) * np.eye(3)
+    )
+    if np.any(electron_tensor_rad_per_us != 0.0):
+        terms.append(
+            LocalTerm(
+                (0, 1),
+                two_spin_coupling_operator(
+                    0.5, 0.5, electron_tensor_rad_per_us
+                ),
+                "electron exchange + dipolar coupling",
+            )
         )
-        terms.append(LocalTerm((0, nucleus_axis), local, f"{label}:{nucleus.name} hyperfine"))
-    return MatrixFreeHamiltonian(dimensions, terms)
+    return MatrixFreeHamiltonian(SYSTEM_DIMENSIONS, terms)
 
 
 def random_phase_nuclear_state(
@@ -222,15 +225,6 @@ def singlet_initial_state(
     return np.kron(singlet, nuclei)
 
 
-def electron_nuclear_initial_state(electron_index: int, nuclear_state: np.ndarray) -> np.ndarray:
-    if electron_index not in (0, 1):
-        raise ValueError("electron_index must be 0 (up) or 1 (down).")
-    electron = np.zeros(2, dtype=complex)
-    electron[electron_index] = 1.0
-    nuclei = np.asarray(nuclear_state, dtype=complex).reshape(-1)
-    return np.kron(electron, nuclei)
-
-
 def singlet_population(vector: np.ndarray, dimensions: Iterable[int]) -> float:
     dimensions = tuple(int(value) for value in dimensions)
     tensor = np.asarray(vector, dtype=complex).reshape(dimensions)
@@ -242,37 +236,6 @@ def singlet_population(vector: np.ndarray, dimensions: Iterable[int]) -> float:
 def state_error_to_population_bound(state_error: float) -> float:
     epsilon = max(0.0, float(state_error))
     return min(1.0, 2.0 * epsilon + epsilon * epsilon)
-
-
-def factorized_singlet_populations(
-    a_up_states: np.ndarray,
-    a_down_states: np.ndarray,
-    b_up_states: np.ndarray,
-    b_down_states: np.ndarray,
-    nuclear_dimension_a: int,
-    nuclear_dimension_b: int,
-) -> np.ndarray:
-    """Project a separable-radical singlet evolution without forming pair states."""
-
-    a_up = np.asarray(a_up_states, dtype=complex).reshape(-1, 2, nuclear_dimension_a)
-    a_down = np.asarray(a_down_states, dtype=complex).reshape(-1, 2, nuclear_dimension_a)
-    b_up = np.asarray(b_up_states, dtype=complex).reshape(-1, 2, nuclear_dimension_b)
-    b_down = np.asarray(b_down_states, dtype=complex).reshape(-1, 2, nuclear_dimension_b)
-    count = a_up.shape[0]
-    if any(array.shape[0] != count for array in (a_down, b_up, b_down)):
-        raise ValueError("All radical trajectories must contain the same number of times.")
-    a_components = np.stack(
-        (a_up[:, 0], a_down[:, 0], a_up[:, 1], a_down[:, 1]), axis=1
-    )
-    b_components = np.stack(
-        (b_down[:, 1], b_up[:, 1], b_down[:, 0], b_up[:, 0]), axis=1
-    )
-    gram_a = np.einsum("tki,tli->tkl", a_components.conj(), a_components, optimize=True)
-    gram_b = np.einsum("tki,tli->tkl", b_components.conj(), b_components, optimize=True)
-    coefficients = np.array([1.0, -1.0, -1.0, 1.0]) / 2.0
-    weights = coefficients[:, None] * coefficients[None, :]
-    values = np.einsum("kl,tkl,tkl->t", weights, gram_a, gram_b, optimize=True).real
-    return np.clip(values, 0.0, 1.0)
 
 
 @dataclass(frozen=True)
@@ -420,6 +383,7 @@ class AdaptiveLanczosPropagator:
         observable: Callable[[np.ndarray], float],
         *,
         store_states: bool = False,
+        progress_callback: Callable[[float, int, int, int, float], None] | None = None,
     ) -> PropagationResult:
         times = np.asarray(tuple(float(value) for value in times_us), dtype=float)
         if times.ndim != 1 or times.size == 0:
@@ -549,6 +513,14 @@ class AdaptiveLanczosPropagator:
             accepted += 1
             used_steps.append(trial_step)
             maximum_norm_error = max(maximum_norm_error, abs(float(np.linalg.norm(state)) - 1.0))
+            if progress_callback is not None:
+                progress_callback(
+                    current_time,
+                    accepted,
+                    rejected,
+                    self.hamiltonian.matvec_count - starting_matvecs,
+                    accumulated_error,
+                )
             if endpoint_error < 0.1 * local_budget:
                 step = min(self.maximum_step_us, 1.5 * trial_step)
             else:

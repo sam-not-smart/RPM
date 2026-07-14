@@ -3,7 +3,6 @@ from __future__ import annotations
 import sys
 import tempfile
 import unittest
-from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -24,13 +23,10 @@ from rpm_quantum_needle_model import (  # noqa: E402
 )
 from rpm_quantum_needle_statevector import (  # noqa: E402
     CellResult,
-    CellTask,
     RunConfig,
     create_report,
     load_cell,
     reaction_time_schedule,
-    run_cell_factorized,
-    run_cell_spectral,
     save_cell,
     uncertainty_components,
 )
@@ -38,7 +34,7 @@ from rpm_statevector_engine import (  # noqa: E402
     AdaptiveLanczosPropagator,
     LocalTerm,
     MatrixFreeHamiltonian,
-    factorized_singlet_populations,
+    build_quantum_needle_hamiltonian,
     random_phase_nuclear_state,
     singlet_initial_state,
     singlet_population,
@@ -90,32 +86,32 @@ class MatrixFreeTests(unittest.TestCase):
         expected = float(np.vdot(state, projector @ state).real)
         self.assertAlmostEqual(singlet_population(state, dimensions), expected, places=13)
 
-    def test_factorized_projection_matches_explicit_pair_state(self) -> None:
-        rng = np.random.default_rng(44)
-        count = 3
-        nuclear_a = 2
-        nuclear_b = 3
-        trajectories = []
-        for dimension in (2 * nuclear_a, 2 * nuclear_a, 2 * nuclear_b, 2 * nuclear_b):
-            values = rng.normal(size=(count, dimension)) + 1j * rng.normal(
-                size=(count, dimension)
-            )
-            values /= np.linalg.norm(values, axis=1)[:, None]
-            trajectories.append(values)
-        a_up, a_down, b_up, b_down = trajectories
-        factorized = factorized_singlet_populations(
-            a_up, a_down, b_up, b_down, nuclear_a, nuclear_b
+    def test_full_hamiltonian_contains_configurable_electron_coupling(self) -> None:
+        zero = build_quantum_needle_hamiltonian(
+            90.0,
+            exchange_J_MHz=0.0,
+            dipolar_tensor_MHz=np.zeros((3, 3)),
         )
-        explicit = []
-        for index in range(count):
-            pair = (
-                np.kron(a_up[index], b_down[index])
-                - np.kron(a_down[index], b_up[index])
-            ) / np.sqrt(2.0)
-            tensor = pair.reshape(2, nuclear_a, 2, nuclear_b).transpose(0, 2, 1, 3)
-            amplitude = (tensor[0, 1] - tensor[1, 0]) / np.sqrt(2.0)
-            explicit.append(float(np.vdot(amplitude, amplitude).real))
-        np.testing.assert_allclose(factorized, explicit, atol=2e-14)
+        self.assertFalse(any(term.axes == (0, 1) for term in zero.terms))
+
+        dipolar = np.diag([-0.5, -0.5, 1.0])
+        coupled = build_quantum_needle_hamiltonian(
+            90.0,
+            exchange_J_MHz=0.25,
+            dipolar_tensor_MHz=dipolar,
+        )
+        electron_terms = [term for term in coupled.terms if term.axes == (0, 1)]
+        self.assertEqual(len(electron_terms), 1)
+        sx, sy, sz = spin_operators(0.5)
+        expected = 2.0 * np.pi * sum(
+            coefficient * np.kron(left, right)
+            for coefficient, left, right in zip(
+                np.diag(dipolar) - 0.5,
+                (sx, sy, sz),
+                (sx, sy, sz),
+            )
+        )
+        np.testing.assert_allclose(electron_terms[0].operator, expected, atol=1e-14)
 
 
 class SamplingTests(unittest.TestCase):
@@ -299,31 +295,6 @@ class CheckpointTests(unittest.TestCase):
                 "certification.json",
             ):
                 self.assertTrue((output / name).exists(), name)
-
-
-class FactorizedRunnerTests(unittest.TestCase):
-    def test_short_physical_cell_runs_with_product_random_phases(self) -> None:
-        config = RunConfig(
-            backend="factorized",
-            lifetimes_us=(0.001,),
-            sobol_scrambles=2,
-            bootstrap_replicates=20,
-            lanczos_state_error_budget=1e-7,
-        )
-        task = CellTask(
-            theta_deg=45.0,
-            sample_id=0,
-            q_points=2,
-            include_trace=False,
-            config=config,
-        )
-        result = run_cell_factorized(task)
-        spectral = run_cell_spectral(replace(task, config=replace(config, backend="spectral")))
-        self.assertEqual(result.yields.shape, (2, 1))
-        self.assertTrue(np.all((result.yields >= 0.0) & (result.yields <= 1.0)))
-        self.assertLess(float(result.propagation_bounds.max()), 5e-5)
-        np.testing.assert_allclose(spectral.yields, result.yields, atol=1e-10)
-        self.assertLess(float(spectral.propagation_bounds.max()), 5e-5)
 
 
 if __name__ == "__main__":
