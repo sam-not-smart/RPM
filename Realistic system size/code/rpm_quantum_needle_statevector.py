@@ -189,6 +189,7 @@ def run_cell_full(task: CellTask) -> CellResult:
         config.field_microT,
         exchange_J_MHz=config.exchange_J_MHz,
         dipolar_tensor_MHz=np.asarray(config.dipolar_tensor_MHz),
+        quadrupole_scale=0.0,
     )
     rng = np.random.default_rng(_seed(config.seed, 0xA11CE, task.sample_id))
     initial_state = singlet_initial_state(SYSTEM_DIMENSIONS, rng)
@@ -957,6 +958,7 @@ def benchmark_full_trajectory(
         config.field_microT,
         exchange_J_MHz=config.exchange_J_MHz,
         dipolar_tensor_MHz=np.asarray(config.dipolar_tensor_MHz),
+        quadrupole_scale=0.0,
     )
     construction_seconds = time.perf_counter() - construction_started
     state_started = time.perf_counter()
@@ -1041,7 +1043,7 @@ def benchmark_full_trajectory(
 
 def _benchmark_task(_: int) -> float:
     started = time.perf_counter()
-    hamiltonian = build_quantum_needle_hamiltonian(90.0)
+    hamiltonian = build_quantum_needle_hamiltonian(90.0, quadrupole_scale=0.0)
     state = singlet_initial_state(SYSTEM_DIMENSIONS, np.random.default_rng(1234))
     for _ in range(4):
         state = hamiltonian.matvec(state)

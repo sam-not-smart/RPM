@@ -15,6 +15,7 @@ if str(CODE_DIR) not in sys.path:
 
 from rpm_quantum_needle_model import (  # noqa: E402
     NUCLEAR_DIMENSION,
+    QUADRUPOLE_TENSORS_MT,
     SPIN_ORDER,
     STATE_DIMENSION,
     SYSTEM_DIMENSIONS,
@@ -60,6 +61,22 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(grid.size, 199)
         self.assertIn(89.25, grid)
 
+    def test_paper_quadrupole_tensors_are_nonzero_and_traceless(self) -> None:
+        reported = {
+            "FAD:N5": (0.031, 0.041, -0.072),
+            "FAD:N10": (0.032, 0.041, -0.072),
+            "TrpH:N1": (0.016, 0.020, -0.036),
+        }
+        self.assertEqual(set(QUADRUPOLE_TENSORS_MT), set(reported))
+        for label, values in reported.items():
+            tensor = QUADRUPOLE_TENSORS_MT[label]
+            np.testing.assert_allclose(tensor, tensor.T, atol=1e-14)
+            self.assertAlmostEqual(float(np.trace(tensor)), 0.0, places=14)
+            principal = np.asarray(values) - np.mean(values)
+            np.testing.assert_allclose(
+                np.linalg.eigvalsh(tensor), np.sort(principal), atol=1e-14
+            )
+
     def test_spin_one_basis_order(self) -> None:
         _, _, sz = spin_operators(1.0)
         np.testing.assert_allclose(np.diag(sz), [1.0, 0.0, -1.0])
@@ -100,6 +117,7 @@ class MatrixFreeTests(unittest.TestCase):
             90.0,
             exchange_J_MHz=0.0,
             dipolar_tensor_MHz=np.zeros((3, 3)),
+            quadrupole_scale=0.0,
         )
         self.assertFalse(any(term.axes == (0, 1) for term in zero.terms))
 
@@ -108,6 +126,7 @@ class MatrixFreeTests(unittest.TestCase):
             90.0,
             exchange_J_MHz=0.25,
             dipolar_tensor_MHz=dipolar,
+            quadrupole_scale=0.0,
         )
         electron_terms = [term for term in coupled.terms if term.axes == (0, 1)]
         self.assertEqual(len(electron_terms), 1)
@@ -121,6 +140,17 @@ class MatrixFreeTests(unittest.TestCase):
             )
         )
         np.testing.assert_allclose(electron_terms[0].operator, expected, atol=1e-14)
+
+    def test_full_hamiltonian_uses_quadrupoles_by_default(self) -> None:
+        physical = build_quantum_needle_hamiltonian(90.0)
+        quadrupole_terms = [
+            term for term in physical.terms if "nuclear quadrupole" in term.label
+        ]
+        self.assertEqual({term.axes for term in quadrupole_terms}, {(2,), (3,), (9,)})
+        validation = build_quantum_needle_hamiltonian(90.0, quadrupole_scale=0.0)
+        self.assertFalse(
+            any("nuclear quadrupole" in term.label for term in validation.terms)
+        )
 
     def test_quadrupole_operator_is_hermitian(self) -> None:
         tensor = np.array([[-0.2, 0.03, 0.0], [0.03, -0.1, 0.02], [0.0, 0.02, 0.3]])

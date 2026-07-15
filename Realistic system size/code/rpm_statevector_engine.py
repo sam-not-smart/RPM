@@ -14,6 +14,8 @@ from rpm_quantum_needle_model import (
     ALL_NUCLEI,
     FAD_NUCLEI,
     GAMMA_E_MHZ_PER_MT,
+    QUADRUPOLE_TENSORS_MT,
+    SPIN_ORDER,
     SYSTEM_DIMENSIONS,
     TWOPI,
     field_vector_mT,
@@ -172,13 +174,16 @@ def build_quantum_needle_hamiltonian(
     *,
     exchange_J_MHz: float = 0.0,
     dipolar_tensor_MHz: np.ndarray | None = None,
+    quadrupole_scale: float = 1.0,
 ) -> MatrixFreeHamiltonian:
     """Full radical-pair Hamiltonian, including optional electron couplings.
 
     The exchange convention matches the existing FAD--Trp model,
     ``H_ex = -2 J S_A.S_B``.  ``dipolar_tensor_MHz`` is a general 3x3 tensor
-    in the shared molecular frame.  Both couplings default to explicit zeros,
-    but the Hamiltonian is always represented in the complete pair space.
+    in the shared molecular frame. ``quadrupole_scale=1`` applies the
+    paper-based 14N tensors; zero is reserved for explicitly quadrupole-free
+    validation. The Hamiltonian is always represented in the complete pair
+    space.
     """
 
     electron_ops = spin_operators(0.5)
@@ -202,6 +207,23 @@ def build_quantum_needle_hamiltonian(
                 f"{nucleus.name} hyperfine",
             )
         )
+        quadrupole_tensor = QUADRUPOLE_TENSORS_MT.get(
+            SPIN_ORDER[nucleus_index + 2]
+        )
+        if quadrupole_tensor is not None and quadrupole_scale != 0.0:
+            terms.append(
+                LocalTerm(
+                    (nucleus_index + 2,),
+                    quadrupole_operator(
+                        nucleus.spin,
+                        TWOPI
+                        * GAMMA_E_MHZ_PER_MT
+                        * float(quadrupole_scale)
+                        * quadrupole_tensor,
+                    ),
+                    f"{nucleus.name} nuclear quadrupole",
+                )
+            )
     dipolar = (
         np.zeros((3, 3), dtype=float)
         if dipolar_tensor_MHz is None

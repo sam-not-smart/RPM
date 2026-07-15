@@ -66,6 +66,65 @@ NUCLEAR_DIMENSION = math.prod(SYSTEM_DIMENSIONS[2:])
 STATE_DIMENSION = math.prod(SYSTEM_DIMENSIONS)
 
 
+def _quadrupole_tensor_in_hyperfine_frame(
+    hyperfine_tensor_mT: np.ndarray,
+    principal_values_mT: tuple[float, float, float],
+    *,
+    qz_orientation: str,
+) -> np.ndarray:
+    """Rotate a traceless Q tensor into the working molecular frame.
+
+    Efimova and Hore give principal values and the Q-z tilt relative to the
+    aromatic-ring normal, but not the in-plane azimuth in their main paper.
+    The hyperfine principal axes provide a reproducible provisional frame.
+    """
+
+    principal = np.asarray(principal_values_mT, dtype=float)
+    principal -= np.mean(principal)
+    hyperfine_values, hyperfine_axes = np.linalg.eigh(hyperfine_tensor_mT)
+    normal_axis = int(np.argmax(np.abs(hyperfine_values)))
+    in_plane_axes = [index for index in range(3) if index != normal_axis]
+    assigned = np.empty(3, dtype=float)
+    if qz_orientation == "ring_normal":
+        assigned[normal_axis] = principal[2]
+        assigned[in_plane_axes[0]] = principal[0]
+        assigned[in_plane_axes[1]] = principal[1]
+    elif qz_orientation == "ring_plane_provisional":
+        # The unknown N5 in-plane azimuth is provisionally placed along the
+        # first HFI in-plane principal axis. Qyy is placed along the ring
+        # normal. This orientation must later be sensitivity-tested.
+        assigned[in_plane_axes[0]] = principal[2]
+        assigned[in_plane_axes[1]] = principal[0]
+        assigned[normal_axis] = principal[1]
+    else:
+        raise ValueError(f"Unknown quadrupole orientation: {qz_orientation}")
+    tensor = hyperfine_axes @ np.diag(assigned) @ hyperfine_axes.T
+    return 0.5 * (tensor + tensor.T)
+
+
+# Table 2 of Efimova & Hore, Molecular Physics 107, 665-671 (2009).
+# Values are equivalent-field mT tensors in the shared molecular frame. All
+# current I>1/2 nuclei are 14N with I=1. The N5 in-plane azimuth is provisional
+# because the main paper reports only its 90-degree tilt to the ring normal.
+QUADRUPOLE_TENSORS_MT = {
+    "FAD:N5": _quadrupole_tensor_in_hyperfine_frame(
+        FAD_NUCLEI[0].tensor_mT,
+        (0.031, 0.041, -0.072),
+        qz_orientation="ring_plane_provisional",
+    ),
+    "FAD:N10": _quadrupole_tensor_in_hyperfine_frame(
+        FAD_NUCLEI[1].tensor_mT,
+        (0.032, 0.041, -0.072),
+        qz_orientation="ring_normal",
+    ),
+    "TrpH:N1": _quadrupole_tensor_in_hyperfine_frame(
+        TRP_NUCLEI[0].tensor_mT,
+        (0.016, 0.020, -0.036),
+        qz_orientation="ring_normal",
+    ),
+}
+
+
 def spin_operators(spin: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Return Sx, Sy, Sz in the descending-m basis."""
 

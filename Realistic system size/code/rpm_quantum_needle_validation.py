@@ -218,6 +218,7 @@ def propagate_full_state(
         config.field_microT,
         exchange_J_MHz=0.0,
         dipolar_tensor_MHz=np.zeros((3, 3)),
+        quadrupole_scale=0.0,
     )
     construction_seconds = time.perf_counter() - build_started
     initial_state = singlet_initial_state(
