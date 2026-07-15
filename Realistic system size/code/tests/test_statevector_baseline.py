@@ -35,6 +35,7 @@ from rpm_quantum_needle_validation import (  # noqa: E402
     PREFERRED_SWEEP,
     ValidationConfig,
     choose_workload,
+    integrate_singlet_yield,
     reduced_validation,
 )
 from rpm_statevector_engine import (  # noqa: E402
@@ -337,6 +338,18 @@ class CheckpointTests(unittest.TestCase):
 
 
 class ExploratoryValidationTests(unittest.TestCase):
+    def test_simpson_yield_integration_uses_existing_samples(self) -> None:
+        times = np.linspace(0.0, 1.0, 5)
+        lifetime = 1.0
+        # Choose P_S so the survival-weighted integrand is exactly cubic.
+        populations = np.exp(times) * times**3
+        simpson = integrate_singlet_yield(times, populations, lifetime)
+        trapezoid = integrate_singlet_yield(
+            times, populations, lifetime, method="trapezoid"
+        )
+        self.assertAlmostEqual(simpson, 0.25, places=14)
+        self.assertGreater(abs(trapezoid - 0.25), 1e-3)
+
     def test_budget_fallback_and_tail_horizon(self) -> None:
         config = ValidationConfig()
         self.assertAlmostEqual(

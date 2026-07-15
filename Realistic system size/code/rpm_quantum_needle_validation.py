@@ -33,6 +33,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.integrate
 import scipy.linalg
 
 import rpm_quantum_needle_reproduction as exact
@@ -183,6 +184,27 @@ def _propagator(hamiltonian: MatrixFreeHamiltonian, config: ValidationConfig):
     )
 
 
+def integrate_singlet_yield(
+    times_us: np.ndarray,
+    singlet_population_values: np.ndarray,
+    lifetime_us: float,
+    *,
+    method: str = "simpson",
+) -> float:
+    """Integrate an already-propagated singlet trajectory without changing it."""
+
+    times = np.asarray(times_us, dtype=float)
+    populations = np.asarray(singlet_population_values, dtype=float)
+    if times.shape != populations.shape or times.ndim != 1:
+        raise ValueError("Yield times and singlet populations must be matching 1-D arrays.")
+    integrand = np.exp(-times / lifetime_us) * populations / lifetime_us
+    if method == "simpson":
+        return float(scipy.integrate.simpson(integrand, x=times))
+    if method == "trapezoid":
+        return float(np.trapezoid(integrand, times))
+    raise ValueError(f"Unknown yield-integration method: {method}")
+
+
 def propagate_full_state(
     theta_deg: float,
     sample_id: int,
@@ -210,7 +232,12 @@ def propagate_full_state(
     )
     propagation_seconds = time.perf_counter() - propagation_started
     weights = np.exp(-times_us / config.lifetime_us) / config.lifetime_us
-    yield_value = float(np.trapezoid(weights * result.observable_values, times_us))
+    yield_value = integrate_singlet_yield(
+        times_us,
+        result.observable_values,
+        config.lifetime_us,
+        method="simpson",
+    )
     yield_propagation_bound = float(
         np.trapezoid(weights * result.observable_error_bounds, times_us)
     )
@@ -221,6 +248,7 @@ def propagate_full_state(
         "singlet_population": result.observable_values,
         "population_bounds": result.observable_error_bounds,
         "yield": yield_value,
+        "yield_integration_method": "composite_simpson",
         "yield_propagation_bound": yield_propagation_bound,
         "yield_tail_bound": config.survival_tail_bound,
         "construction_seconds": construction_seconds,
@@ -376,22 +404,140 @@ def exact_reference(
 
 
 def reference_grid_assessment(config: ValidationConfig) -> dict[str, float | bool]:
-    """Measure yield bias from the finite horizon and trapezoidal output grid."""
+    """Compare Simpson and trapezoidal bias on the unchanged output grid."""
     reference = exact_reference(90.0, config.time_grid_us, config)
-    weights = np.exp(-config.time_grid_us / config.lifetime_us) / config.lifetime_us
-    grid_yield = float(
-        np.trapezoid(weights * np.asarray(reference["singlet_population"]), config.time_grid_us)
+    old_grid_yield = integrate_singlet_yield(
+        config.time_grid_us,
+        np.asarray(reference["singlet_population"]),
+        config.lifetime_us,
+        method="trapezoid",
     )
+    grid_yield = integrate_singlet_yield(
+        config.time_grid_us,
+        np.asarray(reference["singlet_population"]),
+        config.lifetime_us,
+        method="simpson",
+    )
+    old_bias = abs(old_grid_yield - float(reference["yield"]))
     bias = abs(grid_yield - float(reference["yield"]))
     return {
         "theta_deg": 90.0,
         "infinite_time_reference_yield": float(reference["yield"]),
+        "trapezoid_finite_grid_yield": old_grid_yield,
+        "trapezoid_absolute_bias_including_tail": old_bias,
         "finite_grid_reference_yield": grid_yield,
         "absolute_bias_including_tail": bias,
+        "absolute_bias_reduction": old_bias - bias,
+        "relative_bias_reduction": (old_bias - bias) / old_bias,
+        "integration_method": "composite_simpson",
         "survival_tail_bound": config.survival_tail_bound,
         "output_step_us": config.output_step_us,
         "passed": bool(bias <= config.yield_error_target / 4.0),
     }
+
+
+def reintegrate_saved_trajectories(
+    output_dir: Path, config: ValidationConfig
+) -> dict[str, object]:
+    """Reintegrate retained trajectories; never propagates or edits checkpoints."""
+
+    cell_rows: list[dict[str, object]] = []
+    missing_trace_cells: list[str] = []
+    for theta in STAGE1_ANGLES:
+        exact_yield = float(exact_reference(theta, np.array([0.0]), config)["yield"])
+        for sample_id in range(config.stage1_max_samples):
+            path = checkpoint_path(output_dir, theta, sample_id)
+            if not path.exists():
+                missing_trace_cells.append(f"theta={theta:g},sample={sample_id}")
+                continue
+            cell = load_trajectory(output_dir, theta, sample_id, config)
+            if "times_us" not in cell or "singlet_population" not in cell:
+                missing_trace_cells.append(f"theta={theta:g},sample={sample_id}")
+                continue
+            old_yield = float(cell["yield"])
+            new_yield = integrate_singlet_yield(
+                np.asarray(cell["times_us"]),
+                np.asarray(cell["singlet_population"]),
+                config.lifetime_us,
+                method="simpson",
+            )
+            cell_rows.append(
+                {
+                    "theta_deg": theta,
+                    "sample_id": sample_id,
+                    "exact_yield": exact_yield,
+                    "trapezoid_yield": old_yield,
+                    "simpson_yield": new_yield,
+                    "trapezoid_signed_error": old_yield - exact_yield,
+                    "simpson_signed_error": new_yield - exact_yield,
+                }
+            )
+    if not cell_rows:
+        raise RuntimeError("No retained P_S(t) trajectories were available to reintegrate.")
+    _write_csv(output_dir / "yield_reintegration_cells.csv", cell_rows)
+
+    aggregate_rows: list[dict[str, object]] = []
+    for count in NESTED_COUNTS:
+        for theta in STAGE1_ANGLES:
+            selected = [
+                row
+                for row in cell_rows
+                if row["theta_deg"] == theta and int(row["sample_id"]) < count
+            ]
+            if len(selected) != count:
+                continue
+            exact_yield = float(selected[0]["exact_yield"])
+            old_mean = float(np.mean([row["trapezoid_yield"] for row in selected]))
+            new_mean = float(np.mean([row["simpson_yield"] for row in selected]))
+            old_bias = abs(old_mean - exact_yield)
+            new_bias = abs(new_mean - exact_yield)
+            aggregate_rows.append(
+                {
+                    "M": count,
+                    "theta_deg": theta,
+                    "exact_yield": exact_yield,
+                    "trapezoid_mean_yield": old_mean,
+                    "simpson_mean_yield": new_mean,
+                    "trapezoid_absolute_bias": old_bias,
+                    "simpson_absolute_bias": new_bias,
+                    "absolute_bias_reduction": old_bias - new_bias,
+                    "relative_bias_reduction": (old_bias - new_bias) / old_bias
+                    if old_bias
+                    else math.nan,
+                }
+            )
+    _write_csv(output_dir / "yield_reintegration_summary.csv", aggregate_rows)
+    final_rows = [row for row in aggregate_rows if row["M"] == max(NESTED_COUNTS)]
+    grid = reference_grid_assessment(config)
+    summary = {
+        "propagation_rerun": False,
+        "checkpoints_modified": False,
+        "retained_trajectory_cells_reintegrated": len(cell_rows),
+        "missing_representative_trace_cells": missing_trace_cells,
+        "M16_mean_trapezoid_absolute_bias": float(
+            np.mean([row["trapezoid_absolute_bias"] for row in final_rows])
+        ),
+        "M16_mean_simpson_absolute_bias": float(
+            np.mean([row["simpson_absolute_bias"] for row in final_rows])
+        ),
+        "M16_max_trapezoid_absolute_bias": float(
+            max(row["trapezoid_absolute_bias"] for row in final_rows)
+        ),
+        "M16_max_simpson_absolute_bias": float(
+            max(row["simpson_absolute_bias"] for row in final_rows)
+        ),
+        "exact_reference_grid": grid,
+        "note": (
+            "Sweep-only checkpoints without retained P_S(t) were not reintegrated; "
+            "no state-vector trajectory was rerun."
+        ),
+    }
+    old_mean = float(summary["M16_mean_trapezoid_absolute_bias"])
+    new_mean = float(summary["M16_mean_simpson_absolute_bias"])
+    summary["M16_mean_absolute_bias_reduction"] = old_mean - new_mean
+    summary["M16_mean_relative_bias_reduction"] = (old_mean - new_mean) / old_mean
+    _write_json(output_dir / "yield_reintegration_report.json", summary)
+    return summary
 
 
 def stage1_metrics(
@@ -801,7 +947,19 @@ def final_report(output_dir: Path, config: ValidationConfig, manifest: dict[str,
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--stage", choices=("auto", "benchmark", "reduced", "stage1", "stage2", "report"), default="auto")
+    parser.add_argument(
+        "--stage",
+        choices=(
+            "auto",
+            "benchmark",
+            "reduced",
+            "stage1",
+            "stage2",
+            "report",
+            "reintegrate",
+        ),
+        default="auto",
+    )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--walltime-hours", type=float, default=23.5)
@@ -846,6 +1004,15 @@ def main() -> None:
         return
     config, projection = choose_workload(base_config, throughput, args.target_hours)
     manifest = ensure_manifest(output_dir, config, args.resume, workers, throughput, projection)
+    if args.stage == "reintegrate":
+        print(
+            json.dumps(
+                reintegrate_saved_trajectories(output_dir, config),
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        return
     deadline = time.time() + args.walltime_hours * 3600.0
     reduced_path = output_dir / "reduced_model_summary.json"
     reduced = json.loads(reduced_path.read_text()) if reduced_path.exists() else reduced_validation(output_dir)
