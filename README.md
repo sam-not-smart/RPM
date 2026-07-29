@@ -27,7 +27,7 @@ If the smoke test passes, exercise the actual RPM code with:
 python "Realistic system size/code/rpm_8qubit_magnetosensitivity.py" --quick
 ```
 
-Some details about the system: 1. we'll use closed system dynamics. 2. The hamiltonian will have the Zeeman, hyperfine, exchange, and full (non-secular) dipolar interactions (maybe we'll add the quadrupolar interaction later). 3. We'll treat electrons and all nuclei as spin-1/2 qubits for now. To reiterate, the first goal is to have a magnetosensitive model and we'll go from there. See literature/code/thesis for paramter choices. One unclear parameter choice is the hyperfine coupling tensors for the full system. The 'quantum needle supp' under the 'literature' folder details hyperfine tensor values calculated using Density Functional Theory so we can use that a starting point, which we've already done for the 8-qubit code, and maybe tweak the tensors from there. 
+Some details about the system: 1. we'll use closed system dynamics. 2. The physical Hamiltonian includes Zeeman, hyperfine, exchange, full (non-secular) electron-dipolar, and nuclear-quadrupole interactions. Every nucleus with spin greater than 1/2 must have a nonzero, documented quadrupole tensor; see `Realistic system size/literature/quadrupole_parameter_policy.md`. 3. Nuclear spin dimensions are represented physically rather than treating every nucleus as a spin-1/2 qubit. To reiterate, the first goal is to have a magnetosensitive model and we'll go from there. See literature/code/thesis for parameter choices. One unclear parameter choice is the hyperfine coupling tensors for the full system. The 'quantum needle supp' under the 'literature' folder details hyperfine tensor values calculated using Density Functional Theory so we can use that a starting point, which we've already done for the 8-qubit code, and maybe tweak the tensors from there.
 
 ## Getting the current baseline running
 
@@ -86,6 +86,60 @@ formula in Section S5 of the supplement, including the physical spin-1 nature
 of the three selected nitrogen nuclei. The production run recreates the 50-uT
 field-angle traces for radical-pair lifetimes of 1, 2, 5, 10, 20, and 100 us.
 Results are written under `outputs/quantum_needle_2016`.
+
+### Matrix-free state-vector validation
+
+The sampled state-vector model always uses the complete 221,184-component
+radical-pair state, even when electron exchange and dipolar couplings are zero.
+The Hamiltonian includes explicit exchange and general electron-dipolar tensor
+machinery; the current baseline records (J=0) MHz and a zero dipolar tensor.
+Radical-factorized propagation is not available in this runner.
+
+The overnight validation runner answers a narrower question than the former
+publication-grade 199-angle convergence plan: does random-phase trace sampling
+plus direct full-pair Krylov evolution reproduce the exact J=D=0 dynamics and
+coarse magnetosensitivity well enough for exploratory work? Run it with:
+
+```bash
+python "Realistic system size/code/rpm_quantum_needle_validation.py" \
+  --stage auto --walltime-hours 23.5 --target-hours 12
+```
+
+It benchmarks process counts, selects a workload projected to fit 12 hours,
+and refuses a central workload projected above 24 hours. The first fallback is
+the 7-angle grid; the second uses a 2-us lifetime and its corresponding survival
+horizon. Stage 1 uses five representative angles and one nested, paired seed
+bank with M=1,2,4,8,16. Stage 2 uses 13 angles at 15-degree spacing (or 7 at
+30-degree spacing) and M=4, increasing to M=8 only if justified and affordable.
+The yield horizon satisfies exp(-t_max/tau)=1e-4, and the 0.01-us integration
+grid is independently checked against the exact reference yield.
+
+Each completed full-space trajectory is checkpointed under
+`outputs/quantum_needle_fullspace_validation`; sweep-only checkpoints retain
+the yield and diagnostics rather than full traces. Continue an interrupted run
+with:
+
+```bash
+python "Realistic system size/code/rpm_quantum_needle_validation.py" --stage auto --resume
+```
+
+The exact factorized implementation is called only as a reference oracle. It is
+never used to propagate a sampled trajectory. A separate reduced `(2,2,3,2)`
+test compares exact density-matrix evolution, exhaustive nuclear averaging,
+random-phase sampling, and Krylov evolution with nonzero exchange, a full
+electron-dipolar tensor, and a spin-1 quadrupolar term.
+
+The older `rpm_quantum_needle_statevector.py` remains available for a single
+full-space trajectory benchmark, but its multi-angle publication-grade runner
+is not the current validation workflow.
+
+The shared physical model is in `rpm_quantum_needle_model.py`; the reusable
+mixed-spin local-term and adaptive Lanczos implementation is in
+`rpm_statevector_engine.py`.  Focused tests run with:
+
+```bash
+python -m unittest discover -s "Realistic system size/code/tests" -v
+```
 
 It uses the FAD-TrpC hyperfine tensor ordering and geometry from the broadband
 upper-bound/action-spectrum work. The current main production baseline is:
