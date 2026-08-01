@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import math
+import tempfile
 import unittest
+from pathlib import Path
 
 import numpy as np
 import scipy.integrate
@@ -39,6 +41,7 @@ from poster_reproduction.core import (
     selected_radicals,
     spin_pi_pulse,
 )
+from poster_reproduction.audit import completion_snapshot
 from rpm_quantum_needle_jd_sweeps import integrate_yield
 from rpm_quantum_needle_model import FAD_NUCLEI, SYSTEM_DIMENSIONS, spin_operators
 from rpm_statevector_engine import (
@@ -52,6 +55,17 @@ from poster_reproduction.report import _bootstrap_electron_entanglement
 
 
 class PosterReproductionTests(unittest.TestCase):
+    def test_completion_audit_uses_the_unreduced_inventory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            result = completion_snapshot(Path(directory))
+        self.assertEqual(result["expected_production_cells"], 20052)
+        self.assertEqual(result["completed_production_cells"], 0)
+        self.assertEqual(
+            result["expected_by_kind"],
+            {"entanglement": 96, "n10": 16080, "overhauser": 228, "quantum": 3648},
+        )
+        self.assertFalse(result["complete"])
+
     def test_compiled_full_pair_matvec_matches_generic_local_terms(self):
         compiled = build_hamiltonian(37.0, 2.0)
         self.assertIsInstance(compiled, CompiledFullPairHamiltonian)
