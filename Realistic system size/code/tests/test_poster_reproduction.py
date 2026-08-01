@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import math
 import tempfile
 import unittest
@@ -52,9 +53,31 @@ from rpm_statevector_engine import (
 )
 from poster_reproduction.runner import planned_tasks
 from poster_reproduction.report import _bootstrap_electron_entanglement
+from poster_reproduction.report import analyze_runtime
 
 
 class PosterReproductionTests(unittest.TestCase):
+    def test_runtime_audit_counts_checkpointed_work(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            checkpoint = output / "checkpoints" / "quantum" / "example.npz"
+            checkpoint.parent.mkdir(parents=True)
+            metadata = {
+                "elapsed_seconds": 7200.0,
+                "task": {
+                    "kind": "quantum",
+                    "key": "example",
+                    "sample_id": 0,
+                    "field_mT": 0.05,
+                    "theta_deg": 90.0,
+                },
+            }
+            np.savez(checkpoint, metadata_json=np.array(json.dumps(metadata)))
+            runtime = analyze_runtime(output)
+        self.assertEqual(runtime["completed_checkpoint_cells"], 1)
+        self.assertEqual(runtime["completed_statevector_trajectories"], 1)
+        self.assertAlmostEqual(runtime["aggregate_cell_compute_hours"], 2.0)
+
     def test_completion_audit_uses_the_unreduced_inventory(self):
         with tempfile.TemporaryDirectory() as directory:
             result = completion_snapshot(Path(directory))

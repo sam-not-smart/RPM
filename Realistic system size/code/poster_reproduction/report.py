@@ -103,6 +103,117 @@ def _load(path: Path) -> dict[str, np.ndarray]:
         return {key: data[key] for key in data.files}
 
 
+def analyze_runtime(output: Path) -> dict[str, float | int]:
+    """Build a checkpoint-derived runtime ledger across all completed cells."""
+
+    rows: list[dict[str, object]] = []
+    cell_elapsed: list[float] = []
+    starts: list[float] = []
+    finishes: list[float] = []
+    statevector_cells = 0
+    semiclassical_realizations = 0
+    checkpoint_root = output / "checkpoints"
+    for path in sorted(checkpoint_root.glob("*/*.npz")):
+        try:
+            with np.load(path, allow_pickle=False) as cell:
+                metadata = json.loads(str(cell["metadata_json"]))
+        except (KeyError, ValueError, OSError, json.JSONDecodeError):
+            continue
+        task = metadata.get("task", {})
+        kind = str(task.get("kind", path.parent.name))
+        elapsed = float(metadata.get("elapsed_seconds", math.nan))
+        finish = float(path.stat().st_mtime)
+        if np.isfinite(elapsed) and elapsed >= 0.0:
+            cell_elapsed.append(elapsed)
+            starts.append(finish - elapsed)
+            finishes.append(finish)
+        if kind in {"quantum", "entanglement", "n10"}:
+            statevector_cells += 1
+        elif kind == "overhauser":
+            semiclassical_realizations += int(task.get("overhauser_samples", 0))
+            semiclassical_realizations += int(task.get("atomwise_samples", 0))
+        rows.append(
+            {
+                "record_type": "checkpoint_cell",
+                "kind": kind,
+                "key": task.get("key", path.stem),
+                "protocol": task.get("protocol", ""),
+                "field_mT": task.get("field_mT", ""),
+                "theta_deg": task.get("theta_deg", ""),
+                "sample_id": task.get("sample_id", ""),
+                "elapsed_seconds": elapsed,
+                "finished_unix_seconds": finish,
+                "relative_path": str(path.relative_to(output)),
+            }
+        )
+
+    invocation_elapsed: list[float] = []
+    for path in sorted(output.glob("run_manifest_*.json")):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        elapsed = float(manifest.get("elapsed_seconds_this_invocation", math.nan))
+        if np.isfinite(elapsed) and elapsed >= 0.0:
+            invocation_elapsed.append(elapsed)
+        rows.append(
+            {
+                "record_type": "runner_invocation",
+                "kind": "-".join(manifest.get("kinds", [])),
+                "key": path.stem,
+                "elapsed_seconds": elapsed,
+                "workers": manifest.get("workers", ""),
+                "submitted_cells": manifest.get("submitted_this_invocation", ""),
+                "completed_cells": manifest.get("completed_cells", ""),
+                "status": manifest.get("status", ""),
+                "relative_path": str(path.relative_to(output)),
+            }
+        )
+    history_elapsed: list[float] = []
+    for path in sorted((output / "run_history").glob("*.json")):
+        try:
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        elapsed = float(manifest.get("elapsed_seconds_this_invocation", math.nan))
+        if np.isfinite(elapsed) and elapsed >= 0.0:
+            history_elapsed.append(elapsed)
+        rows.append(
+            {
+                "record_type": "runner_invocation_history",
+                "kind": "-".join(manifest.get("kinds", [])),
+                "key": path.stem,
+                "elapsed_seconds": elapsed,
+                "workers": manifest.get("workers", ""),
+                "submitted_cells": manifest.get("submitted_this_invocation", ""),
+                "completed_cells": manifest.get("completed_cells", ""),
+                "status": manifest.get("status", ""),
+                "relative_path": str(path.relative_to(output)),
+            }
+        )
+    _write_csv(output / "runtime_audit.csv", rows)
+    return {
+        "completed_checkpoint_cells": sum(
+            row["record_type"] == "checkpoint_cell" for row in rows
+        ),
+        "completed_statevector_trajectories": statevector_cells,
+        "completed_semiclassical_realizations": semiclassical_realizations,
+        "aggregate_cell_compute_hours": float(np.sum(cell_elapsed) / 3600.0),
+        "surviving_manifest_invocation_hours": float(
+            np.sum(invocation_elapsed) / 3600.0
+        ),
+        "preserved_run_history_hours": float(np.sum(history_elapsed) / 3600.0),
+        "first_to_last_checkpoint_span_hours": (
+            float((max(finishes) - min(starts)) / 3600.0)
+            if starts and finishes
+            else 0.0
+        ),
+        "median_cell_seconds": (
+            float(np.median(cell_elapsed)) if cell_elapsed else math.nan
+        ),
+    }
+
+
 def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not rows:
@@ -1026,7 +1137,15 @@ def _conclusion_from_metrics(field_metrics, overhauser_metrics, n10_metrics) -> 
     )
 
 
-def write_summary(output: Path, samples: int, field_metrics, overhauser_metrics, entanglement_rows, n10_metrics) -> None:
+def write_summary(
+    output: Path,
+    samples: int,
+    field_metrics,
+    overhauser_metrics,
+    entanglement_rows,
+    n10_metrics,
+    runtime: dict[str, float | int],
+) -> None:
     run = json.loads((output / "run_manifest.json").read_text(encoding="utf-8"))
     text = f"""# Poster-style rerun with the current production model
 
@@ -1040,8 +1159,16 @@ and Simpson-corrected yield integration.
 - Nuclear samples per quantum curve: **{samples}**.
 - Master seed: **{run['seed']}** with paired sample IDs across conditions.
 - Quadrupole scale: **0** (machinery retained but disabled in the validated model).
-- Completed cells: **{run.get('completed_cells', 'unknown')} / {run.get('total_cells', 'unknown')}**.
-- Latest recorded invocation runtime: **{run.get('elapsed_seconds_this_invocation', math.nan) / 3600.0:.2f} h**.
+- Completed checkpoint cells: **{runtime['completed_checkpoint_cells']}**.
+- Completed full-state trajectories: **{runtime['completed_statevector_trajectories']}**.
+- Completed semiclassical realizations: **{runtime['completed_semiclassical_realizations']:,}**.
+- Aggregate checkpointed cell compute: **{runtime['aggregate_cell_compute_hours']:.2f} worker-h**.
+- Invocation time retained by the current manifests: **{runtime['surviving_manifest_invocation_hours']:.2f} h**;
+  resumed invocations overwrite their earlier manifest record, so the
+  checkpoint-derived worker-hour total above is authoritative.
+- Preserved non-overwriting run-history time: **{runtime['preserved_run_history_hours']:.2f} h**
+  for invocations launched after run-history recording was enabled.
+- First-to-last checkpoint span, including unattended gaps: **{runtime['first_to_last_checkpoint_span_hours']:.2f} h**.
 - Uncertainty is across nuclear sample IDs; nonlinear metrics bootstrap complete
   paired sample curves rather than treating angles as replicates.
 
@@ -1090,6 +1217,7 @@ def main() -> None:
         raise ValueError("--components may contain only 2,3,4,5,overhauser.")
     quantum = None
     field_metrics = overhauser_metrics = entanglement_rows = n10_metrics = None
+    runtime = analyze_runtime(args.output_dir)
     if "overhauser" in components:
         analyze_overhauser_sampling(
             args.output_dir,
@@ -1132,6 +1260,7 @@ def main() -> None:
             overhauser_metrics,
             entanglement_rows,
             n10_metrics,
+            runtime,
         )
 
 

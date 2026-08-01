@@ -683,6 +683,11 @@ def execute(args: argparse.Namespace) -> None:
         manifest["projected_remaining_wall_hours"] = remaining * float(np.median(durations)) / args.workers / 3600.0
     atomic_json(args.output_dir / "run_manifest.json", manifest)
     atomic_json(invocation_manifest_path(args.output_dir, args), manifest)
+    history_name = (
+        f"{invocation_token}_{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}"
+        f"_pid{os.getpid()}.json"
+    )
+    atomic_json(args.output_dir / "run_history" / history_name, manifest)
     print(json.dumps(manifest, indent=2, sort_keys=True))
 
 

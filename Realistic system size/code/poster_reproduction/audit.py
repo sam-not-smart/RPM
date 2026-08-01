@@ -20,6 +20,7 @@ REQUIRED_TABLES = (
     "model_manifest.json",
     "poster_setting_recovery.md",
     "run_manifest.json",
+    "runtime_audit.csv",
     "sample_convergence.csv",
     "field_dependence.csv",
     "field_metrics.csv",
