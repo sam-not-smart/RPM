@@ -6,6 +6,7 @@ python="/home/samsmart/miniforge3/envs/rpm/bin/python"
 output="$root/outputs/poster_reproduction_multisample"
 stage="${1:-smoke}"
 figures="${POSTER_FIGURES:-2,3,4,5}"
+kinds="${POSTER_KINDS:-quantum,overhauser,entanglement,n10}"
 workers="${POSTER_WORKERS:-32}"
 
 export PYTHONPATH="$root/Realistic system size/code"
@@ -21,6 +22,7 @@ arguments=(
   --max-wall-hours 23.5
   --output-dir "$output"
   --figures "$figures"
+  --kinds "$kinds"
   --resume
 )
 

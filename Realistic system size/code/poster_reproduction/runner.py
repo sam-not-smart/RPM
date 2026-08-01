@@ -473,6 +473,13 @@ def _write_task_inventory(path: Path, tasks: Iterable[CellTask]) -> None:
     os.replace(temporary, path)
 
 
+def invocation_manifest_path(output_dir: Path, args: argparse.Namespace) -> Path:
+    figure_token = "f" + "-".join(str(value) for value in args.figures)
+    kind_token = "-".join(args.kinds)
+    shard_token = f"shard{args.shard_index:03d}of{args.shard_count:03d}"
+    return output_dir / f"run_manifest_{args.stage}_{figure_token}_{kind_token}_{shard_token}.json"
+
+
 def ensure_manifests(
     output_dir: Path,
     model: ProductionModel,
@@ -492,6 +499,7 @@ def ensure_manifests(
     if not recovery.exists():
         recovery.write_text(RECOVERED_POSTER_SETTINGS, encoding="utf-8")
     run_path = output_dir / "run_manifest.json"
+    resume_path = invocation_manifest_path(output_dir, args)
     manifest = {
         "schema_version": OUTPUT_SCHEMA,
         "model_hash": model.configuration_hash,
@@ -504,6 +512,7 @@ def ensure_manifests(
         "shard_count": args.shard_count,
         "max_wall_hours": args.max_wall_hours,
         "figures": list(args.figures),
+        "kinds": list(args.kinds),
         "git_commit_at_launch": _git_commit(),
         "host": socket.gethostname(),
         "platform": platform.platform(),
@@ -512,13 +521,20 @@ def ensure_manifests(
         "status": "running",
         "updated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    if run_path.exists() and args.resume:
-        old = json.loads(run_path.read_text(encoding="utf-8"))
-        keys = ("model_hash", "samples", "overhauser_samples", "seed", "shard_count", "figures")
-        same_stage = old.get("stage") == manifest["stage"]
-        if same_stage and any(old.get(key) != manifest.get(key) for key in keys):
+    if resume_path.exists() and args.resume:
+        old = json.loads(resume_path.read_text(encoding="utf-8"))
+        keys = (
+            "model_hash",
+            "samples",
+            "overhauser_samples",
+            "seed",
+            "shard_count",
+            "figures",
+            "kinds",
+        )
+        if any(old.get(key) != manifest.get(key) for key in keys):
             raise RuntimeError("Resume rejected because the run manifest is incompatible.")
-    atomic_json(output_dir / f"run_manifest_{args.stage}.json", manifest)
+    atomic_json(resume_path, manifest)
     atomic_json(run_path, manifest)
     return manifest
 
@@ -547,8 +563,10 @@ def execute(args: argparse.Namespace) -> None:
             tuple(args.figures),
         )
     )
+    all_tasks = [task for task in all_tasks if task.kind in args.kinds]
     tasks = [task for index, task in enumerate(all_tasks) if index % args.shard_count == args.shard_index]
-    _write_task_inventory(args.output_dir / f"task_inventory_{args.stage}.csv", tasks)
+    invocation_token = invocation_manifest_path(args.output_dir, args).stem.removeprefix("run_manifest_")
+    _write_task_inventory(args.output_dir / f"task_inventory_{invocation_token}.csv", tasks)
     pending = [task for task in tasks if not cell_path(args.output_dir, task).exists()]
     completed_at_start = len(tasks) - len(pending)
     counts_by_kind = {
@@ -567,11 +585,11 @@ def execute(args: argparse.Namespace) -> None:
         "counts_by_kind": counts_by_kind,
         "note": "N10 pulse cells are more expensive than pulse-free quantum cells.",
     }
-    atomic_json(args.output_dir / f"task_inventory_{args.stage}.json", inventory_summary)
+    atomic_json(args.output_dir / f"task_inventory_{invocation_token}.json", inventory_summary)
     if args.dry_run:
         manifest.update({"status": "dry_run", **inventory_summary})
         atomic_json(args.output_dir / "run_manifest.json", manifest)
-        atomic_json(args.output_dir / f"run_manifest_{args.stage}.json", manifest)
+        atomic_json(invocation_manifest_path(args.output_dir, args), manifest)
         print(json.dumps(manifest, indent=2, sort_keys=True))
         return
     started = time.time()
@@ -617,7 +635,7 @@ def execute(args: argparse.Namespace) -> None:
         manifest["projected_serial_cell_seconds"] = float(np.median(durations))
         manifest["projected_remaining_wall_hours"] = remaining * float(np.median(durations)) / args.workers / 3600.0
     atomic_json(args.output_dir / "run_manifest.json", manifest)
-    atomic_json(args.output_dir / f"run_manifest_{args.stage}.json", manifest)
+    atomic_json(invocation_manifest_path(args.output_dir, args), manifest)
     print(json.dumps(manifest, indent=2, sort_keys=True))
 
 
@@ -641,6 +659,12 @@ def parse_args() -> argparse.Namespace:
         default=(2, 3, 4, 5),
         help="Comma-separated poster figure numbers to schedule (default: 2,3,4,5).",
     )
+    parser.add_argument(
+        "--kinds",
+        type=lambda value: tuple(item.strip() for item in value.split(",") if item.strip()),
+        default=("quantum", "overhauser", "entanglement", "n10"),
+        help="Comma-separated cell kinds to schedule (quantum,overhauser,entanglement,n10).",
+    )
     return parser.parse_args()
 
 
@@ -654,6 +678,9 @@ def main() -> None:
         raise ValueError("Require 0 <= shard-index < shard-count.")
     if not args.figures or any(value not in (2, 3, 4, 5) for value in args.figures):
         raise ValueError("--figures may contain only 2,3,4,5.")
+    valid_kinds = {"quantum", "overhauser", "entanglement", "n10"}
+    if not args.kinds or any(value not in valid_kinds for value in args.kinds):
+        raise ValueError("--kinds contains an unsupported cell kind.")
     if not 0.0 < args.max_wall_hours <= 23.5:
         raise ValueError("--max-wall-hours must be in (0, 23.5].")
     execute(args)

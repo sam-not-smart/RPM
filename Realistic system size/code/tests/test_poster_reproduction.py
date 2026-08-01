@@ -196,6 +196,9 @@ class PosterReproductionTests(unittest.TestCase):
         self.assertEqual(counts["overhauser"], 12 * 19)
         self.assertEqual(counts["entanglement"], 6 * 16)
         self.assertEqual(counts["n10"], 201 * 5 * 16)
+        overhauser_only = [task for task in tasks if task.kind == "overhauser"]
+        self.assertEqual(len(overhauser_only), 12 * 19)
+        self.assertTrue(all(task.kind == "overhauser" for task in overhauser_only))
 
 
 if __name__ == "__main__":
