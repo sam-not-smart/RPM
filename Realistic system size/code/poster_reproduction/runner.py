@@ -58,7 +58,6 @@ from .core import (
     model_manifest,
     n10_principal_axis,
     n10_transverse_deleted_tensor,
-    overhauser_sample_mhz,
     overhauser_yield,
     paired_product_indices,
     product_basis_initial_state,
@@ -66,6 +65,7 @@ from .core import (
     random_phase_initial_state,
     reduced_electron_density,
     sample_seed,
+    scrambled_sobol_overhauser_samples_mhz,
     selected_nuclei,
     selected_radicals,
     spin_pi_pulse,
@@ -131,6 +131,8 @@ class CellTask:
     nuclear_count: int = 14
     protocol: str = "baseline"
     overhauser_samples: int = 4096
+    overhauser_replicates: int = 8
+    atomwise_samples: int = 4096
     master_seed: int = MASTER_SEED
     samples: int = 16
 
@@ -202,33 +204,53 @@ def _quantum_cell(task: CellTask, model: ProductionModel) -> dict[str, np.ndarra
 
 def _overhauser_cell(task: CellTask, model: ProductionModel) -> dict[str, np.ndarray]:
     started = time.perf_counter()
-    yields = np.empty(task.overhauser_samples, dtype=float)
+    if task.overhauser_samples % task.overhauser_replicates:
+        raise ValueError("Overhauser sample count must be divisible by replicate count.")
+    points_per_replicate = task.overhauser_samples // task.overhauser_replicates
+    yields = np.empty((task.overhauser_replicates, points_per_replicate), dtype=float)
     retained = task.theta_deg in (0.0, 90.0, 180.0)
     dynamics_times = np.linspace(0.0, model.sweep_config.maximum_time_us, 1001)
-    dynamics = np.empty((task.overhauser_samples, dynamics_times.size), dtype=float) if retained else None
-    atomwise_yields = np.empty(task.overhauser_samples, dtype=float)
-    for sample_id in range(task.overhauser_samples):
-        local = overhauser_sample_mhz(task.master_seed, sample_id)
-        yields[sample_id], population = overhauser_yield(
-            task.theta_deg,
-            task.field_mT,
-            local,
-            model,
-            return_dynamics=retained,
-            dynamics_times_us=dynamics_times,
+    dynamics_per_replicate = min(256, points_per_replicate)
+    dynamics = (
+        np.zeros((task.overhauser_replicates, dynamics_times.size), dtype=float)
+        if retained
+        else None
+    )
+    for replicate_id in range(task.overhauser_replicates):
+        fad_fields, trp_fields = scrambled_sobol_overhauser_samples_mhz(
+            task.master_seed, replicate_id, points_per_replicate
         )
-        if retained:
-            assert dynamics is not None and population is not None
-            dynamics[sample_id] = population
+        for local_id in range(points_per_replicate):
+            keep_dynamics = retained and local_id < dynamics_per_replicate
+            yields[replicate_id, local_id], population = overhauser_yield(
+                task.theta_deg,
+                task.field_mT,
+                (fad_fields[local_id], trp_fields[local_id]),
+                model,
+                return_dynamics=keep_dynamics,
+                dynamics_times_us=dynamics_times,
+            )
+            if keep_dynamics:
+                assert dynamics is not None and population is not None
+                dynamics[replicate_id] += population / dynamics_per_replicate
+    atomwise_yields = np.empty(task.atomwise_samples, dtype=float)
+    for sample_id in range(task.atomwise_samples):
         atomwise = atomwise_overhauser_sample_mhz(task.master_seed, sample_id)
         atomwise_yields[sample_id], _ = overhauser_yield(
             task.theta_deg, task.field_mT, atomwise, model, return_dynamics=False
         )
     return {
-        "sample_yields": yields,
+        "sample_yields": yields.reshape(-1),
+        "replicate_means": np.mean(yields, axis=1),
+        "replicate_count": np.array(task.overhauser_replicates),
+        "points_per_replicate": np.array(points_per_replicate),
+        "sampler": np.array("independently Owen-scrambled Sobol Gaussian"),
         "atomwise_sample_yields": atomwise_yields,
         "times_us": dynamics_times if retained else np.array([], dtype=float),
         "singlet_population_samples": dynamics if retained else np.empty((0, 0)),
+        "dynamics_samples_per_replicate": np.array(
+            dynamics_per_replicate if retained else 0
+        ),
         "metadata_json": np.array(_metadata(task, model, time.perf_counter() - started)),
     }
 
@@ -377,6 +399,8 @@ def planned_tasks(
     overhauser_samples: int,
     seed: int,
     figures: tuple[int, ...] = (2, 3, 4, 5),
+    overhauser_replicates: int = 8,
+    atomwise_samples: int = 4096,
 ) -> list[CellTask]:
     if stage == "smoke":
         fields = (0.05,)
@@ -401,8 +425,23 @@ def planned_tasks(
     if 3 in figures:
         for field in fields:
             for theta in angles:
-                key = f"B{_slug(field)}_th{_slug(theta)}_n{overhauser_samples:05d}"
-                tasks.append(CellTask("overhauser", key, field, theta, overhauser_samples=overhauser_samples, master_seed=seed, samples=samples))
+                key = (
+                    f"B{_slug(field)}_th{_slug(theta)}_n{overhauser_samples:07d}"
+                    f"_r{overhauser_replicates:02d}_a{atomwise_samples:05d}"
+                )
+                tasks.append(
+                    CellTask(
+                        "overhauser",
+                        key,
+                        field,
+                        theta,
+                        overhauser_samples=overhauser_samples,
+                        overhauser_replicates=overhauser_replicates,
+                        atomwise_samples=atomwise_samples,
+                        master_seed=seed,
+                        samples=samples,
+                    )
+                )
     if 4 in figures:
         for count in counts:
             for sample_id in range(samples):
@@ -506,6 +545,8 @@ def ensure_manifests(
         "stage": args.stage,
         "samples": requested_samples,
         "overhauser_samples": args.overhauser_samples,
+        "overhauser_replicates": args.overhauser_replicates,
+        "atomwise_samples": args.atomwise_samples,
         "seed": model.master_seed,
         "workers": args.workers,
         "shard_index": args.shard_index,
@@ -527,6 +568,8 @@ def ensure_manifests(
             "model_hash",
             "samples",
             "overhauser_samples",
+            "overhauser_replicates",
+            "atomwise_samples",
             "seed",
             "shard_count",
             "figures",
@@ -561,6 +604,8 @@ def execute(args: argparse.Namespace) -> None:
             args.overhauser_samples,
             args.seed,
             tuple(args.figures),
+            args.overhauser_replicates,
+            args.atomwise_samples,
         )
     )
     all_tasks = [task for task in all_tasks if task.kind in args.kinds]
@@ -646,7 +691,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
     parser.add_argument("--samples", type=int)
-    parser.add_argument("--overhauser-samples", type=int, default=4096)
+    parser.add_argument("--overhauser-samples", type=int, default=262144)
+    parser.add_argument("--overhauser-replicates", type=int, default=8)
+    parser.add_argument("--atomwise-samples", type=int, default=4096)
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument("--shard-index", type=int, default=0)
     parser.add_argument("--shard-count", type=int, default=1)
@@ -670,8 +717,18 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    if args.workers < 1 or args.overhauser_samples < 1:
+    if args.workers < 1 or args.overhauser_samples < 1 or args.atomwise_samples < 1:
         raise ValueError("Worker and sample counts must be positive.")
+    points = args.overhauser_samples // args.overhauser_replicates
+    if (
+        args.overhauser_replicates < 2
+        or args.overhauser_samples % args.overhauser_replicates
+        or points < 2
+        or points & (points - 1)
+    ):
+        raise ValueError(
+            "Overhauser samples must be replicate_count times a power of two >= 2."
+        )
     if args.samples is not None and args.samples < 1:
         raise ValueError("--samples must be positive.")
     if not 0 <= args.shard_index < args.shard_count:

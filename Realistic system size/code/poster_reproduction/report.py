@@ -32,8 +32,8 @@ from .core import (
     bootstrap_curve_metric,
     mean_se_ci,
     mixed_two_electron_log_negativity,
-    overhauser_sample_mhz,
     overhauser_yield,
+    scrambled_sobol_overhauser_samples_mhz,
 )
 from .runner import DEFAULT_OUTPUT, CellTask, cell_path
 
@@ -57,9 +57,30 @@ def quantum_task(field: float, theta: float, sample_id: int, samples: int, seed:
     return CellTask("quantum", key, field, theta, sample_id, master_seed=seed, samples=samples)
 
 
-def overhauser_task(field: float, theta: float, count: int, samples: int, seed: int) -> CellTask:
-    key = f"B{_slug(field)}_th{_slug(theta)}_n{count:05d}"
-    return CellTask("overhauser", key, field, theta, overhauser_samples=count, master_seed=seed, samples=samples)
+def overhauser_task(
+    field: float,
+    theta: float,
+    count: int,
+    samples: int,
+    seed: int,
+    replicates: int = 8,
+    atomwise_samples: int = 4096,
+) -> CellTask:
+    key = (
+        f"B{_slug(field)}_th{_slug(theta)}_n{count:07d}"
+        f"_r{replicates:02d}_a{atomwise_samples:05d}"
+    )
+    return CellTask(
+        "overhauser",
+        key,
+        field,
+        theta,
+        overhauser_samples=count,
+        overhauser_replicates=replicates,
+        atomwise_samples=atomwise_samples,
+        master_seed=seed,
+        samples=samples,
+    )
 
 
 def entanglement_task(count: int, sample_id: int, samples: int, seed: int) -> CellTask:
@@ -231,6 +252,8 @@ def analyze_figure3(
     samples: int,
     overhauser_samples: int,
     seed: int,
+    overhauser_replicates: int = 8,
+    atomwise_samples: int = 4096,
 ) -> list[dict[str, object]]:
     theta = np.asarray(POSTER_THETA_DEG)
     curve_rows: list[dict[str, object]] = []
@@ -243,19 +266,27 @@ def analyze_figure3(
     for field in POSTER_FIELDS_MT:
         quantum = quantum_curves[field]
         q_mean, q_se, q_low, q_high = mean_se_ci(quantum)
-        oh = np.empty((overhauser_samples, len(theta)))
-        atomwise = np.empty_like(oh)
+        oh = np.empty((overhauser_replicates, len(theta)))
+        atomwise = np.empty((atomwise_samples, len(theta)))
         for index, angle in enumerate(theta):
-            task = overhauser_task(field, float(angle), overhauser_samples, samples, seed)
+            task = overhauser_task(
+                field,
+                float(angle),
+                overhauser_samples,
+                samples,
+                seed,
+                overhauser_replicates,
+                atomwise_samples,
+            )
             cell = _load(cell_path(output, task))
-            oh[:, index] = cell["sample_yields"]
+            oh[:, index] = cell["replicate_means"]
             atomwise[:, index] = cell["atomwise_sample_yields"]
         o_mean, o_se, o_low, o_high = mean_se_ci(oh)
         a_mean, a_se, a_low, a_high = mean_se_ci(atomwise)
         for model_name, mean, se, low, high, n in (
             ("full_quantum", q_mean, q_se, q_low, q_high, samples),
             ("gaussian_static_overhauser", o_mean, o_se, o_low, o_high, overhauser_samples),
-            ("atomwise_static_spin", a_mean, a_se, a_low, a_high, overhauser_samples),
+            ("atomwise_static_spin", a_mean, a_se, a_low, a_high, atomwise_samples),
         ):
             for index, angle in enumerate(theta):
                 curve_rows.append({"field_mT": field, "theta_deg": angle, "model": model_name, "samples": n, "mean_yield": mean[index], "standard_error": se[index], "ci95_low": low[index], "ci95_high": high[index]})
@@ -275,6 +306,8 @@ def analyze_figure3(
             "maximum_orientation_difference_deg": o_metric["theta_maximum_deg"] - q_metric["theta_maximum_deg"],
             "quantum_samples": samples,
             "overhauser_samples": overhauser_samples,
+            "overhauser_replicates": overhauser_replicates,
+            "points_per_replicate": overhauser_samples // overhauser_replicates,
         }
         rng = np.random.default_rng(seed ^ int(round(field * 1000.0)) ^ 0xF311)
         bootstrap_values = {key: [] for key in (
@@ -287,7 +320,7 @@ def analyze_figure3(
         )}
         for _ in range(BOOTSTRAP_REPLICATES):
             q_ids = rng.integers(0, samples, size=samples)
-            o_ids = rng.integers(0, overhauser_samples, size=overhauser_samples)
+            o_ids = rng.integers(0, overhauser_replicates, size=overhauser_replicates)
             q_curve = np.mean(quantum[q_ids], axis=0)
             o_curve = np.mean(oh[o_ids], axis=0)
             q_boot_metric = angular_metrics(theta, q_curve)
@@ -333,25 +366,38 @@ def analyze_figure3(
                 cell = _load(cell_path(output, quantum_task(field, angle, sample_id, samples, seed)))
                 q_pop.append(cell["singlet_population"])
             q_pop_mean_full = np.mean(q_pop, axis=0)
-            oh_task_value = overhauser_task(field, angle, overhauser_samples, samples, seed)
+            oh_task_value = overhauser_task(
+                field,
+                angle,
+                overhauser_samples,
+                samples,
+                seed,
+                overhauser_replicates,
+                atomwise_samples,
+            )
             cell = _load(cell_path(output, oh_task_value))
             if cell["singlet_population_samples"].size:
                 times = cell["times_us"]
                 oh_pop_mean = np.mean(cell["singlet_population_samples"], axis=0)
             else:
                 times = np.linspace(0.0, PRODUCTION_MODEL.sweep_config.maximum_time_us, 1001)
-                accum = np.zeros_like(times)
-                for sample_id in range(overhauser_samples):
-                    _, pop = overhauser_yield(
-                        angle,
-                        field,
-                        overhauser_sample_mhz(seed, sample_id),
-                        return_dynamics=True,
-                        dynamics_times_us=times,
+                replicate_dynamics = np.zeros((overhauser_replicates, times.size))
+                dynamics_points = 256
+                for replicate_id in range(overhauser_replicates):
+                    fad_fields, trp_fields = scrambled_sobol_overhauser_samples_mhz(
+                        seed, replicate_id, dynamics_points
                     )
-                    assert pop is not None
-                    accum += pop
-                oh_pop_mean = accum / overhauser_samples
+                    for sample_id in range(dynamics_points):
+                        _, pop = overhauser_yield(
+                            angle,
+                            field,
+                            (fad_fields[sample_id], trp_fields[sample_id]),
+                            return_dynamics=True,
+                            dynamics_times_us=times,
+                        )
+                        assert pop is not None
+                        replicate_dynamics[replicate_id] += pop / dynamics_points
+                oh_pop_mean = np.mean(replicate_dynamics, axis=0)
             q_times = PRODUCTION_MODEL.sweep_config.time_grid_us
             q_pop_mean = np.interp(times, q_times, q_pop_mean_full)
             rmse_t = float(np.sqrt(np.mean((q_pop_mean - oh_pop_mean) ** 2)))
@@ -671,6 +717,8 @@ def analyze_overhauser_sampling(
     samples: int,
     overhauser_samples: int,
     seed: int,
+    overhauser_replicates: int = 8,
+    atomwise_samples: int = 4096,
 ) -> list[dict[str, object]]:
     """Validate the completed semiclassical ensemble without quantum curves."""
 
@@ -682,8 +730,21 @@ def analyze_overhauser_sampling(
         maximum_se = 0.0
         maximum_atomwise_se = 0.0
         for angle in theta:
-            cell = _load(cell_path(output, overhauser_task(field, float(angle), overhauser_samples, samples, seed)))
-            gaussian = np.asarray(cell["sample_yields"], dtype=float)
+            cell = _load(
+                cell_path(
+                    output,
+                    overhauser_task(
+                        field,
+                        float(angle),
+                        overhauser_samples,
+                        samples,
+                        seed,
+                        overhauser_replicates,
+                        atomwise_samples,
+                    ),
+                )
+            )
+            gaussian = np.asarray(cell["replicate_means"], dtype=float)
             atomwise = np.asarray(cell["atomwise_sample_yields"], dtype=float)
             gaussian_mean, gaussian_se, gaussian_low, gaussian_high = mean_se_ci(gaussian[:, None])
             atom_mean, atom_se, atom_low, atom_high = mean_se_ci(atomwise[:, None])
@@ -694,6 +755,8 @@ def analyze_overhauser_sampling(
                     "field_mT": field,
                     "theta_deg": angle,
                     "overhauser_samples": overhauser_samples,
+                    "overhauser_replicates": overhauser_replicates,
+                    "points_per_replicate": overhauser_samples // overhauser_replicates,
                     "gaussian_mean_yield": gaussian_mean[0],
                     "gaussian_standard_error": gaussian_se[0],
                     "gaussian_ci95_low": gaussian_low[0],
@@ -713,7 +776,7 @@ def analyze_overhauser_sampling(
     axis.set(
         xlabel="field strength (mT)",
         ylabel="maximum pointwise Monte Carlo standard error",
-        title="Semiclassical ensemble precision (4096 samples)",
+        title=f"Semiclassical ensemble precision ({overhauser_samples:,} Gaussian samples)",
     )
     axis.legend(frameon=False)
     _save_figure(fig, output / "figures" / "overhauser_sampling_precision")
@@ -783,7 +846,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--samples", type=int, default=PRODUCTION_MODEL.samples)
-    parser.add_argument("--overhauser-samples", type=int, default=4096)
+    parser.add_argument("--overhauser-samples", type=int, default=262144)
+    parser.add_argument("--overhauser-replicates", type=int, default=8)
+    parser.add_argument("--atomwise-samples", type=int, default=4096)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
     parser.add_argument(
         "--components",
@@ -801,7 +866,14 @@ def main() -> None:
     quantum = None
     field_metrics = overhauser_metrics = entanglement_rows = n10_metrics = None
     if "overhauser" in components:
-        analyze_overhauser_sampling(args.output_dir, args.samples, args.overhauser_samples, args.seed)
+        analyze_overhauser_sampling(
+            args.output_dir,
+            args.samples,
+            args.overhauser_samples,
+            args.seed,
+            args.overhauser_replicates,
+            args.atomwise_samples,
+        )
     if "2" in components:
         quantum, field_metrics = analyze_figure2(args.output_dir, args.samples, args.seed)
         sample_convergence(args.output_dir, quantum)
@@ -820,6 +892,8 @@ def main() -> None:
             args.samples,
             args.overhauser_samples,
             args.seed,
+            args.overhauser_replicates,
+            args.atomwise_samples,
         )
     if "4" in components:
         entanglement_rows = analyze_figure4(args.output_dir, args.samples, args.seed)

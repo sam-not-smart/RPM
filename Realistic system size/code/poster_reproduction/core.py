@@ -18,6 +18,7 @@ from typing import Iterable, Sequence
 import numpy as np
 import scipy.integrate
 import scipy.linalg
+import scipy.stats
 
 from rpm_quantum_needle_jd_sweeps import (
     QUADRUPOLE_SCALE,
@@ -325,6 +326,30 @@ def overhauser_sample_mhz(master_seed: int, sample_id: int) -> tuple[np.ndarray,
         values, axes = np.linalg.eigh(covariances[radical])
         factor = axes @ np.diag(np.sqrt(np.maximum(values, 0.0)))
         samples.append(factor @ rng.standard_normal(3))
+    return samples[0], samples[1]
+
+
+def scrambled_sobol_overhauser_samples_mhz(
+    master_seed: int,
+    replicate_id: int,
+    points_per_replicate: int,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Return one independently Owen-scrambled Gaussian 6-D QMC replicate."""
+
+    count = int(points_per_replicate)
+    exponent = int(round(math.log2(count))) if count > 0 else -1
+    if count < 2 or 2**exponent != count:
+        raise ValueError("points_per_replicate must be a power of two >= 2.")
+    seed = sample_seed(int(master_seed) ^ 0x50B01, int(replicate_id))
+    unit = scipy.stats.qmc.Sobol(d=6, scramble=True, seed=seed).random_base2(exponent)
+    # Avoid infinite normal quantiles if a future Sobol implementation emits an endpoint.
+    normal = scipy.stats.norm.ppf(np.clip(unit, np.finfo(float).eps, 1.0 - np.finfo(float).eps))
+    covariances = overhauser_covariances_mhz2()
+    samples = []
+    for offset, radical in ((0, "FAD"), (3, "TrpH")):
+        values, axes = np.linalg.eigh(covariances[radical])
+        factor = axes @ np.diag(np.sqrt(np.maximum(values, 0.0)))
+        samples.append(normal[:, offset : offset + 3] @ factor.T)
     return samples[0], samples[1]
 
 

@@ -31,6 +31,7 @@ from poster_reproduction.core import (
     random_phase_initial_state,
     reduced_electron_density,
     sample_seed,
+    scrambled_sobol_overhauser_samples_mhz,
     selected_nuclei,
     selected_radicals,
     spin_pi_pulse,
@@ -125,6 +126,18 @@ class PosterReproductionTests(unittest.TestCase):
             empirical = np.cov(values, rowvar=False, ddof=1)
             relative = np.linalg.norm(empirical - expected[radical]) / np.linalg.norm(expected[radical])
             self.assertLess(relative, 0.06)
+
+    def test_scrambled_sobol_overhauser_replicates_are_deterministic(self):
+        first = scrambled_sobol_overhauser_samples_mhz(MASTER_SEED, 0, 1024)
+        second = scrambled_sobol_overhauser_samples_mhz(MASTER_SEED, 0, 1024)
+        third = scrambled_sobol_overhauser_samples_mhz(MASTER_SEED, 1, 1024)
+        self.assertTrue(np.array_equal(first[0], second[0]))
+        self.assertFalse(np.array_equal(first[0], third[0]))
+        expected = overhauser_covariances_mhz2()
+        for values, radical in ((first[0], "FAD"), (first[1], "TrpH")):
+            empirical = np.cov(values, rowvar=False, ddof=1)
+            relative = np.linalg.norm(empirical - expected[radical]) / np.linalg.norm(expected[radical])
+            self.assertLess(relative, 0.03)
 
     def test_spin_one_pulse_unitarity_and_toggling(self):
         pulse = spin_pi_pulse(1.0, np.array([0.0, 0.0, 1.0]))
