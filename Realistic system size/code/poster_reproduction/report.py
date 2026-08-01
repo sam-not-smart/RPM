@@ -666,6 +666,61 @@ def sample_convergence(output: Path, fields: dict[float, np.ndarray]) -> None:
     _write_csv(output / "sample_convergence.csv", rows)
 
 
+def analyze_overhauser_sampling(
+    output: Path,
+    samples: int,
+    overhauser_samples: int,
+    seed: int,
+) -> list[dict[str, object]]:
+    """Validate the completed semiclassical ensemble without quantum curves."""
+
+    rows: list[dict[str, object]] = []
+    theta = np.asarray(POSTER_THETA_DEG)
+    field_max_se = []
+    field_max_atomwise_se = []
+    for field in POSTER_FIELDS_MT:
+        maximum_se = 0.0
+        maximum_atomwise_se = 0.0
+        for angle in theta:
+            cell = _load(cell_path(output, overhauser_task(field, float(angle), overhauser_samples, samples, seed)))
+            gaussian = np.asarray(cell["sample_yields"], dtype=float)
+            atomwise = np.asarray(cell["atomwise_sample_yields"], dtype=float)
+            gaussian_mean, gaussian_se, gaussian_low, gaussian_high = mean_se_ci(gaussian[:, None])
+            atom_mean, atom_se, atom_low, atom_high = mean_se_ci(atomwise[:, None])
+            maximum_se = max(maximum_se, float(gaussian_se[0]))
+            maximum_atomwise_se = max(maximum_atomwise_se, float(atom_se[0]))
+            rows.append(
+                {
+                    "field_mT": field,
+                    "theta_deg": angle,
+                    "overhauser_samples": overhauser_samples,
+                    "gaussian_mean_yield": gaussian_mean[0],
+                    "gaussian_standard_error": gaussian_se[0],
+                    "gaussian_ci95_low": gaussian_low[0],
+                    "gaussian_ci95_high": gaussian_high[0],
+                    "atomwise_mean_yield": atom_mean[0],
+                    "atomwise_standard_error": atom_se[0],
+                    "atomwise_ci95_low": atom_low[0],
+                    "atomwise_ci95_high": atom_high[0],
+                }
+            )
+        field_max_se.append(maximum_se)
+        field_max_atomwise_se.append(maximum_atomwise_se)
+    fig, axis = plt.subplots(figsize=(7.2, 4.5))
+    axis.plot(POSTER_FIELDS_MT, field_max_se, marker="o", label="Gaussian static")
+    axis.plot(POSTER_FIELDS_MT, field_max_atomwise_se, marker="s", label="atomwise static")
+    axis.set_xscale("log")
+    axis.set(
+        xlabel="field strength (mT)",
+        ylabel="maximum pointwise Monte Carlo standard error",
+        title="Semiclassical ensemble precision (4096 samples)",
+    )
+    axis.legend(frameon=False)
+    _save_figure(fig, output / "figures" / "overhauser_sampling_precision")
+    _write_csv(output / "overhauser_sampling_diagnostics.csv", rows)
+    return rows
+
+
 def _conclusion_from_metrics(field_metrics, overhauser_metrics, n10_metrics) -> str:
     geomagnetic = next(row for row in field_metrics if np.isclose(row["field_mT"], 0.05))
     two_mt = next(row for row in field_metrics if np.isclose(row["field_mT"], 2.0))
@@ -730,17 +785,55 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--samples", type=int, default=PRODUCTION_MODEL.samples)
     parser.add_argument("--overhauser-samples", type=int, default=4096)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
+    parser.add_argument(
+        "--components",
+        default="2,3,4,5",
+        help="Comma-separated completed components: 2,3,4,5,overhauser.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    quantum, field_metrics = analyze_figure2(args.output_dir, args.samples, args.seed)
-    sample_convergence(args.output_dir, quantum)
-    overhauser_metrics = analyze_figure3(args.output_dir, quantum, args.samples, args.overhauser_samples, args.seed)
-    entanglement_rows = analyze_figure4(args.output_dir, args.samples, args.seed)
-    n10_metrics = analyze_figure5(args.output_dir, args.samples, args.seed)
-    write_summary(args.output_dir, args.samples, field_metrics, overhauser_metrics, entanglement_rows, n10_metrics)
+    components = tuple(item.strip() for item in args.components.split(",") if item.strip())
+    if not components or any(item not in {"2", "3", "4", "5", "overhauser"} for item in components):
+        raise ValueError("--components may contain only 2,3,4,5,overhauser.")
+    quantum = None
+    field_metrics = overhauser_metrics = entanglement_rows = n10_metrics = None
+    if "overhauser" in components:
+        analyze_overhauser_sampling(args.output_dir, args.samples, args.overhauser_samples, args.seed)
+    if "2" in components:
+        quantum, field_metrics = analyze_figure2(args.output_dir, args.samples, args.seed)
+        sample_convergence(args.output_dir, quantum)
+    if "3" in components:
+        if quantum is None:
+            quantum = load_quantum_curves(
+                args.output_dir,
+                POSTER_FIELDS_MT,
+                np.asarray(POSTER_THETA_DEG),
+                args.samples,
+                args.seed,
+            )
+        overhauser_metrics = analyze_figure3(
+            args.output_dir,
+            quantum,
+            args.samples,
+            args.overhauser_samples,
+            args.seed,
+        )
+    if "4" in components:
+        entanglement_rows = analyze_figure4(args.output_dir, args.samples, args.seed)
+    if "5" in components:
+        n10_metrics = analyze_figure5(args.output_dir, args.samples, args.seed)
+    if all(value is not None for value in (field_metrics, overhauser_metrics, entanglement_rows, n10_metrics)):
+        write_summary(
+            args.output_dir,
+            args.samples,
+            field_metrics,
+            overhauser_metrics,
+            entanglement_rows,
+            n10_metrics,
+        )
 
 
 if __name__ == "__main__":
