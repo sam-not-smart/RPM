@@ -513,6 +513,7 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     selected_radical["selected_by"] = "minimum_AIC"
     counts = np.asarray(ENTANGLEMENT_NUCLEAR_COUNTS, dtype=float)
     extrapolated = np.arange(16.0, 27.0, 2.0)
+    extrapolated_physical_maxima = physical_maxima[-1] + (extrapolated - counts[-1]) / 2.0
     bootstrap_ids = _bootstrap_indices(samples, seed ^ 0xF417)
     radical_predictions = []
     en_predictions = []
@@ -538,8 +539,26 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     radical_prediction_low, radical_prediction_high = np.quantile(radical_predictions, [0.025, 0.975], axis=0)
     en_prediction_low, en_prediction_high = np.quantile(en_predictions, [0.025, 0.975], axis=0)
     fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6))
-    axes[0].plot(counts, radical_means, marker="o", label="explicit mean")
-    axes[0].plot(counts, physical_maxima, linestyle="--", label="physical maximum")
+    radical_summary = [row for row in scaling_rows if row["cut"] == "radical_partition"]
+    en_summary = [row for row in scaling_rows if row["cut"] == "electron_nuclear_trajectory_proxy"]
+    radical_low = np.array([row["ci95_low"] for row in radical_summary])
+    radical_high = np.array([row["ci95_high"] for row in radical_summary])
+    en_low = np.array([row["ci95_low"] for row in en_summary])
+    en_high = np.array([row["ci95_high"] for row in en_summary])
+    axes[0].errorbar(
+        counts,
+        radical_means,
+        yerr=np.vstack([np.asarray(radical_means) - radical_low, radical_high - np.asarray(radical_means)]),
+        marker="o",
+        capsize=3,
+        label="explicit mean and 95% CI",
+    )
+    axes[0].plot(
+        np.concatenate([counts, extrapolated]),
+        np.concatenate([physical_maxima, extrapolated_physical_maxima]),
+        linestyle="--",
+        label="physical maximum (spin-1/2 continuation after N=14)",
+    )
     if selected_radical["model"] == "linear":
         prediction = selected_radical["intercept"] + selected_radical["slope"] * extrapolated
     else:
@@ -547,7 +566,14 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     axes[0].plot(extrapolated, prediction, marker="x", linestyle=":", label="phenomenological prediction")
     axes[0].fill_between(extrapolated, radical_prediction_low, radical_prediction_high, alpha=0.18, label="bootstrap 95% prediction band")
     axes[0].set(xlabel="nuclear count", ylabel="time-averaged log negativity", title="radical partition")
-    axes[1].plot(counts, en_means, marker="o", label="trajectory proxy")
+    axes[1].errorbar(
+        counts,
+        en_means,
+        yerr=np.vstack([np.asarray(en_means) - en_low, en_high - np.asarray(en_means)]),
+        marker="o",
+        capsize=3,
+        label="trajectory proxy and 95% CI",
+    )
     bounded = next(row for row in fit_rows if row["model"] == "bounded_saturation_electron_nuclear")
     if np.isfinite(bounded["a"]):
         bounded_prediction = saturation(extrapolated, bounded["a"], bounded["N0"])
@@ -564,16 +590,32 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     axis.set(xlabel="time (us)", ylabel="two-electron log negativity", title="Ensemble-averaged physical electron entanglement")
     axis.legend(frameon=False, ncol=2)
     _save_figure(fig, output / "figures" / "figure4b_two_electron_entanglement")
-    fig, axes = plt.subplots(1, 2, figsize=(10.0, 4.2))
+    fig, axes = plt.subplots(2, 2, figsize=(10.0, 7.6), sharex="col")
     for axis, key, expected, title in (
-        (axes[0], "radical_initial", 1.0, "radical cut"),
-        (axes[1], "electron_nuclear_initial", 0.0, "electron--nuclear cut"),
+        (axes[0, 0], "radical_initial", 1.0, "radical cut: initial"),
+        (axes[0, 1], "electron_nuclear_initial", 0.0, "electron--nuclear cut: initial"),
     ):
         for count in ENTANGLEMENT_NUCLEAR_COUNTS:
             values = [row[key] for row in initial_rows if row["nuclear_count"] == count]
             axis.scatter([count] * len(values), values, s=10)
         axis.axhline(expected, color="black", linestyle="--")
         axis.set(xlabel="nuclear count", ylabel="initial log negativity", title=title)
+    for axis, key, title in (
+        (axes[1, 0], "radical_generated_time_average", "radical cut: generated change"),
+        (axes[1, 1], "electron_nuclear_generated_time_average", "electron--nuclear cut: generated proxy"),
+    ):
+        for count in ENTANGLEMENT_NUCLEAR_COUNTS:
+            values = np.asarray([row[key] for row in initial_rows if row["nuclear_count"] == count])
+            mean, se, low, high = mean_se_ci(values[:, None])
+            axis.errorbar(
+                count,
+                mean[0],
+                yerr=[[mean[0] - low[0]], [high[0] - mean[0]]],
+                marker="o",
+                capsize=3,
+            )
+        axis.axhline(0.0, color="black", linestyle="--")
+        axis.set(xlabel="nuclear count", ylabel="time-averaged change", title=title)
     _save_figure(fig, output / "figures" / "figure4c_initial_state_check")
     for index, count in enumerate(extrapolated):
         fit_rows.append({
@@ -593,6 +635,14 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
                 "prediction_ci95_high": en_prediction_high[index],
                 "label": "phenomenological prediction",
             })
+        fit_rows.append(
+            {
+                "model": "radical_partition_physical_maximum",
+                "nuclear_count": count,
+                "prediction": extrapolated_physical_maxima[index],
+                "label": "spin-1/2 continuation after N=14; bound, not an entanglement prediction",
+            }
+        )
     _write_csv(output / "entanglement_scaling.csv", scaling_rows)
     _write_csv(output / "entanglement_fit_parameters.csv", fit_rows)
     _write_csv(output / "two_electron_entanglement.csv", electron_rows)
