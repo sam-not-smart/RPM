@@ -504,9 +504,11 @@ class AdaptiveLanczosPropagator:
             raise ValueError("Cannot propagate the zero vector.")
         count = min(int(maximum_dimension), state.size)
         basis = np.empty((state.size, count), dtype=complex)
+        conjugate_basis = np.empty_like(basis)
         diagonal = np.empty(count, dtype=float)
         off_diagonal = np.empty(count - 1, dtype=float)
         basis[:, 0] = state / norm
+        np.conjugate(basis[:, 0], out=conjugate_basis[:, 0])
         actual = count
         for index in range(count):
             work = self.hamiltonian.matvec(basis[:, index])
@@ -515,8 +517,9 @@ class AdaptiveLanczosPropagator:
             if index:
                 work -= off_diagonal[index - 1] * basis[:, index - 1]
             active = basis[:, : index + 1]
+            active_conjugate_transpose = conjugate_basis[:, : index + 1].T
             for _ in range(2):
-                work -= active @ (active.conj().T @ work)
+                work -= active @ (active_conjugate_transpose @ work)
             if index == count - 1:
                 break
             beta = float(np.linalg.norm(work))
@@ -525,6 +528,9 @@ class AdaptiveLanczosPropagator:
                 actual = index + 1
                 break
             basis[:, index + 1] = work / beta
+            np.conjugate(
+                basis[:, index + 1], out=conjugate_basis[:, index + 1]
+            )
         return basis[:, :actual], diagonal[:actual], off_diagonal[: max(0, actual - 1)]
 
     def _candidate(
