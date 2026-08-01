@@ -783,6 +783,32 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     _write_csv(output / "two_electron_entanglement.csv", electron_rows)
     _write_csv(output / "two_electron_entanglement_time_average.csv", electron_average_rows)
     _write_csv(output / "entanglement_initial_state_check.csv", initial_rows)
+    scaling_se = {
+        (int(row["nuclear_count"]), str(row["cut"])): float(row["standard_error"])
+        for row in scaling_rows
+    }
+    electron_se = {
+        int(row["nuclear_count"]): float(row["bootstrap_standard_error"])
+        for row in electron_average_rows
+    }
+    for row in quadrature_rows:
+        count = int(row["nuclear_count"])
+        cut = str(row["cut"])
+        uncertainty = (
+            electron_se[count]
+            if cut == "ensemble_averaged_two_electron"
+            else scaling_se[(count, cut)]
+        )
+        difference = float(row["mean_absolute_fine_minus_coarse"])
+        ratio = difference / uncertainty if uncertainty > 0.0 else math.inf
+        row.update(
+            {
+                "uncertainty_standard_error": uncertainty,
+                "mean_difference_to_standard_error_ratio": ratio,
+                "gate_maximum_ratio": 0.25,
+                "passed_quadrature_gate": ratio <= 0.25,
+            }
+        )
     _write_csv(output / "entanglement_quadrature_check.csv", quadrature_rows)
     return scaling_rows
 
