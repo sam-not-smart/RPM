@@ -42,6 +42,7 @@ from rpm_quantum_needle_model import (
 )
 from rpm_statevector_engine import (
     AdaptiveLanczosPropagator,
+    CompiledFullPairHamiltonian,
     LocalTerm,
     MatrixFreeHamiltonian,
     SingletPopulationObservable,
@@ -175,7 +176,7 @@ def build_hamiltonian(
     nuclei: Sequence[Nucleus] = ALL_NUCLEI,
     radicals: Sequence[str] = NUCLEAR_RADICALS,
     hyperfine_overrides_mT: dict[str, np.ndarray] | None = None,
-) -> MatrixFreeHamiltonian:
+) -> CompiledFullPairHamiltonian:
     """Build the current nonfactorized Hamiltonian for any paired bath prefix."""
 
     if len(nuclei) != len(radicals):
@@ -211,10 +212,26 @@ def build_hamiltonian(
     if any(value != 1 for value in used_names.values()):
         raise ValueError("Selected nuclei contain duplicate radical/name keys.")
     terms.append(_electron_coupling_term(model))
-    return MatrixFreeHamiltonian(dimensions, terms)
+    left_axes = (0,) + tuple(
+        index + 2 for index, radical in enumerate(radicals) if radical == "FAD"
+    )
+    right_axes = (1,) + tuple(
+        index + 2 for index, radical in enumerate(radicals) if radical == "TrpH"
+    )
+    if len(left_axes) + len(right_axes) != len(dimensions):
+        raise ValueError("Every selected nucleus must belong to FAD or TrpH.")
+    return CompiledFullPairHamiltonian(
+        dimensions,
+        terms,
+        left_axes=left_axes,
+        right_axes=right_axes,
+    )
 
 
-def make_propagator(hamiltonian: MatrixFreeHamiltonian, model: ProductionModel = PRODUCTION_MODEL):
+def make_propagator(
+    hamiltonian: MatrixFreeHamiltonian | CompiledFullPairHamiltonian,
+    model: ProductionModel = PRODUCTION_MODEL,
+):
     config = model.sweep_config
     return AdaptiveLanczosPropagator(
         hamiltonian,
@@ -583,6 +600,15 @@ def model_manifest(model: ProductionModel = PRODUCTION_MODEL) -> dict[str, objec
         "tensor_source": "Hiscock et al. 2016 supporting-information Tables S1-S2",
         "tensor_reference_frame": "shared flavin molecular frame",
         "field_plane": model.field_plane,
+        "hamiltonian_representation": {
+            "state_space": "one complete 221184-component radical-pair state vector",
+            "matvec": (
+                "exact radical-local sparse blocks plus an explicit cross-radical "
+                "electron exchange/dipolar action"
+            ),
+            "factorized_evolution": False,
+            "electron_pair_coupling_retained": True,
+        },
         "quadrupole_machinery": "available for all spin-1 nuclei",
         "quadrupole_scale": model.quadrupole_scale,
         "quadrupole_note": "Frozen to the latest validated Danny production value Q=0; no nonzero Q is introduced here.",

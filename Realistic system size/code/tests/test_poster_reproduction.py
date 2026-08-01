@@ -22,6 +22,7 @@ from poster_reproduction.core import (
     mixed_two_electron_log_negativity,
     mixed_two_electron_log_negativity_batch,
     mean_se_ci,
+    model_manifest,
     n10_principal_axis,
     n10_transverse_deleted_tensor,
     overhauser_covariances_mhz2,
@@ -40,12 +41,37 @@ from poster_reproduction.core import (
 )
 from rpm_quantum_needle_jd_sweeps import integrate_yield
 from rpm_quantum_needle_model import FAD_NUCLEI, SYSTEM_DIMENSIONS, spin_operators
-from rpm_statevector_engine import singlet_population
+from rpm_statevector_engine import (
+    CompiledFullPairHamiltonian,
+    LocalTerm,
+    MatrixFreeHamiltonian,
+    singlet_population,
+)
 from poster_reproduction.runner import planned_tasks
 from poster_reproduction.report import _bootstrap_electron_entanglement
 
 
 class PosterReproductionTests(unittest.TestCase):
+    def test_compiled_full_pair_matvec_matches_generic_local_terms(self):
+        compiled = build_hamiltonian(37.0, 2.0)
+        self.assertIsInstance(compiled, CompiledFullPairHamiltonian)
+        generic = MatrixFreeHamiltonian(
+            compiled.dimensions,
+            [LocalTerm(term.axes, term.operator, term.label) for term in compiled.terms],
+        )
+        rng = np.random.default_rng(20260731)
+        vector = rng.normal(size=compiled.dimension) + 1j * rng.normal(
+            size=compiled.dimension
+        )
+        expected = generic.matvec(vector)
+        observed = compiled.matvec(vector)
+        relative = np.linalg.norm(observed - expected) / np.linalg.norm(expected)
+        self.assertLess(relative, 1e-12)
+        self.assertTrue(any(term.axes == (0, 1) for term in compiled.terms))
+        representation = model_manifest()["hamiltonian_representation"]
+        self.assertFalse(representation["factorized_evolution"])
+        self.assertTrue(representation["electron_pair_coupling_retained"])
+
     def test_hamiltonian_branches_are_hermitian(self):
         branches = [
             build_hamiltonian(0.0, 0.05),

@@ -8,6 +8,7 @@ from typing import Callable, Iterable
 
 import numpy as np
 import scipy.linalg
+import scipy.sparse
 from scipy.sparse.linalg import LinearOperator
 
 from rpm_quantum_needle_model import (
@@ -123,6 +124,143 @@ class MatrixFreeHamiltonian:
     def explicit_matrix(self) -> np.ndarray:
         """Assemble a dense matrix for tests and deliberately small systems."""
 
+        identity = np.eye(self.dimension, dtype=complex)
+        return self.matmat(identity)
+
+
+class CompiledFullPairHamiltonian:
+    """Fast exact action of a coupled full-pair Hamiltonian.
+
+    The state remains one vector in the complete tensor-product Hilbert space.
+    Terms local to either radical are compiled into small sparse blocks, while
+    the electron--electron term is applied explicitly across the two blocks.
+    Consequently this is not a factorized propagator and remains valid for
+    nonzero exchange and dipolar coupling.
+    """
+
+    def __init__(
+        self,
+        dimensions: Iterable[int],
+        terms: Iterable[LocalTerm],
+        *,
+        left_axes: Iterable[int],
+        right_axes: Iterable[int],
+        electron_pair_axes: tuple[int, int] = (0, 1),
+    ) -> None:
+        source = MatrixFreeHamiltonian(dimensions, terms)
+        self.dimensions = source.dimensions
+        self.dimension = source.dimension
+        self.shape = source.shape
+        self.dtype = source.dtype
+        self.terms = source.terms
+        self.matvec_count = 0
+
+        left = tuple(int(axis) for axis in left_axes)
+        right = tuple(int(axis) for axis in right_axes)
+        if not left or not right or set(left) & set(right):
+            raise ValueError("Full-pair axis groups must be nonempty and disjoint.")
+        if set(left + right) != set(range(len(self.dimensions))):
+            raise ValueError("Full-pair axis groups must partition every tensor axis.")
+        if left[0] != electron_pair_axes[0] or right[0] != electron_pair_axes[1]:
+            raise ValueError("Each radical electron must be first in its axis group.")
+        if self.dimensions[left[0]] != 2 or self.dimensions[right[0]] != 2:
+            raise ValueError("The electron-pair axes must both have dimension two.")
+
+        left_map = {axis: index for index, axis in enumerate(left)}
+        right_map = {axis: index for index, axis in enumerate(right)}
+        left_terms: list[LocalTerm] = []
+        right_terms: list[LocalTerm] = []
+        electron_operator = np.zeros((4, 4), dtype=complex)
+        for term in self.terms:
+            if all(axis in left_map for axis in term.axes):
+                left_terms.append(
+                    LocalTerm(
+                        tuple(left_map[axis] for axis in term.axes),
+                        term.operator,
+                        term.label,
+                    )
+                )
+            elif all(axis in right_map for axis in term.axes):
+                right_terms.append(
+                    LocalTerm(
+                        tuple(right_map[axis] for axis in term.axes),
+                        term.operator,
+                        term.label,
+                    )
+                )
+            elif term.axes == electron_pair_axes:
+                electron_operator += term.operator
+            else:
+                raise ValueError(
+                    "Cross-radical terms must act on the configured electron pair."
+                )
+
+        self.left_axes = left
+        self.right_axes = right
+        self.permutation = left + right
+        self.inverse_permutation = tuple(
+            int(value) for value in np.argsort(self.permutation)
+        )
+        self.left_dimensions = tuple(self.dimensions[axis] for axis in left)
+        self.right_dimensions = tuple(self.dimensions[axis] for axis in right)
+        self.left_dimension = math.prod(self.left_dimensions)
+        self.right_dimension = math.prod(self.right_dimensions)
+        left_dense = MatrixFreeHamiltonian(
+            self.left_dimensions, left_terms
+        ).explicit_matrix()
+        right_dense = MatrixFreeHamiltonian(
+            self.right_dimensions, right_terms
+        ).explicit_matrix()
+        self.left_operator = scipy.sparse.csr_matrix(left_dense)
+        self.right_operator = scipy.sparse.csr_matrix(right_dense)
+        self.left_operator.eliminate_zeros()
+        self.right_operator.eliminate_zeros()
+        self.electron_pair_operator = electron_operator.reshape(2, 2, 2, 2)
+
+    def matvec(self, vector: np.ndarray) -> np.ndarray:
+        flat = np.asarray(vector, dtype=complex).reshape(-1)
+        if flat.size != self.dimension:
+            raise ValueError(f"Vector length {flat.size} does not match {self.dimension}.")
+        tensor = flat.reshape(self.dimensions)
+        grouped = np.transpose(tensor, self.permutation)
+        matrix = grouped.reshape(self.left_dimension, self.right_dimension)
+        result = self.left_operator @ matrix + (
+            self.right_operator @ matrix.T
+        ).T
+        four_axis = grouped.reshape(
+            2, self.left_dimension // 2, 2, self.right_dimension // 2
+        )
+        result += np.einsum(
+            "abcd,cxdy->axby",
+            self.electron_pair_operator,
+            four_axis,
+            optimize=True,
+        ).reshape(self.left_dimension, self.right_dimension)
+        ungrouped = np.transpose(
+            result.reshape(self.left_dimensions + self.right_dimensions),
+            self.inverse_permutation,
+        )
+        self.matvec_count += 1
+        return ungrouped.reshape(-1)
+
+    def matmat(self, matrix: np.ndarray) -> np.ndarray:
+        values = np.asarray(matrix, dtype=complex)
+        if values.ndim != 2 or values.shape[0] != self.dimension:
+            raise ValueError(f"Matrix must have shape ({self.dimension}, n_vectors).")
+        return np.column_stack(
+            [self.matvec(values[:, column]) for column in range(values.shape[1])]
+        )
+
+    def aslinearoperator(self) -> LinearOperator:
+        return LinearOperator(
+            self.shape,
+            matvec=self.matvec,
+            rmatvec=self.matvec,
+            matmat=self.matmat,
+            dtype=self.dtype,
+        )
+
+    def explicit_matrix(self) -> np.ndarray:
         identity = np.eye(self.dimension, dtype=complex)
         return self.matmat(identity)
 
