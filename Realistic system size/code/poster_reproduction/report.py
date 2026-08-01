@@ -1,0 +1,747 @@
+"""Analyze checkpointed poster reruns and create the requested data products."""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import math
+from pathlib import Path
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.integrate
+import scipy.optimize
+
+from rpm_quantum_needle_model import FAD_NUCLEI, TRP_NUCLEI
+
+from .core import (
+    BOOTSTRAP_REPLICATES,
+    ENTANGLEMENT_NUCLEAR_COUNTS,
+    MASTER_SEED,
+    N10_THETA_DEG,
+    OVERHAUSER_FIELDS_MT,
+    POSTER_FIELDS_MT,
+    POSTER_THETA_DEG,
+    PRODUCTION_MODEL,
+    angular_metrics,
+    atomwise_overhauser_sample_mhz,
+    bootstrap_curve_metric,
+    mean_se_ci,
+    mixed_two_electron_log_negativity,
+    overhauser_sample_mhz,
+    overhauser_yield,
+)
+from .runner import DEFAULT_OUTPUT, CellTask, cell_path
+
+
+PROTOCOLS = ("baseline", "n10_transverse_deleted", "one_pulse", "periodic_0.02", "periodic_0.05")
+PROTOCOL_LABELS = {
+    "baseline": "baseline",
+    "n10_transverse_deleted": "N10 transverse deleted",
+    "one_pulse": "one N10 z pi pulse",
+    "periodic_0.02": "periodic N10 z pi, 0.02 us",
+    "periodic_0.05": "periodic N10 z pi, 0.05 us",
+}
+
+
+def _slug(value: float, digits: int = 3) -> str:
+    return f"{float(value):0{digits + 4}.{digits}f}".replace(".", "p")
+
+
+def quantum_task(field: float, theta: float, sample_id: int, samples: int, seed: int) -> CellTask:
+    key = f"B{_slug(field)}_th{_slug(theta)}_s{sample_id:03d}"
+    return CellTask("quantum", key, field, theta, sample_id, master_seed=seed, samples=samples)
+
+
+def overhauser_task(field: float, theta: float, count: int, samples: int, seed: int) -> CellTask:
+    key = f"B{_slug(field)}_th{_slug(theta)}_n{count:05d}"
+    return CellTask("overhauser", key, field, theta, overhauser_samples=count, master_seed=seed, samples=samples)
+
+
+def entanglement_task(count: int, sample_id: int, samples: int, seed: int) -> CellTask:
+    return CellTask("entanglement", f"N{count:02d}_s{sample_id:03d}", 0.05, 90.0, sample_id, count, master_seed=seed, samples=samples)
+
+
+def n10_task(theta: float, protocol: str, sample_id: int, samples: int, seed: int) -> CellTask:
+    key = f"{protocol}_th{_slug(theta)}_s{sample_id:03d}"
+    return CellTask("n10", key, 0.05, theta, sample_id, protocol=protocol, master_seed=seed, samples=samples)
+
+
+def _load(path: Path) -> dict[str, np.ndarray]:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    with np.load(path, allow_pickle=False) as data:
+        return {key: data[key] for key in data.files}
+
+
+def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not rows:
+        path.write_text("", encoding="utf-8")
+        return
+    columns: list[str] = []
+    for row in rows:
+        for key in row:
+            if key not in columns:
+                columns.append(key)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with temporary.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+    temporary.replace(path)
+
+
+def _save_figure(fig: plt.Figure, base: Path) -> None:
+    base.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(base.with_suffix(".png"), dpi=300, bbox_inches="tight")
+    fig.savefig(base.with_suffix(".pdf"), bbox_inches="tight")
+    plt.close(fig)
+
+
+def _bootstrap_indices(samples: int, seed: int, replicates: int = BOOTSTRAP_REPLICATES) -> np.ndarray:
+    return np.random.default_rng(seed).integers(0, samples, size=(replicates, samples))
+
+
+def load_quantum_curves(output: Path, fields, theta, samples: int, seed: int) -> dict[float, np.ndarray]:
+    result = {}
+    for field in fields:
+        values = np.empty((samples, len(theta)), dtype=float)
+        for angle_index, angle in enumerate(theta):
+            for sample_id in range(samples):
+                task = quantum_task(float(field), float(angle), sample_id, samples, seed)
+                values[sample_id, angle_index] = float(_load(cell_path(output, task))["yield"])
+        result[float(field)] = values
+    return result
+
+
+def analyze_figure2(output: Path, samples: int, seed: int) -> tuple[dict[float, np.ndarray], list[dict[str, object]]]:
+    theta = np.asarray(POSTER_THETA_DEG)
+    curves = load_quantum_curves(output, POSTER_FIELDS_MT, theta, samples, seed)
+    rows: list[dict[str, object]] = []
+    metrics_rows: list[dict[str, object]] = []
+    colors = plt.cm.viridis(np.linspace(0.02, 0.98, len(POSTER_FIELDS_MT)))
+    fig, axis = plt.subplots(figsize=(8.7, 5.6))
+    for color, field in zip(colors, POSTER_FIELDS_MT):
+        values = curves[field]
+        mean, se, low, high = mean_se_ci(values)
+        for index, angle in enumerate(theta):
+            rows.append(
+                {
+                    "field_mT": field,
+                    "theta_deg": angle,
+                    "samples": samples,
+                    "mean_yield": mean[index],
+                    "standard_error": se[index],
+                    "ci95_low": low[index],
+                    "ci95_high": high[index],
+                    "quadrupole_scale": PRODUCTION_MODEL.quadrupole_scale,
+                }
+            )
+        axis.plot(theta, mean, color=color, marker="o", markersize=2.2, linewidth=1.2, label=f"{field:g} mT")
+        axis.fill_between(theta, low, high, color=color, alpha=0.08)
+        derivative = np.gradient(mean, theta, edge_order=2)
+        centers = (theta[int(np.argmin(mean))], theta[int(np.argmax(mean))], theta[int(np.argmax(np.abs(derivative)))])
+        refined_theta = np.array(
+            sorted(
+                set(theta.tolist())
+                | {
+                    float(value)
+                    for center in centers
+                    for value in np.arange(max(0.0, center - 5.0), min(180.0, center + 5.0) + 0.5, 1.0)
+                }
+            )
+        )
+        refined_values = np.empty((samples, refined_theta.size), dtype=float)
+        refinement_complete = True
+        for angle_index, angle in enumerate(refined_theta):
+            coarse_match = np.where(np.isclose(theta, angle))[0]
+            if coarse_match.size:
+                refined_values[:, angle_index] = values[:, coarse_match[0]]
+                continue
+            for sample_id in range(samples):
+                path = cell_path(output, quantum_task(field, float(angle), sample_id, samples, seed))
+                if not path.exists():
+                    refinement_complete = False
+                    break
+                refined_values[sample_id, angle_index] = float(_load(path)["yield"])
+            if not refinement_complete:
+                break
+        metric_theta = refined_theta if refinement_complete else theta
+        metric_values = refined_values if refinement_complete else values
+        point = angular_metrics(metric_theta, np.mean(metric_values, axis=0))
+        boot_ids = _bootstrap_indices(samples, seed ^ int(round(field * 1000)) ^ 0xF2)
+        boot_metrics = [angular_metrics(metric_theta, np.mean(metric_values[ids], axis=0)) for ids in boot_ids]
+        metric_row: dict[str, object] = {
+            "field_mT": field,
+            "samples": samples,
+            "one_degree_refinement_complete": refinement_complete,
+            **point,
+        }
+        for name in ("contrast", "relative_contrast", "maximum_abs_slope_per_deg"):
+            distribution = np.array([item[name] for item in boot_metrics])
+            metric_row[f"{name}_ci95_low"], metric_row[f"{name}_ci95_high"] = np.quantile(distribution, [0.025, 0.975])
+        metrics_rows.append(metric_row)
+    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="singlet yield", title="Poster-style field dependence; current full-state model")
+    axis.legend(ncol=2, fontsize=7, frameon=False)
+    _save_figure(fig, output / "figures" / "figure2_field_dependence")
+
+    fields = np.asarray(POSTER_FIELDS_MT)
+    fig, axes = plt.subplots(3, 1, figsize=(7.4, 8.0), sharex=True)
+    for axis, key, ylabel in zip(
+        axes,
+        ("contrast", "relative_contrast", "maximum_abs_slope_per_deg"),
+        ("absolute contrast", "relative contrast", "maximum |slope| per degree"),
+    ):
+        values = np.array([row[key] for row in metrics_rows])
+        low = np.array([row[f"{key}_ci95_low"] for row in metrics_rows])
+        high = np.array([row[f"{key}_ci95_high"] for row in metrics_rows])
+        axis.errorbar(fields, values, yerr=np.vstack([values - low, high - values]), marker="o", capsize=2)
+        axis.set_xscale("log")
+        axis.set_ylabel(ylabel)
+    axes[-1].set_xlabel("field strength (mT)")
+    fig.suptitle("Directional-response metrics")
+    _save_figure(fig, output / "figures" / "figure2b_contrast_vs_field")
+
+    matrix = np.array([np.mean(curves[field], axis=0) for field in POSTER_FIELDS_MT])
+    fig, axis = plt.subplots(figsize=(8.0, 4.8))
+    mesh = axis.pcolormesh(theta, fields, matrix - matrix.mean(axis=1, keepdims=True), shading="nearest", cmap="coolwarm")
+    axis.set_yscale("log")
+    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="field strength (mT)", title="Mean-subtracted directional singlet yield")
+    fig.colorbar(mesh, ax=axis, label="yield minus angular mean")
+    _save_figure(fig, output / "figures" / "figure2c_field_angle_heatmap")
+    _write_csv(output / "field_dependence.csv", rows)
+    _write_csv(output / "field_metrics.csv", metrics_rows)
+    return curves, metrics_rows
+
+
+def _correlation(left: np.ndarray, right: np.ndarray) -> float:
+    if np.std(left) < 1e-12 or np.std(right) < 1e-12:
+        return math.nan
+    return float(np.corrcoef(left, right)[0, 1])
+
+
+def analyze_figure3(
+    output: Path,
+    quantum_curves: dict[float, np.ndarray],
+    samples: int,
+    overhauser_samples: int,
+    seed: int,
+) -> list[dict[str, object]]:
+    theta = np.asarray(POSTER_THETA_DEG)
+    curve_rows: list[dict[str, object]] = []
+    metric_rows: list[dict[str, object]] = []
+    dynamics_rows: list[dict[str, object]] = []
+    fig, axes = plt.subplots(1, 3, figsize=(13.0, 4.1), sharey=True)
+    error_field: list[float] = []
+    error_rmse: list[float] = []
+    contrast_ratio: list[float] = []
+    for field in POSTER_FIELDS_MT:
+        quantum = quantum_curves[field]
+        q_mean, q_se, q_low, q_high = mean_se_ci(quantum)
+        oh = np.empty((overhauser_samples, len(theta)))
+        atomwise = np.empty_like(oh)
+        for index, angle in enumerate(theta):
+            task = overhauser_task(field, float(angle), overhauser_samples, samples, seed)
+            cell = _load(cell_path(output, task))
+            oh[:, index] = cell["sample_yields"]
+            atomwise[:, index] = cell["atomwise_sample_yields"]
+        o_mean, o_se, o_low, o_high = mean_se_ci(oh)
+        a_mean, a_se, a_low, a_high = mean_se_ci(atomwise)
+        for model_name, mean, se, low, high, n in (
+            ("full_quantum", q_mean, q_se, q_low, q_high, samples),
+            ("gaussian_static_overhauser", o_mean, o_se, o_low, o_high, overhauser_samples),
+            ("atomwise_static_spin", a_mean, a_se, a_low, a_high, overhauser_samples),
+        ):
+            for index, angle in enumerate(theta):
+                curve_rows.append({"field_mT": field, "theta_deg": angle, "model": model_name, "samples": n, "mean_yield": mean[index], "standard_error": se[index], "ci95_low": low[index], "ci95_high": high[index]})
+        difference = q_mean - o_mean
+        q_metric = angular_metrics(theta, q_mean)
+        o_metric = angular_metrics(theta, o_mean)
+        row = {
+            "field_mT": field,
+            "rmse_theta": float(np.sqrt(np.mean(difference**2))),
+            "max_abs_error": float(np.max(np.abs(difference))),
+            "mean_yield_bias_OH_minus_Q": float(np.mean(o_mean - q_mean)),
+            "pearson_shape_correlation": _correlation(q_mean, o_mean),
+            "quantum_contrast": q_metric["contrast"],
+            "overhauser_contrast": o_metric["contrast"],
+            "contrast_ratio_OH_over_Q": o_metric["contrast"] / q_metric["contrast"] if q_metric["contrast"] > 0 else math.nan,
+            "minimum_orientation_difference_deg": o_metric["theta_minimum_deg"] - q_metric["theta_minimum_deg"],
+            "maximum_orientation_difference_deg": o_metric["theta_maximum_deg"] - q_metric["theta_maximum_deg"],
+            "quantum_samples": samples,
+            "overhauser_samples": overhauser_samples,
+        }
+        rng = np.random.default_rng(seed ^ int(round(field * 1000.0)) ^ 0xF311)
+        bootstrap_values = {key: [] for key in (
+            "rmse_theta",
+            "max_abs_error",
+            "mean_yield_bias_OH_minus_Q",
+            "quantum_contrast",
+            "overhauser_contrast",
+            "contrast_ratio_OH_over_Q",
+        )}
+        for _ in range(BOOTSTRAP_REPLICATES):
+            q_ids = rng.integers(0, samples, size=samples)
+            o_ids = rng.integers(0, overhauser_samples, size=overhauser_samples)
+            q_curve = np.mean(quantum[q_ids], axis=0)
+            o_curve = np.mean(oh[o_ids], axis=0)
+            q_boot_metric = angular_metrics(theta, q_curve)
+            o_boot_metric = angular_metrics(theta, o_curve)
+            delta = q_curve - o_curve
+            bootstrap_values["rmse_theta"].append(float(np.sqrt(np.mean(delta**2))))
+            bootstrap_values["max_abs_error"].append(float(np.max(np.abs(delta))))
+            bootstrap_values["mean_yield_bias_OH_minus_Q"].append(float(np.mean(o_curve - q_curve)))
+            bootstrap_values["quantum_contrast"].append(q_boot_metric["contrast"])
+            bootstrap_values["overhauser_contrast"].append(o_boot_metric["contrast"])
+            bootstrap_values["contrast_ratio_OH_over_Q"].append(
+                o_boot_metric["contrast"] / q_boot_metric["contrast"]
+                if q_boot_metric["contrast"] > 0.0
+                else math.nan
+            )
+        for name, distribution in bootstrap_values.items():
+            row[f"{name}_ci95_low"], row[f"{name}_ci95_high"] = np.nanquantile(distribution, [0.025, 0.975])
+        metric_rows.append(row)
+        error_field.append(field)
+        error_rmse.append(row["rmse_theta"])
+        contrast_ratio.append(row["contrast_ratio_OH_over_Q"])
+        if field in OVERHAUSER_FIELDS_MT:
+            panel = OVERHAUSER_FIELDS_MT.index(field)
+            axis = axes[panel]
+            axis.plot(theta, q_mean, color="black", label="full quantum")
+            axis.fill_between(theta, q_low, q_high, color="black", alpha=0.15)
+            axis.plot(theta, o_mean, color="#d95f02", label="Gaussian static")
+            axis.fill_between(theta, o_low, o_high, color="#d95f02", alpha=0.15)
+            axis.plot(theta, a_mean, color="#1b9e77", linestyle="--", label="atomwise static")
+            axis.set_title(f"{field:g} mT")
+            axis.set_xlabel("angle (deg)")
+            if panel == 0:
+                axis.set_ylabel("singlet yield")
+        representative = (
+            sorted({0.0, 90.0, 180.0, q_metric["theta_minimum_deg"], q_metric["theta_maximum_deg"]})
+            if field in OVERHAUSER_FIELDS_MT
+            else []
+        )
+        for angle in representative:
+            angle_index = int(np.where(np.isclose(theta, angle))[0][0])
+            q_pop = []
+            for sample_id in range(samples):
+                cell = _load(cell_path(output, quantum_task(field, angle, sample_id, samples, seed)))
+                q_pop.append(cell["singlet_population"])
+            q_pop_mean_full = np.mean(q_pop, axis=0)
+            oh_task_value = overhauser_task(field, angle, overhauser_samples, samples, seed)
+            cell = _load(cell_path(output, oh_task_value))
+            if cell["singlet_population_samples"].size:
+                times = cell["times_us"]
+                oh_pop_mean = np.mean(cell["singlet_population_samples"], axis=0)
+            else:
+                times = np.linspace(0.0, PRODUCTION_MODEL.sweep_config.maximum_time_us, 1001)
+                accum = np.zeros_like(times)
+                for sample_id in range(overhauser_samples):
+                    _, pop = overhauser_yield(
+                        angle,
+                        field,
+                        overhauser_sample_mhz(seed, sample_id),
+                        return_dynamics=True,
+                        dynamics_times_us=times,
+                    )
+                    assert pop is not None
+                    accum += pop
+                oh_pop_mean = accum / overhauser_samples
+            q_times = PRODUCTION_MODEL.sweep_config.time_grid_us
+            q_pop_mean = np.interp(times, q_times, q_pop_mean_full)
+            rmse_t = float(np.sqrt(np.mean((q_pop_mean - oh_pop_mean) ** 2)))
+            iae = float(scipy.integrate.simpson(np.abs(q_pop_mean - oh_pop_mean), x=times))
+            for time_value, q_value, o_value in zip(times, q_pop_mean, oh_pop_mean):
+                dynamics_rows.append({"field_mT": field, "theta_deg": angle, "time_us": time_value, "quantum_mean_Ps": q_value, "overhauser_mean_Ps": o_value, "time_domain_rmse": rmse_t, "integrated_absolute_error": iae})
+    axes[0].legend(frameon=False, fontsize=8)
+    fig.suptitle("Full quantum vs covariance-matched static Overhauser")
+    _save_figure(fig, output / "figures" / "figure3_overhauser_comparison")
+    fig, left = plt.subplots(figsize=(7.2, 4.5))
+    right = left.twinx()
+    left.plot(error_field, error_rmse, marker="o", color="#7570b3", label="angular RMSE")
+    right.plot(error_field, contrast_ratio, marker="s", color="#e7298a", label="contrast ratio")
+    left.set_xscale("log")
+    left.set(xlabel="field strength (mT)", ylabel="angular RMSE")
+    right.set_ylabel("Overhauser / quantum contrast")
+    left.set_title("Static-Overhauser approximation error")
+    _save_figure(fig, output / "figures" / "figure3b_overhauser_error_vs_field")
+    fig, axes = plt.subplots(3, 3, figsize=(12.0, 8.4), sharex=True, sharey=True)
+    for row_axis, field in zip(axes, OVERHAUSER_FIELDS_MT):
+        selected = [row for row in dynamics_rows if row["field_mT"] == field and row["theta_deg"] in (0.0, 90.0, 180.0)]
+        for axis, angle in zip(row_axis, (0.0, 90.0, 180.0)):
+            rows = [row for row in selected if row["theta_deg"] == angle]
+            axis.plot([row["time_us"] for row in rows], [row["quantum_mean_Ps"] for row in rows], color="black")
+            axis.plot([row["time_us"] for row in rows], [row["overhauser_mean_Ps"] for row in rows], color="#d95f02")
+            axis.set_title(f"{field:g} mT, {angle:g} deg")
+    fig.supxlabel("time (us)")
+    fig.supylabel("singlet population")
+    _save_figure(fig, output / "figures" / "figure3c_overhauser_dynamics")
+    _write_csv(output / "overhauser_curves.csv", curve_rows)
+    _write_csv(output / "overhauser_metrics.csv", metric_rows)
+    _write_csv(output / "overhauser_dynamics.csv", dynamics_rows)
+    return metric_rows
+
+
+def _fit_models(x: np.ndarray, y: np.ndarray) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    design = np.column_stack([np.ones_like(x), x])
+    coefficients, *_ = np.linalg.lstsq(design, y, rcond=None)
+    predicted = design @ coefficients
+    rss = float(np.sum((y - predicted) ** 2))
+    rows.append({"model": "linear", "intercept": coefficients[0], "slope": coefficients[1], "rss": rss, "aic": len(x) * math.log(max(rss / len(x), 1e-30)) + 4})
+    def power(value, a, b, c):
+        return a + b * value**c
+    try:
+        parameters, _ = scipy.optimize.curve_fit(power, x, y, p0=(0.0, 0.2, 0.8), maxfev=20000)
+        residual = y - power(x, *parameters)
+        rss = float(np.sum(residual**2))
+        rows.append({"model": "power", "a": parameters[0], "b": parameters[1], "exponent": parameters[2], "rss": rss, "aic": len(x) * math.log(max(rss / len(x), 1e-30)) + 6})
+    except (RuntimeError, ValueError):
+        rows.append({"model": "power", "a": math.nan, "b": math.nan, "exponent": math.nan, "rss": math.inf, "aic": math.inf})
+    return rows
+
+
+def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, object]]:
+    scaling_rows: list[dict[str, object]] = []
+    electron_rows: list[dict[str, object]] = []
+    initial_rows: list[dict[str, object]] = []
+    radical_means = []
+    en_means = []
+    physical_maxima = []
+    time_by_count = {}
+    electron_curve_by_count = {}
+    radical_samples_by_count = {}
+    en_samples_by_count = {}
+    for count in ENTANGLEMENT_NUCLEAR_COUNTS:
+        radical_sample = []
+        en_sample = []
+        rho_samples = []
+        times = None
+        for sample_id in range(samples):
+            cell = _load(cell_path(output, entanglement_task(count, sample_id, samples, seed)))
+            times = cell["times_us"]
+            radical_sample.append(scipy.integrate.simpson(cell["radical_log_negativity"], x=times) / (times[-1] - times[0]))
+            en_sample.append(scipy.integrate.simpson(cell["electron_nuclear_log_negativity"], x=times) / (times[-1] - times[0]))
+            rho_samples.append(cell["electron_density_real"] + 1.0j * cell["electron_density_imag"])
+            initial_rows.append({"nuclear_count": count, "sample_id": sample_id, "radical_initial": float(cell["initial_radical_log_negativity"]), "electron_nuclear_initial": float(cell["initial_electron_nuclear_log_negativity"]), "radical_generated_time_average": radical_sample[-1] - float(cell["initial_radical_log_negativity"]), "electron_nuclear_generated_time_average": en_sample[-1]})
+        assert times is not None
+        radical_sample = np.asarray(radical_sample)
+        en_sample = np.asarray(en_sample)
+        radical_samples_by_count[count] = radical_sample
+        en_samples_by_count[count] = en_sample
+        rho_mean = np.mean(rho_samples, axis=0)
+        electron_curve = np.array([mixed_two_electron_log_negativity(rho) for rho in rho_mean])
+        electron_average = float(scipy.integrate.simpson(electron_curve, x=times) / (times[-1] - times[0]))
+        time_by_count[count] = times
+        electron_curve_by_count[count] = electron_curve
+        per = count // 2
+        dim_fad = 2 * math.prod(n.dimension for n in FAD_NUCLEI[:per])
+        dim_trp = 2 * math.prod(n.dimension for n in TRP_NUCLEI[:per])
+        physical_maximum = math.log2(min(dim_fad, dim_trp))
+        physical_maxima.append(physical_maximum)
+        radical_mean, radical_se, radical_low, radical_high = mean_se_ci(radical_sample[:, None])
+        en_mean, en_se, en_low, en_high = mean_se_ci(en_sample[:, None])
+        radical_means.append(float(radical_mean[0]))
+        en_means.append(float(en_mean[0]))
+        for cut, values, mean, se, low, high in (
+            ("radical_partition", radical_sample, radical_mean, radical_se, radical_low, radical_high),
+            ("electron_nuclear_trajectory_proxy", en_sample, en_mean, en_se, en_low, en_high),
+        ):
+            scaling_rows.append({"nuclear_count": count, "cut": cut, "samples": samples, "mean_time_averaged_log_negativity": mean[0], "standard_error": se[0], "ci95_low": low[0], "ci95_high": high[0], "physical_maximum": physical_maximum if cut == "radical_partition" else 2.0, "label": "Mean pure-trajectory log negativity for a product-state decomposition of the nuclear mixture"})
+        for t, value in zip(times, electron_curve):
+            electron_rows.append({"nuclear_count": count, "time_us": t, "ensemble_averaged_two_electron_log_negativity": value, "time_average": electron_average, "samples": samples})
+    fit_rows = _fit_models(np.asarray(ENTANGLEMENT_NUCLEAR_COUNTS, dtype=float), np.asarray(radical_means))
+    def saturation(value, a, n0):
+        return 2.0 - a * np.exp(-value / n0)
+    try:
+        parameters, _ = scipy.optimize.curve_fit(saturation, ENTANGLEMENT_NUCLEAR_COUNTS, en_means, p0=(2.0, 5.0), bounds=([0.0, 0.01], [10.0, 100.0]))
+        fit_rows.append({"model": "bounded_saturation_electron_nuclear", "a": parameters[0], "N0": parameters[1]})
+    except (RuntimeError, ValueError):
+        fit_rows.append({"model": "bounded_saturation_electron_nuclear", "a": math.nan, "N0": math.nan})
+    selected_radical = min((row for row in fit_rows if row["model"] in ("linear", "power")), key=lambda row: row["aic"])
+    selected_radical["selected_by"] = "minimum_AIC"
+    counts = np.asarray(ENTANGLEMENT_NUCLEAR_COUNTS, dtype=float)
+    extrapolated = np.arange(16.0, 27.0, 2.0)
+    bootstrap_ids = _bootstrap_indices(samples, seed ^ 0xF417)
+    radical_predictions = []
+    en_predictions = []
+    for ids in bootstrap_ids:
+        radical_boot = np.array([np.mean(radical_samples_by_count[count][ids]) for count in ENTANGLEMENT_NUCLEAR_COUNTS])
+        if selected_radical["model"] == "linear":
+            coefficients, *_ = np.linalg.lstsq(np.column_stack([np.ones_like(counts), counts]), radical_boot, rcond=None)
+            radical_predictions.append(coefficients[0] + coefficients[1] * extrapolated)
+        else:
+            def power(value, a, b, c):
+                return a + b * value**c
+            try:
+                parameters, _ = scipy.optimize.curve_fit(power, counts, radical_boot, p0=(0.0, 0.2, 0.8), maxfev=5000)
+                radical_predictions.append(power(extrapolated, *parameters))
+            except (RuntimeError, ValueError):
+                pass
+        en_boot = np.array([np.mean(en_samples_by_count[count][ids]) for count in ENTANGLEMENT_NUCLEAR_COUNTS])
+        try:
+            parameters, _ = scipy.optimize.curve_fit(saturation, counts, en_boot, p0=(2.0, 5.0), bounds=([0.0, 0.01], [10.0, 100.0]), maxfev=5000)
+            en_predictions.append(saturation(extrapolated, *parameters))
+        except (RuntimeError, ValueError):
+            pass
+    radical_prediction_low, radical_prediction_high = np.quantile(radical_predictions, [0.025, 0.975], axis=0)
+    en_prediction_low, en_prediction_high = np.quantile(en_predictions, [0.025, 0.975], axis=0)
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6))
+    axes[0].plot(counts, radical_means, marker="o", label="explicit mean")
+    axes[0].plot(counts, physical_maxima, linestyle="--", label="physical maximum")
+    if selected_radical["model"] == "linear":
+        prediction = selected_radical["intercept"] + selected_radical["slope"] * extrapolated
+    else:
+        prediction = selected_radical["a"] + selected_radical["b"] * extrapolated ** selected_radical["exponent"]
+    axes[0].plot(extrapolated, prediction, marker="x", linestyle=":", label="phenomenological prediction")
+    axes[0].fill_between(extrapolated, radical_prediction_low, radical_prediction_high, alpha=0.18, label="bootstrap 95% prediction band")
+    axes[0].set(xlabel="nuclear count", ylabel="time-averaged log negativity", title="radical partition")
+    axes[1].plot(counts, en_means, marker="o", label="trajectory proxy")
+    bounded = next(row for row in fit_rows if row["model"] == "bounded_saturation_electron_nuclear")
+    if np.isfinite(bounded["a"]):
+        bounded_prediction = saturation(extrapolated, bounded["a"], bounded["N0"])
+        axes[1].plot(extrapolated, bounded_prediction, marker="x", linestyle=":", label="bounded phenomenological prediction")
+        axes[1].fill_between(extrapolated, en_prediction_low, en_prediction_high, alpha=0.18, label="bootstrap 95% prediction band")
+    axes[1].axhline(2.0, linestyle="--", color="gray", label="physical maximum")
+    axes[1].set(xlabel="nuclear count", title="electron--nuclear trajectory proxy")
+    for axis in axes:
+        axis.legend(frameon=False, fontsize=8)
+    _save_figure(fig, output / "figures" / "figure4_entanglement_scaling")
+    fig, axis = plt.subplots(figsize=(7.4, 4.8))
+    for count in ENTANGLEMENT_NUCLEAR_COUNTS:
+        axis.plot(time_by_count[count], electron_curve_by_count[count], label=f"N={count}")
+    axis.set(xlabel="time (us)", ylabel="two-electron log negativity", title="Ensemble-averaged physical electron entanglement")
+    axis.legend(frameon=False, ncol=2)
+    _save_figure(fig, output / "figures" / "figure4b_two_electron_entanglement")
+    fig, axes = plt.subplots(1, 2, figsize=(10.0, 4.2))
+    for axis, key, expected, title in (
+        (axes[0], "radical_initial", 1.0, "radical cut"),
+        (axes[1], "electron_nuclear_initial", 0.0, "electron--nuclear cut"),
+    ):
+        for count in ENTANGLEMENT_NUCLEAR_COUNTS:
+            values = [row[key] for row in initial_rows if row["nuclear_count"] == count]
+            axis.scatter([count] * len(values), values, s=10)
+        axis.axhline(expected, color="black", linestyle="--")
+        axis.set(xlabel="nuclear count", ylabel="initial log negativity", title=title)
+    _save_figure(fig, output / "figures" / "figure4c_initial_state_check")
+    for index, count in enumerate(extrapolated):
+        fit_rows.append({
+            "model": f"{selected_radical['model']}_radical_prediction",
+            "nuclear_count": count,
+            "prediction": prediction[index],
+            "prediction_ci95_low": radical_prediction_low[index],
+            "prediction_ci95_high": radical_prediction_high[index],
+            "label": "phenomenological prediction",
+        })
+        if np.isfinite(bounded["a"]):
+            fit_rows.append({
+                "model": "bounded_saturation_electron_nuclear_prediction",
+                "nuclear_count": count,
+                "prediction": bounded_prediction[index],
+                "prediction_ci95_low": en_prediction_low[index],
+                "prediction_ci95_high": en_prediction_high[index],
+                "label": "phenomenological prediction",
+            })
+    _write_csv(output / "entanglement_scaling.csv", scaling_rows)
+    _write_csv(output / "entanglement_fit_parameters.csv", fit_rows)
+    _write_csv(output / "two_electron_entanglement.csv", electron_rows)
+    _write_csv(output / "entanglement_initial_state_check.csv", initial_rows)
+    return scaling_rows
+
+
+def _n10_metrics(theta: np.ndarray, curve: np.ndarray) -> dict[str, float]:
+    metrics = angular_metrics(theta, curve)
+    derivative = np.gradient(curve, theta, edge_order=2)
+    curvature = np.gradient(derivative, theta, edge_order=2)
+    center = int(np.argmin(np.abs(theta - 90.0)))
+    metrics["curvature_at_90_per_deg2"] = float(curvature[center])
+    return metrics
+
+
+def analyze_figure5(output: Path, samples: int, seed: int) -> list[dict[str, object]]:
+    theta = np.asarray(N10_THETA_DEG)
+    curves = {}
+    rows: list[dict[str, object]] = []
+    metrics_rows: list[dict[str, object]] = []
+    dynamics_rows: list[dict[str, object]] = []
+    common_boot_ids = _bootstrap_indices(samples, seed ^ 0xF510)
+    bootstrap_metrics_by_protocol = {}
+    for protocol in PROTOCOLS:
+        values = np.empty((samples, len(theta)))
+        standard = np.empty_like(values)
+        for angle_index, angle in enumerate(theta):
+            for sample_id in range(samples):
+                cell = _load(cell_path(output, n10_task(float(angle), protocol, sample_id, samples, seed)))
+                values[sample_id, angle_index] = cell["conditional_normalized_yield"]
+                standard[sample_id, angle_index] = cell["standard_truncated_yield"]
+        curves[protocol] = values
+        mean, se, low, high = mean_se_ci(values)
+        standard_mean = np.mean(standard, axis=0)
+        for index, angle in enumerate(theta):
+            rows.append({"protocol": protocol, "theta_deg": angle, "samples": samples, "conditional_mean_yield": mean[index], "standard_mean_yield": standard_mean[index], "standard_error": se[index], "ci95_low": low[index], "ci95_high": high[index]})
+        point = _n10_metrics(theta, mean)
+        distributions = [_n10_metrics(theta, np.mean(values[ids], axis=0)) for ids in common_boot_ids]
+        bootstrap_metrics_by_protocol[protocol] = distributions
+        row = {"protocol": protocol, "samples": samples, **point}
+        for key in ("contrast", "maximum_abs_slope_per_deg", "curvature_at_90_per_deg2"):
+            row[f"{key}_ci95_low"], row[f"{key}_ci95_high"] = np.quantile([item[key] for item in distributions], [0.025, 0.975])
+        metrics_rows.append(row)
+    baseline = next(row for row in metrics_rows if row["protocol"] == "baseline")
+    deleted_mean = np.mean(curves["n10_transverse_deleted"], axis=0)
+    for row in metrics_rows:
+        protocol = row["protocol"]
+        row["absolute_slope_reduction_from_baseline"] = baseline["maximum_abs_slope_per_deg"] - row["maximum_abs_slope_per_deg"]
+        row["percentage_slope_reduction_from_baseline"] = 100.0 * row["absolute_slope_reduction_from_baseline"] / baseline["maximum_abs_slope_per_deg"]
+        row["L2_distance_from_transverse_deleted"] = float(np.sqrt(np.mean((np.mean(curves[protocol], axis=0) - deleted_mean) ** 2)))
+        slope_reductions = []
+        percentage_reductions = []
+        l2_distances = []
+        for boot_index, ids in enumerate(common_boot_ids):
+            baseline_slope = bootstrap_metrics_by_protocol["baseline"][boot_index]["maximum_abs_slope_per_deg"]
+            protocol_slope = bootstrap_metrics_by_protocol[protocol][boot_index]["maximum_abs_slope_per_deg"]
+            reduction = baseline_slope - protocol_slope
+            slope_reductions.append(reduction)
+            percentage_reductions.append(100.0 * reduction / baseline_slope)
+            protocol_curve = np.mean(curves[protocol][ids], axis=0)
+            deleted_curve = np.mean(curves["n10_transverse_deleted"][ids], axis=0)
+            l2_distances.append(float(np.sqrt(np.mean((protocol_curve - deleted_curve) ** 2))))
+        for name, distribution in (
+            ("absolute_slope_reduction_from_baseline", slope_reductions),
+            ("percentage_slope_reduction_from_baseline", percentage_reductions),
+            ("L2_distance_from_transverse_deleted", l2_distances),
+        ):
+            row[f"{name}_ci95_low"], row[f"{name}_ci95_high"] = np.quantile(distribution, [0.025, 0.975])
+    fig, axis = plt.subplots(figsize=(8.0, 5.0))
+    for protocol in PROTOCOLS:
+        mean, _, low, high = mean_se_ci(curves[protocol])
+        axis.plot(theta, mean, label=PROTOCOL_LABELS[protocol])
+        axis.fill_between(theta, low, high, alpha=0.12)
+    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="conditionally normalized truncated singlet yield", title="FAD-N10 control near 90 degrees")
+    axis.legend(frameon=False, fontsize=8)
+    _save_figure(fig, output / "figures" / "figure5_n10_control")
+    fig, axis = plt.subplots(figsize=(8.0, 5.0))
+    for protocol in PROTOCOLS:
+        mean = np.mean(curves[protocol], axis=0)
+        axis.plot(theta, np.gradient(mean, theta, edge_order=2), label=PROTOCOL_LABELS[protocol])
+    axis.set(xlabel="angle (deg)", ylabel="d yield / d angle", title="N10-control angular derivatives")
+    axis.legend(frameon=False, fontsize=8)
+    _save_figure(fig, output / "figures" / "figure5b_n10_slope")
+    fig, axes = plt.subplots(1, 3, figsize=(12.0, 3.8), sharey=True)
+    for axis, angle in zip(axes, (89.0, 90.0, 91.0)):
+        for protocol in PROTOCOLS:
+            populations = []
+            times = None
+            for sample_id in range(samples):
+                cell = _load(cell_path(output, n10_task(angle, protocol, sample_id, samples, seed)))
+                times = cell["times_us"]
+                populations.append(cell["singlet_population"])
+            mean = np.mean(populations, axis=0)
+            axis.plot(times, mean, label=PROTOCOL_LABELS[protocol])
+            for time_value, population in zip(times, mean):
+                dynamics_rows.append({"protocol": protocol, "theta_deg": angle, "time_us": time_value, "mean_singlet_population": population, "samples": samples})
+        axis.set_title(f"{angle:g} deg")
+        axis.set_xlabel("time (us)")
+    axes[0].set_ylabel("singlet population")
+    axes[0].legend(frameon=False, fontsize=7)
+    _save_figure(fig, output / "figures" / "figure5c_n10_dynamics")
+    _write_csv(output / "n10_control_curves.csv", rows)
+    _write_csv(output / "n10_control_metrics.csv", metrics_rows)
+    _write_csv(output / "n10_control_dynamics.csv", dynamics_rows)
+    return metrics_rows
+
+
+def sample_convergence(output: Path, fields: dict[float, np.ndarray]) -> None:
+    rows = []
+    for field, values in fields.items():
+        for count in (4, 8, 16):
+            if count > values.shape[0]:
+                continue
+            _, se, low, high = mean_se_ci(values[:count])
+            rows.append({"field_mT": field, "samples": count, "maximum_standard_error": float(np.nanmax(se)), "maximum_ci95_half_width": float(np.nanmax((high - low) / 2.0))})
+    _write_csv(output / "sample_convergence.csv", rows)
+
+
+def _conclusion_from_metrics(field_metrics, overhauser_metrics, n10_metrics) -> str:
+    geomagnetic = next(row for row in field_metrics if np.isclose(row["field_mT"], 0.05))
+    two_mt = next(row for row in field_metrics if np.isclose(row["field_mT"], 2.0))
+    survived_field = two_mt["relative_contrast"] > geomagnetic["relative_contrast"]
+    oh_50 = next(row for row in overhauser_metrics if np.isclose(row["field_mT"], 0.05))
+    oh_20 = next(row for row in overhauser_metrics if np.isclose(row["field_mT"], 20.0))
+    overhauser_improves = oh_20["rmse_theta"] < oh_50["rmse_theta"]
+    baseline = next(row for row in n10_metrics if row["protocol"] == "baseline")
+    p005 = next(row for row in n10_metrics if row["protocol"] == "periodic_0.05")
+    pulse_flattens = p005["maximum_abs_slope_per_deg"] < baseline["maximum_abs_slope_per_deg"]
+    return (
+        f"- Field-transition observation survived: **{survived_field}**.\n"
+        f"- Static-Overhauser error decreased from 0.05 to 20 mT: **{overhauser_improves}**.\n"
+        f"- The 0.05-us periodic N10 sequence reduced the local maximum slope: **{pulse_flattens}**.\n"
+    )
+
+
+def write_summary(output: Path, samples: int, field_metrics, overhauser_metrics, entanglement_rows, n10_metrics) -> None:
+    run = json.loads((output / "run_manifest.json").read_text(encoding="utf-8"))
+    text = f"""# Poster-style rerun with the current production model
+
+This is not an exact reproduction of the APS poster.  It uses the current
+nonfactorized 14-nucleus state-vector Hamiltonian, Efimova--Hore D/J=-3 electron
+coupling at r=2 nm, random-phase trace sampling, adaptive Krylov propagation,
+and Simpson-corrected yield integration.
+
+## Validation and sampling
+
+- Nuclear samples per quantum curve: **{samples}**.
+- Master seed: **{run['seed']}** with paired sample IDs across conditions.
+- Quadrupole scale: **0** (machinery retained but disabled in the validated model).
+- Completed cells: **{run.get('completed_cells', 'unknown')} / {run.get('total_cells', 'unknown')}**.
+- Latest recorded invocation runtime: **{run.get('elapsed_seconds_this_invocation', math.nan) / 3600.0:.2f} h**.
+- Uncertainty is across nuclear sample IDs; nonlinear metrics bootstrap complete
+  paired sample curves rather than treating angles as replicates.
+
+## Poster-conclusion checks
+
+{_conclusion_from_metrics(field_metrics, overhauser_metrics, n10_metrics)}
+
+## Interpretation limits
+
+The Figure 4 pure-trajectory values are decomposition-dependent entanglement-
+generation proxies from a computational-basis product-state decomposition of
+the nuclear mixture.  They are not the log negativity of the mixed nuclear
+ensemble.  The separately reported two-electron curve averages reduced density
+matrices before evaluating log negativity and is a genuine mixed-state measure.
+
+Any change from the old poster combines two deliberate changes: reliable
+multi-sample trace estimation and the added D/J electron interaction.  This run
+does not isolate those effects by parameter tuning; the D=J=0 legacy one-sample
+check is interpretation-only and the current-model curves remain primary.
+
+All requested CSV files and 300-dpi PNG/vector-PDF figures are in this directory.
+"""
+    (output / "summary.md").write_text(text, encoding="utf-8")
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--samples", type=int, default=PRODUCTION_MODEL.samples)
+    parser.add_argument("--overhauser-samples", type=int, default=4096)
+    parser.add_argument("--seed", type=int, default=MASTER_SEED)
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    quantum, field_metrics = analyze_figure2(args.output_dir, args.samples, args.seed)
+    sample_convergence(args.output_dir, quantum)
+    overhauser_metrics = analyze_figure3(args.output_dir, quantum, args.samples, args.overhauser_samples, args.seed)
+    entanglement_rows = analyze_figure4(args.output_dir, args.samples, args.seed)
+    n10_metrics = analyze_figure5(args.output_dir, args.samples, args.seed)
+    write_summary(args.output_dir, args.samples, field_metrics, overhauser_metrics, entanglement_rows, n10_metrics)
+
+
+if __name__ == "__main__":
+    main()

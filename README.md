@@ -141,6 +141,51 @@ mixed-spin local-term and adaptive Lanczos implementation is in
 python -m unittest discover -s "Realistic system size/code/tests" -v
 ```
 
+### Quadrupole-free dipole/exchange sweeps
+
+The current validation uses the same complete 14-nucleus state, fixes
+`quadrupole_scale=0`, and never uses radical-factorized propagation. New runs
+use the literal Efimova-Hore operators and report `D_paper/J`, whose exact
+crossing centers are -3 and 6. The complete guarded sweep is:
+
+```bash
+python "Realistic system size/code/rpm_quantum_needle_jd_sweeps.py" --stage benchmark
+python "Realistic system size/code/rpm_quantum_needle_jd_sweeps.py" --stage efimova-hore-24h --workers 32 --max-wall-hours 23.5 --resume
+```
+
+The job checkpoints every completed condition/angle/sample cell, but it does
+not automatically relaunch beyond its 23.5-hour hard guard. It screens around
+`D/J=-3,6`, confirms selected points at M=4, refines them on a 15-degree grid,
+and finishes with M=8 contrasts at 0 and 90 degrees. It includes both D=J=0
+and dipole-only controls. The runner uses projected-singlet observation,
+composite Simpson yield integration, and paired random-phase samples. The
+convention is documented in
+`Realistic system size/literature/exchange_dipolar_parameter_policy.md`.
+
+### Exchange-tuned avoided-crossing reconnaissance
+
+`rpm_exchange_avoided_crossing_scan.py` tests exchange as a spectral tuning
+parameter rather than optimizing an analytical dipole-cancellation ratio. Its
+first stage exactly diagonalizes the 108-dimensional
+`[eA,eB,FAD:N5,FAD:N10,TrpH:N1]` needle core, tracks singlet character, and
+ranks finite avoided crossings near 90 degrees. Reduced controls verify that
+removing the complete transverse N5/N10 hyperfine block closes the selected
+avoided gap and that exchange introduces no singlet-triplet coupling.
+
+The selected exchange values are then screened in the complete 14-nucleus
+model at `tau=5 us`, alongside both `D=J=0` and dipole-only controls. The full
+automatic experiment is resumable but has no automatic continuation beyond
+its 23.5-hour wall-time guard:
+
+```bash
+python "Realistic system size/code/rpm_exchange_avoided_crossing_scan.py" \
+  --stage auto --workers 32 --spectral-workers 4 --max-wall-hours 23.5 \
+  --output-dir outputs/exchange_avoided_crossing_scan
+```
+
+The primary scan coordinate is `J` in microtesla. The old `D/J=-3,6`
+cancellation values appear only as reference markers.
+
 It uses the FAD-TrpC hyperfine tensor ordering and geometry from the broadband
 upper-bound/action-spectrum work. The current main production baseline is:
 
@@ -236,3 +281,32 @@ Production pulse-control screen:
 ```powershell
 python "Realistic system size\code\rpm_pulse_control.py" --verify-no-pulse --output-dir "outputs\baseline_16n_full\pulse_control"
 ```
+
+## APS poster rerun with current production physics
+
+The `poster_reproduction` package reruns poster Figures 2--5 with the complete
+14-nucleus, nonfactorized state-vector Hamiltonian.  It freezes the current
+Efimova--Hore `D/J=-3` condition at `r=2 nm`, the 5-us recombination lifetime,
+adaptive Lanczos settings, Simpson yield grid, and the currently validated
+`quadrupole_scale=0`.  Nuclear trace samples are paired across every comparison;
+the entanglement experiment instead uses computational-basis product samples so
+that the bath has no artificial initial entanglement.
+
+On Danny, from the repository root:
+
+```bash
+export PYTHONPATH="Realistic system size/code"
+python -m unittest discover -s "Realistic system size/code/tests" -p "test_poster_reproduction.py" -v
+python -m poster_reproduction.runner --stage smoke --workers 4 --resume
+python -m poster_reproduction.runner --stage pilot --workers 32 --resume
+python -m poster_reproduction.runner --stage production --workers 32 --resume
+python -m poster_reproduction.runner --stage refine --workers 32 --resume
+python -m poster_reproduction.report
+```
+
+Every runner invocation stops starting new cells before the 23.5-hour guard and
+can be resumed without recomputing completed cells.  Use `--shard-index` and
+`--shard-count` to split the deterministic inventory across independent jobs.
+Outputs are written under the ignored
+`outputs/poster_reproduction_multisample/` directory; the PowerPoint poster is
+not modified by this workflow.

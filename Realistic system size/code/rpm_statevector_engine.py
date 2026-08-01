@@ -148,6 +148,48 @@ def two_spin_coupling_operator(
     return operator
 
 
+def efimova_hore_electron_coupling_operator(
+    exchange_J_MHz: float,
+    dipolar_D_MHz: float,
+    dipolar_axis: np.ndarray,
+) -> np.ndarray:
+    """Return the literal Efimova-Hore electron-pair Hamiltonian in MHz.
+
+    Implements Eqs. 9-10 of Efimova and Hore, Biophys. J. 94,
+    1565-1574 (2008):
+
+    ``H_J = -J (S^2 - 1)`` and
+    ``H_D = D ((S.n)^2 - S^2 / 3)``.
+
+    The returned 4x4 operator includes the state-independent exchange shift.
+    Keeping that shift makes the implementation literally match the paper;
+    it changes only the global phase of a propagated state.
+    """
+
+    axis = np.asarray(dipolar_axis, dtype=float)
+    if axis.shape != (3,):
+        raise ValueError("dipolar_axis must be a length-3 vector.")
+    norm = float(np.linalg.norm(axis))
+    if norm == 0.0:
+        raise ValueError("dipolar_axis must be nonzero.")
+    axis = axis / norm
+    single = spin_operators(0.5)
+    identity_2 = np.eye(2, dtype=complex)
+    identity_4 = np.eye(4, dtype=complex)
+    total = tuple(
+        np.kron(operator, identity_2) + np.kron(identity_2, operator)
+        for operator in single
+    )
+    total_squared = sum(operator @ operator for operator in total)
+    along_axis = sum(component * operator for component, operator in zip(axis, total))
+    exchange = -float(exchange_J_MHz) * (total_squared - identity_4)
+    dipolar = float(dipolar_D_MHz) * (
+        along_axis @ along_axis - total_squared / 3.0
+    )
+    result = exchange + dipolar
+    return 0.5 * (result + result.conj().T)
+
+
 def quadrupole_operator(spin: float, tensor: np.ndarray) -> np.ndarray:
     """Return the Hermitian single-spin operator sum_ab Q_ab {I_a,I_b}/2."""
 
@@ -174,13 +216,17 @@ def build_quantum_needle_hamiltonian(
     *,
     exchange_J_MHz: float = 0.0,
     dipolar_tensor_MHz: np.ndarray | None = None,
+    efimova_hore_D_MHz: float | None = None,
+    efimova_hore_axis: np.ndarray | None = None,
     quadrupole_scale: float = 1.0,
 ) -> MatrixFreeHamiltonian:
     """Full radical-pair Hamiltonian, including optional electron couplings.
 
-    The exchange convention matches the existing FAD--Trp model,
-    ``H_ex = -2 J S_A.S_B``.  ``dipolar_tensor_MHz`` is a general 3x3 tensor
-    in the shared molecular frame. ``quadrupole_scale=1`` applies the
+    The legacy exchange convention is ``H_ex = -2 J S_A.S_B`` and
+    ``dipolar_tensor_MHz`` is a general 3x3 tensor in the shared molecular
+    frame. Passing ``efimova_hore_D_MHz`` instead selects the literal
+    Efimova-Hore Eqs. 9-10, with ``efimova_hore_axis`` defining the dipolar
+    axis. ``quadrupole_scale=1`` applies the
     paper-based 14N tensors; zero is reserved for explicitly quadrupole-free
     validation. The Hamiltonian is always represented in the complete pair
     space.
@@ -224,6 +270,28 @@ def build_quantum_needle_hamiltonian(
                     f"{nucleus.name} nuclear quadrupole",
                 )
             )
+    if efimova_hore_D_MHz is not None and dipolar_tensor_MHz is not None:
+        raise ValueError(
+            "Choose either dipolar_tensor_MHz or efimova_hore_D_MHz, not both."
+        )
+    if efimova_hore_D_MHz is not None:
+        axis = (
+            np.array([1.0, 0.0, 0.0])
+            if efimova_hore_axis is None
+            else np.asarray(efimova_hore_axis, dtype=float)
+        )
+        electron_operator = TWOPI * efimova_hore_electron_coupling_operator(
+            exchange_J_MHz, efimova_hore_D_MHz, axis
+        )
+        if np.any(electron_operator != 0.0):
+            terms.append(
+                LocalTerm(
+                    (0, 1),
+                    electron_operator,
+                    "Efimova-Hore electron exchange + dipolar coupling",
+                )
+            )
+        return MatrixFreeHamiltonian(SYSTEM_DIMENSIONS, terms)
     dipolar = (
         np.zeros((3, 3), dtype=float)
         if dipolar_tensor_MHz is None
@@ -275,6 +343,47 @@ def singlet_population(vector: np.ndarray, dimensions: Iterable[int]) -> float:
     return float(np.vdot(singlet_amplitude, singlet_amplitude).real)
 
 
+@dataclass(frozen=True)
+class SingletPopulationObservable:
+    """Singlet population with an exact Krylov-basis projection shortcut.
+
+    For a Krylov basis ``V`` this precomputes ``V^H P_S V``.  Populations at
+    all requested times in the accepted macro-step can then be evaluated from
+    the small Krylov coefficient vector without reconstructing a full state.
+    The propagated endpoint state and every Lanczos decision are unchanged.
+    """
+
+    dimensions: tuple[int, ...]
+
+    def __init__(self, dimensions: Iterable[int]) -> None:
+        parsed = tuple(int(value) for value in dimensions)
+        if parsed[:2] != (2, 2):
+            raise ValueError("The first two axes must be the two electron spins.")
+        object.__setattr__(self, "dimensions", parsed)
+
+    def __call__(self, vector: np.ndarray) -> float:
+        return singlet_population(vector, self.dimensions)
+
+    def project_basis(self, basis: np.ndarray) -> np.ndarray:
+        values = np.asarray(basis, dtype=complex)
+        expected = math.prod(self.dimensions)
+        if values.ndim != 2 or values.shape[0] != expected:
+            raise ValueError(f"Krylov basis must have shape ({expected}, m).")
+        electronic = values.reshape(2, 2, -1, values.shape[1])
+        amplitudes = (electronic[0, 1] - electronic[1, 0]) / math.sqrt(2.0)
+        projected = amplitudes.conj().T @ amplitudes
+        return 0.5 * (projected + projected.conj().T)
+
+    @staticmethod
+    def evaluate_projected(
+        projected_operator: np.ndarray,
+        coefficients: np.ndarray,
+        state_norm: float,
+    ) -> float:
+        value = np.vdot(coefficients, projected_operator @ coefficients).real
+        return float(state_norm * state_norm * value)
+
+
 def state_error_to_population_bound(state_error: float) -> float:
     epsilon = max(0.0, float(state_error))
     return min(1.0, 2.0 * epsilon + epsilon * epsilon)
@@ -317,6 +426,33 @@ def _projected_coefficients(
     )
     weights = eigenvectors[0, :]
     return eigenvectors @ (np.exp(-1.0j * eigenvalues * time_us) * weights)
+
+
+@dataclass(frozen=True)
+class _ProjectedEvolution:
+    eigenvalues: np.ndarray
+    eigenvectors: np.ndarray
+    weights: np.ndarray
+
+    @classmethod
+    def from_tridiagonal(
+        cls, diagonal: np.ndarray, off_diagonal: np.ndarray
+    ) -> "_ProjectedEvolution":
+        if diagonal.size == 1:
+            return cls(
+                np.asarray(diagonal, dtype=float),
+                np.ones((1, 1), dtype=float),
+                np.ones(1, dtype=float),
+            )
+        eigenvalues, eigenvectors = scipy.linalg.eigh_tridiagonal(
+            diagonal, off_diagonal, check_finite=False
+        )
+        return cls(eigenvalues, eigenvectors, eigenvectors[0, :].copy())
+
+    def coefficients(self, time_us: float) -> np.ndarray:
+        return self.eigenvectors @ (
+            np.exp(-1.0j * self.eigenvalues * time_us) * self.weights
+        )
 
 
 class AdaptiveLanczosPropagator:
@@ -436,6 +572,14 @@ class AdaptiveLanczosPropagator:
         if state.size != self.hamiltonian.dimension:
             raise ValueError("Initial state dimension does not match the Hamiltonian.")
 
+        project_basis = getattr(observable, "project_basis", None)
+        evaluate_projected = getattr(observable, "evaluate_projected", None)
+        use_projected_observable = (
+            not store_states
+            and callable(project_basis)
+            and callable(evaluate_projected)
+        )
+
         values = np.empty(times.size, dtype=float)
         bounds = np.empty(times.size, dtype=float)
         state_errors = np.empty(times.size, dtype=float)
@@ -550,30 +694,54 @@ class AdaptiveLanczosPropagator:
             maximum_dimension = max(maximum_dimension, selected_dimension)
             if selected_dimension > self.minimum_dimension:
                 prefer_maximum_basis = True
+            active_basis = basis[:, :selected_dimension]
+            projected_operator = (
+                project_basis(active_basis) if use_projected_observable else None
+            )
+            high_evolution = _ProjectedEvolution.from_tridiagonal(
+                diagonal[:selected_dimension],
+                off_diagonal[: max(0, selected_dimension - 1)],
+            )
+            low_dimension = max(1, selected_dimension - self.embedded_offset)
+            low_evolution = (
+                None
+                if exact_subspace or low_dimension == selected_dimension
+                else _ProjectedEvolution.from_tridiagonal(
+                    diagonal[:low_dimension],
+                    off_diagonal[: max(0, low_dimension - 1)],
+                )
+            )
             step_end = current_time + trial_step
             while cursor < times.size and times[cursor] <= step_end + 1e-13:
                 offset = float(times[cursor] - current_time)
-                if exact_subspace:
-                    coefficients = _projected_coefficients(diagonal, off_diagonal, offset)
+                coefficients = high_evolution.coefficients(offset)
+                if low_evolution is None:
                     point_error = 0.0
                 else:
-                    coefficients, point_error = self._candidate(
-                        basis,
-                        diagonal,
-                        off_diagonal,
-                        selected_dimension,
-                        offset,
-                        state_norm,
+                    low = low_evolution.coefficients(offset)
+                    difference = coefficients.copy()
+                    difference[:low_dimension] -= low
+                    point_error = (
+                        self.safety_factor
+                        * state_norm
+                        * float(np.linalg.norm(difference))
                     )
-                point_state = state_norm * (basis[:, :selected_dimension] @ coefficients)
-                values[cursor] = observable(point_state)
+                if projected_operator is not None:
+                    values[cursor] = evaluate_projected(
+                        projected_operator, coefficients, state_norm
+                    )
+                    point_state = None
+                else:
+                    point_state = state_norm * (active_basis @ coefficients)
+                    values[cursor] = observable(point_state)
                 state_errors[cursor] = accumulated_error + point_error
                 bounds[cursor] = state_error_to_population_bound(state_errors[cursor])
                 if stored_states is not None:
+                    assert point_state is not None
                     stored_states[cursor] = point_state
                 cursor += 1
             assert endpoint_coefficients is not None
-            state = state_norm * (basis[:, :selected_dimension] @ endpoint_coefficients)
+            state = state_norm * (active_basis @ endpoint_coefficients)
             current_time = step_end
             accumulated_error += endpoint_error
             accepted += 1
