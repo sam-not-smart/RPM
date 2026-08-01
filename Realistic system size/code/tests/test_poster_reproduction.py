@@ -53,10 +53,50 @@ from rpm_statevector_engine import (
 )
 from poster_reproduction.runner import planned_tasks
 from poster_reproduction.report import _bootstrap_electron_entanglement
+from poster_reproduction.report import _load_best_overhauser_cell
 from poster_reproduction.report import analyze_runtime
+from poster_reproduction.report import overhauser_task
 
 
 class PosterReproductionTests(unittest.TestCase):
+    def test_overhauser_report_prefers_adaptive_precision_refinement(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            for count, value in ((8_388_608, 0.25), (16_777_216, 0.5)):
+                task = overhauser_task(
+                    20.0,
+                    130.0,
+                    count,
+                    16,
+                    MASTER_SEED,
+                    8,
+                    4096,
+                )
+                path = output / "checkpoints" / "overhauser" / f"{task.key}.npz"
+                path.parent.mkdir(parents=True, exist_ok=True)
+                metadata = {
+                    "task": {
+                        "overhauser_samples": count,
+                        "overhauser_replicates": 8,
+                        "atomwise_samples": 4096,
+                    }
+                }
+                np.savez(
+                    path,
+                    replicate_means=np.full(8, value),
+                    metadata_json=np.array(json.dumps(metadata)),
+                )
+            cell, count = _load_best_overhauser_cell(
+                output,
+                20.0,
+                130.0,
+                8_388_608,
+                8,
+                4096,
+            )
+        self.assertEqual(count, 16_777_216)
+        np.testing.assert_allclose(cell["replicate_means"], 0.5)
+
     def test_runtime_audit_counts_checkpointed_work(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)

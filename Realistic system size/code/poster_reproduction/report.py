@@ -103,6 +103,59 @@ def _load(path: Path) -> dict[str, np.ndarray]:
         return {key: data[key] for key in data.files}
 
 
+def _load_best_overhauser_cell(
+    output: Path,
+    field: float,
+    theta: float,
+    minimum_samples: int,
+    replicates: int,
+    atomwise_samples: int,
+) -> tuple[dict[str, np.ndarray], int]:
+    """Load the highest-precision compatible checkpoint for one OH cell.
+
+    The production sweep establishes a common minimum sample count.  A small
+    number of cells can then be refined independently when their replicate
+    standard error misses the precision gate, without recomputing the other
+    hundreds of completed cells.
+    """
+
+    pattern = (
+        f"B{_slug(field)}_th{_slug(theta)}_n*_r{replicates:02d}"
+        f"_a{atomwise_samples:05d}.npz"
+    )
+    candidates: list[tuple[int, Path]] = []
+    for path in (output / "checkpoints" / "overhauser").glob(pattern):
+        try:
+            with np.load(path, allow_pickle=False) as data:
+                metadata = json.loads(str(data["metadata_json"]))
+            task = metadata["task"]
+            count = int(task["overhauser_samples"])
+            if (
+                count >= minimum_samples
+                and int(task["overhauser_replicates"]) == replicates
+                and int(task["atomwise_samples"]) == atomwise_samples
+            ):
+                candidates.append((count, path))
+        except (KeyError, ValueError, OSError, json.JSONDecodeError, TypeError):
+            continue
+    if not candidates:
+        expected = cell_path(
+            output,
+            overhauser_task(
+                field,
+                theta,
+                minimum_samples,
+                PRODUCTION_MODEL.samples,
+                PRODUCTION_MODEL.master_seed,
+                replicates,
+                atomwise_samples,
+            ),
+        )
+        raise FileNotFoundError(expected)
+    count, path = max(candidates, key=lambda item: item[0])
+    return _load(path), count
+
+
 def analyze_runtime(output: Path) -> dict[str, float | int]:
     """Build a checkpoint-derived runtime ledger across all completed cells."""
 
@@ -404,28 +457,35 @@ def analyze_figure3(
         q_mean, q_se, q_low, q_high = mean_se_ci(quantum)
         oh = np.empty((overhauser_replicates, len(theta)))
         atomwise = np.empty((atomwise_samples, len(theta)))
+        oh_counts = np.empty(len(theta), dtype=np.int64)
         for index, angle in enumerate(theta):
-            task = overhauser_task(
+            cell, actual_count = _load_best_overhauser_cell(
+                output,
                 field,
                 float(angle),
                 overhauser_samples,
-                samples,
-                seed,
                 overhauser_replicates,
                 atomwise_samples,
             )
-            cell = _load(cell_path(output, task))
             oh[:, index] = cell["replicate_means"]
             atomwise[:, index] = cell["atomwise_sample_yields"]
+            oh_counts[index] = actual_count
         o_mean, o_se, o_low, o_high = mean_se_ci(oh)
         a_mean, a_se, a_low, a_high = mean_se_ci(atomwise)
-        for model_name, mean, se, low, high, n in (
-            ("full_quantum", q_mean, q_se, q_low, q_high, samples),
-            ("gaussian_static_overhauser", o_mean, o_se, o_low, o_high, overhauser_samples),
-            ("atomwise_static_spin", a_mean, a_se, a_low, a_high, atomwise_samples),
-        ):
-            for index, angle in enumerate(theta):
-                curve_rows.append({"field_mT": field, "theta_deg": angle, "model": model_name, "samples": n, "mean_yield": mean[index], "standard_error": se[index], "ci95_low": low[index], "ci95_high": high[index]})
+        for index, angle in enumerate(theta):
+            for model_name, mean, se, low, high, count in (
+                ("full_quantum", q_mean, q_se, q_low, q_high, samples),
+                (
+                    "gaussian_static_overhauser",
+                    o_mean,
+                    o_se,
+                    o_low,
+                    o_high,
+                    int(oh_counts[index]),
+                ),
+                ("atomwise_static_spin", a_mean, a_se, a_low, a_high, atomwise_samples),
+            ):
+                curve_rows.append({"field_mT": field, "theta_deg": angle, "model": model_name, "samples": count, "mean_yield": mean[index], "standard_error": se[index], "ci95_low": low[index], "ci95_high": high[index]})
         difference = q_mean - o_mean
         q_metric = angular_metrics(theta, q_mean)
         o_metric = angular_metrics(theta, o_mean)
@@ -441,9 +501,16 @@ def analyze_figure3(
             "minimum_orientation_difference_deg": o_metric["theta_minimum_deg"] - q_metric["theta_minimum_deg"],
             "maximum_orientation_difference_deg": o_metric["theta_maximum_deg"] - q_metric["theta_maximum_deg"],
             "quantum_samples": samples,
-            "overhauser_samples": overhauser_samples,
+            "overhauser_samples": int(np.min(oh_counts)),
+            "minimum_overhauser_samples": int(np.min(oh_counts)),
+            "maximum_overhauser_samples": int(np.max(oh_counts)),
             "overhauser_replicates": overhauser_replicates,
-            "points_per_replicate": overhauser_samples // overhauser_replicates,
+            "points_per_replicate": int(np.min(oh_counts))
+            // overhauser_replicates,
+            "minimum_points_per_replicate": int(np.min(oh_counts))
+            // overhauser_replicates,
+            "maximum_points_per_replicate": int(np.max(oh_counts))
+            // overhauser_replicates,
         }
         rng = np.random.default_rng(seed ^ int(round(field * 1000.0)) ^ 0xF311)
         bootstrap_values = {key: [] for key in (
@@ -502,16 +569,14 @@ def analyze_figure3(
                 cell = _load(cell_path(output, quantum_task(field, angle, sample_id, samples, seed)))
                 q_pop.append(cell["singlet_population"])
             q_pop_mean_full = np.mean(q_pop, axis=0)
-            oh_task_value = overhauser_task(
+            cell, _ = _load_best_overhauser_cell(
+                output,
                 field,
                 angle,
                 overhauser_samples,
-                samples,
-                seed,
                 overhauser_replicates,
                 atomwise_samples,
             )
-            cell = _load(cell_path(output, oh_task_value))
             if cell["singlet_population_samples"].size:
                 times = cell["times_us"]
                 oh_pop_mean = np.mean(cell["singlet_population_samples"], axis=0)
@@ -1056,19 +1121,13 @@ def analyze_overhauser_sampling(
         maximum_se = 0.0
         maximum_atomwise_se = 0.0
         for angle in theta:
-            cell = _load(
-                cell_path(
-                    output,
-                    overhauser_task(
-                        field,
-                        float(angle),
-                        overhauser_samples,
-                        samples,
-                        seed,
-                        overhauser_replicates,
-                        atomwise_samples,
-                    ),
-                )
+            cell, actual_overhauser_samples = _load_best_overhauser_cell(
+                output,
+                field,
+                float(angle),
+                overhauser_samples,
+                overhauser_replicates,
+                atomwise_samples,
             )
             gaussian = np.asarray(cell["replicate_means"], dtype=float)
             atomwise = np.asarray(cell["atomwise_sample_yields"], dtype=float)
@@ -1080,9 +1139,10 @@ def analyze_overhauser_sampling(
                 {
                     "field_mT": field,
                     "theta_deg": angle,
-                    "overhauser_samples": overhauser_samples,
+                    "overhauser_samples": actual_overhauser_samples,
                     "overhauser_replicates": overhauser_replicates,
-                    "points_per_replicate": overhauser_samples // overhauser_replicates,
+                    "points_per_replicate": actual_overhauser_samples
+                    // overhauser_replicates,
                     "gaussian_mean_yield": gaussian_mean[0],
                     "gaussian_standard_error": gaussian_se[0],
                     "gaussian_ci95_low": gaussian_low[0],
@@ -1112,7 +1172,7 @@ def analyze_overhauser_sampling(
     axis.set(
         xlabel="field strength (mT)",
         ylabel="maximum pointwise Monte Carlo standard error",
-        title=f"Semiclassical ensemble precision ({overhauser_samples:,} Gaussian samples)",
+        title=f"Semiclassical ensemble precision (at least {overhauser_samples:,} Gaussian samples)",
     )
     axis.legend(frameon=False)
     _save_figure(fig, output / "figures" / "overhauser_sampling_precision")
