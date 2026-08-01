@@ -143,7 +143,11 @@ def _bootstrap_electron_entanglement(
     result = np.empty((sample_indices.shape[0], density.shape[1]), dtype=float)
     for start in range(0, sample_indices.shape[0], chunk_size):
         stop = min(sample_indices.shape[0], start + chunk_size)
-        averaged = np.mean(density[sample_indices[start:stop]], axis=1)
+        ids = sample_indices[start:stop]
+        weights = np.zeros((ids.shape[0], density.shape[0]), dtype=float)
+        for row in range(ids.shape[0]):
+            np.add.at(weights[row], ids[row], 1.0)
+        averaged = np.einsum("bm,mtij->btij", weights, density, optimize=True) / ids.shape[1]
         result[start:stop] = mixed_two_electron_log_negativity_batch(averaged)
     return result
 
@@ -706,7 +710,10 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
         counts,
         electron_averages,
         yerr=np.vstack(
-            [electron_averages - electron_average_low, electron_average_high - electron_averages]
+            [
+                np.maximum(0.0, electron_averages - electron_average_low),
+                np.maximum(0.0, electron_average_high - electron_averages),
+            ]
         ),
         marker="o",
         capsize=3,

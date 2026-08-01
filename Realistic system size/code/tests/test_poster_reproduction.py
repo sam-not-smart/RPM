@@ -42,6 +42,7 @@ from rpm_quantum_needle_jd_sweeps import integrate_yield
 from rpm_quantum_needle_model import FAD_NUCLEI, SYSTEM_DIMENSIONS, spin_operators
 from rpm_statevector_engine import singlet_population
 from poster_reproduction.runner import planned_tasks
+from poster_reproduction.report import _bootstrap_electron_entanglement
 
 
 class PosterReproductionTests(unittest.TestCase):
@@ -169,6 +170,25 @@ class PosterReproductionTests(unittest.TestCase):
             np.stack((rho_product, rho_bell, rho_product))
         )
         np.testing.assert_allclose(batch, np.array([0.0, 1.0, 0.0]), atol=1e-12)
+
+    def test_electron_entanglement_bootstrap_averages_density_first(self):
+        product = np.array([1.0, 0.0, 0.0, 0.0], dtype=complex)
+        bell = np.array([1.0, 0.0, 0.0, 1.0], dtype=complex) / math.sqrt(2.0)
+        density = np.stack(
+            (
+                np.stack((np.outer(product, product.conj()), np.outer(bell, bell.conj()))),
+                np.stack((np.outer(bell, bell.conj()), np.outer(product, product.conj()))),
+            )
+        )
+        ids = np.array([[0, 1], [1, 1]], dtype=int)
+        actual = _bootstrap_electron_entanglement(density, ids, chunk_size=1)
+        expected = np.array(
+            [
+                mixed_two_electron_log_negativity_batch(np.mean(density[[0, 1]], axis=0)),
+                mixed_two_electron_log_negativity_batch(np.mean(density[[1, 1]], axis=0)),
+            ]
+        )
+        np.testing.assert_allclose(actual, expected, atol=1e-12)
 
     def test_negativity_physical_bounds(self):
         rng = np.random.default_rng(12)
