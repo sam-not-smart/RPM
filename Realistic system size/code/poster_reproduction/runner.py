@@ -38,6 +38,7 @@ from rpm_statevector_engine import SingletPopulationObservable, singlet_populati
 
 from .core import (
     BOOTSTRAP_REPLICATES,
+    ENTANGLEMENT_GRID_VERSION,
     ENTANGLEMENT_NUCLEAR_COUNTS,
     MASTER_SEED,
     N10_PERIODS_US,
@@ -51,6 +52,7 @@ from .core import (
     atomwise_overhauser_sample_mhz,
     build_hamiltonian,
     dimensions_for,
+    entanglement_time_grids_us,
     full_product_basis_indices,
     local_unitary_apply,
     make_propagator,
@@ -91,7 +93,9 @@ experiment definitions only; their obsolete factorized Hamiltonian is not used.
 - Figure 3: 0.05, 2, and 20 mT; 0--180 degrees in 10-degree steps; representative
   dynamics at 0, 90, and 180 degrees.
 - Figure 4: paired strongest-to-weakest growth at N=4,6,...,14; 50 microtesla,
-  theta=90 degrees, and a 0--2 microsecond, 101-point unitary time window.
+  theta=90 degrees, and a 0--2 microsecond unitary time window. The recovered
+  101-point grid was superseded by a nested dense-early grid after it failed to
+  resolve the initial two-electron entanglement decay.
 - Figure 5: 50 microtesla, a 10-microsecond displayed control window, one pulse at
   5 microseconds, pulse intervals 0.02 and 0.05 microseconds, and conditionally
   normalized truncated yield `Phi_trunc/(1-exp(-T/tau))`.  The old transverse
@@ -264,7 +268,7 @@ def _entanglement_cell(task: CellTask, model: ProductionModel) -> dict[str, np.n
     full_indices = full_product_basis_indices(model.master_seed, task.sample_id)
     indices = paired_product_indices(task.nuclear_count, full_indices)
     initial = product_basis_initial_state(dimensions, indices)
-    times = np.linspace(0.0, 2.0, 101)
+    times, _ = entanglement_time_grids_us()
     result = make_propagator(hamiltonian, model).propagate(
         initial, times, lambda state: singlet_population(state, dimensions), store_states=True
     )
@@ -445,7 +449,7 @@ def planned_tasks(
     if 4 in figures:
         for count in counts:
             for sample_id in range(samples):
-                key = f"N{count:02d}_s{sample_id:03d}"
+                key = f"N{count:02d}_s{sample_id:03d}_{ENTANGLEMENT_GRID_VERSION}"
                 tasks.append(CellTask("entanglement", key, 0.05, 90.0, sample_id, count, master_seed=seed, samples=samples))
     protocols = ("baseline", "n10_transverse_deleted", "one_pulse", "periodic_0.02", "periodic_0.05")
     if 5 in figures:
@@ -532,11 +536,9 @@ def ensure_manifests(
         previous = json.loads(model_path.read_text(encoding="utf-8"))
         if previous.get("configuration_hash") != current["configuration_hash"]:
             raise RuntimeError("Existing output directory has an incompatible model manifest.")
-    else:
-        atomic_json(model_path, current)
+    atomic_json(model_path, current)
     recovery = output_dir / "poster_setting_recovery.md"
-    if not recovery.exists():
-        recovery.write_text(RECOVERED_POSTER_SETTINGS, encoding="utf-8")
+    recovery.write_text(RECOVERED_POSTER_SETTINGS, encoding="utf-8")
     run_path = output_dir / "run_manifest.json"
     resume_path = invocation_manifest_path(output_dir, args)
     manifest = {

@@ -57,6 +57,7 @@ POSTER_FIELDS_MT = (0.05, 0.10, 0.20, 0.50, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100
 POSTER_THETA_DEG = tuple(float(value) for value in range(0, 181, 10))
 OVERHAUSER_FIELDS_MT = (0.05, 2.0, 20.0)
 ENTANGLEMENT_NUCLEAR_COUNTS = (4, 6, 8, 10, 12, 14)
+ENTANGLEMENT_GRID_VERSION = "dense_early_v2"
 N10_THETA_DEG = tuple(float(value) for value in np.round(np.arange(85.0, 95.0 + 0.025, 0.05), 10))
 N10_PERIODS_US = (0.02, 0.05)
 PRODUCTION_SAMPLE_COUNT = 16
@@ -98,6 +99,28 @@ class ProductionModel:
 
 
 PRODUCTION_MODEL = ProductionModel()
+
+
+def entanglement_time_grids_us() -> tuple[np.ndarray, np.ndarray]:
+    """Return nested fine/coarse grids for the 0--2 us entanglement average.
+
+    Electron entanglement can disappear well before the old poster's 0.02-us
+    sample spacing. The fine grid resolves 0--0.1 us at 0.00025 us and uses
+    0.005 us thereafter. The coarse grid is an exact subset with twice both
+    spacings, enabling a quadrature-bias check without another propagation.
+    """
+
+    fine_early = np.arange(0.0, 0.1 + 0.000125, 0.00025)
+    fine_late = np.arange(0.105, 2.0 + 0.0025, 0.005)
+    fine = np.concatenate((fine_early, fine_late))
+    coarse_early = np.arange(0.0, 0.1 + 0.00025, 0.0005)
+    coarse_late = np.arange(0.11, 2.0 + 0.005, 0.01)
+    coarse = np.concatenate((coarse_early, coarse_late))
+    fine[-1] = coarse[-1] = 2.0
+    indices = np.searchsorted(fine, coarse)
+    if not np.allclose(fine[indices], coarse, rtol=0.0, atol=1e-13):
+        raise RuntimeError("Entanglement quadrature grids are not nested.")
+    return fine, indices
 
 
 def sample_seed(master_seed: int, sample_id: int) -> int:
@@ -566,6 +589,15 @@ def model_manifest(model: ProductionModel = PRODUCTION_MODEL) -> dict[str, objec
             "master_seed": model.master_seed,
             "production_samples": model.samples,
             "pairing": "same sample ID reused across all compared conditions",
+        },
+        "poster_figure4_protocol": {
+            "field_mT": 0.05,
+            "theta_deg": 90.0,
+            "time_window_us": [0.0, 2.0],
+            "time_grid_version": ENTANGLEMENT_GRID_VERSION,
+            "fine_time_points": int(entanglement_time_grids_us()[0].size),
+            "coarse_time_points": int(entanglement_time_grids_us()[1].size),
+            "quadrature_check": "fine Simpson average minus nested coarse Simpson average",
         },
     }
 

@@ -20,6 +20,7 @@ from rpm_quantum_needle_model import FAD_NUCLEI, TRP_NUCLEI
 
 from .core import (
     BOOTSTRAP_REPLICATES,
+    ENTANGLEMENT_GRID_VERSION,
     ENTANGLEMENT_NUCLEAR_COUNTS,
     MASTER_SEED,
     N10_THETA_DEG,
@@ -30,6 +31,7 @@ from .core import (
     angular_metrics,
     atomwise_overhauser_sample_mhz,
     bootstrap_curve_metric,
+    entanglement_time_grids_us,
     mean_se_ci,
     mixed_two_electron_log_negativity,
     overhauser_yield,
@@ -84,7 +86,8 @@ def overhauser_task(
 
 
 def entanglement_task(count: int, sample_id: int, samples: int, seed: int) -> CellTask:
-    return CellTask("entanglement", f"N{count:02d}_s{sample_id:03d}", 0.05, 90.0, sample_id, count, master_seed=seed, samples=samples)
+    key = f"N{count:02d}_s{sample_id:03d}_{ENTANGLEMENT_GRID_VERSION}"
+    return CellTask("entanglement", key, 0.05, 90.0, sample_id, count, master_seed=seed, samples=samples)
 
 
 def n10_task(theta: float, protocol: str, sample_id: int, samples: int, seed: int) -> CellTask:
@@ -456,6 +459,8 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     scaling_rows: list[dict[str, object]] = []
     electron_rows: list[dict[str, object]] = []
     initial_rows: list[dict[str, object]] = []
+    quadrature_rows: list[dict[str, object]] = []
+    expected_times, coarse_indices = entanglement_time_grids_us()
     radical_means = []
     en_means = []
     physical_maxima = []
@@ -466,13 +471,25 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     for count in ENTANGLEMENT_NUCLEAR_COUNTS:
         radical_sample = []
         en_sample = []
+        radical_quadrature_difference = []
+        en_quadrature_difference = []
         rho_samples = []
         times = None
         for sample_id in range(samples):
             cell = _load(cell_path(output, entanglement_task(count, sample_id, samples, seed)))
             times = cell["times_us"]
+            if not np.allclose(times, expected_times, rtol=0.0, atol=1e-13):
+                raise RuntimeError("Figure 4 checkpoint uses an incompatible time grid.")
             radical_sample.append(scipy.integrate.simpson(cell["radical_log_negativity"], x=times) / (times[-1] - times[0]))
             en_sample.append(scipy.integrate.simpson(cell["electron_nuclear_log_negativity"], x=times) / (times[-1] - times[0]))
+            radical_coarse = scipy.integrate.simpson(
+                cell["radical_log_negativity"][coarse_indices], x=times[coarse_indices]
+            ) / (times[-1] - times[0])
+            en_coarse = scipy.integrate.simpson(
+                cell["electron_nuclear_log_negativity"][coarse_indices], x=times[coarse_indices]
+            ) / (times[-1] - times[0])
+            radical_quadrature_difference.append(abs(radical_sample[-1] - radical_coarse))
+            en_quadrature_difference.append(abs(en_sample[-1] - en_coarse))
             rho_samples.append(cell["electron_density_real"] + 1.0j * cell["electron_density_imag"])
             initial_rows.append({"nuclear_count": count, "sample_id": sample_id, "radical_initial": float(cell["initial_radical_log_negativity"]), "electron_nuclear_initial": float(cell["initial_electron_nuclear_log_negativity"]), "radical_generated_time_average": radical_sample[-1] - float(cell["initial_radical_log_negativity"]), "electron_nuclear_generated_time_average": en_sample[-1]})
         assert times is not None
@@ -483,6 +500,34 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
         rho_mean = np.mean(rho_samples, axis=0)
         electron_curve = np.array([mixed_two_electron_log_negativity(rho) for rho in rho_mean])
         electron_average = float(scipy.integrate.simpson(electron_curve, x=times) / (times[-1] - times[0]))
+        electron_coarse_average = float(
+            scipy.integrate.simpson(electron_curve[coarse_indices], x=times[coarse_indices])
+            / (times[-1] - times[0])
+        )
+        for cut, differences in (
+            ("radical_partition", radical_quadrature_difference),
+            ("electron_nuclear_trajectory_proxy", en_quadrature_difference),
+        ):
+            quadrature_rows.append(
+                {
+                    "nuclear_count": count,
+                    "cut": cut,
+                    "fine_time_points": times.size,
+                    "coarse_time_points": coarse_indices.size,
+                    "mean_absolute_fine_minus_coarse": float(np.mean(differences)),
+                    "maximum_absolute_fine_minus_coarse": float(np.max(differences)),
+                }
+            )
+        quadrature_rows.append(
+            {
+                "nuclear_count": count,
+                "cut": "ensemble_averaged_two_electron",
+                "fine_time_points": times.size,
+                "coarse_time_points": coarse_indices.size,
+                "mean_absolute_fine_minus_coarse": abs(electron_average - electron_coarse_average),
+                "maximum_absolute_fine_minus_coarse": abs(electron_average - electron_coarse_average),
+            }
+        )
         time_by_count[count] = times
         electron_curve_by_count[count] = electron_curve
         per = count // 2
@@ -647,6 +692,7 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     _write_csv(output / "entanglement_fit_parameters.csv", fit_rows)
     _write_csv(output / "two_electron_entanglement.csv", electron_rows)
     _write_csv(output / "entanglement_initial_state_check.csv", initial_rows)
+    _write_csv(output / "entanglement_quadrature_check.csv", quadrature_rows)
     return scaling_rows
 
 
@@ -742,6 +788,7 @@ def analyze_figure5(output: Path, samples: int, seed: int) -> list[dict[str, obj
                 dynamics_rows.append({"protocol": protocol, "theta_deg": angle, "time_us": time_value, "mean_singlet_population": population, "samples": samples})
         axis.set_title(f"{angle:g} deg")
         axis.set_xlabel("time (us)")
+        axis.set_xlim(0.0, 10.0)
     axes[0].set_ylabel("singlet population")
     axes[0].legend(frameon=False, fontsize=7)
     _save_figure(fig, output / "figures" / "figure5c_n10_dynamics")

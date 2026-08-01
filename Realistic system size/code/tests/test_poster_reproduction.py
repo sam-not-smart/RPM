@@ -16,6 +16,7 @@ from poster_reproduction.core import (
     dense_truncated_singlet_yield,
     electron_only_hamiltonian,
     dimensions_for,
+    entanglement_time_grids_us,
     electron_spectrum_manifest,
     full_product_basis_indices,
     mixed_two_electron_log_negativity,
@@ -183,6 +184,17 @@ class PosterReproductionTests(unittest.TestCase):
         radical_left = (0, 2, 3)
         self.assertAlmostEqual(pure_log_negativity(state, dimensions, radical_left), 1.0, places=12)
         self.assertAlmostEqual(pure_log_negativity(state, dimensions, (0, 1)), 0.0, places=12)
+
+    def test_entanglement_quadrature_grids_are_nested(self):
+        fine, coarse_indices = entanglement_time_grids_us()
+        self.assertAlmostEqual(float(fine[0]), 0.0, places=15)
+        self.assertAlmostEqual(float(fine[-1]), 2.0, places=15)
+        self.assertGreater(fine.size, 700)
+        self.assertGreater(coarse_indices.size, 300)
+        self.assertTrue(np.all(np.diff(fine) > 0.0))
+        self.assertTrue(np.all(np.diff(coarse_indices) > 0))
+        early = fine[fine <= 0.1]
+        self.assertLessEqual(float(np.max(np.diff(early))), 0.00025 + 1e-14)
 
     def test_reduced_electron_density_is_physical(self):
         dimensions = dimensions_for(selected_nuclei(4))
