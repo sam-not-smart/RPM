@@ -19,6 +19,7 @@ from poster_reproduction.core import (
     electron_spectrum_manifest,
     full_product_basis_indices,
     mixed_two_electron_log_negativity,
+    mean_se_ci,
     n10_principal_axis,
     n10_transverse_deleted_tensor,
     overhauser_covariances_mhz2,
@@ -102,6 +103,15 @@ class PosterReproductionTests(unittest.TestCase):
         first = full_product_basis_indices(MASTER_SEED, 7)
         second = full_product_basis_indices(MASTER_SEED, 7)
         self.assertEqual(first, second)
+
+    def test_mean_standard_error_and_confidence_interval(self):
+        values = np.array([[1.0, 2.0], [2.0, 4.0], [3.0, 6.0], [4.0, 8.0]])
+        mean, se, low, high = mean_se_ci(values)
+        self.assertTrue(np.allclose(mean, [2.5, 5.0]))
+        self.assertTrue(np.all(se > 0.0))
+        self.assertTrue(np.all(low < mean))
+        self.assertTrue(np.all(high > mean))
+        self.assertTrue(np.allclose(mean - low, high - mean))
 
     def test_empirical_overhauser_moments(self):
         count = 12000

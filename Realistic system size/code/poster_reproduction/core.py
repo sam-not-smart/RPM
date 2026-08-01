@@ -418,7 +418,7 @@ def mean_se_ci(samples: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray,
         se = np.full_like(mean, np.nan, dtype=float)
         return mean, se, np.full_like(mean, np.nan), np.full_like(mean, np.nan)
     se = np.std(values, axis=0, ddof=1) / math.sqrt(values.shape[0])
-    half = scipy.stats_t_975(values.shape[0] - 1) * se
+    half = scipy_stats_t_975(values.shape[0] - 1) * se
     return mean, se, mean - half, mean + half
 
 
