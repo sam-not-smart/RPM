@@ -37,6 +37,7 @@ from poster_reproduction.core import (
 from rpm_quantum_needle_jd_sweeps import integrate_yield
 from rpm_quantum_needle_model import FAD_NUCLEI, SYSTEM_DIMENSIONS, spin_operators
 from rpm_statevector_engine import singlet_population
+from poster_reproduction.runner import planned_tasks
 
 
 class PosterReproductionTests(unittest.TestCase):
@@ -187,6 +188,14 @@ class PosterReproductionTests(unittest.TestCase):
         spectrum = electron_spectrum_manifest()
         self.assertTrue(spectrum["cancellation_exact"])
         self.assertLess(spectrum["minimum_adjacent_gap_MHz"], 1e-12)
+
+    def test_complete_pilot_inventory_is_not_silently_reduced(self):
+        tasks = planned_tasks("pilot", 16, 4096, MASTER_SEED)
+        counts = {kind: sum(task.kind == kind for task in tasks) for kind in ("quantum", "overhauser", "entanglement", "n10")}
+        self.assertEqual(counts["quantum"], 12 * 19 * 16)
+        self.assertEqual(counts["overhauser"], 12 * 19)
+        self.assertEqual(counts["entanglement"], 6 * 16)
+        self.assertEqual(counts["n10"], 201 * 5 * 16)
 
 
 if __name__ == "__main__":

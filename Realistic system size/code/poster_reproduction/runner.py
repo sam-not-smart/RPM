@@ -551,6 +551,29 @@ def execute(args: argparse.Namespace) -> None:
     _write_task_inventory(args.output_dir / f"task_inventory_{args.stage}.csv", tasks)
     pending = [task for task in tasks if not cell_path(args.output_dir, task).exists()]
     completed_at_start = len(tasks) - len(pending)
+    counts_by_kind = {
+        kind: sum(task.kind == kind for task in tasks)
+        for kind in ("quantum", "overhauser", "entanglement", "n10")
+    }
+    inventory_summary = {
+        "stage": args.stage,
+        "figures": list(args.figures),
+        "samples": samples,
+        "shard_index": args.shard_index,
+        "shard_count": args.shard_count,
+        "total_cells": len(tasks),
+        "completed_cells": completed_at_start,
+        "pending_cells": len(pending),
+        "counts_by_kind": counts_by_kind,
+        "note": "N10 pulse cells are more expensive than pulse-free quantum cells.",
+    }
+    atomic_json(args.output_dir / f"task_inventory_{args.stage}.json", inventory_summary)
+    if args.dry_run:
+        manifest.update({"status": "dry_run", **inventory_summary})
+        atomic_json(args.output_dir / "run_manifest.json", manifest)
+        atomic_json(args.output_dir / f"run_manifest_{args.stage}.json", manifest)
+        print(json.dumps(manifest, indent=2, sort_keys=True))
+        return
     started = time.time()
     deadline = started + args.max_wall_hours * 3600.0
     durations: list[float] = []
@@ -611,6 +634,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--shard-count", type=int, default=1)
     parser.add_argument("--max-wall-hours", type=float, default=23.5)
     parser.add_argument("--initial-cell-estimate-minutes", type=float, default=240.0)
+    parser.add_argument("--dry-run", action="store_true", help="Write manifests and the exact task inventory without launching cells.")
     parser.add_argument(
         "--figures",
         type=lambda value: tuple(int(item) for item in value.split(",") if item),
