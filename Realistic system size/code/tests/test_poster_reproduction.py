@@ -214,12 +214,12 @@ class PosterReproductionTests(unittest.TestCase):
         fine, coarse_indices = entanglement_time_grids_us()
         self.assertAlmostEqual(float(fine[0]), 0.0, places=15)
         self.assertAlmostEqual(float(fine[-1]), 2.0, places=15)
-        self.assertGreater(fine.size, 700)
-        self.assertGreater(coarse_indices.size, 300)
+        self.assertGreater(fine.size, 1500)
+        self.assertGreater(coarse_indices.size, 700)
         self.assertTrue(np.all(np.diff(fine) > 0.0))
         self.assertTrue(np.all(np.diff(coarse_indices) > 0))
         early = fine[fine <= 0.1]
-        self.assertLessEqual(float(np.max(np.diff(early))), 0.00025 + 1e-14)
+        self.assertLessEqual(float(np.max(np.diff(early))), 0.000125 + 1e-14)
 
     def test_reduced_electron_density_is_physical(self):
         dimensions = dimensions_for(selected_nuclei(4))

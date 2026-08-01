@@ -57,7 +57,7 @@ POSTER_FIELDS_MT = (0.05, 0.10, 0.20, 0.50, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100
 POSTER_THETA_DEG = tuple(float(value) for value in range(0, 181, 10))
 OVERHAUSER_FIELDS_MT = (0.05, 2.0, 20.0)
 ENTANGLEMENT_NUCLEAR_COUNTS = (4, 6, 8, 10, 12, 14)
-ENTANGLEMENT_GRID_VERSION = "dense_early_v2"
+ENTANGLEMENT_GRID_VERSION = "dense_early_v3"
 N10_THETA_DEG = tuple(float(value) for value in np.round(np.arange(85.0, 95.0 + 0.025, 0.05), 10))
 N10_PERIODS_US = (0.02, 0.05)
 PRODUCTION_SAMPLE_COUNT = 16
@@ -105,16 +105,16 @@ def entanglement_time_grids_us() -> tuple[np.ndarray, np.ndarray]:
     """Return nested fine/coarse grids for the 0--2 us entanglement average.
 
     Electron entanglement can disappear well before the old poster's 0.02-us
-    sample spacing. The fine grid resolves 0--0.1 us at 0.00025 us and uses
-    0.005 us thereafter. The coarse grid is an exact subset with twice both
+    sample spacing. The fine grid resolves 0--0.1 us at 0.000125 us and uses
+    0.0025 us thereafter. The coarse grid is an exact subset with twice both
     spacings, enabling a quadrature-bias check without another propagation.
     """
 
-    fine_early = np.arange(0.0, 0.1 + 0.000125, 0.00025)
-    fine_late = np.arange(0.105, 2.0 + 0.0025, 0.005)
+    fine_early = np.arange(0.0, 0.1 + 0.0000625, 0.000125)
+    fine_late = np.arange(0.1025, 2.0 + 0.00125, 0.0025)
     fine = np.concatenate((fine_early, fine_late))
-    coarse_early = np.arange(0.0, 0.1 + 0.00025, 0.0005)
-    coarse_late = np.arange(0.11, 2.0 + 0.005, 0.01)
+    coarse_early = np.arange(0.0, 0.1 + 0.000125, 0.00025)
+    coarse_late = np.arange(0.105, 2.0 + 0.0025, 0.005)
     coarse = np.concatenate((coarse_early, coarse_late))
     fine[-1] = coarse[-1] = 2.0
     indices = np.searchsorted(fine, coarse)
