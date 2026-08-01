@@ -56,6 +56,7 @@ MASTER_SEED = 20260731
 POSTER_FIELDS_MT = (0.05, 0.10, 0.20, 0.50, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100.0, 400.0)
 POSTER_THETA_DEG = tuple(float(value) for value in range(0, 181, 10))
 OVERHAUSER_FIELDS_MT = (0.05, 2.0, 20.0)
+OVERHAUSER_STANDARD_ERROR_TARGET = 2.0e-5
 ENTANGLEMENT_NUCLEAR_COUNTS = (4, 6, 8, 10, 12, 14)
 ENTANGLEMENT_GRID_VERSION = "dense_early_v3"
 N10_THETA_DEG = tuple(float(value) for value in np.round(np.arange(85.0, 95.0 + 0.025, 0.05), 10))
@@ -607,6 +608,11 @@ def model_manifest(model: ProductionModel = PRODUCTION_MODEL) -> dict[str, objec
             "master_seed": model.master_seed,
             "production_samples": model.samples,
             "pairing": "same sample ID reused across all compared conditions",
+            "overhauser_standard_error_target": OVERHAUSER_STANDARD_ERROR_TARGET,
+            "overhauser_target_basis": (
+                "conservative threshold below the 2.52e-5 minimum representative "
+                "M=16 quantum standard error"
+            ),
         },
         "poster_figure4_protocol": {
             "field_mT": 0.05,

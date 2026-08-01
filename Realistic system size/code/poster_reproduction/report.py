@@ -25,6 +25,7 @@ from .core import (
     MASTER_SEED,
     N10_THETA_DEG,
     OVERHAUSER_FIELDS_MT,
+    OVERHAUSER_STANDARD_ERROR_TARGET,
     POSTER_FIELDS_MT,
     POSTER_THETA_DEG,
     PRODUCTION_MODEL,
@@ -975,6 +976,9 @@ def analyze_overhauser_sampling(
                     "gaussian_standard_error": gaussian_se[0],
                     "gaussian_ci95_low": gaussian_low[0],
                     "gaussian_ci95_high": gaussian_high[0],
+                    "gaussian_standard_error_target": OVERHAUSER_STANDARD_ERROR_TARGET,
+                    "gaussian_precision_gate_passed": gaussian_se[0]
+                    <= OVERHAUSER_STANDARD_ERROR_TARGET,
                     "atomwise_mean_yield": atom_mean[0],
                     "atomwise_standard_error": atom_se[0],
                     "atomwise_ci95_low": atom_low[0],
@@ -986,6 +990,13 @@ def analyze_overhauser_sampling(
     fig, axis = plt.subplots(figsize=(7.2, 4.5))
     axis.plot(POSTER_FIELDS_MT, field_max_se, marker="o", label="Gaussian static")
     axis.plot(POSTER_FIELDS_MT, field_max_atomwise_se, marker="s", label="atomwise static")
+    axis.axhline(
+        OVERHAUSER_STANDARD_ERROR_TARGET,
+        color="black",
+        linestyle="--",
+        linewidth=1.0,
+        label="conservative M=16 quantum-noise target",
+    )
     axis.set_xscale("log")
     axis.set(
         xlabel="field strength (mT)",
