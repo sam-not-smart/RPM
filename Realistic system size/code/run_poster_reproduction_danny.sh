@@ -5,6 +5,7 @@ root="/home/samsmart/Research/RPM"
 python="/home/samsmart/miniforge3/envs/rpm/bin/python"
 output="$root/outputs/poster_reproduction_multisample"
 stage="${1:-smoke}"
+figures="${POSTER_FIGURES:-2,3,4,5}"
 workers="${POSTER_WORKERS:-32}"
 
 export PYTHONPATH="$root/Realistic system size/code"
@@ -19,6 +20,7 @@ arguments=(
   --workers "$workers"
   --max-wall-hours 23.5
   --output-dir "$output"
+  --figures "$figures"
   --resume
 )
 

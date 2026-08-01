@@ -371,7 +371,13 @@ def _slug(value: float, digits: int = 3) -> str:
     return f"{float(value):0{digits + 4}.{digits}f}".replace(".", "p")
 
 
-def planned_tasks(stage: str, samples: int, overhauser_samples: int, seed: int) -> list[CellTask]:
+def planned_tasks(
+    stage: str,
+    samples: int,
+    overhauser_samples: int,
+    seed: int,
+    figures: tuple[int, ...] = (2, 3, 4, 5),
+) -> list[CellTask]:
     if stage == "smoke":
         fields = (0.05,)
         angles = (0.0, 90.0, 180.0)
@@ -383,27 +389,32 @@ def planned_tasks(stage: str, samples: int, overhauser_samples: int, seed: int) 
         n10_angles = N10_THETA_DEG
         counts = ENTANGLEMENT_NUCLEAR_COUNTS
     tasks: list[CellTask] = []
-    for field in fields:
-        for theta in angles:
-            for sample_id in range(samples):
-                key = f"B{_slug(field)}_th{_slug(theta)}_s{sample_id:03d}"
-                tasks.append(CellTask("quantum", key, field, theta, sample_id, master_seed=seed, samples=samples))
+    if 2 in figures or 3 in figures:
+        quantum_fields = fields if 2 in figures else tuple(value for value in OVERHAUSER_FIELDS_MT if value in fields)
+        for field in quantum_fields:
+            for theta in angles:
+                for sample_id in range(samples):
+                    key = f"B{_slug(field)}_th{_slug(theta)}_s{sample_id:03d}"
+                    tasks.append(CellTask("quantum", key, field, theta, sample_id, master_seed=seed, samples=samples))
     # The three poster panels are a subset, but the error-vs-field result uses
     # the complete Figure 2 field grid.
-    for field in fields:
-        for theta in angles:
-            key = f"B{_slug(field)}_th{_slug(theta)}_n{overhauser_samples:05d}"
-            tasks.append(CellTask("overhauser", key, field, theta, overhauser_samples=overhauser_samples, master_seed=seed, samples=samples))
-    for count in counts:
-        for sample_id in range(samples):
-            key = f"N{count:02d}_s{sample_id:03d}"
-            tasks.append(CellTask("entanglement", key, 0.05, 90.0, sample_id, count, master_seed=seed, samples=samples))
-    protocols = ("baseline", "n10_transverse_deleted", "one_pulse", "periodic_0.02", "periodic_0.05")
-    for theta in n10_angles:
-        for protocol in protocols:
+    if 3 in figures:
+        for field in fields:
+            for theta in angles:
+                key = f"B{_slug(field)}_th{_slug(theta)}_n{overhauser_samples:05d}"
+                tasks.append(CellTask("overhauser", key, field, theta, overhauser_samples=overhauser_samples, master_seed=seed, samples=samples))
+    if 4 in figures:
+        for count in counts:
             for sample_id in range(samples):
-                key = f"{protocol}_th{_slug(theta)}_s{sample_id:03d}"
-                tasks.append(CellTask("n10", key, 0.05, theta, sample_id, protocol=protocol, master_seed=seed, samples=samples))
+                key = f"N{count:02d}_s{sample_id:03d}"
+                tasks.append(CellTask("entanglement", key, 0.05, 90.0, sample_id, count, master_seed=seed, samples=samples))
+    protocols = ("baseline", "n10_transverse_deleted", "one_pulse", "periodic_0.02", "periodic_0.05")
+    if 5 in figures:
+        for theta in n10_angles:
+            for protocol in protocols:
+                for sample_id in range(samples):
+                    key = f"{protocol}_th{_slug(theta)}_s{sample_id:03d}"
+                    tasks.append(CellTask("n10", key, 0.05, theta, sample_id, protocol=protocol, master_seed=seed, samples=samples))
     return tasks
 
 
@@ -492,6 +503,7 @@ def ensure_manifests(
         "shard_index": args.shard_index,
         "shard_count": args.shard_count,
         "max_wall_hours": args.max_wall_hours,
+        "figures": list(args.figures),
         "git_commit_at_launch": _git_commit(),
         "host": socket.gethostname(),
         "platform": platform.platform(),
@@ -502,7 +514,7 @@ def ensure_manifests(
     }
     if run_path.exists() and args.resume:
         old = json.loads(run_path.read_text(encoding="utf-8"))
-        keys = ("model_hash", "samples", "overhauser_samples", "seed", "shard_count")
+        keys = ("model_hash", "samples", "overhauser_samples", "seed", "shard_count", "figures")
         same_stage = old.get("stage") == manifest["stage"]
         if same_stage and any(old.get(key) != manifest.get(key) for key in keys):
             raise RuntimeError("Resume rejected because the run manifest is incompatible.")
@@ -527,7 +539,13 @@ def execute(args: argparse.Namespace) -> None:
     all_tasks = (
         planned_refinement_tasks(args.output_dir, samples, args.seed)
         if args.stage == "refine"
-        else planned_tasks(args.stage, samples, args.overhauser_samples, args.seed)
+        else planned_tasks(
+            args.stage,
+            samples,
+            args.overhauser_samples,
+            args.seed,
+            tuple(args.figures),
+        )
     )
     tasks = [task for index, task in enumerate(all_tasks) if index % args.shard_count == args.shard_index]
     _write_task_inventory(args.output_dir / f"task_inventory_{args.stage}.csv", tasks)
@@ -593,6 +611,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--shard-count", type=int, default=1)
     parser.add_argument("--max-wall-hours", type=float, default=23.5)
     parser.add_argument("--initial-cell-estimate-minutes", type=float, default=240.0)
+    parser.add_argument(
+        "--figures",
+        type=lambda value: tuple(int(item) for item in value.split(",") if item),
+        default=(2, 3, 4, 5),
+        help="Comma-separated poster figure numbers to schedule (default: 2,3,4,5).",
+    )
     return parser.parse_args()
 
 
@@ -604,6 +628,8 @@ def main() -> None:
         raise ValueError("--samples must be positive.")
     if not 0 <= args.shard_index < args.shard_count:
         raise ValueError("Require 0 <= shard-index < shard-count.")
+    if not args.figures or any(value not in (2, 3, 4, 5) for value in args.figures):
+        raise ValueError("--figures may contain only 2,3,4,5.")
     if not 0.0 < args.max_wall_hours <= 23.5:
         raise ValueError("--max-wall-hours must be in (0, 23.5].")
     execute(args)
