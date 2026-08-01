@@ -332,6 +332,24 @@ def mixed_two_electron_log_negativity(rho: np.ndarray) -> float:
     return float(max(0.0, np.log2(np.sum(np.abs(eigenvalues)))))
 
 
+def mixed_two_electron_log_negativity_batch(rho: np.ndarray) -> np.ndarray:
+    """Vectorized two-qubit log negativity over arbitrary leading axes."""
+
+    matrices = np.asarray(rho, dtype=complex)
+    if matrices.shape[-2:] != (4, 4):
+        raise ValueError("rho must end in shape (4, 4).")
+    hermitian = 0.5 * (matrices + np.swapaxes(matrices.conj(), -1, -2))
+    leading = hermitian.shape[:-2]
+    partial = (
+        hermitian.reshape((-1, 2, 2, 2, 2))
+        .transpose(0, 3, 2, 1, 4)
+        .reshape((-1, 4, 4))
+    )
+    eigenvalues = np.linalg.eigvalsh(partial)
+    values = np.maximum(0.0, np.log2(np.sum(np.abs(eigenvalues), axis=-1)))
+    return values.reshape(leading)
+
+
 def overhauser_covariances_mhz2() -> dict[str, np.ndarray]:
     covariances = {"FAD": np.zeros((3, 3)), "TrpH": np.zeros((3, 3))}
     for radical, nucleus in zip(NUCLEAR_RADICALS, ALL_NUCLEI):

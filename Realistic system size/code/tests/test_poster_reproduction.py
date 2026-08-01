@@ -20,6 +20,7 @@ from poster_reproduction.core import (
     electron_spectrum_manifest,
     full_product_basis_indices,
     mixed_two_electron_log_negativity,
+    mixed_two_electron_log_negativity_batch,
     mean_se_ci,
     n10_principal_axis,
     n10_transverse_deleted_tensor,
@@ -164,6 +165,10 @@ class PosterReproductionTests(unittest.TestCase):
         rho_bell = np.outer(bell, bell.conj())
         self.assertAlmostEqual(mixed_two_electron_log_negativity(rho_product), 0.0, places=12)
         self.assertAlmostEqual(mixed_two_electron_log_negativity(rho_bell), 1.0, places=12)
+        batch = mixed_two_electron_log_negativity_batch(
+            np.stack((rho_product, rho_bell, rho_product))
+        )
+        np.testing.assert_allclose(batch, np.array([0.0, 1.0, 0.0]), atol=1e-12)
 
     def test_negativity_physical_bounds(self):
         rng = np.random.default_rng(12)

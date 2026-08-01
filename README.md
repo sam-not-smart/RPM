@@ -290,7 +290,12 @@ Efimova--Hore `D/J=-3` condition at `r=2 nm`, the 5-us recombination lifetime,
 adaptive Lanczos settings, Simpson yield grid, and the currently validated
 `quadrupole_scale=0`.  Nuclear trace samples are paired across every comparison;
 the entanglement experiment instead uses computational-basis product samples so
-that the bath has no artificial initial entanglement.
+that the bath has no artificial initial entanglement.  Its recovered 0--2 us
+window uses a nested dense-early time grid, with a fine-versus-coarse Simpson
+check, because the poster-era 0.02 us spacing does not resolve the initial
+two-electron entanglement decay.  The primary Gaussian Overhauser calculation
+uses independently Owen-scrambled Sobol replicates and reports uncertainty
+across replicate means.
 
 On Danny, from the repository root:
 

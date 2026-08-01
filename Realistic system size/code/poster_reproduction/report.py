@@ -33,7 +33,7 @@ from .core import (
     bootstrap_curve_metric,
     entanglement_time_grids_us,
     mean_se_ci,
-    mixed_two_electron_log_negativity,
+    mixed_two_electron_log_negativity_batch,
     overhauser_yield,
     scrambled_sobol_overhauser_samples_mhz,
 )
@@ -129,6 +129,23 @@ def _save_figure(fig: plt.Figure, base: Path) -> None:
 
 def _bootstrap_indices(samples: int, seed: int, replicates: int = BOOTSTRAP_REPLICATES) -> np.ndarray:
     return np.random.default_rng(seed).integers(0, samples, size=(replicates, samples))
+
+
+def _bootstrap_electron_entanglement(
+    density_samples: np.ndarray,
+    sample_indices: np.ndarray,
+    *,
+    chunk_size: int = 64,
+) -> np.ndarray:
+    """Bootstrap log negativity after averaging density matrices first."""
+
+    density = np.asarray(density_samples, dtype=complex)
+    result = np.empty((sample_indices.shape[0], density.shape[1]), dtype=float)
+    for start in range(0, sample_indices.shape[0], chunk_size):
+        stop = min(sample_indices.shape[0], start + chunk_size)
+        averaged = np.mean(density[sample_indices[start:stop]], axis=1)
+        result[start:stop] = mixed_two_electron_log_negativity_batch(averaged)
+    return result
 
 
 def load_quantum_curves(output: Path, fields, theta, samples: int, seed: int) -> dict[float, np.ndarray]:
@@ -458,6 +475,7 @@ def _fit_models(x: np.ndarray, y: np.ndarray) -> list[dict[str, object]]:
 def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, object]]:
     scaling_rows: list[dict[str, object]] = []
     electron_rows: list[dict[str, object]] = []
+    electron_average_rows: list[dict[str, object]] = []
     initial_rows: list[dict[str, object]] = []
     quadrature_rows: list[dict[str, object]] = []
     expected_times, coarse_indices = entanglement_time_grids_us()
@@ -466,8 +484,10 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     physical_maxima = []
     time_by_count = {}
     electron_curve_by_count = {}
+    electron_curve_interval_by_count = {}
     radical_samples_by_count = {}
     en_samples_by_count = {}
+    electron_bootstrap_ids = _bootstrap_indices(samples, seed ^ 0xE1EC)
     for count in ENTANGLEMENT_NUCLEAR_COUNTS:
         radical_sample = []
         en_sample = []
@@ -497,9 +517,25 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
         en_sample = np.asarray(en_sample)
         radical_samples_by_count[count] = radical_sample
         en_samples_by_count[count] = en_sample
+        rho_samples = np.asarray(rho_samples)
         rho_mean = np.mean(rho_samples, axis=0)
-        electron_curve = np.array([mixed_two_electron_log_negativity(rho) for rho in rho_mean])
+        electron_curve = mixed_two_electron_log_negativity_batch(rho_mean)
         electron_average = float(scipy.integrate.simpson(electron_curve, x=times) / (times[-1] - times[0]))
+        electron_bootstrap_curves = _bootstrap_electron_entanglement(
+            rho_samples, electron_bootstrap_ids
+        )
+        electron_curve_se = np.std(electron_bootstrap_curves, axis=0, ddof=1)
+        electron_curve_low, electron_curve_high = np.quantile(
+            electron_bootstrap_curves, [0.025, 0.975], axis=0
+        )
+        electron_bootstrap_average = (
+            scipy.integrate.simpson(electron_bootstrap_curves, x=times, axis=1)
+            / (times[-1] - times[0])
+        )
+        electron_average_se = float(np.std(electron_bootstrap_average, ddof=1))
+        electron_average_low, electron_average_high = np.quantile(
+            electron_bootstrap_average, [0.025, 0.975]
+        )
         electron_coarse_average = float(
             scipy.integrate.simpson(electron_curve[coarse_indices], x=times[coarse_indices])
             / (times[-1] - times[0])
@@ -530,6 +566,17 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
         )
         time_by_count[count] = times
         electron_curve_by_count[count] = electron_curve
+        electron_curve_interval_by_count[count] = (electron_curve_low, electron_curve_high)
+        electron_average_rows.append(
+            {
+                "nuclear_count": count,
+                "samples": samples,
+                "time_average": electron_average,
+                "bootstrap_standard_error": electron_average_se,
+                "bootstrap_ci95_low": float(electron_average_low),
+                "bootstrap_ci95_high": float(electron_average_high),
+            }
+        )
         per = count // 2
         dim_fad = 2 * math.prod(n.dimension for n in FAD_NUCLEI[:per])
         dim_trp = 2 * math.prod(n.dimension for n in TRP_NUCLEI[:per])
@@ -544,8 +591,19 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
             ("electron_nuclear_trajectory_proxy", en_sample, en_mean, en_se, en_low, en_high),
         ):
             scaling_rows.append({"nuclear_count": count, "cut": cut, "samples": samples, "mean_time_averaged_log_negativity": mean[0], "standard_error": se[0], "ci95_low": low[0], "ci95_high": high[0], "physical_maximum": physical_maximum if cut == "radical_partition" else 2.0, "label": "Mean pure-trajectory log negativity for a product-state decomposition of the nuclear mixture"})
-        for t, value in zip(times, electron_curve):
-            electron_rows.append({"nuclear_count": count, "time_us": t, "ensemble_averaged_two_electron_log_negativity": value, "time_average": electron_average, "samples": samples})
+        for index, (t, value) in enumerate(zip(times, electron_curve)):
+            electron_rows.append(
+                {
+                    "nuclear_count": count,
+                    "time_us": t,
+                    "ensemble_averaged_two_electron_log_negativity": value,
+                    "bootstrap_standard_error": electron_curve_se[index],
+                    "bootstrap_ci95_low": electron_curve_low[index],
+                    "bootstrap_ci95_high": electron_curve_high[index],
+                    "time_average": electron_average,
+                    "samples": samples,
+                }
+            )
     fit_rows = _fit_models(np.asarray(ENTANGLEMENT_NUCLEAR_COUNTS, dtype=float), np.asarray(radical_means))
     def saturation(value, a, n0):
         return 2.0 - a * np.exp(-value / n0)
@@ -629,11 +687,36 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     for axis in axes:
         axis.legend(frameon=False, fontsize=8)
     _save_figure(fig, output / "figures" / "figure4_entanglement_scaling")
-    fig, axis = plt.subplots(figsize=(7.4, 4.8))
+    fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6))
     for count in ENTANGLEMENT_NUCLEAR_COUNTS:
-        axis.plot(time_by_count[count], electron_curve_by_count[count], label=f"N={count}")
-    axis.set(xlabel="time (us)", ylabel="two-electron log negativity", title="Ensemble-averaged physical electron entanglement")
-    axis.legend(frameon=False, ncol=2)
+        low, high = electron_curve_interval_by_count[count]
+        axes[0].plot(time_by_count[count], electron_curve_by_count[count], label=f"N={count}")
+        axes[0].fill_between(time_by_count[count], low, high, alpha=0.08)
+    axes[0].set(
+        xlabel="time (us)",
+        ylabel="two-electron log negativity",
+        title="ensemble-averaged dynamics",
+    )
+    axes[0].set_xlim(0.0, 0.1)
+    axes[0].legend(frameon=False, ncol=2, fontsize=8)
+    electron_averages = np.array([row["time_average"] for row in electron_average_rows])
+    electron_average_low = np.array([row["bootstrap_ci95_low"] for row in electron_average_rows])
+    electron_average_high = np.array([row["bootstrap_ci95_high"] for row in electron_average_rows])
+    axes[1].errorbar(
+        counts,
+        electron_averages,
+        yerr=np.vstack(
+            [electron_averages - electron_average_low, electron_average_high - electron_averages]
+        ),
+        marker="o",
+        capsize=3,
+    )
+    axes[1].set(
+        xlabel="nuclear count",
+        ylabel="0--2 us time-averaged log negativity",
+        title="physical electron-entanglement average",
+    )
+    fig.suptitle("Ensemble-averaged physical two-electron entanglement")
     _save_figure(fig, output / "figures" / "figure4b_two_electron_entanglement")
     fig, axes = plt.subplots(2, 2, figsize=(10.0, 7.6), sharex="col")
     for axis, key, expected, title in (
@@ -691,6 +774,7 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     _write_csv(output / "entanglement_scaling.csv", scaling_rows)
     _write_csv(output / "entanglement_fit_parameters.csv", fit_rows)
     _write_csv(output / "two_electron_entanglement.csv", electron_rows)
+    _write_csv(output / "two_electron_entanglement_time_average.csv", electron_average_rows)
     _write_csv(output / "entanglement_initial_state_check.csv", initial_rows)
     _write_csv(output / "entanglement_quadrature_check.csv", quadrature_rows)
     return scaling_rows
