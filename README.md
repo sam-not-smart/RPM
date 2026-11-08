@@ -14,7 +14,7 @@ are separate from the manuscript's Q-off field sweep.
 - `Realistic system size/code/`: shared physics, experiment entry points and tests.
 - `methods/`: written methods, figure-specific configurations, and provenance.
 - `figures/`: selected reference plots. These are not the raw simulation arrays.
-- `scripts/danny_smoke_test.py`: a small environment check; it starts no research job.
+- `scripts/workstation_smoke_test.py`: a small environment check; it starts no research job.
 
 ## Quick verification
 
@@ -23,7 +23,7 @@ the repository root:
 
 ```bash
 python -m pip install -r requirements.txt
-python scripts/danny_smoke_test.py
+python scripts/workstation_smoke_test.py
 ```
 
 Set the import path and run the small test suite:
@@ -36,7 +36,7 @@ python "Realistic system size/code/rpm_full14_quadrupole_experiment.py" --stage 
 
 In PowerShell, use `$env:PYTHONPATH = 'Realistic system size/code'` instead
 of `export`. The tests and smoke stage do not need saved production data or
-access to Danny. Run only the `--stage smoke` command above for a quick
+access to Kapit Work Station. Run only the `--stage smoke` command above for a quick
 numerical check; full experiments are separate, expensive jobs.
 
 See [environment and run provenance](methods/provenance.md) for tested

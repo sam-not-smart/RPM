@@ -27,7 +27,9 @@ or the cancellation curves in Fig. 1.
 
 - Consolidation tests: Python 3.12.4, NumPy 2.3.5, SciPy 1.18.0,
   Matplotlib 3.10.8.
-- Archived Danny manifests record Python 3.11.15 for the poster and
+- Kapit Work Station is the compute host; archived hostnames such as
+  `Preposteron` are retained as recorded.
+- Archived Kapit Work Station manifests record Python 3.11.15 for the poster and
   full-bath runs. Consult each run's manifest for any recorded library
   versions; do not assume that the consolidation versions are identical
   to every historical environment.

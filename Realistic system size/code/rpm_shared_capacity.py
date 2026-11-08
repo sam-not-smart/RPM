@@ -1,4 +1,4 @@
-"""Read-only headroom checks for explicitly authorized shared Danny runs."""
+"""Read-only headroom checks for explicitly authorized shared Kapit Work Station runs."""
 from __future__ import annotations
 
 import math

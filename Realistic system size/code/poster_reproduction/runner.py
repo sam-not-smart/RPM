@@ -2,7 +2,7 @@
 
 Examples
 --------
-Run a plumbing smoke test on Danny::
+Run a plumbing smoke test on Kapit Work Station::
 
     python -m poster_reproduction.runner --stage smoke --workers 4 --resume
 

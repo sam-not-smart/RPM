@@ -1,8 +1,8 @@
-"""Read-only environment and numerical smoke test for the Danny workstation.
+"""Read-only environment and numerical smoke test for Kapit Work Station.
 
 Run from the repository root with the intended Conda environment activated:
 
-    python scripts/danny_smoke_test.py
+    python scripts/workstation_smoke_test.py
 
 The test does not write to the repository or run a sustained benchmark.  A
 temporary Matplotlib image is created in the system temporary directory and
@@ -91,7 +91,7 @@ def command_output(command: list[str]) -> str | None:
 
 
 def print_system_info() -> None:
-    print("Danny environment smoke test")
+    print("Kapit Work Station environment smoke test")
     print("=" * 28)
     print(f"Hostname:          {socket.gethostname()}")
     print(f"Operating system:  {platform.platform()}")
@@ -170,7 +170,7 @@ def check_numerics(packages: dict[str, object]) -> list[str]:
             matplotlib.use("Agg")
             from matplotlib import pyplot as plt
 
-            with tempfile.TemporaryDirectory(prefix="danny-smoke-") as directory:
+            with tempfile.TemporaryDirectory(prefix="workstation-smoke-") as directory:
                 output = Path(directory) / "smoke.png"
                 figure, axis = plt.subplots(figsize=(2, 2))
                 axis.plot([0, 1], [0, 1])
