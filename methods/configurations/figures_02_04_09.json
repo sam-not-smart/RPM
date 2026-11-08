@@ -1,0 +1,299 @@
+{
+  "source": "Archived production model manifest plus verified figure-specific inventories",
+  "tensor_export": "../hyperfine_tensors.json",
+  "tensor_reference_frame": "shared flavin molecular frame",
+  "field_plane": "molecular zx plane, B=[sin(theta),0,cos(theta)]",
+  "electron_coupling": {
+    "H_dipolar": "D ((S.n)^2 - S^2/3)",
+    "H_exchange": "-J (S^2 - 1)",
+    "axis_molecular": [
+      1,
+      0,
+      0
+    ],
+    "condition_id": "eh_R_m3p000000",
+    "convention": "Efimova-Hore Eqs. 9-10",
+    "d_paper_MHz": -9.7405,
+    "d_paper_uT": -347.875,
+    "dipolar_axis": [
+      1,
+      0,
+      0
+    ],
+    "exchange_J_MHz": 3.246833333333333,
+    "exchange_J_uT": 115.95833333333333,
+    "family": "efimova_hore",
+    "quadrupole_scale": 0,
+    "r_nm": 2,
+    "ratio_D_over_J": -3,
+    "role": "paper_cancellation_scan"
+  },
+  "quadrupole_scale": 0,
+  "recombination": {
+    "lifetime_us": 5,
+    "model": "equal singlet/triplet first-order recombination",
+    "rate_per_us": 0.2,
+    "tail_bound": 0.0001,
+    "yield": "integral_0^T exp(-t/tau) P_S(t) dt/tau"
+  },
+  "propagation_and_integration": {
+    "coarse_integration_step_us": 0.0025,
+    "dipole_paper_magnitudes_uT": [
+      0,
+      50,
+      75,
+      100,
+      150,
+      200,
+      300,
+      347.875,
+      400,
+      500,
+      600
+    ],
+    "field_microT": 50,
+    "integration_step_us": 0.00125,
+    "lanczos_dimension_increment": 8,
+    "lanczos_embedded_offset": 4,
+    "lanczos_initial_step_us": 0.05,
+    "lanczos_maximum_dimension": 64,
+    "lanczos_maximum_step_us": 0.25,
+    "lanczos_minimum_dimension": 24,
+    "lanczos_safety_factor": 2,
+    "lifetime_us": 5,
+    "low_exchange_uT": [
+      -10,
+      -5,
+      0,
+      5,
+      10
+    ],
+    "negative_ratios": [
+      -8,
+      -6,
+      -5,
+      -4.5,
+      -4.25,
+      -4,
+      -3.75,
+      -3.5,
+      -3,
+      -2.5,
+      -2
+    ],
+    "nuclear_dimension": 55296,
+    "positive_ratios": [
+      4,
+      5,
+      6,
+      7,
+      7.5,
+      8,
+      8.5,
+      9,
+      10,
+      12,
+      16
+    ],
+    "published_dipolar_tensor_MHz": [
+      [
+        1.09,
+        -12.12,
+        4.91
+      ],
+      [
+        -12.12,
+        -7.8,
+        7.02
+      ],
+      [
+        4.91,
+        7.02,
+        6.71
+      ]
+    ],
+    "quadrupole_scale": 0,
+    "refined_angles_deg": [
+      0,
+      15,
+      30,
+      45,
+      60,
+      75,
+      90,
+      105,
+      120,
+      135,
+      150,
+      165,
+      180
+    ],
+    "schema_version": 1,
+    "screen_angles_deg": [
+      0,
+      30,
+      60,
+      90,
+      120,
+      150,
+      180
+    ],
+    "seed": 20260731,
+    "spin_order": [
+      "eA",
+      "eB",
+      "FAD:N5",
+      "FAD:N10",
+      "FAD:H6",
+      "FAD:H8a",
+      "FAD:H8b",
+      "FAD:H8c",
+      "FAD:Hbeta",
+      "TrpH:N1",
+      "TrpH:H1",
+      "TrpH:H2",
+      "TrpH:H4",
+      "TrpH:H5",
+      "TrpH:H7",
+      "TrpH:Hbeta1"
+    ],
+    "state_dimension": 221184,
+    "state_error_budget": 0.000024,
+    "survival_tail_bound": 0.0001,
+    "system_dimensions": [
+      2,
+      2,
+      3,
+      3,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  "sampler_defaults": {
+    "master_seed": 20260731,
+    "overhauser_standard_error_target": 0.00002,
+    "overhauser_target_basis": "conservative threshold below the 2.52e-5 minimum representative M=16 quantum standard error",
+    "pairing": "same sample ID reused across all compared conditions",
+    "production_samples": 16,
+    "quantum_yields": "global random-phase nuclear trace vectors",
+    "trajectory_entanglement": "uniform computational-basis nuclear product states"
+  },
+  "archive_id": "poster_reproduction_multisample",
+  "plotted_figures_2_and_3": {
+    "fields_mT": [
+      0.05,
+      0.1,
+      0.2,
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      20,
+      50,
+      100,
+      400
+    ],
+    "theta_deg": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      160,
+      170,
+      180
+    ],
+    "samples": 4,
+    "sample_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "master_seed": 20260731,
+    "note": "The plotted M=4 curves use sample IDs 0–3 even where older jobs saved more samples."
+  },
+  "plotted_figure_4": {
+    "fields_mT": [
+      0.05,
+      2,
+      20
+    ],
+    "theta_deg": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      110,
+      120,
+      130,
+      140,
+      150,
+      160,
+      170,
+      180
+    ],
+    "quantum_samples": 4,
+    "master_seed": 20260731,
+    "gaussian_scrambles": 8,
+    "gaussian_draw_count_per_angle": [
+      8388608,
+      16777216
+    ],
+    "atomwise_draw_count_per_angle": 4096
+  },
+  "plotted_figure_9": {
+    "coarse_time_points": 781,
+    "field_mT": 0.05,
+    "fine_time_points": 1561,
+    "quadrature_check": "fine Simpson average minus nested coarse Simpson average",
+    "theta_deg": 90,
+    "time_grid_version": "dense_early_v3",
+    "time_window_us": [
+      0,
+      2
+    ],
+    "nuclear_counts": [
+      4,
+      6,
+      8,
+      10,
+      12,
+      14
+    ],
+    "samples": 16,
+    "master_seed": 20260731,
+    "initial_nuclear_state": "uniformly sampled computational-basis product states",
+    "time_average": "unweighted Simpson average over the closed-system trace"
+  },
+  "archived_production_model_hash": "1923c486837d479449665e6f252409875bc00f409ad3d36488fb35ed39eed9eb"
+}

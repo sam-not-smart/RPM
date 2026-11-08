@@ -1,0 +1,40 @@
+{
+  "figure": 7,
+  "angle_step_deg": 0.05,
+  "b_lower_uT": 5,
+  "b_upper_uT": 500,
+  "optimizer_xatol_uT": 0.02,
+  "field_mT": 0.05,
+  "trp_n1_tensor_mT": [
+    0,
+    0,
+    1.0812
+  ],
+  "axial_couplings_mT": [
+    0.6046,
+    1.2,
+    1.7569
+  ],
+  "lifetimes_us": [
+    5,
+    10,
+    20,
+    50,
+    100
+  ],
+  "real_n5_b_uT": 132.5,
+  "direct_check_tau_us": 29,
+  "hamiltonian_dimension": 36,
+  "J_uT": 0,
+  "D_uT": 0,
+  "relaxation": false,
+  "nuclear_zeeman": false,
+  "yield_method": "exact equal-rate eigenbasis integral",
+  "quadrupole_scale": 0,
+  "nuclear_sampling": "exact",
+  "angular_interval_deg": [
+    0,
+    90
+  ],
+  "archive_id": "two_nucleus_optimum_reproduction"
+}

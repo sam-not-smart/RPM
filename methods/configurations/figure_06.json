@@ -1,0 +1,16 @@
+{
+  "figure": 6,
+  "status": "reference_plot_only",
+  "origin": "Earlier laptop analysis in the transverse/axial brief",
+  "field_mT": 0.05,
+  "lifetimes_us": [
+    1,
+    10,
+    100
+  ],
+  "transverse_scale_count": 17,
+  "transverse_scale_grid": null,
+  "exact_source_revision": null,
+  "raw_arrays": null,
+  "note": "Do not treat the later Fig. 7 or three-nitrogen sweep as this run."
+}

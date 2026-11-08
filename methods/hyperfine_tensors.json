@@ -1,0 +1,676 @@
+{
+  "source": "Hiscock et al. 2016, The quantum needle of the avian magnetic compass, supporting information Tables S1–S2; verified against the Danny production manifest",
+  "doi": "10.1073/pnas.1600341113",
+  "reference_frame": "Shared flavin molecular xyz frame. x and y lie in the flavin plane; z is normal. TrpH tensors are already expressed in this frame.",
+  "field_orientation": "Theta is measured from +z toward +x in the molecular zx plane, B/B0 = [sin(theta), 0, cos(theta)].",
+  "units": "mT, field-equivalent hyperfine couplings; production converts with gamma_e/(2*pi) = 28.0 MHz/mT",
+  "axis_convention": "Principal values sorted ascending. Eigenvectors are columns of a right-handed orthonormal matrix V. A = V diag(principal_values) V^T. Signs of principal axes are arbitrary; isotropic sites are listed with V = I because they have no unique axes.",
+  "production_archive": "poster_reproduction_multisample/model_manifest.json (separate archive)",
+  "production_manifest_configuration_hash": "1923c486837d479449665e6f252409875bc00f409ad3d36488fb35ed39eed9eb",
+  "production_quadrupole_scale": 0,
+  "nuclei": [
+    {
+      "name": "FAD:N5",
+      "axis": 2,
+      "spin": 1,
+      "dimension": 3,
+      "hyperfine_tensor_mT": [
+        [
+          -0.0989,
+          0.0039,
+          0
+        ],
+        [
+          0.0039,
+          -0.0881,
+          0
+        ],
+        [
+          0,
+          0,
+          1.7569
+        ]
+      ],
+      "principal_values_mT": [
+        -0.10016108099335236,
+        -0.08683891900664764,
+        1.7569
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.951493360039859,
+          0.30766927990954746,
+          0
+        ],
+        [
+          -0.30766927990954746,
+          0.951493360039859,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "FAD:N10",
+      "axis": 3,
+      "spin": 1,
+      "dimension": 3,
+      "hyperfine_tensor_mT": [
+        [
+          -0.019,
+          -0.0048,
+          0
+        ],
+        [
+          -0.0048,
+          -0.0196,
+          0
+        ],
+        [
+          0,
+          0,
+          0.6046
+        ]
+      ],
+      "principal_values_mT": [
+        -0.024109365862564416,
+        -0.01449063413743558,
+        0.6046
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.6846976390512892,
+          0.7288272381556484,
+          0
+        ],
+        [
+          0.7288272381556484,
+          -0.6846976390512892,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "FAD:H6",
+      "axis": 4,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          -0.2569,
+          -0.1273,
+          0
+        ],
+        [
+          -0.1273,
+          -0.4711,
+          0
+        ],
+        [
+          0,
+          0,
+          -0.4336
+        ]
+      ],
+      "principal_values_mT": [
+        -0.5303601514786519,
+        -0.4336,
+        -0.19763984852134814
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.4220284484479427,
+          0,
+          0.9065825879094646
+        ],
+        [
+          0.9065825879094646,
+          0,
+          -0.4220284484479427
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "FAD:H8a",
+      "axis": 5,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          0.4399,
+          0,
+          0
+        ],
+        [
+          0,
+          0.4399,
+          0
+        ],
+        [
+          0,
+          0,
+          0.4399
+        ]
+      ],
+      "principal_values_mT": [
+        0.4399,
+        0.4399,
+        0.4399
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "isotropic_no_unique_axes": true
+    },
+    {
+      "name": "FAD:H8b",
+      "axis": 6,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          0.4399,
+          0,
+          0
+        ],
+        [
+          0,
+          0.4399,
+          0
+        ],
+        [
+          0,
+          0,
+          0.4399
+        ]
+      ],
+      "principal_values_mT": [
+        0.4399,
+        0.4399,
+        0.4399
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "isotropic_no_unique_axes": true
+    },
+    {
+      "name": "FAD:H8c",
+      "axis": 7,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          0.4399,
+          0,
+          0
+        ],
+        [
+          0,
+          0.4399,
+          0
+        ],
+        [
+          0,
+          0,
+          0.4399
+        ]
+      ],
+      "principal_values_mT": [
+        0.4399,
+        0.4399,
+        0.4399
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "isotropic_no_unique_axes": true
+    },
+    {
+      "name": "FAD:Hbeta",
+      "axis": 8,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          0.407,
+          0,
+          0
+        ],
+        [
+          0,
+          0.407,
+          0
+        ],
+        [
+          0,
+          0,
+          0.407
+        ]
+      ],
+      "principal_values_mT": [
+        0.407,
+        0.407,
+        0.407
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "isotropic_no_unique_axes": true
+    },
+    {
+      "name": "TrpH:N1",
+      "axis": 9,
+      "spin": 1,
+      "dimension": 3,
+      "hyperfine_tensor_mT": [
+        [
+          -0.0336,
+          0.0924,
+          -0.1354
+        ],
+        [
+          0.0924,
+          0.3303,
+          -0.5318
+        ],
+        [
+          -0.1354,
+          -0.5318,
+          0.668
+        ]
+      ],
+      "principal_values_mT": [
+        -0.06360162160128692,
+        -0.0528889105751035,
+        1.0811905321763904
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.661585779806643,
+          0.7356366469195388,
+          0.14540625731588702
+        ],
+        [
+          0.5430073379470096,
+          -0.6037154456753148,
+          0.5836700194362898
+        ],
+        [
+          0.5171530594450142,
+          -0.3071911202525783,
+          -0.7988656512484612
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "TrpH:H1",
+      "axis": 10,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          -0.992,
+          -0.2091,
+          -0.2003
+        ],
+        [
+          -0.2091,
+          -0.2631,
+          0.2803
+        ],
+        [
+          -0.2003,
+          0.2803,
+          -0.5398
+        ]
+      ],
+      "principal_values_mT": [
+        -1.082473924289432,
+        -0.7054739550484742,
+        -0.006952120662093608
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.950190240897854,
+          -0.14157423220979828,
+          0.2776603012255882
+        ],
+        [
+          0.14880018657020394,
+          -0.5767221024435836,
+          -0.8032746236684715
+        ],
+        [
+          0.2738558207874185,
+          0.8045796127961846,
+          -0.526929441285634
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "TrpH:H2",
+      "axis": 11,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          -0.2843,
+          0.1757,
+          0.1525
+        ],
+        [
+          0.1757,
+          -0.2798,
+          0.0975
+        ],
+        [
+          0.1525,
+          0.0975,
+          -0.2699
+        ]
+      ],
+      "principal_values_mT": [
+        -0.47153574119310365,
+        -0.3698990254414838,
+        0.007434766634587519
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.7738794450692053,
+          -0.11377403214654774,
+          -0.6230297537906959
+        ],
+        [
+          -0.5457099591889574,
+          -0.6190386661731363,
+          -0.5647935642556231
+        ],
+        [
+          -0.32142066663698754,
+          0.7770756715994269,
+          -0.5411489218939036
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "TrpH:H4",
+      "axis": 12,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          -0.5596,
+          -0.1956,
+          -0.1657
+        ],
+        [
+          -0.1956,
+          -0.402,
+          0.0762
+        ],
+        [
+          -0.1657,
+          0.0762,
+          -0.5021
+        ]
+      ],
+      "principal_values_mT": [
+        -0.7398602422436465,
+        -0.5359025999926371,
+        -0.18793715776371606
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.8136483492654634,
+          -0.13430684412829197,
+          0.5656306527743046
+        ],
+        [
+          0.36989845316379555,
+          -0.6309994805852079,
+          -0.6819199292059362
+        ],
+        [
+          0.4484991617434957,
+          0.7640689282528749,
+          -0.4637317918731528
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "TrpH:H5",
+      "axis": 13,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          0.0051,
+          0.0616,
+          0.0694
+        ],
+        [
+          0.0616,
+          -0.0665,
+          0.0391
+        ],
+        [
+          0.0694,
+          0.0391,
+          -0.0586
+        ]
+      ],
+      "principal_values_mT": [
+        -0.10317364970108403,
+        -0.10162077938636314,
+        0.08479442908744715
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          -0.6022454955638464,
+          -0.24857464310203695,
+          -0.75862441951189
+        ],
+        [
+          0.18315557822835893,
+          0.8819148280159825,
+          -0.434373422632388
+        ],
+        [
+          0.7770163429664092,
+          -0.4005457313868599,
+          -0.4856014001533285
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "TrpH:H7",
+      "axis": 14,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          -0.4355,
+          -0.1541,
+          -0.1239
+        ],
+        [
+          -0.1541,
+          -0.2777,
+          0.0864
+        ],
+        [
+          -0.1239,
+          0.0864,
+          -0.377
+        ]
+      ],
+      "principal_values_mT": [
+        -0.5580223079721134,
+        -0.42267277855398994,
+        -0.1095049134738967
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.8443524251826298,
+          -0.14107962109143157,
+          0.516880568991435
+        ],
+        [
+          0.33537499154854866,
+          -0.613178895678772,
+          -0.7152169299855621
+        ],
+        [
+          0.41784278997252344,
+          0.7772439658220963,
+          -0.47042451090596654
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    },
+    {
+      "name": "TrpH:Hbeta1",
+      "axis": 15,
+      "spin": 0.5,
+      "dimension": 2,
+      "hyperfine_tensor_mT": [
+        [
+          1.5808,
+          -0.0453,
+          -0.0506
+        ],
+        [
+          -0.0453,
+          1.5575,
+          0.0988
+        ],
+        [
+          -0.0506,
+          0.0988,
+          1.6752
+        ]
+      ],
+      "principal_values_mT": [
+        1.4981086395421015,
+        1.5588567262940851,
+        1.7565346341638135
+      ],
+      "principal_axes_columns_in_flavin_xyz": [
+        [
+          0.219482678966095,
+          0.9088554910305608,
+          0.35469571474358663
+        ],
+        [
+          0.8773303435008989,
+          -0.024836841091444295,
+          -0.4792437789864289
+        ],
+        [
+          -0.4267538189711497,
+          0.41637102174406426,
+          -0.8028177565583255
+        ]
+      ],
+      "isotropic_no_unique_axes": false
+    }
+  ],
+  "system_dimensions": [
+    2,
+    2,
+    3,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "max_absolute_reconstruction_error_mT": 8.881784197001252e-16
+}
