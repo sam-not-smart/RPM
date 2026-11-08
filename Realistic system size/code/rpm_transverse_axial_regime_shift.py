@@ -5,7 +5,7 @@ paired intervention in which only the transverse principal values of FAD N5
 and N10 are set to zero.  It retains the Efimova-Hore D/J=-3 cancellation
 condition, Q=0, a 5-us lifetime, and the production matrix-free Lanczos
 propagator.  The M=1 discovery grid is deliberately multiresolution so it can
-complete within a three-day Danny allocation.
+complete within a three-day Kapit Work Station allocation.
 """
 
 from __future__ import annotations

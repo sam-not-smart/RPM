@@ -2,7 +2,7 @@
 
 This experiment asks whether ideal periodic pi rotations of the dominant FAD
 nitrogen suppress the low-field angular singlet-yield feature.  It uses the
-current complete 14-nucleus, nonfactorized Danny Hamiltonian and a 10-us
+current complete 14-nucleus, nonfactorized Kapit Work Station Hamiltonian and a 10-us
 recombination lifetime.  A paired M=1 five-angle interval screen is followed
 by an M=4 85--95 degree confirmation of the best sequence when a prespecified
 damping gate is met.

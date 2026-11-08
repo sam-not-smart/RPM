@@ -68,7 +68,7 @@ BOOTSTRAP_REPLICATES = 2000
 
 @dataclass(frozen=True)
 class ProductionModel:
-    """The exact currently validated Danny model used by this experiment."""
+    """The exact currently validated Kapit Work Station model used by this experiment."""
 
     master_seed: int = MASTER_SEED
     samples: int = PRODUCTION_SAMPLE_COUNT
@@ -79,7 +79,7 @@ class ProductionModel:
 
     @property
     def condition(self):
-        # This is the production condition used by the latest Danny runner.
+        # This is the production condition used by the latest Kapit Work Station runner.
         return efimova_hore_ratio_condition(self.ratio_D_over_J)
 
     @property
@@ -611,7 +611,7 @@ def model_manifest(model: ProductionModel = PRODUCTION_MODEL) -> dict[str, objec
         },
         "quadrupole_machinery": "available for all spin-1 nuclei",
         "quadrupole_scale": model.quadrupole_scale,
-        "quadrupole_note": "Frozen to the latest validated Danny production value Q=0; no nonzero Q is introduced here.",
+        "quadrupole_note": "Frozen to the latest validated Kapit Work Station production value Q=0; no nonzero Q is introduced here.",
         "electron_coupling": {
             **condition.stable_dict(),
             "H_exchange": "-J (S^2 - 1)",

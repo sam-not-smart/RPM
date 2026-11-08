@@ -1,5 +1,5 @@
 {
-  "source": "Hiscock et al. 2016, The quantum needle of the avian magnetic compass, supporting information Tables S1–S2; verified against the Danny production manifest",
+  "source": "Hiscock et al. 2016, The quantum needle of the avian magnetic compass, supporting information Tables S1–S2; verified against the Kapit Work Station production manifest",
   "doi": "10.1073/pnas.1600341113",
   "reference_frame": "Shared flavin molecular xyz frame. x and y lie in the flavin plane; z is normal. TrpH tensors are already expressed in this frame.",
   "field_orientation": "Theta is measured from +z toward +x in the molecular zx plane, B/B0 = [sin(theta), 0, cos(theta)].",

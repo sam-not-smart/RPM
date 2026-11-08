@@ -539,7 +539,7 @@ def plot_bridge(output):
         axes[1,col].axhline(0,color="gray",lw=.6)
         axes[1,col].set(xlabel=r"time ($\mu$s)",ylabel=r"$\Delta P_S(t)$",xlim=(0,10))
         axes[1,col].legend(fontsize=8)
-    fig.suptitle("Small-model bridge to the Danny cancellation baseline",fontsize=13)
+    fig.suptitle("Small-model bridge to the Kapit Work Station cancellation baseline",fontsize=13)
     fig.supxlabel(r"Three nuclei only; $D_{\rm EH}=-347.875\,\mu$T, $J=115.9583\,\mu$T, $D/J=-3$, dipolar axis x; Q off vs nominal",fontsize=9)
     save_fig(fig,output,"quadrupole_coupling_bridge")
 
@@ -583,7 +583,7 @@ def report(output):
     plot_dynamics(output);plot_bridge(output)
     notes=f"""# Three-nitrogen quadrupole experiment
 
-Approved experiment 1 only. Local laptop calculation; no Danny jobs.
+Approved experiment 1 only. Local laptop calculation; no Kapit Work Station jobs.
 
 ## Fixed model
 
@@ -625,7 +625,7 @@ not automatically mean altered magnetosensitivity.
 The small-model bridge retains only Q off/all nominal and sparse angles with
 the literal Efimova-Hore D/J=-3 condition, D=-347.875 uT and J=115.9583 uT,
 dipolar axis x. Dashed bridge lines connect sampled points and do not resolve
-needle shape. This is still only a three-nucleus model, not the Danny study.
+needle shape. This is still only a three-nucleus model, not the Kapit Work Station study.
 
 ## Verification
 
@@ -651,7 +651,7 @@ five PDF figures (dynamics has two pages) and white-background PNGs.
         table.append(f"| {row['field_mT']:g} | {row['tau_us']:g} | {row['phi_90']-row['delta_phi_90']:.6f} | {row['phi_90']:.6f} | {row['delta_phi_90']:+.6f} | {row['delta_contrast_0_90']:+.6f} |")
     results="""# Experiment 1 results: quadrupoles in the three-nitrogen toy
 
-Completed on the laptop. No full 14-nucleus or Danny run was launched.
+Completed on the laptop. No full 14-nucleus or Kapit Work Station run was launched.
 
 ## Main result
 
@@ -671,7 +671,7 @@ Delta means Q on minus Q off; yields are probabilities, not percentages.
 
 The main table is J=D=0. Hyperfine tensors and their aligned axes are unchanged.
 The small-model D/J=-3 bridge also shows a quadrupole effect; it is a sparse
-exploration and remains a three-nucleus calculation, not a Danny result.
+exploration and remains a three-nucleus calculation, not a Kapit Work Station result.
 The low-field effect remains across all three tested N5 azimuths; the high-field
 fine structure should not be interpreted without its orientation sensitivity.
 No inference about the size of the effect in the full bath is made here.
