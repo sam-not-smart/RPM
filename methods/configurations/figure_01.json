@@ -1,0 +1,188 @@
+{
+  "figure": 1,
+  "archived_run": {
+    "configuration": {
+      "coarse_integration_step_us": 0.0025,
+      "dipole_paper_magnitudes_uT": [
+        0,
+        50,
+        75,
+        100,
+        150,
+        200,
+        300,
+        347.875,
+        400,
+        500,
+        600
+      ],
+      "field_microT": 50,
+      "integration_step_us": 0.00125,
+      "lanczos_dimension_increment": 8,
+      "lanczos_embedded_offset": 4,
+      "lanczos_initial_step_us": 0.05,
+      "lanczos_maximum_dimension": 64,
+      "lanczos_maximum_step_us": 0.25,
+      "lanczos_minimum_dimension": 24,
+      "lanczos_safety_factor": 2,
+      "lifetime_us": 2,
+      "low_exchange_uT": [
+        -10,
+        -5,
+        0,
+        5,
+        10
+      ],
+      "negative_ratios": [
+        -8,
+        -6,
+        -5,
+        -4.5,
+        -4.25,
+        -4,
+        -3.75,
+        -3.5,
+        -3,
+        -2.5,
+        -2
+      ],
+      "nuclear_dimension": 55296,
+      "positive_ratios": [
+        4,
+        5,
+        6,
+        7,
+        7.5,
+        8,
+        8.5,
+        9,
+        10,
+        12,
+        16
+      ],
+      "published_dipolar_tensor_MHz": [
+        [
+          1.09,
+          -12.12,
+          4.91
+        ],
+        [
+          -12.12,
+          -7.8,
+          7.02
+        ],
+        [
+          4.91,
+          7.02,
+          6.71
+        ]
+      ],
+      "quadrupole_scale": 0,
+      "refined_angles_deg": [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        90,
+        105,
+        120,
+        135,
+        150,
+        165,
+        180
+      ],
+      "schema_version": 1,
+      "screen_angles_deg": [
+        0,
+        30,
+        60,
+        90,
+        120,
+        150,
+        180
+      ],
+      "seed": 20260715,
+      "spin_order": [
+        "eA",
+        "eB",
+        "FAD:N5",
+        "FAD:N10",
+        "FAD:H6",
+        "FAD:H8a",
+        "FAD:H8b",
+        "FAD:H8c",
+        "FAD:Hbeta",
+        "TrpH:N1",
+        "TrpH:H1",
+        "TrpH:H2",
+        "TrpH:H4",
+        "TrpH:H5",
+        "TrpH:H7",
+        "TrpH:Hbeta1"
+      ],
+      "state_dimension": 221184,
+      "state_error_budget": 0.000024,
+      "survival_tail_bound": 0.0001,
+      "system_dimensions": [
+        2,
+        2,
+        3,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "configuration_hash": "fbb20e111278a173c8afed5d1562db3c1df482a4dfc43df2a4b035581bb7bd30",
+    "git_commit": "unknown",
+    "environment": null,
+    "source_sha256": null
+  },
+  "plotted_selection": {
+    "field_mT": 0.05,
+    "lifetime_us": 2,
+    "quadrupole_scale": 0,
+    "random_phase_samples": 4,
+    "angles_deg": [
+      0,
+      30,
+      60,
+      90,
+      120,
+      150,
+      180
+    ],
+    "master_seed": 20260715,
+    "conditions": [
+      {
+        "D_uT": 0,
+        "J_uT": 0
+      },
+      {
+        "D_uT": -347.875,
+        "J_uT": 0
+      },
+      {
+        "D_uT": -347.875,
+        "J_uT": 115.95833333333333
+      },
+      {
+        "D_uT": -347.875,
+        "J_uT": -57.979166666666664
+      }
+    ]
+  },
+  "archive_id": "quantum_needle_efimova_hore_24h",
+  "note": "Archived launch commit is unknown; settings and raw sample identifiers are preserved."
+}

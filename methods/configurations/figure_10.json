@@ -1,0 +1,9 @@
+{
+  "figure": 10,
+  "status": "reference_plot_only",
+  "origin": "Plot carried over from earlier laptop analysis",
+  "configuration": null,
+  "source_revision": null,
+  "raw_arrays": null,
+  "note": "The source ZIP contains images, not a simulation or plotting script. Settings are not inferred from the image."
+}

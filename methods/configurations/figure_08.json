@@ -1,0 +1,230 @@
+{
+  "figure": 8,
+  "configuration": {
+    "bootstrap_replicates": 2000,
+    "coarse_integration_step_us": 0.0025,
+    "confirm_angles_deg": [
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95
+    ],
+    "confirm_samples": 4,
+    "damping_gate_fraction": 0.1,
+    "field_mT": 0.05,
+    "integration_step_us": 0.00125,
+    "lifetime_us": 10,
+    "master_seed": 20260731,
+    "maximum_time_us": 92.10340371976181,
+    "model": {
+      "condition": {
+        "condition_id": "eh_R_m3p000000",
+        "convention": "Efimova-Hore Eqs. 9-10",
+        "d_paper_MHz": -9.7405,
+        "d_paper_uT": -347.875,
+        "dipolar_axis": [
+          1,
+          0,
+          0
+        ],
+        "exchange_J_MHz": 3.246833333333333,
+        "exchange_J_uT": 115.95833333333333,
+        "family": "efimova_hore",
+        "quadrupole_scale": 0,
+        "ratio_D_over_J": -3,
+        "role": "paper_cancellation_scan"
+      },
+      "field_plane": "molecular zx plane, B=[sin(theta),0,cos(theta)]",
+      "lifetime_us": 10,
+      "master_seed": 20260731,
+      "propagation": {
+        "coarse_integration_step_us": 0.0025,
+        "dipole_paper_magnitudes_uT": [
+          0,
+          50,
+          75,
+          100,
+          150,
+          200,
+          300,
+          347.875,
+          400,
+          500,
+          600
+        ],
+        "field_microT": 50,
+        "integration_step_us": 0.00125,
+        "lanczos_dimension_increment": 8,
+        "lanczos_embedded_offset": 4,
+        "lanczos_initial_step_us": 0.05,
+        "lanczos_maximum_dimension": 64,
+        "lanczos_maximum_step_us": 0.25,
+        "lanczos_minimum_dimension": 24,
+        "lanczos_safety_factor": 2,
+        "lifetime_us": 10,
+        "low_exchange_uT": [
+          -10,
+          -5,
+          0,
+          5,
+          10
+        ],
+        "negative_ratios": [
+          -8,
+          -6,
+          -5,
+          -4.5,
+          -4.25,
+          -4,
+          -3.75,
+          -3.5,
+          -3,
+          -2.5,
+          -2
+        ],
+        "nuclear_dimension": 55296,
+        "positive_ratios": [
+          4,
+          5,
+          6,
+          7,
+          7.5,
+          8,
+          8.5,
+          9,
+          10,
+          12,
+          16
+        ],
+        "published_dipolar_tensor_MHz": [
+          [
+            1.09,
+            -12.12,
+            4.91
+          ],
+          [
+            -12.12,
+            -7.8,
+            7.02
+          ],
+          [
+            4.91,
+            7.02,
+            6.71
+          ]
+        ],
+        "quadrupole_scale": 0,
+        "refined_angles_deg": [
+          0,
+          15,
+          30,
+          45,
+          60,
+          75,
+          90,
+          105,
+          120,
+          135,
+          150,
+          165,
+          180
+        ],
+        "schema_version": 1,
+        "screen_angles_deg": [
+          0,
+          30,
+          60,
+          90,
+          120,
+          150,
+          180
+        ],
+        "seed": 20260731,
+        "spin_order": [
+          "eA",
+          "eB",
+          "FAD:N5",
+          "FAD:N10",
+          "FAD:H6",
+          "FAD:H8a",
+          "FAD:H8b",
+          "FAD:H8c",
+          "FAD:Hbeta",
+          "TrpH:N1",
+          "TrpH:H1",
+          "TrpH:H2",
+          "TrpH:H4",
+          "TrpH:H5",
+          "TrpH:H7",
+          "TrpH:Hbeta1"
+        ],
+        "state_dimension": 221184,
+        "state_error_budget": 0.000024,
+        "survival_tail_bound": 0.0001,
+        "system_dimensions": [
+          2,
+          2,
+          3,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          3,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      },
+      "quadrupole_scale": 0,
+      "ratio_D_over_J": -3,
+      "samples": 4
+    },
+    "poster_target": "FAD:N10",
+    "primary_target": "FAD:N5",
+    "pulse": {
+      "axis": "target hyperfine tensor dominant principal axis",
+      "interpretation": "ideal mechanistic control; no finite pulse width or drive Hamiltonian",
+      "rotation_angle_rad": 3.141592653589793,
+      "timing": "instantaneous pulses at t=n*interval through the full reaction horizon"
+    },
+    "pulse_intervals_us": [
+      0.02,
+      0.03,
+      0.05,
+      0.075,
+      0.1,
+      0.2
+    ],
+    "schema_version": 1,
+    "screen_angles_deg": [
+      88,
+      89,
+      90,
+      91,
+      92
+    ],
+    "screen_samples": 1,
+    "smoke": false,
+    "state_error_budget": 0.000024,
+    "survival_tail_bound": 0.0001
+  },
+  "configuration_hash": "86679c318200627fec0309595e47f79745c1e0f7d0d0ee91637b79f3976e54c9",
+  "git_commit": "7484260f2ff65454c2195043ec1f98652a25957e",
+  "environment": null,
+  "source_sha256": null,
+  "plotted_period_us": 0.2,
+  "archive_id": "nuclear_spin_rotation_control_tau10",
+  "note": "Fig. 8 uses the confirmation trajectories, detrended using the 85° and 95° endpoints."
+}
