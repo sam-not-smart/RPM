@@ -2,8 +2,7 @@
 
 This index describes the figures we’re working toward. Each row links to
 the current reference plot and records the settings used to produce it.
-Figure numbers follow the manuscript, not the older APS poster numbering
-used by `poster_reproduction`.
+Figure numbers follow the manuscript draft.
 
 ## Proposed full-bath model
 
