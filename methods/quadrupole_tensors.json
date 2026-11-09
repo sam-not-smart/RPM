@@ -1,0 +1,110 @@
+{
+  "description": "Nominal spin-1 nuclear quadrupoles used by the full-bath Q-on model.",
+  "source": "Efimova and Hore (2009), Table 2 principal values for FAD radical anion N5/N10 and protonated Trp radical cation N1; approximate orientation in the Hiscock flavin frame.",
+  "doi": "10.1080/00268970902852624",
+  "units": "field-equivalent mT; multiply by 2*pi*28 for rad/us; not the conventional quadrupole coupling constant chi",
+  "multiplier": {
+    "off": 0,
+    "nominal": 1
+  },
+  "frame": "Common flavin molecular xyz. x/y in the flavin plane; z is the ring normal.",
+  "tensor_construction": "Subtract each triplet's mean, assign its entries to the stated hyperfine principal axes, and rotate to flavin xyz. The eigenvectors from Supplementary Table 2 were not directly imported.",
+  "sites": {
+    "FAD:N5": {
+      "spin": 1,
+      "table2_principal_mT": [
+        0.031,
+        0.041,
+        -0.072
+      ],
+      "table2_tilt_from_local_ring_normal_deg": 90,
+      "nominal_dominant_axis_flavin_xyz": [
+        0.951493,
+        -0.307669,
+        0
+      ],
+      "orientation": "Qz along the lower-eigenvalue in-plane hyperfine axis (provisional azimuth), Qy along flavin z.",
+      "tensor_mT": [
+        [
+          -0.062249980262593874,
+          0.030152763522984453,
+          0
+        ],
+        [
+          0.030152763522984453,
+          0.02124998026259388,
+          0
+        ],
+        [
+          0,
+          0,
+          0.040999999999999995
+        ]
+      ]
+    },
+    "FAD:N10": {
+      "spin": 1,
+      "table2_principal_mT": [
+        0.032,
+        0.041,
+        -0.072
+      ],
+      "table2_tilt_from_local_ring_normal_deg": 0,
+      "nominal_dominant_axis_flavin_xyz": [
+        0,
+        0,
+        1
+      ],
+      "orientation": "Qz aligned with the dominant hyperfine axis, flavin z.",
+      "tensor_mT": [
+        [
+          0.03644736895436497,
+          -0.0044912366031729985,
+          0
+        ],
+        [
+          -0.0044912366031729985,
+          0.03588596437896834,
+          0
+        ],
+        [
+          0,
+          0,
+          -0.07233333333333333
+        ]
+      ]
+    },
+    "TrpH:N1": {
+      "spin": 1,
+      "table2_principal_mT": [
+        0.016,
+        0.02,
+        -0.036
+      ],
+      "table2_tilt_from_local_ring_normal_deg": 2.9,
+      "nominal_dominant_axis_flavin_xyz": [
+        -0.145406,
+        -0.58367,
+        0.798866
+      ],
+      "orientation": "Qz aligned with the dominant TrpH N1 hyperfine axis, about 37 degrees from flavin z; small local tilt neglected.",
+      "tensor_mT": [
+        [
+          0.01706521016250016,
+          -0.0061896630223540324,
+          0.005136399168541131
+        ],
+        [
+          -0.0061896630223540324,
+          -0.00025698660522767674,
+          0.02498806846622416
+        ],
+        [
+          0.005136399168541131,
+          0.02498806846622416,
+          -0.016808223557272517
+        ]
+      ]
+    }
+  }
+}

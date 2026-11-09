@@ -44,7 +44,8 @@ import scipy.interpolate
 import scipy.linalg
 import scipy.optimize
 
-from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, spin_operators
+from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, add_quadrupole_argument, spin_operators
+from rpm_statevector_engine import dense_aligned_toy_quadrupole
 
 
 DEFAULT_OUTPUT = Path("outputs") / "two_nucleus_optimum_reproduction"
@@ -76,6 +77,7 @@ _singlet = np.array([0.0, 1.0, -1.0, 0.0], dtype=complex) / math.sqrt(2.0)
 _singlet_projector = np.outer(_singlet, _singlet.conj())
 SINGLET_PROJECTOR = np.kron(_singlet_projector, np.eye(9, dtype=complex))
 NUCLEAR_DIMENSION = 9
+QUADRUPOLE = dense_aligned_toy_quadrupole(DIMENSIONS, ("FAD:N5", "TrpH:N1"))
 
 
 def transverse_tensor_mT(azz_mT: float, b_uT: float) -> np.ndarray:
@@ -118,10 +120,11 @@ class Configuration:
     b_lower_uT: float = 5.0
     b_upper_uT: float = 500.0
     optimizer_xatol_uT: float = 0.02
+    quadrupole_scale: float = 0.0
 
     def stable_dict(self) -> dict[str, object]:
         return {
-            **asdict(self),
+            **{k: v for k, v in asdict(self).items() if k != "quadrupole_scale" or v != 0},
             "field_mT": FIELD_MT,
             "trp_n1_tensor_mT": [0.0, 0.0, TRP_N1_AZZ_MT],
             "axial_couplings_mT": list(AXIAL_COUPLINGS_MT),
@@ -142,9 +145,10 @@ def angular_curve(
     b_uT: float,
     lifetime_us: float,
     angle_step_deg: float,
+    quadrupole_scale: float = 0.0,
 ) -> tuple[np.ndarray, np.ndarray]:
     theta = np.arange(0.0, 90.0 + 0.5 * angle_step_deg, angle_step_deg)
-    return theta, _yields_for_angles(azz_mT, b_uT, lifetime_us, theta)
+    return theta, _yields_for_angles(azz_mT, b_uT, lifetime_us, theta, quadrupole_scale)
 
 
 def _yields_for_angles(
@@ -152,8 +156,11 @@ def _yields_for_angles(
     b_uT: float,
     lifetime_us: float,
     theta: np.ndarray,
+    quadrupole_scale: float = 0.0,
 ) -> np.ndarray:
     hyperfine = _hyperfine_hamiltonian(azz_mT, b_uT)
+    if quadrupole_scale:
+        hyperfine += quadrupole_scale * QUADRUPOLE
     k = 1.0 / float(lifetime_us)
     yields = np.empty(theta.size, dtype=float)
     for index, angle in enumerate(theta):
@@ -175,8 +182,9 @@ def sensitivity(
     b_uT: float,
     lifetime_us: float,
     angle_step_deg: float,
+    quadrupole_scale: float = 0.0,
 ) -> tuple[float, float]:
-    theta, yields = angular_curve(azz_mT, b_uT, lifetime_us, angle_step_deg)
+    theta, yields = angular_curve(azz_mT, b_uT, lifetime_us, angle_step_deg, quadrupole_scale)
     coarse_gradient = np.gradient(yields, theta, edge_order=2)
     coarse_index = int(np.argmax(np.abs(coarse_gradient)))
 
@@ -191,7 +199,7 @@ def sensitivity(
     local_theta = np.arange(
         lower_window, upper_window + 0.5 * local_step, local_step
     )
-    local_yields = _yields_for_angles(azz_mT, b_uT, lifetime_us, local_theta)
+    local_yields = _yields_for_angles(azz_mT, b_uT, lifetime_us, local_theta, quadrupole_scale)
     spline = scipy.interpolate.CubicSpline(local_theta, local_yields)
     probe_step = local_step / 10.0
     probe = np.arange(lower_window, upper_window + 0.5 * probe_step, probe_step)
@@ -221,7 +229,7 @@ def optimize_cell(
         key = round(float(value), 9)
         if key not in evaluations:
             evaluations[key] = sensitivity(
-                azz_mT, key, lifetime_us, config.angle_step_deg
+                azz_mT, key, lifetime_us, config.angle_step_deg, config.quadrupole_scale
             )
         return -evaluations[key][0]
 
@@ -254,7 +262,8 @@ def optimize_cell(
             f"b optimization failed for Azz={azz_mT}, tau={lifetime_us}: {result.message}"
         )
     b_opt = float(result.x)
-    gamma, theta = sensitivity(azz_mT, b_opt, lifetime_us, config.angle_step_deg)
+    gamma, theta = sensitivity(azz_mT, b_opt, lifetime_us, config.angle_step_deg,
+                               config.quadrupole_scale)
     return {
         "azz_mT": float(azz_mT),
         "lifetime_us": float(lifetime_us),
@@ -310,12 +319,12 @@ def reproduce(config: Configuration) -> tuple[list[dict[str, float]], dict[str, 
     direct = []
     for b_value in DIRECT_CHECK_B_UT:
         gamma, theta = sensitivity(
-            1.7569, b_value, DIRECT_CHECK_TAU_US, config.angle_step_deg
+            1.7569, b_value, DIRECT_CHECK_TAU_US, config.angle_step_deg, config.quadrupole_scale
         )
         direct.append({"b_uT": b_value, "gamma": gamma, "theta_deg": theta})
     direct_peak = optimize_cell(1.7569, DIRECT_CHECK_TAU_US, config)
     real_gamma, real_theta = sensitivity(
-        1.7569, REAL_N5_B_UT, DIRECT_CHECK_TAU_US, config.angle_step_deg
+        1.7569, REAL_N5_B_UT, DIRECT_CHECK_TAU_US, config.angle_step_deg, config.quadrupole_scale
     )
 
     summary: dict[str, object] = {
@@ -462,8 +471,10 @@ def make_figure(
     )
     axes[2].legend(loc="upper left", fontsize=7.2, frameon=True)
 
+    scale = summary["configuration"].get("quadrupole_scale", 0.0)
     fig.suptitle(
-        "Modelling of the transverse-coupling optimum",
+        "Modelling of the transverse-coupling optimum" +
+        (f" (Q scale={scale:g}, exploratory)" if scale else ""),
         fontsize=12,
     )
     for suffix in ("png", "pdf"):
@@ -495,6 +506,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--b-upper", type=float, default=500.0)
     parser.add_argument("--optimizer-xatol", type=float, default=0.02)
     parser.add_argument("--report-only", action="store_true")
+    add_quadrupole_argument(parser, default=0.0)
     return parser.parse_args()
 
 
@@ -505,15 +517,18 @@ def main() -> None:
         b_lower_uT=args.b_lower,
         b_upper_uT=args.b_upper,
         optimizer_xatol_uT=args.optimizer_xatol,
+        quadrupole_scale=args.quadrupole_scale,
     )
     if config.angle_step_deg <= 0.0:
         raise ValueError("--angle-step must be positive")
     if not (0.0 < config.b_lower_uT < config.b_upper_uT):
         raise ValueError("require 0 < --b-lower < --b-upper")
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    (args.output_dir / "manifest.json").write_text(
-        json.dumps(config.stable_dict(), indent=2) + "\n"
-    )
+    manifest = args.output_dir / "manifest.json"
+    if manifest.exists() and json.loads(manifest.read_text()) != config.stable_dict():
+        raise ValueError("output manifest is incompatible with this configuration")
+    if not manifest.exists():
+        manifest.write_text(json.dumps(config.stable_dict(), indent=2) + "\n")
     if args.report_only:
         cells_path = args.output_dir / "section3_optimum_cells.csv"
         summary_path = args.output_dir / "section3_summary.json"

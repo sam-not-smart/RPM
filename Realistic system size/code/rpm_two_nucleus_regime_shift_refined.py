@@ -36,7 +36,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.linalg
 
-from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, spin_operators
+from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, add_quadrupole_argument, spin_operators
+from rpm_statevector_engine import dense_aligned_toy_quadrupole
 
 
 DEFAULT_OUTPUT = Path("outputs") / "two_nucleus_regime_shift_refined"
@@ -92,21 +93,25 @@ HYPERFINE = {
     "full": _hyperfine_hamiltonian(N5_TENSOR_MT),
     "transverse_ablated": _hyperfine_hamiltonian(np.diag([0.0, 0.0, N5_TENSOR_MT[2, 2]])),
 }
+QUADRUPOLE = dense_aligned_toy_quadrupole(DIMENSIONS, ("FAD:N5", "TrpH:N1"))
 
 
-def hamiltonian(condition: str, field_mT: float, theta_deg: float) -> np.ndarray:
+def hamiltonian(condition: str, field_mT: float, theta_deg: float,
+                quadrupole_scale: float = 0.0) -> np.ndarray:
     theta = math.radians(theta_deg)
     zeeman = field_mT * (
         math.sin(theta) * TOTAL_ELECTRON[0] + math.cos(theta) * TOTAL_ELECTRON[2]
     )
-    return HYPERFINE[condition] + TWOPI * GAMMA_E_MHZ_PER_MT * zeeman
+    h = HYPERFINE[condition] + TWOPI * GAMMA_E_MHZ_PER_MT * zeeman
+    return h if quadrupole_scale == 0 else h + quadrupole_scale * QUADRUPOLE
 
 
-def exact_singlet_yield(condition: str, field_mT: float, theta_deg: float) -> float:
+def exact_singlet_yield(condition: str, field_mT: float, theta_deg: float,
+                       quadrupole_scale: float = 0.0) -> float:
     """Return Phi_S for equal first-order S/T recombination, exactly."""
 
     energies, vectors = scipy.linalg.eigh(
-        hamiltonian(condition, field_mT, theta_deg),
+        hamiltonian(condition, field_mT, theta_deg, quadrupole_scale),
         overwrite_a=True,
         check_finite=False,
         driver="evd",
@@ -131,10 +136,11 @@ class GridConfig:
     refine_angle_step_deg: float = 0.001
     refine_half_width_deg: float = 0.025
     candidate_count: int = 4
+    quadrupole_scale: float = 0.0
 
     def stable_dict(self) -> dict[str, object]:
         return {
-            **asdict(self),
+            **{k: v for k, v in asdict(self).items() if k != "quadrupole_scale" or v != 0},
             "lifetime_us": LIFETIME_US,
             "n5_tensor_mT": N5_TENSOR_MT.tolist(),
             "trp_tensor_mT": TRP_TENSOR_MT.tolist(),
@@ -165,7 +171,10 @@ def condition_metrics(
     # Symmetry permits the diagnostic orientation to be reported on 0-90 deg,
     # matching the historical Figure 1 convention.
     theta = np.arange(0.0, 90.0 + 0.5 * config.coarse_angle_step_deg, config.coarse_angle_step_deg)
-    yields = np.array([exact_singlet_yield(condition, field_mT, value) for value in theta])
+    yields = np.array([
+        exact_singlet_yield(condition, field_mT, value, config.quadrupole_scale)
+        for value in theta
+    ])
     gradient = np.gradient(yields, theta, edge_order=2)
     candidates = _top_candidates(theta, np.abs(gradient), config.candidate_count)
 
@@ -180,7 +189,8 @@ def condition_metrics(
             config.refine_angle_step_deg,
         )
         fine_yields = np.array(
-            [exact_singlet_yield(condition, field_mT, value) for value in fine_theta]
+            [exact_singlet_yield(condition, field_mT, value, config.quadrupole_scale)
+             for value in fine_theta]
         )
         fine_gradient = np.gradient(fine_yields, fine_theta, edge_order=2)
         index = int(np.argmax(np.abs(fine_gradient)))
@@ -385,6 +395,7 @@ def write_outputs(output_dir: Path, config: GridConfig) -> None:
     )
     fig.suptitle(
         r"Two-nucleus transverse-to-axial regime shift; $\tau=10\,\mu$s, $J=D=0$"
+        + f", Q scale={config.quadrupole_scale:g}"
     )
     for suffix in ("png", "pdf"):
         fig.savefig(output_dir / f"regime_shift_refined_figure1.{suffix}", dpi=300)
@@ -413,6 +424,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--refine-half-width", type=float, default=0.025)
     parser.add_argument("--candidate-count", type=int, default=4)
     parser.add_argument("--report-only", action="store_true")
+    add_quadrupole_argument(parser, default=0.0)
     return parser.parse_args()
 
 
@@ -423,6 +435,7 @@ def main() -> None:
         refine_angle_step_deg=args.refine_angle_step,
         refine_half_width_deg=args.refine_half_width,
         candidate_count=args.candidate_count,
+        quadrupole_scale=args.quadrupole_scale,
     )
     if args.workers < 1:
         raise ValueError("--workers must be positive")

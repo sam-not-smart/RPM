@@ -33,7 +33,7 @@ from typing import Iterable
 
 import numpy as np
 
-from rpm_quantum_needle_model import ALL_NUCLEI, SYSTEM_DIMENSIONS
+from rpm_quantum_needle_model import ALL_NUCLEI, SYSTEM_DIMENSIONS, add_quadrupole_argument
 from rpm_statevector_engine import SingletPopulationObservable, singlet_population
 
 from .core import (
@@ -113,8 +113,8 @@ experiment definitions only; their obsolete factorized Hamiltonian is not used.
 - Nuclear yields use paired random-phase trace samples.  Entanglement uses paired
   computational-basis product-state samples to avoid artificial initial bath
   entanglement.
-- Quadrupole operators remain implemented, but the frozen validated production
-  setting is `quadrupole_scale=0`.
+- Archived figures use `quadrupole_scale=0`. New calculations can enable
+  the nominal tensors with `--quadrupole-scale 1`.
 
 ## Production sample count
 
@@ -374,8 +374,9 @@ def _n10_cell(task: CellTask, model: ProductionModel) -> dict[str, np.ndarray]:
     }
 
 
-def run_cell(task: CellTask) -> tuple[str, dict[str, np.ndarray]]:
-    model = replace(PRODUCTION_MODEL, master_seed=task.master_seed, samples=task.samples)
+def run_cell(task: CellTask, quadrupole_scale: float = 0.0) -> tuple[str, dict[str, np.ndarray]]:
+    model = replace(PRODUCTION_MODEL, master_seed=task.master_seed, samples=task.samples,
+                    quadrupole_scale=quadrupole_scale)
     if task.kind == "quantum":
         result = _quantum_cell(task, model)
     elif task.kind == "overhauser":
@@ -536,6 +537,8 @@ def ensure_manifests(
         previous = json.loads(model_path.read_text(encoding="utf-8"))
         if previous.get("configuration_hash") != current["configuration_hash"]:
             raise RuntimeError("Existing output directory has an incompatible model manifest.")
+    elif model.quadrupole_scale and any((output_dir / "checkpoints").glob("*/*.npz")):
+        raise RuntimeError("Cannot reuse unlabelled checkpoints for a Q-on run.")
     atomic_json(model_path, current)
     recovery = output_dir / "poster_setting_recovery.md"
     recovery.write_text(RECOVERED_POSTER_SETTINGS, encoding="utf-8")
@@ -595,7 +598,8 @@ def execute(args: argparse.Namespace) -> None:
         samples = args.samples
     # The model manifest always describes the unreduced production model.  Smoke
     # and pilot sample counts are execution-stage properties, not new physics.
-    model = replace(PRODUCTION_MODEL, master_seed=args.seed)
+    model = replace(PRODUCTION_MODEL, master_seed=args.seed,
+                    quadrupole_scale=getattr(args, "quadrupole_scale", 0.0))
     manifest = ensure_manifests(args.output_dir, model, samples, args)
     all_tasks = (
         planned_refinement_tasks(args.output_dir, samples, args.seed)
@@ -649,7 +653,7 @@ def execute(args: argparse.Namespace) -> None:
             median = float(np.median(durations)) if durations else args.initial_cell_estimate_minutes * 60.0
             while pending and len(inflight) < args.workers and time.time() + 1.25 * median < deadline:
                 task = pending.pop(0)
-                future = pool.submit(run_cell, task)
+                future = pool.submit(run_cell, task, model.quadrupole_scale)
                 inflight[future] = (task, time.time())
                 submitted += 1
             if not inflight:
@@ -697,6 +701,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
+    add_quadrupole_argument(parser)
     parser.add_argument("--samples", type=int)
     parser.add_argument("--overhauser-samples", type=int, default=262144)
     parser.add_argument("--overhauser-replicates", type=int, default=8)

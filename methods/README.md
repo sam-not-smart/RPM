@@ -1,9 +1,13 @@
-# Methods and figure index
+# Proposed methods and figure index
 
 Figure numbers below are the manuscript draft's numbering, not the older
 APS poster numbering used internally by `poster_reproduction`.
+This page separates the **proposed quadrupole-inclusive methods** from the
+**settings actually used for the archived figures**. Existing figures are
+not relabelled as Q-on results. Q-on settings are a roadmap, not evidence
+that the updated figures are complete.
 
-## Model used in the full-bath figures
+## Proposed full-bath model
 
 The [exact matrices and principal axes](hyperfine_tensors.json) are in mT
 in the common flavin molecular frame. They were checked against the
@@ -21,8 +25,27 @@ the dipolar term is `D[(S·n)^2 − S^2/3]` and the exchange term is
 molecular x for the dipolar axis and the 2 nm model:
 **D = −347.875 μT, J = +115.958333 μT**, or −9.7405 MHz and +3.246833 MHz
 using 28 MHz/mT. The 21.2 Å / 5.46 MHz literature comparison in the draft
-is not the simulated input. Figs. 2–4 use **Q = 0**. The nonzero-Q
-calculation is a separate [low-field study](quadrupole.md).
+is not the simulated input. The archived Figs. 2–4 use **Q = 0**.
+
+For the proposed quantum production runs, add
+`s_Q Σᵢ Iᵢ · Qᵢ · Iᵢ` on **FAD N5, FAD N10 and TrpH N1** (the three
+spin-1 nuclei). Use `--quadrupole-scale 1` for the current nominal model
+and `--quadrupole-scale 0` for the archived ablation/control. The
+[exact nominal matrices](quadrupole_tensors.json) are traceless and in
+field-equivalent mT; multiply by `2π × 28` for rad/μs. Their starting
+principal values are from [Efimova & Hore (2009), Table 2](https://doi.org/10.1080/00268970902852624):
+
+| Site | Table 2 `(Qxx, Qyy, Qzz)`, mT before trace removal | Current modeled principal direction `Q_z` |
+| --- | --- | --- |
+| FAD N5 | (0.031, 0.041, −0.072) | In the flavin plane, on the lower-eigenvalue in-plane hyperfine axis (about 18° from +x toward −y). This azimuth is provisional. |
+| FAD N10 | (0.032, 0.041, −0.072) | Flavin z, aligned with the dominant N10 hyperfine axis. |
+| TrpH N1 | (0.016, 0.020, −0.036) | Dominant N1 hyperfine axis, about 37° from flavin z; the small reported tilt from the local ring normal is neglected. |
+
+The current implementation did not transform and import the eigenvectors
+in the paper's Supplementary Table 2. Verify the mapping into our frame
+and assess orientation sensitivity before treating the nominal tensor
+orientations as definitive. A scale of zero leaves the rest of the
+Hamiltonian unchanged. See [quadrupole studies and commands](quadrupole.md).
 
 Equal singlet/triplet recombination gives
 `Phi_S = integral exp(-t/tau) P_S(t) dt/tau`. Thus τ = 5 μs is a lifetime,
@@ -31,10 +54,29 @@ Nuclear Zeeman and relaxation are omitted. Quantum yield sweeps use
 paired global nuclear random-phase vectors; the code derives a sample
 seed with `SeedSequence([master_seed, 0xA11CE, sample_id])`.
 
-## Figure settings and availability
+## Proposed figure roadmap
+
+| Figures | Proposed Q-on work |
+| --- | --- |
+| **2–3 · Field sweep and heatmap** | Start with 2 and 10 mT, 0° and 90°, τ = 5 μs. Compare absolute yields and the 0°–90° contrast against paired Q-off controls. Use the screen to prioritize the wider Q-on grid. A four-point screen is not a replacement for an angular sweep or heatmap. |
+| **8 · N5 spin control** | At 50 μT and τ = 10 μs, test no pulses and ideal N5 π pulses every 0.2 μs at 85°, 90° and 95°. Keep Q active between pulses. Compare damping (unpulsed minus pulsed needle depth) with Q off, where depth is the mean of the two shoulders minus the 90° yield. Extend to the full 85–95° grid and to other protocols as required for the final figure. |
+| **4 · Overhauser** | Start by comparing the Q-on quantum result at 2 mT against the existing static curves. The electron-only static Overhauser models have no explicit nuclear degrees of freedom; the Q term applies to the quantum reference, not to those models. Decide whether to expand the Q-on quantum grid to the other comparison fields after the screen. |
+| **1, 9 · Cancellation and entanglement** | Q-on reruns are supported. Retain the archived Q-off results as controls. If retained as claims about the quadrupole-inclusive model, rerun the relevant conditions; the current screen does not establish Q insensitivity here. |
+| **5–7 · Exact toy mechanisms** | The archived mechanism tests remain explicitly idealized. Q can be enabled in the available two-nucleus runners as an exploratory extension in the toy frame. Fig. 6's original generating source and raw grid are still missing. The Q-off scaling law is not assumed to hold with Q on. |
+| **10 · Magic and entanglement** | Recover the original source and parameters before defining a matched Q-on run. The available reference image does not establish reproducibility. |
+
+The [field/pulse screen configuration](configurations/quadrupole_field_pulse_screen.json)
+contains 40 Q-on trajectories with four matched nuclear states per condition
+and 40 archived Q-off controls (seed 20260731). It uses the same (D/J=-3)
+baseline, field plane, propagation and integration settings as the two
+original workflows. The separate low-field Q-on/Q-off comparison and its
+29-angle extension are documented in [Quadrupole studies](quadrupole.md).
+
+## Archived figure settings and availability
 
 Archive identifiers below refer to separately retained simulation outputs,
-not folders that are part of this repository.
+not folders that are part of this repository. These entries describe the
+current reference figures, not the proposed Q-on replacements.
 
 | Figure | Configuration, code and archive |
 | --- | --- |

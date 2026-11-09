@@ -30,6 +30,7 @@ from scipy.interpolate import CubicSpline
 from scipy.optimize import minimize_scalar
 
 from rpm_three_nitrogen_optimum import PairModel, NITROGENS, B_N5_AT_ONE_UT
+from rpm_quantum_needle_model import add_quadrupole_argument
 
 AXIAL_N5_MT = np.array([0.6046, 1.2, 1.7569])
 TAUS = np.array([5., 10., 20., 50., 100.])
@@ -107,9 +108,9 @@ def angular_metrics(model, scale, taus, angle_step=.05, refine_step=.002,
             "gamma":gamma, "theta_gamma_deg":angles}
 
 
-def field_cell(field, angle_step=.01, refine_factor=1.):
+def field_cell(field, angle_step=.01, refine_factor=1., quadrupole_scale=0.):
     start = time.perf_counter()
-    model = PairModel("three_nitrogen", field_mT=field)
+    model = PairModel("three_nitrogen", field_mT=field, quadrupole_scale=quadrupole_scale)
     fine = (.0002 if field >= 3 else .001) * refine_factor
     seeds = axial_crossing_seeds(model, field) if field >= .3 else []
     results = [angular_metrics(model, scale, [10.], angle_step, fine,
@@ -127,11 +128,12 @@ def field_cell(field, angle_step=.01, refine_factor=1.):
             "elapsed_seconds":time.perf_counter()-start}
 
 
-def scaling_cell(azz, scale, angle_step=.05, refine_step=.002, taus=None, kind="scaling"):
+def scaling_cell(azz, scale, angle_step=.05, refine_step=.002, taus=None, kind="scaling",
+                 quadrupole_scale=0.):
     start = time.perf_counter()
     taus = TAUS if taus is None else np.asarray(taus)
     axial_scale = azz / NITROGENS[0][3]
-    model = PairModel("three_nitrogen", axial_scale=axial_scale)
+    model = PairModel("three_nitrogen", axial_scale=axial_scale, quadrupole_scale=quadrupole_scale)
     result = angular_metrics(model, scale, taus, angle_step, refine_step)
     rows = [{"Azz_N5_mT":float(azz), "axial_scale":float(axial_scale),
              "Azz_N10_mT":float(model.nuclei[1][3]),
@@ -199,10 +201,10 @@ def local_peak_brackets(rows):
             if g[i] >= g[i-1] and g[i] >= g[i+1] and g[i] >= .9*g.max()]
 
 
-def refine_optimum(azz, tau, bracket, kind="scaling"):
+def refine_optimum(azz, tau, bracket, kind="scaling", quadrupole_scale=0.):
     cells = {}
     def objective(scale):
-        cell = scaling_cell(azz, float(scale), taus=[tau], kind=kind)
+        cell = scaling_cell(azz, float(scale), taus=[tau], kind=kind, quadrupole_scale=quadrupole_scale)
         cells[float(scale)] = cell
         return -cell["rows"][0]["gamma_per_rad"]
     optimum = minimize_scalar(objective, bounds=bracket, method="bounded",
@@ -213,7 +215,7 @@ def refine_optimum(azz, tau, bracket, kind="scaling"):
             "lambda":float(optimum.x), "cells":list(cells.values())}
 
 
-def refine_all(output, workers, kind="scaling"):
+def refine_all(output, workers, kind="scaling", quadrupole_scale=0.):
     marker = output / f"{kind}_refinement.json"
     if marker.exists():
         return
@@ -221,7 +223,7 @@ def refine_all(output, workers, kind="scaling"):
     tasks = []
     for azz, tau in sorted({(r["Azz_N5_mT"], r["tau_us"]) for r in rows}):
         selected = [r for r in rows if r["Azz_N5_mT"]==azz and r["tau_us"]==tau]
-        tasks.extend((azz, tau, bracket, kind) for bracket in local_peak_brackets(selected))
+        tasks.extend((azz, tau, bracket, kind, quadrupole_scale) for bracket in local_peak_brackets(selected))
     diagnostics = []
     with ProcessPoolExecutor(max_workers=workers) as pool:
         futures = [pool.submit(refine_optimum, *args) for args in tasks]
@@ -243,7 +245,7 @@ def best_scaling(rows):
             for azz in AXIAL_N5_MT for tau in TAUS]
 
 
-def resolution_checks(output, workers):
+def resolution_checks(output, workers, quadrupole_scale=0.):
     marker = output / "resolution_checks.json"
     if marker.exists():
         return json.loads(marker.read_text())
@@ -254,9 +256,9 @@ def resolution_checks(output, workers):
         futures = {}
         for field in (.05, .6, 100.):
             original = next(r for r in field_rows if abs(r["field_mT"]-field)<1e-8)
-            futures[pool.submit(field_cell, field, .005, .5)] = ("field", original)
+            futures[pool.submit(field_cell, field, .005, .5, quadrupole_scale)] = ("field", original)
         for original in peaks:
-            futures[pool.submit(scaling_cell, original["Azz_N5_mT"], original["lambda"], .025, .001, [original["tau_us"]], "verify")] = ("scaling", original)
+            futures[pool.submit(scaling_cell, original["Azz_N5_mT"], original["lambda"], .025, .001, [original["tau_us"]], "verify", quadrupole_scale)] = ("scaling", original)
         for future in as_completed(futures):
             category, original = futures[future]
             cell = future.result()
@@ -344,7 +346,7 @@ def require_complete_inventory(output):
         raise RuntimeError(f"incomplete suite: {len(missing)} missing discovery units")
 
 
-def report(output):
+def report(output, quadrupole_scale=0.):
     require_complete_inventory(output)
     repo_root = Path(__file__).resolve().parents[2]
     brief = repo_root/"methods"/"references"/"RPM_transverse_vs_axial_brief_v2.pdf"
@@ -409,7 +411,8 @@ def report(output):
     axes[1].legend(fontsize=8,loc="lower right",bbox_to_anchor=(1,.11))
     shade_regimes(axes,fields)
     fig.suptitle("Transverse-to-axial regime change: three-nitrogen toy")
-    fig.supxlabel(r"N5 + N10 on FAD, N1 on Trp; aligned axes; $\tau=10\,\mu$s; $J=D=Q=0$; exact nuclear trace",fontsize=9)
+    fig.supxlabel(r"N5 + N10 on FAD, N1 on Trp; aligned axes; $\tau=10\,\mu$s; $J=D=0$"
+                  + f"; Q scale={quadrupole_scale:g}; exact nuclear trace",fontsize=9)
     save_figure(fig,output,"three_nitrogen_regime_shift")
 
     fig,axes = plt.subplots(1,3,figsize=(13.5,4.6),constrained_layout=True)
@@ -431,7 +434,8 @@ def report(output):
     axes[1].set(yscale="log",ylabel=r"$b_{N5,\rm opt}/A_{zz,N5}$ ($\mu$T/mT)",title="(b) Test of scale collapse")
     axes[2].set(ylabel=r"$C_{\rm eff}$ ($\mu$T $\sqrt{\mu{\rm s}}$/mT)",title="(c) Test of inverse-square-root law")
     fig.suptitle("Modelling of the transverse-coupling optimum: three nitrogens")
-    fig.supxlabel(r"All three $A_{zz}$ scale together; all transverse terms share an independent scale; $B_0=50\,\mu$T, $J=D=Q=0$",fontsize=9)
+    fig.supxlabel(r"All three $A_{zz}$ scale together; shared transverse scale; $B_0=50\,\mu$T, $J=D=0$"
+                  + f"; Q scale={quadrupole_scale:g}",fontsize=9)
     save_figure(fig,output,"three_nitrogen_scaling_law")
 
     fig,axes = plt.subplots(1,2,figsize=(11.6,4.7),constrained_layout=True)
@@ -467,7 +471,7 @@ N1 couples to B. Unscaled tensors in mT are {NITROGENS!r}.
 Exact electronic singlet and maximally mixed nuclear state. Full-pair dense
 diagonalization and analytic equal-rate recombination integral; no Hamiltonian
 factorization, Monte Carlo uncertainty, quadrature or propagation error.
-J=D=Q=0, no nuclear Zeeman or relaxation.
+J=D=0, Q scale={quadrupole_scale:g}, no nuclear Zeeman or relaxation.
 
 ## Investigations
 
@@ -522,7 +526,7 @@ Source: Paper/Final Results/RPM_transverse_vs_axial_brief_v2.pdf, sections 1-3.
         "resolution_passed":summary["numerical_resolution_passed"]},indent=2),flush=True)
 
 
-def ensure_manifest(output):
+def ensure_manifest(output, quadrupole_scale=0.):
     configuration={"version":1,"nuclei":NITROGENS,"dimensions":[2,2,3,3,3],
         "axis_convention":"all principal axes aligned", "axial_scan_N5_mT":AXIAL_N5_MT.tolist(),
         "axial_mapping":"all three Azz scaled together relative to original N5 Azz",
@@ -533,7 +537,7 @@ def ensure_manifest(output):
         "direct_b_uT":DIRECT_B.tolist(),"angular_step_field_deg":.01,
         "angular_step_scaling_deg":.05,"local_step_scaling_deg":.002,
         "local_step_field_deg":"0.001 below 3 mT, 0.0002 above",
-        "optimizer_lambda_tolerance":.0005,"J_uT":0.,"D_uT":0.,"quadrupole_scale":0.,
+        "optimizer_lambda_tolerance":.0005,"J_uT":0.,"D_uT":0.,"quadrupole_scale":quadrupole_scale,
         "initial_state":"singlet times exact maximally mixed nuclear density",
         "yield_method":"complete dense pair Hamiltonian, exact spectral recombination integral"}
     digest=hashlib.sha256(json.dumps(configuration,sort_keys=True).encode()).hexdigest()
@@ -555,29 +559,31 @@ def main():
     parser.add_argument("--output-dir",type=Path,default=Path("outputs/three_nitrogen_suite"))
     parser.add_argument("--workers",type=int,default=4)
     parser.add_argument("--resume",action="store_true")
+    add_quadrupole_argument(parser, default=0.0)
     args=parser.parse_args()
     if args.workers<1:
         parser.error("workers must be positive")
     output=args.output_dir;output.mkdir(parents=True,exist_ok=True)
-    ensure_manifest(output)
+    q = args.quadrupole_scale
+    ensure_manifest(output, q)
     if args.stage in ("all","field"):
-        jobs=[(f"field_B{b:.10f}",field_cell,(float(b),)) for b in field_grid()]
+        jobs=[(f"field_B{b:.10f}",field_cell,(float(b),.01,1.,q)) for b in field_grid()]
         run_jobs(output,jobs,args.workers,args.resume)
     if args.stage in ("all","scaling"):
-        jobs=[(f"scaling_A{a:.8f}_lambda{s:.10f}",scaling_cell,(float(a),float(s)))
+        jobs=[(f"scaling_A{a:.8f}_lambda{s:.10f}",scaling_cell,(float(a),float(s),.05,.002,None,"scaling",q))
               for a in AXIAL_N5_MT for s in transverse_grid()]
         run_jobs(output,jobs,args.workers,args.resume)
-        refine_all(output,args.workers)
+        refine_all(output,args.workers,quadrupole_scale=q)
     if args.stage in ("all","direct"):
         scales=np.unique(np.r_[transverse_grid(), DIRECT_B/B_N5_AT_ONE_UT])
         jobs=[(f"direct_A1.75690000_lambda{s:.10f}",scaling_cell,
-               (1.7569,float(s),.05,.002,[DIRECT_TAU],"direct")) for s in scales]
+               (1.7569,float(s),.05,.002,[DIRECT_TAU],"direct",q)) for s in scales]
         run_jobs(output,jobs,args.workers,args.resume)
-        refine_all(output,args.workers,"direct")
+        refine_all(output,args.workers,"direct",q)
     if args.stage in ("all","report"):
         require_complete_inventory(output)
-        resolution_checks(output,args.workers)
-        report(output)
+        resolution_checks(output,args.workers,q)
+        report(output,q)
     print(f"stage {args.stage} complete: {output}",flush=True)
 
 

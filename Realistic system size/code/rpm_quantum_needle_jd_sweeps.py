@@ -1,8 +1,7 @@
-"""Quadrupole-free full-state dipolar/exchange quantum-needle sweeps.
+"""Full-state dipolar/exchange quantum-needle sweeps with optional quadrupoles.
 
 Every trajectory evolves the complete 14-nucleus radical-pair state with the
-matrix-free Hamiltonian.  This runner deliberately fixes ``Q=0`` while the
-quadrupole model is studied separately.
+matrix-free Hamiltonian. Use ``--quadrupole-scale 0`` for the historical sweeps.
 """
 
 from __future__ import annotations
@@ -46,6 +45,8 @@ from rpm_quantum_needle_model import (
     SPIN_ORDER,
     STATE_DIMENSION,
     SYSTEM_DIMENSIONS,
+    add_quadrupole_argument,
+    nominal_quadrupole_metadata,
 )
 from rpm_statevector_engine import (
     AdaptiveLanczosPropagator,
@@ -141,7 +142,7 @@ class CouplingCondition:
     def dipolar_tensor_MHz(self) -> np.ndarray:
         return scaled_published_dipolar_tensor_MHz(self.d_parallel_MHz)
 
-    def stable_dict(self) -> dict[str, object]:
+    def stable_dict(self, quadrupole_scale: float = QUADRUPOLE_SCALE) -> dict[str, object]:
         result = asdict(self)
         result.update(
             {
@@ -151,7 +152,7 @@ class CouplingCondition:
                 "dipolar_principal_values_MHz": np.linalg.eigvalsh(
                     self.dipolar_tensor_MHz
                 ).tolist(),
-                "quadrupole_scale": QUADRUPOLE_SCALE,
+                "quadrupole_scale": quadrupole_scale,
             }
         )
         return result
@@ -182,13 +183,13 @@ class EfimovaHoreCondition:
     def exchange_J_MHz(self) -> float:
         return equivalent_field_uT_to_MHz(self.exchange_J_uT)
 
-    def stable_dict(self) -> dict[str, object]:
+    def stable_dict(self, quadrupole_scale: float = QUADRUPOLE_SCALE) -> dict[str, object]:
         return {
             **asdict(self),
             "convention": "Efimova-Hore Eqs. 9-10",
             "d_paper_MHz": self.d_paper_MHz,
             "exchange_J_MHz": self.exchange_J_MHz,
-            "quadrupole_scale": QUADRUPOLE_SCALE,
+            "quadrupole_scale": quadrupole_scale,
         }
 
     @property
@@ -317,6 +318,7 @@ class SweepConfig:
     lanczos_safety_factor: float = 2.0
     lanczos_initial_step_us: float = 0.05
     lanczos_maximum_step_us: float = 0.25
+    quadrupole_scale: float = QUADRUPOLE_SCALE
 
     @property
     def maximum_time_us(self) -> float:
@@ -335,7 +337,8 @@ class SweepConfig:
         result.update(
             {
                 "schema_version": SCHEMA_VERSION,
-                "quadrupole_scale": QUADRUPOLE_SCALE,
+                "quadrupole_scale": self.quadrupole_scale,
+                **nominal_quadrupole_metadata(self.quadrupole_scale),
                 "state_dimension": STATE_DIMENSION,
                 "nuclear_dimension": NUCLEAR_DIMENSION,
                 "spin_order": list(SPIN_ORDER),
@@ -435,7 +438,7 @@ def _propagator(condition: CouplingCondition, theta_deg: float, config: SweepCon
             exchange_J_MHz=condition.exchange_J_MHz,
             efimova_hore_D_MHz=condition.d_paper_MHz,
             efimova_hore_axis=np.asarray(condition.dipolar_axis),
-            quadrupole_scale=QUADRUPOLE_SCALE,
+            quadrupole_scale=config.quadrupole_scale,
         )
     else:
         hamiltonian = build_quantum_needle_hamiltonian(
@@ -443,7 +446,7 @@ def _propagator(condition: CouplingCondition, theta_deg: float, config: SweepCon
             config.field_microT,
             exchange_J_MHz=condition.exchange_J_MHz,
             dipolar_tensor_MHz=condition.dipolar_tensor_MHz,
-            quadrupole_scale=QUADRUPOLE_SCALE,
+            quadrupole_scale=config.quadrupole_scale,
         )
     propagator = AdaptiveLanczosPropagator(
         hamiltonian,
@@ -508,7 +511,7 @@ def run_trajectory(task: TrajectoryTask, *, times_us: np.ndarray | None = None) 
         "condition_hash": task.condition.configuration_hash,
         "theta_deg": float(task.theta_deg),
         "sample_id": int(task.sample_id),
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "quadrupole_scale": task.config.quadrupole_scale,
         "initial_singlet": initial_singlet,
         "yield": fine_yield,
         "coarse_yield": coarse_yield,
@@ -691,7 +694,7 @@ def benchmark_concurrency(output_dir: Path, config: SweepConfig) -> dict[str, ob
         if float(row["simulated_us_per_wall_second"]) >= 0.95 * best
     )
     result = {
-        "conditions": [condition.stable_dict() for condition in conditions],
+        "conditions": [condition.stable_dict(config.quadrupole_scale) for condition in conditions],
         "rows": rows,
         "selected_workers": selected,
         "selected_throughput": next(
@@ -759,7 +762,7 @@ def condition_metrics(
                 "nuclear_95_halfwidth": nuclear,
                 "systematic_halfwidth": systematic,
                 "total_halfwidth": systematic + (nuclear if np.isfinite(nuclear) else 0.0),
-                "quadrupole_scale": QUADRUPOLE_SCALE,
+                "quadrupole_scale": config.quadrupole_scale,
             }
         )
     means_array = np.asarray(means)
@@ -791,7 +794,7 @@ def condition_metrics(
         contrast_nuclear if np.isfinite(contrast_nuclear) else 0.0
     )
     summary = {
-        **condition.stable_dict(),
+        **condition.stable_dict(config.quadrupole_scale),
         "samples": sample_count,
         "angle_count": len(angles),
         "mean_yield": float(np.mean(means_array)),
@@ -1009,7 +1012,7 @@ def create_efimova_hore_report(
                 cell = load_cell(output_dir, condition, theta, sample, config)
                 raw_rows.append(
                     {
-                        **condition.stable_dict(),
+                        **condition.stable_dict(config.quadrupole_scale),
                         "theta_deg": theta,
                         "sample_id": sample,
                         **{
@@ -1060,7 +1063,7 @@ def create_efimova_hore_report(
         axis.set(
             xlabel=r"Efimova-Hore $D/J$",
             ylabel="Normalized angular anisotropy",
-            title="Literal Efimova-Hore cancellation screen (Q=0)",
+            title=f"Literal Efimova-Hore cancellation screen (Q scale={config.quadrupole_scale:g})",
         )
         axis.legend(frameon=False)
         fig.tight_layout()
@@ -1085,7 +1088,7 @@ def create_efimova_hore_report(
         axis.set(
             xlabel="Field angle (degrees)",
             ylabel="Singlet yield",
-            title="Efimova-Hore angular sensitivity (Q=0, 2 us)",
+            title=f"Efimova-Hore angular sensitivity (Q scale={config.quadrupole_scale:g}, 2 us)",
         )
         axis.legend(frameon=False)
         fig.tight_layout()
@@ -1107,13 +1110,13 @@ def create_efimova_hore_report(
         "dipolar_axis": EFIMOVA_HORE_AXIS.tolist(),
         "d_paper_uT": R2_D_PAPER_UT,
         "cancellation_centres_D_over_J": [-3.0, 6.0],
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "quadrupole_scale": config.quadrupole_scale,
         "screen_complete": bool(screen_summaries),
         "confirmation_complete": bool(confirm_summaries),
         "refinement_complete": bool(final_summaries),
         "precision_complete": bool(precision_summaries),
-        "confirmed_conditions": [item.stable_dict() for item in confirmed],
-        "final_conditions": [item.stable_dict() for item in final],
+        "confirmed_conditions": [item.stable_dict(config.quadrupole_scale) for item in confirmed],
+        "final_conditions": [item.stable_dict(config.quadrupole_scale) for item in final],
         "uncoupled_control_precision": control_precision,
         "uncoupled_control_angular_sensitivity_resolved": bool(
             control_precision is not None and control_precision["contrast_resolved"]
@@ -1166,7 +1169,7 @@ def create_ratio_focus_report(
                 cell = load_cell(output_dir, condition, theta, sample, config)
                 raw_rows.append(
                     {
-                        **condition.stable_dict(),
+                        **condition.stable_dict(config.quadrupole_scale),
                         "theta_deg": theta,
                         "sample_id": sample,
                         **{
@@ -1242,7 +1245,7 @@ def create_ratio_focus_report(
             "requested_samples": requested_samples,
             "angles_deg": angles,
             "control_samples": control_samples,
-            "quadrupole_scale": QUADRUPOLE_SCALE,
+            "quadrupole_scale": config.quadrupole_scale,
             "conditions_complete": len(summaries),
             "conditions_requested": len(conditions),
             "metrics": summaries,
@@ -1265,7 +1268,7 @@ def create_ratio_focus_report(
         axis.set(
             xlabel="Field angle (degrees)",
             ylabel="Singlet yield",
-            title=f"Focused exchange confirmation (M={requested_samples}, Q=0)",
+            title=f"Focused exchange confirmation (M={requested_samples}, Q scale={config.quadrupole_scale:g})",
         )
         axis.legend(frameon=False)
         fig.tight_layout()
@@ -1308,7 +1311,7 @@ def create_ratio_lifetime_report(
                 for index, lifetime in enumerate(lifetimes):
                     raw_rows.append(
                         {
-                            **condition.stable_dict(),
+                            **condition.stable_dict(config.quadrupole_scale),
                             "theta_deg": theta,
                             "sample_id": sample,
                             "lifetime_us": lifetime,
@@ -1332,7 +1335,7 @@ def create_ratio_lifetime_report(
                             "maximum_krylov_dimension": int(
                                 cell["maximum_krylov_dimension"]
                             ),
-                            "quadrupole_scale": QUADRUPOLE_SCALE,
+                            "quadrupole_scale": config.quadrupole_scale,
                         }
                     )
             cells_by_angle[theta] = cells
@@ -1374,7 +1377,7 @@ def create_ratio_lifetime_report(
                         "nuclear_95_halfwidth": nuclear,
                         "systematic_halfwidth": bound,
                         "total_halfwidth": bound + nuclear,
-                        "quadrupole_scale": QUADRUPOLE_SCALE,
+                        "quadrupole_scale": config.quadrupole_scale,
                     }
                 )
             minimum_index = int(np.argmin(means))
@@ -1388,7 +1391,7 @@ def create_ratio_lifetime_report(
             angular_range = float(means[maximum_index] - means[minimum_index])
             summaries.append(
                 {
-                    **condition.stable_dict(),
+                    **condition.stable_dict(config.quadrupole_scale),
                     "lifetime_us": lifetime,
                     "samples": requested_samples,
                     "angle_count": len(angles),
@@ -1431,7 +1434,7 @@ def create_ratio_lifetime_report(
             "requested_samples": requested_samples,
             "angles_deg": angles,
             "lifetimes_us": lifetimes,
-            "quadrupole_scale": QUADRUPOLE_SCALE,
+            "quadrupole_scale": config.quadrupole_scale,
             "conditions_complete": len(summaries) // max(1, len(lifetimes)),
             "conditions_requested": len(conditions),
             "metrics": summaries,
@@ -1465,7 +1468,7 @@ def create_ratio_lifetime_report(
             axis.set(
                 xlabel="Field angle (degrees)",
                 ylabel="Singlet yield",
-                title=rf"$\tau={lifetime:g}\,\mu s$ (M={requested_samples}, Q=0)",
+                title=rf"$\tau={lifetime:g}\,\mu s$ (M={requested_samples}, Q scale={config.quadrupole_scale:g})",
             )
             axis.legend(frameon=False)
         fig.tight_layout()
@@ -1545,8 +1548,8 @@ def ensure_manifest(output_dir: Path, config: SweepConfig, resume: bool) -> dict
         "status": "created",
         "configuration_hash": config.configuration_hash,
         "configuration": config.stable_dict(),
-        "conditions": [condition.stable_dict() for condition in all_conditions()],
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "conditions": [condition.stable_dict(config.quadrupole_scale) for condition in all_conditions()],
+        "quadrupole_scale": config.quadrupole_scale,
         "created_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "hostname": socket.gethostname(),
         "platform": platform.platform(),
@@ -1558,7 +1561,9 @@ def ensure_manifest(output_dir: Path, config: SweepConfig, resume: bool) -> dict
     return manifest
 
 
-def ensure_efimova_hore_stage_definition(output_dir: Path) -> dict[str, object]:
+def ensure_efimova_hore_stage_definition(
+    output_dir: Path, quadrupole_scale: float = QUADRUPOLE_SCALE
+) -> dict[str, object]:
     """Pin adaptive selections and the full 24-hour task budget for safe resume."""
 
     definition = {
@@ -1568,7 +1573,7 @@ def ensure_efimova_hore_stage_definition(output_dir: Path) -> dict[str, object]:
         "dipolar_hamiltonian": "D*((S.n)^2-S^2/3)",
         "dipolar_axis": EFIMOVA_HORE_AXIS.tolist(),
         "d_paper_uT": R2_D_PAPER_UT,
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "quadrupole_scale": quadrupole_scale,
         "negative_ratios": list(EFIMOVA_HORE_NEGATIVE_RATIOS),
         "positive_ratios": list(EFIMOVA_HORE_POSITIVE_RATIOS),
         "screen": {"conditions": 16, "angles_deg": list(SCREEN_ANGLES_DEG), "samples": 1},
@@ -1612,7 +1617,7 @@ def create_report(output_dir: Path, config: SweepConfig) -> dict[str, object]:
             cell = load_cell(output_dir, condition, theta, sample, config)
             raw_rows.append(
                 {
-                    **condition.stable_dict(),
+                    **condition.stable_dict(config.quadrupole_scale),
                     "theta_deg": theta,
                     "sample_id": sample,
                     **{
@@ -1687,7 +1692,7 @@ def create_report(output_dir: Path, config: SweepConfig) -> dict[str, object]:
         "fallback": (
             None
             if best_physical is not None or best_mechanistic is not None
-            else "Retain the J=D=Q=0 quantum-needle baseline."
+            else f"Retain the J=D=0 control at Q scale={config.quadrupole_scale:g}."
         ),
     }
     _write_json(output_dir / "candidate_summary.json", candidates)
@@ -1696,13 +1701,13 @@ def create_report(output_dir: Path, config: SweepConfig) -> dict[str, object]:
         {
             "configuration": config.stable_dict(),
             "configuration_hash": config.configuration_hash,
-            "quadrupole_scale": QUADRUPOLE_SCALE,
-            "conditions": [condition.stable_dict() for condition in all_conditions()],
+            "quadrupole_scale": config.quadrupole_scale,
+            "conditions": [condition.stable_dict(config.quadrupole_scale) for condition in all_conditions()],
             "candidate_summary": candidates,
             "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         },
     )
-    _plot_reports(output_dir, curve_rows, summaries)
+    _plot_reports(output_dir, curve_rows, summaries, config.quadrupole_scale)
     return candidates
 
 
@@ -1710,6 +1715,7 @@ def _plot_reports(
     output_dir: Path,
     curve_rows: list[dict[str, object]],
     summaries: list[dict[str, object]],
+    quadrupole_scale: float = QUADRUPOLE_SCALE,
 ) -> None:
     if not curve_rows:
         return
@@ -1723,8 +1729,8 @@ def _plot_reports(
             return rf"$D_\parallel/J={float(summary['ratio_D_over_J']):g}$"
         return rf"$J={float(summary['exchange_J_uT']):g}\ \mu T$"
     for family, filename, title in (
-        ("dipole", "dipole_angular_yields.png", "Dipole-only angular yields (J=Q=0)"),
-        ("ratio", "exchange_angular_yields.png", "Fixed-D exchange angular yields (Q=0)"),
+        ("dipole", "dipole_angular_yields.png", f"Dipole-only angular yields (J=0, Q scale={quadrupole_scale:g})"),
+        ("ratio", "exchange_angular_yields.png", f"Fixed-D exchange angular yields (Q scale={quadrupole_scale:g})"),
     ):
         fig, axis = plt.subplots(figsize=(9.0, 5.3))
         ids = sorted({str(row["condition_id"]) for row in curve_rows if row["family"] == family})
@@ -1780,7 +1786,7 @@ def _plot_reports(
         [row for row in summaries if row["family"] == "dipole"],
         "d_paper_uT",
         r"$D_{paper}$ ($\mu$T)",
-        "Dipolar strength and angular response (J=Q=0)",
+        f"Dipolar strength and angular response (J=0, Q scale={quadrupole_scale:g})",
         "dipole_angle_heatmap.png",
     )
     heatmap(
@@ -1791,7 +1797,7 @@ def _plot_reports(
         ],
         "ratio_D_over_J",
         r"$D_{\parallel}/J$",
-        "Cancellation-ratio angular response (Q=0)",
+        f"Cancellation-ratio angular response (Q scale={quadrupole_scale:g})",
         "ratio_angle_heatmap.png",
     )
 
@@ -1809,7 +1815,7 @@ def _plot_reports(
         axis.set(
             xlabel=r"$|D_{paper}|$ ($\mu$T)",
             ylabel="Normalized angular anisotropy",
-            title="Dipolar-strength sweep (J=Q=0)",
+            title=f"Dipolar-strength sweep (J=0, Q scale={quadrupole_scale:g})",
         )
         fig.tight_layout()
         fig.savefig(output_dir / "anisotropy_vs_dipole.png", dpi=180)
@@ -1834,7 +1840,7 @@ def _plot_reports(
         axis.set(
             xlabel=r"$D_{\parallel}/J$",
             ylabel="Normalized angular anisotropy",
-            title="Exchange/dipole cancellation scan (Q=0)",
+            title=f"Exchange/dipole cancellation scan (Q scale={quadrupole_scale:g})",
         )
         axis.legend(frameon=False)
         fig.tight_layout()
@@ -1872,6 +1878,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--seed", type=int, default=20260715)
+    add_quadrupole_argument(parser)
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--max-wall-hours", type=float, default=20.0)
     parser.add_argument(
@@ -1915,17 +1922,18 @@ def main() -> None:
         if not args.lifetimes or any(value <= 0.0 for value in args.lifetimes):
             raise ValueError("--stage ratio-lifetime-focus requires positive --lifetimes.")
         lifetimes = tuple(dict.fromkeys(float(value) for value in args.lifetimes))
-        config = replace(SweepConfig(), seed=args.seed, lifetime_us=max(lifetimes))
+        config = replace(SweepConfig(), seed=args.seed, lifetime_us=max(lifetimes),
+                         quadrupole_scale=args.quadrupole_scale)
     else:
         lifetimes = ()
-        config = replace(SweepConfig(), seed=args.seed)
+        config = replace(SweepConfig(), seed=args.seed, quadrupole_scale=args.quadrupole_scale)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     manifest = ensure_manifest(args.output_dir, config, args.resume)
     if args.stage == "efimova-hore-24h":
-        definition = ensure_efimova_hore_stage_definition(args.output_dir)
+        definition = ensure_efimova_hore_stage_definition(args.output_dir, config.quadrupole_scale)
         manifest["efimova_hore_stage_definition"] = definition
         manifest["efimova_hore_conditions"] = [
-            item.stable_dict() for item in efimova_hore_screen_conditions()
+            item.stable_dict(config.quadrupole_scale) for item in efimova_hore_screen_conditions()
         ]
         _write_json(args.output_dir / "manifest.json", manifest)
     if args.stage == "report":
@@ -1969,7 +1977,7 @@ def main() -> None:
             confirmed = select_efimova_hore_confirm_conditions(args.output_dir, config)
             _write_json(
                 args.output_dir / "efimova_hore_confirmation_selection.json",
-                [item.stable_dict() for item in confirmed],
+                [item.stable_dict(config.quadrupole_scale) for item in confirmed],
             )
             complete = run_tasks(
                 args.output_dir,
@@ -1987,7 +1995,7 @@ def main() -> None:
             )
             _write_json(
                 args.output_dir / "efimova_hore_final_selection.json",
-                [item.stable_dict() for item in final],
+                [item.stable_dict(config.quadrupole_scale) for item in final],
             )
             complete = run_tasks(
                 args.output_dir,
@@ -2042,10 +2050,10 @@ def main() -> None:
         _write_json(
             args.output_dir / "ratio_focus_selection.json",
             {
-                "conditions": [item.stable_dict() for item in selected],
+                "conditions": [item.stable_dict(config.quadrupole_scale) for item in selected],
                 "angles_deg": SCREEN_ANGLES_DEG,
                 "samples": args.samples,
-                "quadrupole_scale": QUADRUPOLE_SCALE,
+                "quadrupole_scale": config.quadrupole_scale,
             },
         )
         complete = run_tasks(
@@ -2073,12 +2081,12 @@ def main() -> None:
         _write_json(
             args.output_dir / "ratio_lifetime_selection.json",
             {
-                "conditions": [item.stable_dict() for item in selected],
+                "conditions": [item.stable_dict(config.quadrupole_scale) for item in selected],
                 "angles_deg": SCREEN_ANGLES_DEG,
                 "samples": args.samples,
                 "lifetimes_us": lifetimes,
                 "propagation_horizon_us": config.maximum_time_us,
-                "quadrupole_scale": QUADRUPOLE_SCALE,
+                "quadrupole_scale": config.quadrupole_scale,
             },
         )
         complete = run_tasks(
@@ -2104,7 +2112,7 @@ def main() -> None:
         return
     elif args.stage == "dipole-confirm":
         selected = select_dipole_confirm_conditions(args.output_dir, config)
-        _write_json(args.output_dir / "dipole_confirmation_selection.json", [item.stable_dict() for item in selected])
+        _write_json(args.output_dir / "dipole_confirmation_selection.json", [item.stable_dict(config.quadrupole_scale) for item in selected])
         complete = run_tasks(
             args.output_dir, selected, SCREEN_ANGLES_DEG, 4, config, workers, deadline, estimated_wave_seconds
         )
@@ -2112,13 +2120,13 @@ def main() -> None:
             nonzero = [condition for condition in selected if condition.d_parallel_uT != 0.0]
             best = _best_by_range(args.output_dir, nonzero, config)
             refined = (dipole_condition(0.0), best)
-            _write_json(args.output_dir / "dipole_refinement_selection.json", [item.stable_dict() for item in refined])
+            _write_json(args.output_dir / "dipole_refinement_selection.json", [item.stable_dict(config.quadrupole_scale) for item in refined])
             complete = run_tasks(
                 args.output_dir, refined, REFINED_ANGLES_DEG, 4, config, workers, deadline, estimated_wave_seconds
             )
     else:
         selected = select_ratio_confirm_conditions(args.output_dir, config)
-        _write_json(args.output_dir / "ratio_confirmation_selection.json", [item.stable_dict() for item in selected])
+        _write_json(args.output_dir / "ratio_confirmation_selection.json", [item.stable_dict(config.quadrupole_scale) for item in selected])
         complete = run_tasks(
             args.output_dir, selected, SCREEN_ANGLES_DEG, 4, config, workers, deadline, estimated_wave_seconds
         )
@@ -2130,7 +2138,7 @@ def main() -> None:
                 _best_by_range(args.output_dir, negative, config),
                 _best_by_range(args.output_dir, positive, config),
             )
-            _write_json(args.output_dir / "ratio_refinement_selection.json", [item.stable_dict() for item in refined])
+            _write_json(args.output_dir / "ratio_refinement_selection.json", [item.stable_dict(config.quadrupole_scale) for item in refined])
             complete = run_tasks(
                 args.output_dir, refined, REFINED_ANGLES_DEG, 4, config, workers, deadline, estimated_wave_seconds
             )

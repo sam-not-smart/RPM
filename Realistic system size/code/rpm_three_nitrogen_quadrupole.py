@@ -34,7 +34,7 @@ from scipy.linalg import eigh
 
 from rpm_three_nitrogen_optimum import PairModel, NITROGENS, embed
 from rpm_quantum_needle_model import (TWOPI, GAMMA_E_MHZ_PER_MT,
-    QUADRUPOLE_PRINCIPAL_VALUES_MT, spin_operators)
+    QUADRUPOLE_PRINCIPAL_VALUES_MT, aligned_toy_quadrupole_tensor_mT, spin_operators)
 from rpm_statevector_engine import quadrupole_operator, efimova_hore_electron_coupling_operator
 
 FIELDS_MT = (.05, 3.)
@@ -69,22 +69,11 @@ BY_KEY = {c.key:c for c in CONDITIONS}
 
 
 def quadrupole_tensors(condition: Condition) -> tuple[np.ndarray, ...]:
-    tensors=[]
-    phi=math.radians(condition.n5_azimuth_deg)
-    # Columns are Qx, Qy, Qz. Qz remains in the ring plane; Qy is the
-    # ring normal. This is a right-handed frame for every azimuth.
-    cosine,sine=math.cos(phi),math.sin(phi)
-    if condition.n5_azimuth_deg==0.:cosine,sine=1.,0.
-    if condition.n5_azimuth_deg==90.:cosine,sine=0.,1.
-    rotation=np.column_stack(([-sine,cosine,0.], [0.,0.,1.], [cosine,sine,0.]))
-    for i,key in enumerate(Q_KEYS):
-        values=np.array(QUADRUPOLE_PRINCIPAL_VALUES_MT[key],dtype=float)
-        values-=values.mean()
-        tensor=np.diag(values)
-        if i==0:
-            tensor=rotation@tensor@rotation.T
-        tensors.append(tensor*condition.scale*float(condition.enabled[i]))
-    return tuple(tensors)
+    return tuple(
+        aligned_toy_quadrupole_tensor_mT(key, condition.n5_azimuth_deg)
+        * condition.scale * float(condition.enabled[i])
+        for i, key in enumerate(Q_KEYS)
+    )
 
 
 class QuadrupoleModel:

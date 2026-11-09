@@ -1,0 +1,84 @@
+{
+  "status": "Exploratory design launched on Kapit Work Station; design only, not a final Q-on figure.",
+  "runner": "rpm_full14_quadrupole_field_pulse_screen.py",
+  "archived_run_id": "full14_quadrupole_field_pulse_screen",
+  "manuscript_figures": [
+    2,
+    3,
+    4,
+    8
+  ],
+  "quadrupole_scale": [
+    0,
+    1
+  ],
+  "nominal_tensors": "../quadrupole_tensors.json",
+  "electron_coupling": {
+    "convention": "Efimova-Hore",
+    "D_uT": -347.875,
+    "J_uT": 115.95833333333333,
+    "axis_molecular": [
+      1,
+      0,
+      0
+    ],
+    "ratio_D_over_J": -3
+  },
+  "field": {
+    "fields_mT": [
+      2,
+      10
+    ],
+    "angles_deg": [
+      0,
+      90
+    ],
+    "lifetime_us": 5,
+    "q_on_trajectories": 16,
+    "q_off_archive": "poster_reproduction_multisample/checkpoints/quantum",
+    "metrics": [
+      "absolute yield shifts",
+      "change in Phi_S(0)-Phi_S(90)"
+    ]
+  },
+  "spin_control": {
+    "field_mT": 0.05,
+    "angles_deg": [
+      85,
+      90,
+      95
+    ],
+    "lifetime_us": 10,
+    "protocols": [
+      "baseline",
+      "FAD:N5 pi pulse every 0.2 us about its dominant hyperfine axis"
+    ],
+    "q_on_trajectories": 24,
+    "q_off_archive": "nuclear_spin_rotation_control_tau10/checkpoints/cells",
+    "metrics": [
+      "85/95-degree shoulder mean minus 90-degree yield",
+      "change in damping: unpulsed depth minus pulsed depth"
+    ]
+  },
+  "sampling": {
+    "paired_nuclear_samples": 4,
+    "sample_ids": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "master_seed": 20260731,
+    "seed_derivation": "SeedSequence([master_seed, 0xA11CE, sample_id])"
+  },
+  "numerics": {
+    "integrator": "original production projected-basis Krylov + Simpson",
+    "fine_time_step_us": 0.00125,
+    "coarse_time_step_us": 0.0025,
+    "survival_tail_bound": 0.0001,
+    "state_error_budget": 0.000024,
+    "full_pair_dimension": 221184
+  },
+  "q_on_trajectories_total": 40,
+  "reused_q_off_controls": 40
+}
