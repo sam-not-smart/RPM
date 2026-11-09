@@ -56,13 +56,8 @@ seed with `SeedSequence([master_seed, 0xA11CE, sample_id])`.
 
 ## Figure index
 
-The first priority is the [40-trajectory field/pulse screen](configurations/quadrupole_field_pulse_screen.json)
-for Figs. 2–3 and 8, with four matched nuclear states per condition
-(seed 20260731) and the same D/J = −3 baseline and numerical settings.
-This screen guides the wider Q-on runs; it does not replace the full
-figure grids. The low-field comparison and 29-angle extension are in
-[Quadrupole studies](quadrupole.md). Archive names below refer to
-separately retained data, not files included in this repository.
+Archive names below refer to
+separately retained data, not files included in this repository. The majority of the raw data used for producing these figures is saved separately on Eliot Kapit's workstation in the Quantum Theory Lab.
 
 | Figure | Proposed method, code and reference settings |
 | --- | --- |
