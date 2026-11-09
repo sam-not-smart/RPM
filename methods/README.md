@@ -25,7 +25,7 @@ molecular x for the dipolar axis and the 2 nm model:
 using 28 MHz/mT. The 21.2 Å / 5.46 MHz literature comparison in the draft
 is not the simulated input. The archived Figs. 2–4 use **Q = 0**.
 
-For the proposed quantum production runs, add
+For the quadrupolar interaction we add
 `s_Q Σᵢ Iᵢ · Qᵢ · Iᵢ` on **FAD N5, FAD N10 and TrpH N1** (the three
 spin-1 nuclei). Use `--quadrupole-scale 1` for the current nominal model
 and `--quadrupole-scale 0` for the archived ablation/control. The
