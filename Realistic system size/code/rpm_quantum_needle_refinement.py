@@ -31,7 +31,6 @@ import numpy as np
 import scipy.stats
 
 from rpm_quantum_needle_jd_sweeps import (
-    QUADRUPOLE_SCALE,
     SweepConfig,
     _write_csv,
     _write_json,
@@ -40,6 +39,7 @@ from rpm_quantum_needle_jd_sweeps import (
     load_cell,
     run_tasks,
 )
+from rpm_quantum_needle_model import add_quadrupole_argument
 
 
 SCHEMA_VERSION = 1
@@ -57,11 +57,11 @@ def _manifest_payload(config: SweepConfig, samples: int) -> dict[str, object]:
         "experiment": "full14_D_over_J_minus3_quantum_needle_refinement",
         "angles_deg": list(REFINED_ANGLES_DEG),
         "samples": int(samples),
-        "condition": condition.stable_dict(),
+        "condition": condition.stable_dict(config.quadrupole_scale),
         "condition_hash": condition.configuration_hash,
         "sweep_configuration": config.stable_dict(),
         "sweep_configuration_hash": config.configuration_hash,
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "quadrupole_scale": config.quadrupole_scale,
     }
     digest = hashlib.sha256(
         json.dumps(stable, sort_keys=True, separators=(",", ":")).encode()
@@ -116,7 +116,7 @@ def write_report(
             cell = load_cell(output_dir, condition, theta, sample, config)
             cells.append(
                 {
-                    **condition.stable_dict(),
+                    **condition.stable_dict(config.quadrupole_scale),
                     "theta_deg": theta,
                     "sample_id": sample,
                     "yield": float(cell["yield"]),
@@ -144,7 +144,7 @@ def write_report(
         "field_microT": config.field_microT,
         "lifetime_us": config.lifetime_us,
         "ratio_D_over_J": -3.0,
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "quadrupole_scale": config.quadrupole_scale,
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     if not complete:
@@ -251,7 +251,7 @@ def _plot(
     axis.text(
         0.5,
         1.01,
-        "14 nuclei; lifetime=5 microseconds; Q=0; 0.25-degree central grid",
+        f"14 nuclei; lifetime=5 microseconds; Q scale={summary['quadrupole_scale']:g}; 0.25-degree central grid",
         transform=axis.transAxes,
         ha="center",
         va="bottom",
@@ -268,6 +268,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--stage", choices=("run", "report", "auto"), default="auto")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--samples", type=int, default=8)
+    add_quadrupole_argument(parser)
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument("--seed", type=int, default=20260728)
     parser.add_argument("--max-wall-hours", type=float, default=23.5)
@@ -285,7 +286,8 @@ def main() -> None:
         raise ValueError("Samples must be at least two and workers must be positive.")
     if args.max_wall_hours <= 0.0:
         raise ValueError("--max-wall-hours must be positive.")
-    config = replace(SweepConfig(), seed=args.seed, lifetime_us=5.0)
+    config = replace(SweepConfig(), seed=args.seed, lifetime_us=5.0,
+                     quadrupole_scale=args.quadrupole_scale)
     condition = efimova_hore_ratio_condition(-3.0)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     manifest = ensure_manifest(args.output_dir, config, args.samples, args.resume)

@@ -30,7 +30,8 @@ import scipy.interpolate
 import scipy.linalg
 import scipy.optimize
 
-from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, spin_operators
+from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, add_quadrupole_argument, spin_operators
+from rpm_statevector_engine import dense_aligned_toy_quadrupole
 
 LIFETIMES_US = np.array([1.0, 10.0, 100.0])
 FIELD_MT = 0.05
@@ -54,7 +55,8 @@ def embed(op: np.ndarray, axis: int, dims: tuple[int, ...]) -> np.ndarray:
 
 class PairModel:
     def __init__(self, name: str, field_mT: float = FIELD_MT,
-                 n5_azz_mT: float | None = None, axial_scale: float = 1.0):
+                 n5_azz_mT: float | None = None, axial_scale: float = 1.0,
+                 quadrupole_scale: float = 0.0):
         if name not in MODELS:
             raise ValueError(name)
         self.name = name
@@ -68,6 +70,11 @@ class PairModel:
         self.dims = (2, 2) + (3,) * len(self.nuclei)
         self.nuclear_dimension = 3 ** len(self.nuclei)
         self.dimension = 4 * self.nuclear_dimension
+        self.quadrupole = (
+            quadrupole_scale * dense_aligned_toy_quadrupole(
+                self.dims, [label.replace("Trp:", "TrpH:") for label, *_ in self.nuclei]
+            ) if quadrupole_scale else None
+        )
         electrons = [tuple(embed(op, e, self.dims) for op in spin_operators(0.5)) for e in (0, 1)]
         self.zeeman_x = (TWOPI * GAMMA_E_MHZ_PER_MT * field_mT * (electrons[0][0] + electrons[1][0])).real
         self.zeeman_z = (TWOPI * GAMMA_E_MHZ_PER_MT * field_mT * (electrons[0][2] + electrons[1][2])).real
@@ -84,7 +91,8 @@ class PairModel:
 
     def hamiltonian(self, scale: float, theta_deg: float) -> np.ndarray:
         theta = math.radians(theta_deg)
-        return self.axial + scale * self.transverse + math.sin(theta) * self.zeeman_x + math.cos(theta) * self.zeeman_z
+        h = self.axial + scale * self.transverse + math.sin(theta) * self.zeeman_x + math.cos(theta) * self.zeeman_z
+        return h if self.quadrupole is None else h + self.quadrupole
 
     def yields_from_hamiltonian(self, h: np.ndarray, lifetimes: np.ndarray) -> np.ndarray:
         energies, vectors = scipy.linalg.eigh(h, overwrite_a=True, check_finite=False, driver="evd")
@@ -109,9 +117,10 @@ def scale_grid() -> np.ndarray:
     return np.unique(np.concatenate(([0.0, 1.0], np.geomspace(0.175, 4.0, 41))))
 
 
-def metrics_for_scale(model_name: str, scale: float, angle_step: float, refine_step: float = 0.005) -> dict:
+def metrics_for_scale(model_name: str, scale: float, angle_step: float, refine_step: float = 0.005,
+                      quadrupole_scale: float = 0.0) -> dict:
     start = time.perf_counter()
-    model = PairModel(model_name)
+    model = PairModel(model_name, quadrupole_scale=quadrupole_scale)
     theta = np.arange(0.0, 90.0 + angle_step / 2.0, angle_step)
     curves = model.curve(scale, theta)
     metrics = []
@@ -150,7 +159,7 @@ def metrics_for_scale(model_name: str, scale: float, angle_step: float, refine_s
             "needle_85_to_90": float(shoulders[2] - shoulders[3]),
             "contrast_0_to_90": float(shoulders[0] - shoulders[3]),
             "angular_range": float(np.ptp(curves[i])),
-            "phi_90": float(shoulders[3]), "J_uT": 0.0, "D_uT": 0.0, "quadrupole_scale": 0.0,
+            "phi_90": float(shoulders[3]), "J_uT": 0.0, "D_uT": 0.0, "quadrupole_scale": quadrupole_scale,
         })
     return {"model": model_name, "scale": float(scale), "theta_deg": theta, "curves": curves, "metrics": metrics, "elapsed_seconds": time.perf_counter()-start}
 
@@ -175,10 +184,11 @@ def load_rows(output: Path) -> list[dict]:
     return sorted(rows, key=lambda r: (r["model"], r["tau_us"], r["lambda"]))
 
 
-def refine_peak(model: str, tau: float, metric: str, lower: float, upper: float, angle_step: float) -> dict:
+def refine_peak(model: str, tau: float, metric: str, lower: float, upper: float, angle_step: float,
+                quadrupole_scale: float = 0.0) -> dict:
     cells = {}
     def objective(scale):
-        cell=metrics_for_scale(model,float(scale),angle_step)
+        cell=metrics_for_scale(model,float(scale),angle_step,quadrupole_scale=quadrupole_scale)
         cells[float(scale)]=cell
         row=next(r for r in cell["metrics"] if r["tau_us"]==tau)
         return -row[metric]
@@ -188,7 +198,7 @@ def refine_peak(model: str, tau: float, metric: str, lower: float, upper: float,
     return {"model":model,"tau":tau,"metric":metric,"lambda":float(optimum.x),"cells":list(cells.values())}
 
 
-def refine_sweep(output: Path, angle_step: float, workers: int) -> None:
+def refine_sweep(output: Path, angle_step: float, workers: int, quadrupole_scale: float = 0.0) -> None:
     marker=output / "peak_refinement.json"
     if marker.exists():
         return
@@ -201,7 +211,7 @@ def refine_sweep(output: Path, angle_step: float, workers: int) -> None:
                 index=max(range(len(selected)),key=lambda i:selected[i][metric])
                 if index in (0,len(selected)-1):
                     continue
-                jobs.append((model,tau,metric,selected[index-1]["lambda"],selected[index+1]["lambda"],angle_step))
+                jobs.append((model,tau,metric,selected[index-1]["lambda"],selected[index+1]["lambda"],angle_step,quadrupole_scale))
     diagnostics=[]
     with ProcessPoolExecutor(max_workers=workers) as pool:
         futures=[pool.submit(refine_peak,*job) for job in jobs]
@@ -214,7 +224,7 @@ def refine_sweep(output: Path, angle_step: float, workers: int) -> None:
     marker.write_text(json.dumps(diagnostics,indent=2)+"\n")
 
 
-def report(output: Path) -> None:
+def report(output: Path, quadrupole_scale: float = 0.0) -> None:
     rows = load_rows(output)
     with (output / "sweep_metrics.csv").open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
@@ -252,7 +262,8 @@ def report(output: Path) -> None:
         ax.axvline(B_N5_AT_ONE_UT,color="#b83243",ls=":",lw=1.3)
         ax.legend(fontsize=9)
     fig.suptitle("Transverse-coupling optimum with three anisotropic nitrogens")
-    fig.supxlabel(r"solid: N5 + N10 on FAD, N1 on Trp; dashed: original two-nucleus control; $B_0=50\,\mu$T, $J=D=Q=0$",fontsize=9)
+    fig.supxlabel(r"solid: N5 + N10 on FAD, N1 on Trp; dashed: two-nucleus control; $B_0=50\,\mu$T, $J=D=0$"
+                  + f", Q scale={quadrupole_scale:g}",fontsize=9)
     for suffix in ("png","pdf"):
         fig.savefig(output / f"three_nitrogen_optimum.{suffix}",dpi=300,facecolor="white")
     plt.close(fig)
@@ -272,7 +283,7 @@ def report(output: Path) -> None:
             ax.plot(np.concatenate((t,180-t[-2::-1])),np.concatenate((y,y[-2::-1])),color=color,label=label)
         ax.set(xlabel=r"field angle $\theta$ (degrees)",ylabel=r"singlet yield $\Phi_S$",title=rf"$\tau={tau:g}\,\mu$s")
         ax.legend(fontsize=8)
-    fig.suptitle("Three-nitrogen angular response across coherence times")
+    fig.suptitle(f"Three-nitrogen angular response across coherence times (Q scale={quadrupole_scale:g})")
     for suffix in ("png","pdf"):
         fig.savefig(output / f"three_nitrogen_angular_curves.{suffix}",dpi=300,facecolor="white")
     plt.close(fig)
@@ -285,10 +296,12 @@ def main() -> None:
     parser.add_argument("--angle-step",type=float,default=0.05)
     parser.add_argument("--resume",action="store_true")
     parser.add_argument("--report-only",action="store_true")
+    add_quadrupole_argument(parser, default=0.0)
     args=parser.parse_args()
     output=args.output_dir
     output.mkdir(parents=True,exist_ok=True)
     config={"nuclei":NITROGENS,"axis_convention":"all principal z axes aligned; diagonal axial tensors","dimensions":[2,2,3,3,3],"field_mT":FIELD_MT,"lifetimes_us":LIFETIMES_US.tolist(),"scale_grid":scale_grid().tolist(),"angle_step_deg":args.angle_step,"refine_step_deg":0.005,"J_uT":0.,"D_uT":0.,"quadrupole_scale":0.,"initial_state":"electron singlet and exact maximally mixed nuclear state","method":"full pair dense eigendecomposition, analytic equal-rate recombination integral"}
+    config["quadrupole_scale"] = args.quadrupole_scale
     config_hash=hashlib.sha256(json.dumps(config,sort_keys=True).encode()).hexdigest()
     manifest=output / "manifest.json"
     if manifest.exists() and json.loads(manifest.read_text())["configuration_hash"]!=config_hash:
@@ -299,7 +312,7 @@ def main() -> None:
         pending=[(m,float(s)) for m in MODELS for s in scale_grid() if not (args.resume and checkpoint_path(output,m,float(s)).exists())]
         print(f"starting {len(pending)} scale cells, {args.workers} workers; each includes all three lifetimes",flush=True)
         with ProcessPoolExecutor(max_workers=args.workers) as pool:
-            futures={pool.submit(metrics_for_scale,m,s,args.angle_step):(m,s) for m,s in pending}
+            futures={pool.submit(metrics_for_scale,m,s,args.angle_step,quadrupole_scale=args.quadrupole_scale):(m,s) for m,s in pending}
             for i,future in enumerate(as_completed(futures),1):
                 cell=future.result()
                 save_cell(output,cell)
@@ -308,8 +321,8 @@ def main() -> None:
     if missing:
         raise RuntimeError(f"{len(missing)} missing scale cells")
     if not args.report_only:
-        refine_sweep(output,args.angle_step,args.workers)
-    report(output)
+        refine_sweep(output,args.angle_step,args.workers,args.quadrupole_scale)
+    report(output,args.quadrupole_scale)
     print(f"complete: {output}",flush=True)
 
 

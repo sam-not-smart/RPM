@@ -47,7 +47,9 @@ from poster_reproduction.core import (
     spin_pi_pulse,
 )
 from rpm_quantum_needle_jd_sweeps import SweepConfig, integrate_yield
-from rpm_quantum_needle_model import ALL_NUCLEI, FAD_NUCLEI, NUCLEAR_RADICALS, Nucleus, spin_operators
+from rpm_quantum_needle_model import (
+    ALL_NUCLEI, FAD_NUCLEI, NUCLEAR_RADICALS, Nucleus, add_quadrupole_argument, spin_operators,
+)
 from rpm_statevector_engine import SingletPopulationObservable, singlet_population
 
 
@@ -79,6 +81,7 @@ class ControlConfig:
     damping_gate_fraction: float = 0.10
     bootstrap_replicates: int = 2000
     smoke: bool = False
+    quadrupole_scale: float = 0.0
 
     @property
     def model(self) -> ProductionModel:
@@ -87,6 +90,7 @@ class ControlConfig:
             master_seed=self.master_seed,
             samples=self.confirm_samples,
             lifetime_us=self.lifetime_us,
+            quadrupole_scale=self.quadrupole_scale,
         )
 
     @property
@@ -112,6 +116,8 @@ class ControlConfig:
 
     def stable_dict(self) -> dict[str, object]:
         result = asdict(self)
+        if self.quadrupole_scale == 0:
+            result.pop("quadrupole_scale")  # Preserve archived checkpoint fingerprints.
         result.update(
             {
                 "schema_version": SCHEMA_VERSION,
@@ -799,7 +805,7 @@ def generate_report(output_dir: Path, config: ControlConfig, selection: dict[str
     text = f"""# Nuclear spin rotation control
 
 Complete 14-nucleus nonfactorized state-vector calculation at 50 uT with a
-10-us recombination lifetime and Q=0.
+10-us recombination lifetime and quadrupole scale {config.quadrupole_scale:g}.
 
 - Best screened N5 pulse interval: **{best:g} us**
 - Screen gate passed: **{selection['gate_passed']}**
@@ -826,6 +832,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--workers", type=int, default=64)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
+    add_quadrupole_argument(parser)
     parser.add_argument("--max-wall-hours", type=float, default=24.0)
     parser.add_argument("--start-guard-hours", type=float, default=7.0)
     parser.add_argument("--resume", action="store_true")
@@ -839,7 +846,9 @@ def main() -> None:
         raise ValueError("--workers must be positive.")
     if args.max_wall_hours <= 0.0 or args.start_guard_hours < 0.0:
         raise ValueError("Wall-time values must be nonnegative, with a positive maximum.")
-    config = smoke_config(args.seed) if args.stage == "smoke" else ControlConfig(master_seed=args.seed)
+    config = (replace(smoke_config(args.seed), quadrupole_scale=args.quadrupole_scale)
+              if args.stage == "smoke" else
+              ControlConfig(master_seed=args.seed, quadrupole_scale=args.quadrupole_scale))
     ensure_manifest(args.output_dir, config)
     deadline = time.monotonic() + 3600.0 * args.max_wall_hours
     guard = 0.0 if config.smoke else 3600.0 * args.start_guard_hours

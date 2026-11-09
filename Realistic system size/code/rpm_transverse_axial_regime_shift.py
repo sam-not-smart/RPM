@@ -3,7 +3,7 @@
 The experiment compares the complete 14-nucleus production Hamiltonian with a
 paired intervention in which only the transverse principal values of FAD N5
 and N10 are set to zero.  It retains the Efimova-Hore D/J=-3 cancellation
-condition, Q=0, a 5-us lifetime, and the production matrix-free Lanczos
+condition, configurable quadrupoles, a 5-us lifetime, and the production matrix-free Lanczos
 propagator.  The M=1 discovery grid is deliberately multiresolution so it can
 complete within a three-day Kapit Work Station allocation.
 """
@@ -49,7 +49,7 @@ from poster_reproduction.core import (
     random_phase_initial_state,
 )
 from rpm_quantum_needle_jd_sweeps import SweepConfig, coarse_grid_indices, integrate_yield
-from rpm_quantum_needle_model import ALL_NUCLEI, FAD_NUCLEI, NUCLEAR_RADICALS
+from rpm_quantum_needle_model import ALL_NUCLEI, FAD_NUCLEI, NUCLEAR_RADICALS, add_quadrupole_argument
 from rpm_statevector_engine import SingletPopulationObservable, singlet_population
 
 
@@ -122,6 +122,7 @@ class RegimeConfig:
     coarse_integration_step_us: float = 0.0025
     state_error_budget: float = 2.4e-5
     smoke: bool = False
+    quadrupole_scale: float = 0.0
 
     @property
     def model(self) -> ProductionModel:
@@ -130,7 +131,7 @@ class RegimeConfig:
             master_seed=self.master_seed,
             samples=self.samples,
             lifetime_us=self.lifetime_us,
-            quadrupole_scale=0.0,
+            quadrupole_scale=self.quadrupole_scale,
             ratio_D_over_J=-3.0,
         )
 
@@ -157,7 +158,7 @@ class RegimeConfig:
             if f"{radical}:{nucleus.name}" in ABLATION_TARGETS
         }
         return {
-            **asdict(self),
+            **{k: v for k, v in asdict(self).items() if k != "quadrupole_scale" or v != 0},
             "schema_version": SCHEMA_VERSION,
             "experiment_title": EXPERIMENT_TITLE,
             "conditions": list(CONDITIONS),
@@ -596,7 +597,7 @@ def generate_report(output_dir: Path, config: RegimeConfig) -> None:
     for axis in axes:
         axis.set_xscale("log")
         axis.grid(alpha=0.25)
-    fig.suptitle(f"{EXPERIMENT_TITLE}\nM=1 discovery; tau=5 us; Q=0")
+    fig.suptitle(f"{EXPERIMENT_TITLE}\nM=1 discovery; tau=5 us; Q scale={config.quadrupole_scale:g}")
     fig.tight_layout()
     fig.savefig(figures / "regime_shift_discovery_metrics.png", dpi=220)
     plt.close(fig)
@@ -642,7 +643,7 @@ Discovery sweep complete for the complete 14-nucleus nonfactorized model.
 
 - Lifetime: **5 us**
 - D/J: **-3** in the Efimova-Hore convention
-- Quadrupole scale: **Q=0**
+- Quadrupole scale: **{config.quadrupole_scale:g}**
 - Nuclear samples: **M=1**, paired across conditions and angles
 - Statistical status: **discovery only**; M=1 does not support a sampling confidence interval
 """,
@@ -653,6 +654,7 @@ Discovery sweep complete for the complete 14-nucleus nonfactorized model.
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--stage", choices=("smoke", "discovery", "report"), default="discovery")
+    add_quadrupole_argument(parser)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--workers", type=int, default=64)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
@@ -668,7 +670,9 @@ def main() -> None:
         raise ValueError("--workers must be positive.")
     if args.max_wall_hours <= 0.0 or args.start_guard_hours < 0.0:
         raise ValueError("Wall-time values must be nonnegative, with a positive maximum.")
-    config = smoke_config(args.seed) if args.stage == "smoke" else RegimeConfig(args.seed)
+    config = (replace(smoke_config(args.seed), quadrupole_scale=args.quadrupole_scale)
+              if args.stage == "smoke" else
+              RegimeConfig(args.seed, quadrupole_scale=args.quadrupole_scale))
     ensure_manifest(args.output_dir, config)
     tasks = discovery_tasks(config)
     write_inventory(args.output_dir, tasks)

@@ -131,6 +131,50 @@ QUADRUPOLE_TENSORS_MT = {
 }
 
 
+NOMINAL_QUADRUPOLE_SCALE = 1.0
+
+
+def parse_quadrupole_scale(value: str | float) -> float:
+    """Parse a nonnegative multiplier of the nominal tensors."""
+    scale = float(value)
+    if not math.isfinite(scale) or scale < 0:
+        raise ValueError("quadrupole scale must be finite and nonnegative")
+    return 0.0 if scale == 0 else scale
+
+
+def add_quadrupole_argument(parser, *, default=NOMINAL_QUADRUPOLE_SCALE):
+    parser.add_argument(
+        "--quadrupole-scale", type=parse_quadrupole_scale, default=default,
+        help="Multiply the nominal nuclear quadrupole tensors by this value "
+             "(1: nominal; 0: archived Q-off settings).",
+    )
+
+
+def nominal_quadrupole_metadata(scale: float) -> dict:
+    """Describe active tensors without changing legacy Q-off fingerprints."""
+    scale = parse_quadrupole_scale(scale)
+    if scale == 0:
+        return {}
+    return {
+        "nominal_quadrupole_tensors_mT": {k: q.tolist() for k, q in QUADRUPOLE_TENSORS_MT.items()},
+        "quadrupole_frame": "shared flavin molecular frame; N5 in-plane azimuth provisional",
+    }
+
+
+def aligned_toy_quadrupole_tensor_mT(site: str, n5_azimuth_deg: float = 0.0) -> np.ndarray:
+    """Nominal tensor in the aligned toy frame used in the three-N Q study."""
+    values = np.array(QUADRUPOLE_PRINCIPAL_VALUES_MT[site])
+    values -= values.mean()
+    if site != "FAD:N5":
+        return np.diag(values)
+    phi = math.radians(n5_azimuth_deg)
+    c, s = math.cos(phi), math.sin(phi)
+    if n5_azimuth_deg in (0.0, 90.0):
+        c, s = (1., 0.) if n5_azimuth_deg == 0.0 else (0., 1.)
+    axes = np.column_stack(([-s, c, 0.], [0., 0., 1.], [c, s, 0.]))
+    return axes @ np.diag(values) @ axes.T
+
+
 def spin_operators(spin: float) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Return Sx, Sy, Sz in the descending-m basis."""
 

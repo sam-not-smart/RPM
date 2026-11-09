@@ -19,6 +19,7 @@ from rpm_quantum_needle_model import (
     SPIN_ORDER,
     SYSTEM_DIMENSIONS,
     TWOPI,
+    aligned_toy_quadrupole_tensor_mT,
     field_vector_mT,
     spin_operators,
 )
@@ -346,6 +347,21 @@ def quadrupole_operator(spin: float, tensor: np.ndarray) -> np.ndarray:
                     operators[a] @ operators[b] + operators[b] @ operators[a]
                 )
     return result
+
+
+def dense_aligned_toy_quadrupole(dimensions, sites) -> np.ndarray:
+    """Embed the nominal spin-1 quadrupoles of the aligned toy, in rad/us."""
+    dimensions, sites = tuple(dimensions), tuple(sites)
+    if dimensions[2:] != (3,) * len(sites):
+        raise ValueError("One spin-1 axis is required for each toy nitrogen.")
+    size = math.prod(dimensions)
+    total = np.zeros((size, size), dtype=complex)
+    for axis, site in enumerate(sites, start=2):
+        tensor = aligned_toy_quadrupole_tensor_mT(site)
+        local = quadrupole_operator(1.0, TWOPI * GAMMA_E_MHZ_PER_MT * tensor)
+        total += np.kron(np.kron(np.eye(math.prod(dimensions[:axis])), local),
+                         np.eye(math.prod(dimensions[axis + 1:])))
+    return total
 
 
 def build_quantum_needle_hamiltonian(

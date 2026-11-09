@@ -3,7 +3,7 @@
 Stage A diagonalizes an exact 108-dimensional needle-core Hamiltonian and
 ranks singlet-active avoided crossings. Stage B uses those candidates in the
 complete 14-nucleus matrix-free state-vector model. The experiment fixes the
-literal Efimova-Hore electron coupling convention and Q=0 throughout.
+literal Efimova-Hore electron coupling convention and configurable quadrupoles.
 """
 
 from __future__ import annotations
@@ -61,13 +61,17 @@ from rpm_quantum_needle_model import (
     GAMMA_E_MHZ_PER_MT,
     TRP_NUCLEI,
     TWOPI,
+    QUADRUPOLE_TENSORS_MT,
+    add_quadrupole_argument,
     field_vector_mT,
+    nominal_quadrupole_metadata,
     spin_operators,
 )
 from rpm_statevector_engine import (
     LocalTerm,
     MatrixFreeHamiltonian,
     efimova_hore_electron_coupling_operator,
+    quadrupole_operator,
     two_spin_coupling_operator,
 )
 
@@ -96,6 +100,7 @@ class SpectralConfig:
     refinement_half_width_uT: float = 10.0
     refinement_step_uT: float = 5.0
     refined_region_count: int = 6
+    quadrupole_scale: float = QUADRUPOLE_SCALE
 
     def stable_dict(self) -> dict[str, object]:
         return {
@@ -103,7 +108,7 @@ class SpectralConfig:
             "schema_version": SCHEMA_VERSION,
             "core_order": list(CORE_ORDER),
             "core_dimensions": list(CORE_DIMENSIONS),
-            "quadrupole_scale": QUADRUPOLE_SCALE,
+            **nominal_quadrupole_metadata(self.quadrupole_scale),
             "exchange_hamiltonian": "-J*(S^2-1)",
             "dipolar_hamiltonian": "D*((S.n)^2-S^2/3)",
         }
@@ -150,6 +155,7 @@ def build_core_hamiltonian(
     d_paper_uT: float = R2_D_PAPER_UT,
     field_microT: float = 50.0,
     remove_n5_n10_transverse: bool = False,
+    quadrupole_scale: float = QUADRUPOLE_SCALE,
 ) -> np.ndarray:
     """Return the exact 108x108 needle-core Hamiltonian in rad/us."""
 
@@ -182,6 +188,11 @@ def build_core_hamiltonian(
                 f"{CORE_ORDER[nucleus_index + 2]} hyperfine",
             )
         )
+        if quadrupole_scale:
+            site = CORE_ORDER[nucleus_index + 2]
+            q = TWOPI * GAMMA_E_MHZ_PER_MT * quadrupole_scale * QUADRUPOLE_TENSORS_MT[site]
+            terms.append(LocalTerm((nucleus_index + 2,), quadrupole_operator(nucleus.spin, q),
+                                   f"{site} quadrupole"))
     pair = TWOPI * efimova_hore_electron_coupling_operator(
         equivalent_field_uT_to_MHz(exchange_j_uT),
         equivalent_field_uT_to_MHz(d_paper_uT),
@@ -229,6 +240,7 @@ def _spectrum_for_j(
             d_paper_uT=config.d_paper_uT,
             field_microT=config.field_microT,
             remove_n5_n10_transverse=remove_transverse,
+            quadrupole_scale=config.quadrupole_scale,
         )
         eigenvalues, eigenvectors = np.linalg.eigh(hamiltonian)
         energies[theta_index] = eigenvalues / TWOPI
@@ -242,6 +254,7 @@ def _spectrum_for_j(
         "singlet_characters": singlets,
         "remove_transverse": bool(remove_transverse),
         "scan_kind": scan_kind,
+        "quadrupole_scale": config.quadrupole_scale,
     }
 
 
@@ -758,7 +771,7 @@ def _plot_spectroscopy(
             label=r"$\langle P_S\rangle$",
             shrink=0.8,
         )
-    fig.suptitle("Transverse-hyperfine avoided-crossing control (D=J=Q=0)")
+    fig.suptitle(f"Transverse-hyperfine avoided-crossing control (D=J=0, Q scale={control_full.get('quadrupole_scale', 0):g})")
     fig.savefig(output_dir / "transverse_hyperfine_control.png", dpi=180)
     plt.close(fig)
 
@@ -778,7 +791,7 @@ def ensure_manifest(
         "full_configuration": full_config.stable_dict(),
         "full_angles_deg": list(FULL_ANGLES_DEG),
         "needle_refinement_angles_deg": list(NEEDLE_REFINEMENT_ANGLES_DEG),
-        "quadrupole_scale": QUADRUPOLE_SCALE,
+        "quadrupole_scale": full_config.quadrupole_scale,
         "literal_efimova_hore": True,
     }
     digest = hashlib.sha256(
@@ -1032,7 +1045,7 @@ def _plot_full_results(
     axis.set(
         xlabel="Field angle (degrees)",
         ylabel=r"Yield reduction from 0 degrees ($\times10^{-3}$)",
-        title=r"Full 14-nucleus exchange reconnaissance ($D=-347.875\ \mu$T$, $\tau=5\ \mu$s, $Q=0$)",
+        title=rf"Full 14-nucleus exchange reconnaissance ($D=-347.875\ \mu$T, $\tau=5\ \mu$s, Q scale={config.quadrupole_scale:g})",
     )
     axis.legend(frameon=False, fontsize=7, ncol=2)
     fig.tight_layout()
@@ -1065,6 +1078,7 @@ def _plot_full_results(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--stage", choices=("spectroscopy", "full", "auto", "report"), required=True)
+    add_quadrupole_argument(parser)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--seed", type=int, default=20260728)
     parser.add_argument("--workers", type=int, default=32)
@@ -1086,8 +1100,9 @@ def main() -> None:
         raise ValueError("Worker counts must be positive.")
     started_wall = time.time()
     deadline = started_wall + args.max_wall_hours * 3600.0
-    spectral_config = SpectralConfig()
-    full_config = replace(SweepConfig(), seed=args.seed, lifetime_us=5.0)
+    spectral_config = SpectralConfig(quadrupole_scale=args.quadrupole_scale)
+    full_config = replace(SweepConfig(), seed=args.seed, lifetime_us=5.0,
+                          quadrupole_scale=args.quadrupole_scale)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     manifest = ensure_manifest(
         args.output_dir, spectral_config, full_config, args.resume

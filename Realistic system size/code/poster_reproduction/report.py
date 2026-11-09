@@ -16,7 +16,7 @@ import numpy as np
 import scipy.integrate
 import scipy.optimize
 
-from rpm_quantum_needle_model import FAD_NUCLEI, TRP_NUCLEI
+from rpm_quantum_needle_model import FAD_NUCLEI, TRP_NUCLEI, add_quadrupole_argument
 
 from .core import (
     BOOTSTRAP_REPLICATES,
@@ -94,6 +94,14 @@ def entanglement_task(count: int, sample_id: int, samples: int, seed: int) -> Ce
 def n10_task(theta: float, protocol: str, sample_id: int, samples: int, seed: int) -> CellTask:
     key = f"{protocol}_th{_slug(theta)}_s{sample_id:03d}"
     return CellTask("n10", key, 0.05, theta, sample_id, protocol=protocol, master_seed=seed, samples=samples)
+
+
+def reported_quadrupole_scale(output: Path) -> float:
+    """Use the run manifest rather than the current default in report labels."""
+    path = output / "model_manifest.json"
+    if not path.exists():
+        return 0.0  # Pre-manifest legacy reports only.
+    return float(json.loads(path.read_text(encoding="utf-8"))["quadrupole_scale"])
 
 
 def _load(path: Path) -> dict[str, np.ndarray]:
@@ -372,6 +380,7 @@ def load_quantum_curves_adaptive(
 
 def analyze_figure2(output: Path, samples: int, seed: int) -> tuple[dict[float, np.ndarray], list[dict[str, object]]]:
     theta = np.asarray(POSTER_THETA_DEG)
+    q = reported_quadrupole_scale(output)
     curves = load_quantum_curves(output, POSTER_FIELDS_MT, theta, samples, seed)
     rows: list[dict[str, object]] = []
     metrics_rows: list[dict[str, object]] = []
@@ -390,7 +399,7 @@ def analyze_figure2(output: Path, samples: int, seed: int) -> tuple[dict[float, 
                     "standard_error": se[index],
                     "ci95_low": low[index],
                     "ci95_high": high[index],
-                    "quadrupole_scale": PRODUCTION_MODEL.quadrupole_scale,
+                    "quadrupole_scale": q,
                 }
             )
         axis.plot(theta, mean, color=color, marker="o", markersize=2.2, linewidth=1.2, label=f"{field:g} mT")
@@ -437,7 +446,8 @@ def analyze_figure2(output: Path, samples: int, seed: int) -> tuple[dict[float, 
             distribution = np.array([item[name] for item in boot_metrics])
             metric_row[f"{name}_ci95_low"], metric_row[f"{name}_ci95_high"] = np.quantile(distribution, [0.025, 0.975])
         metrics_rows.append(metric_row)
-    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="singlet yield", title="Poster-style field dependence; current full-state model")
+    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="singlet yield",
+             title=f"Full-state field dependence (Q scale={q:g})")
     axis.legend(ncol=2, fontsize=7, frameon=False)
     _save_figure(fig, output / "figures" / "figure2_field_dependence")
 
@@ -455,14 +465,15 @@ def analyze_figure2(output: Path, samples: int, seed: int) -> tuple[dict[float, 
         axis.set_xscale("log")
         axis.set_ylabel(ylabel)
     axes[-1].set_xlabel("field strength (mT)")
-    fig.suptitle("Directional-response metrics")
+    fig.suptitle(f"Directional-response metrics (Q scale={q:g})")
     _save_figure(fig, output / "figures" / "figure2b_contrast_vs_field")
 
     matrix = np.array([np.mean(curves[field], axis=0) for field in POSTER_FIELDS_MT])
     fig, axis = plt.subplots(figsize=(8.0, 4.8))
     mesh = axis.pcolormesh(theta, fields, matrix - matrix.mean(axis=1, keepdims=True), shading="nearest", cmap="coolwarm")
     axis.set_yscale("log")
-    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="field strength (mT)", title="Mean-subtracted directional singlet yield")
+    axis.set(xlabel="magnetic-field polar angle (deg)", ylabel="field strength (mT)",
+             title=f"Mean-subtracted directional singlet yield (Q scale={q:g})")
     fig.colorbar(mesh, ax=axis, label="yield minus angular mean")
     _save_figure(fig, output / "figures" / "figure2c_field_angle_heatmap")
     _write_csv(output / "field_dependence.csv", rows)
@@ -659,7 +670,10 @@ def analyze_figure3(
             for time_value, q_value, o_value in zip(times, q_pop_mean, oh_pop_mean):
                 dynamics_rows.append({"field_mT": field, "theta_deg": angle, "time_us": time_value, "quantum_mean_Ps": q_value, "overhauser_mean_Ps": o_value, "time_domain_rmse": rmse_t, "integrated_absolute_error": iae})
     axes[0].legend(frameon=False, fontsize=8)
-    fig.suptitle("Full quantum vs covariance-matched static Overhauser")
+    fig.suptitle(
+        f"Full quantum (Q scale={reported_quadrupole_scale(output):g}) "
+        "vs covariance-matched static Overhauser"
+    )
     _save_figure(fig, output / "figures" / "figure3_overhauser_comparison")
     fig, left = plt.subplots(figsize=(7.2, 4.5))
     right = left.twinx()
@@ -920,6 +934,7 @@ def analyze_figure4(output: Path, samples: int, seed: int) -> list[dict[str, obj
     axes[1].set(xlabel="nuclear count", title="electron--nuclear trajectory proxy")
     for axis in axes:
         axis.legend(frameon=False, fontsize=8)
+    fig.suptitle(f"Entanglement scaling (Q scale={reported_quadrupole_scale(output):g})")
     _save_figure(fig, output / "figures" / "figure4_entanglement_scaling")
     fig, axes = plt.subplots(1, 2, figsize=(11.0, 4.6))
     for count in ENTANGLEMENT_NUCLEAR_COUNTS:
@@ -1271,7 +1286,8 @@ and Simpson-corrected yield integration.
 
 - Nuclear samples per quantum curve: **{samples}**.
 - Master seed: **{run['seed']}** with paired sample IDs across conditions.
-- Quadrupole scale: **0** (machinery retained but disabled in the validated model).
+- Quantum quadrupole scale: **{reported_quadrupole_scale(output):g}**.
+  Static Overhauser calculations have no explicit nuclear quadrupole term.
 - Completed checkpoint cells: **{runtime['completed_checkpoint_cells']}**.
 - Completed full-state trajectories: **{runtime['completed_statevector_trajectories']}**.
 - Completed semiclassical realizations: **{runtime['completed_semiclassical_realizations']:,}**.
@@ -1315,6 +1331,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--overhauser-replicates", type=int, default=8)
     parser.add_argument("--atomwise-samples", type=int, default=4096)
     parser.add_argument("--seed", type=int, default=MASTER_SEED)
+    add_quadrupole_argument(parser, default=None)
     parser.add_argument(
         "--components",
         default="2,3,4,5",
@@ -1325,6 +1342,9 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    if (args.quadrupole_scale is not None and
+            args.quadrupole_scale != reported_quadrupole_scale(args.output_dir)):
+        raise ValueError("Requested quadrupole scale does not match the archived model.")
     components = tuple(item.strip() for item in args.components.split(",") if item.strip())
     if not components or any(item not in {"2", "3", "4", "5", "overhauser"} for item in components):
         raise ValueError("--components may contain only 2,3,4,5,overhauser.")

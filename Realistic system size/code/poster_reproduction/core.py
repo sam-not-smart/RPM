@@ -84,13 +84,14 @@ class ProductionModel:
 
     @property
     def sweep_config(self) -> SweepConfig:
-        return replace(SweepConfig(), seed=self.master_seed, lifetime_us=self.lifetime_us)
+        return replace(SweepConfig(), seed=self.master_seed, lifetime_us=self.lifetime_us,
+                       quadrupole_scale=self.quadrupole_scale)
 
     def stable_dict(self) -> dict[str, object]:
         config = self.sweep_config
         return {
             **asdict(self),
-            "condition": self.condition.stable_dict(),
+            "condition": self.condition.stable_dict(self.quadrupole_scale),
             "propagation": config.stable_dict(),
         }
 
@@ -611,9 +612,10 @@ def model_manifest(model: ProductionModel = PRODUCTION_MODEL) -> dict[str, objec
         },
         "quadrupole_machinery": "available for all spin-1 nuclei",
         "quadrupole_scale": model.quadrupole_scale,
-        "quadrupole_note": "Frozen to the latest validated Kapit Work Station production value Q=0; no nonzero Q is introduced here.",
+        "quadrupole_note": "Scale 0 reproduces archived Q-off runs; scale 1 uses nominal tensors. "
+                           "FAD N5 in-plane azimuth is provisional.",
         "electron_coupling": {
-            **condition.stable_dict(),
+            **condition.stable_dict(model.quadrupole_scale),
             "H_exchange": "-J (S^2 - 1)",
             "H_dipolar": "D ((S.n)^2 - S^2/3)",
             "r_nm": 2.0,
