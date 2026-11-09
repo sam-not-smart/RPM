@@ -1,7 +1,7 @@
 # Nuclear quadrupole follow-up
 
 The archived high-field and spin-control manuscript figures used Q = 0.
-The [proposed figure roadmap](README.md#proposed-figure-roadmap) describes
+The [figure index](README.md#figure-index) describes
 the Q-on replacements and distinguishes screens from final figures.
 
 The quadrupole term is `I · Q · I`. The code uses the field-equivalent
