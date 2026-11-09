@@ -7,15 +7,8 @@ The historical factorized calculation is retained only as a validation
 reference, not as a production propagation path.
 
 **Start with the [Proposed methods and figure index](methods/README.md).**
-It distinguishes the Q-on figure roadmap from the settings actually used for
-the archived Figs. 1–10. The [quadrupole guide](methods/quadrupole.md) has
-run commands and the [nominal tensors](methods/quadrupole_tensors.json).
-
-New full-bath production commands default to the nominal
-`--quadrupole-scale 1`. To reproduce archived settings, pass
-`--quadrupole-scale 0` and match the original configuration, seeds and
-sample count. Use a separate output directory for each scale. The exact toy
-mechanism studies default to Q off and accept Q on as an exploratory extension.
+It discusses the parameters used, including hyperfine tables, dipolar and exchange values and quadrupolar tensors with references as well
+as all other parameters and methods used for the current body of figures and results. 
 
 - `Realistic system size/code/`: shared physics, experiment entry points and tests.
 - `methods/`: written methods, figure-specific configurations, and provenance.
