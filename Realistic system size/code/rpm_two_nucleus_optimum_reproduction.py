@@ -44,6 +44,7 @@ import scipy.interpolate
 import scipy.linalg
 import scipy.optimize
 
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, add_quadrupole_argument, spin_operators
 from rpm_statevector_engine import dense_aligned_toy_quadrupole
 
@@ -120,7 +121,7 @@ class Configuration:
     b_lower_uT: float = 5.0
     b_upper_uT: float = 500.0
     optimizer_xatol_uT: float = 0.02
-    quadrupole_scale: float = 0.0
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE
 
     def stable_dict(self) -> dict[str, object]:
         return {
@@ -145,7 +146,7 @@ def angular_curve(
     b_uT: float,
     lifetime_us: float,
     angle_step_deg: float,
-    quadrupole_scale: float = 0.0,
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE,
 ) -> tuple[np.ndarray, np.ndarray]:
     theta = np.arange(0.0, 90.0 + 0.5 * angle_step_deg, angle_step_deg)
     return theta, _yields_for_angles(azz_mT, b_uT, lifetime_us, theta, quadrupole_scale)
@@ -156,7 +157,7 @@ def _yields_for_angles(
     b_uT: float,
     lifetime_us: float,
     theta: np.ndarray,
-    quadrupole_scale: float = 0.0,
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE,
 ) -> np.ndarray:
     hyperfine = _hyperfine_hamiltonian(azz_mT, b_uT)
     if quadrupole_scale:
@@ -182,7 +183,7 @@ def sensitivity(
     b_uT: float,
     lifetime_us: float,
     angle_step_deg: float,
-    quadrupole_scale: float = 0.0,
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE,
 ) -> tuple[float, float]:
     theta, yields = angular_curve(azz_mT, b_uT, lifetime_us, angle_step_deg, quadrupole_scale)
     coarse_gradient = np.gradient(yields, theta, edge_order=2)
@@ -506,7 +507,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--b-upper", type=float, default=500.0)
     parser.add_argument("--optimizer-xatol", type=float, default=0.02)
     parser.add_argument("--report-only", action="store_true")
-    add_quadrupole_argument(parser, default=0.0)
+    add_quadrupole_argument(parser)
     return parser.parse_args()
 
 

@@ -33,6 +33,7 @@ from typing import Iterable
 
 import numpy as np
 
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import ALL_NUCLEI, SYSTEM_DIMENSIONS, add_quadrupole_argument
 from rpm_statevector_engine import SingletPopulationObservable, singlet_population
 
@@ -374,7 +375,7 @@ def _n10_cell(task: CellTask, model: ProductionModel) -> dict[str, np.ndarray]:
     }
 
 
-def run_cell(task: CellTask, quadrupole_scale: float = 0.0) -> tuple[str, dict[str, np.ndarray]]:
+def run_cell(task: CellTask, quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> tuple[str, dict[str, np.ndarray]]:
     model = replace(PRODUCTION_MODEL, master_seed=task.master_seed, samples=task.samples,
                     quadrupole_scale=quadrupole_scale)
     if task.kind == "quantum":
@@ -599,7 +600,7 @@ def execute(args: argparse.Namespace) -> None:
     # The model manifest always describes the unreduced production model.  Smoke
     # and pilot sample counts are execution-stage properties, not new physics.
     model = replace(PRODUCTION_MODEL, master_seed=args.seed,
-                    quadrupole_scale=getattr(args, "quadrupole_scale", 0.0))
+                    quadrupole_scale=getattr(args, "quadrupole_scale", NOMINAL_QUADRUPOLE_SCALE))
     manifest = ensure_manifests(args.output_dir, model, samples, args)
     all_tasks = (
         planned_refinement_tasks(args.output_dir, samples, args.seed)

@@ -25,6 +25,7 @@ import csv
 import json
 import math
 import os
+from functools import lru_cache
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
@@ -43,9 +44,14 @@ from rpm_quantum_needle_model import (
     DEFAULT_LIFETIMES_US,
     FAD_NUCLEI,
     GAMMA_E_MHZ_PER_MT,
+    NOMINAL_QUADRUPOLE_SCALE,
+    QUADRUPOLE_TENSORS_MT,
     TRP_NUCLEI,
     TWOPI,
     Nucleus,
+    add_quadrupole_argument,
+    nominal_quadrupole_metadata,
+    parse_quadrupole_scale,
     field_vector_mT,
     spin_operators,
     theta_grid,
@@ -84,7 +90,9 @@ def embed(operator: np.ndarray, position: int, dimensions: tuple[int, ...]) -> s
     return result
 
 
-def build_radical(name: str, nuclei: Iterable[Nucleus]) -> RadicalModel:
+def build_radical(name: str, nuclei: Iterable[Nucleus],
+                  quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> RadicalModel:
+    quadrupole_scale = parse_quadrupole_scale(quadrupole_scale)
     nuclei = tuple(nuclei)
     dimensions = (2, *(int(round(2.0 * nucleus.spin + 1.0)) for nucleus in nuclei))
     electron_ops = tuple(embed(operator, 0, dimensions) for operator in spin_operators(0.5))
@@ -101,6 +109,12 @@ def build_radical(name: str, nuclei: Iterable[Nucleus]) -> RadicalModel:
                         * coupling
                         * (electron_ops[electron_axis] @ nuclear_ops[nuclear_axis])
                     )
+        tensor = QUADRUPOLE_TENSORS_MT.get(f"{name}:{nucleus.name}")
+        if tensor is not None and quadrupole_scale:
+            for axis in range(3):
+                for other in range(3):
+                    h0 += (TWOPI * GAMMA_E_MHZ_PER_MT * quadrupole_scale
+                           * tensor[axis, other] * (nuclear_ops[axis] @ nuclear_ops[other]))
     return RadicalModel(
         name=name,
         nuclei=nuclei,
@@ -205,9 +219,11 @@ def solve_orientation(
     field_microT: float,
     lifetimes_us: tuple[float, ...],
     bins_per_linewidth: float,
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE,
 ) -> dict[str, float]:
-    fad = diagonalize_radical(_FAD_MODEL, theta_deg, field_microT)
-    trp = diagonalize_radical(_TRP_MODEL, theta_deg, field_microT)
+    fad_model, trp_model = reference_models(quadrupole_scale)
+    fad = diagonalize_radical(fad_model, theta_deg, field_microT)
+    trp = diagonalize_radical(trp_model, theta_deg, field_microT)
     min_k = 1.0 / max(lifetimes_us)
     delta_omega = min_k / bins_per_linewidth
     omega, coefficients, initial_singlet = convolved_correlation_spectrum(fad, trp, delta_omega)
@@ -344,6 +360,7 @@ def parse_lifetimes(value: str) -> tuple[float, ...]:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    add_quadrupole_argument(parser)
     parser.add_argument("--self-test", action="store_true", help="Validate FFT convolution on the paper's toy model and exit.")
     parser.add_argument("--quick", action="store_true", help="Run five angles and lifetimes 1, 10, and 100 us.")
     parser.add_argument("--field-microt", type=float, default=50.0)
@@ -380,7 +397,7 @@ def main() -> None:
     print(f"workers: {args.workers}; bins per narrowest linewidth: {args.bins_per_linewidth:g}")
 
     task_args = [
-        (float(theta), args.field_microt, lifetimes_us, args.bins_per_linewidth)
+        (float(theta), args.field_microt, lifetimes_us, args.bins_per_linewidth, args.quadrupole_scale)
         for theta in theta_values
     ]
     if args.workers == 1:
@@ -414,6 +431,8 @@ def main() -> None:
                 "paper": "Hiscock et al., PNAS 113, 4634-4639 (2016)",
                 "doi": "10.1073/pnas.1600341113",
                 "field_microT": args.field_microt,
+                "quadrupole_scale": args.quadrupole_scale,
+                **nominal_quadrupole_metadata(args.quadrupole_scale),
                 "lifetimes_us": lifetimes_us,
                 "theta_values_deg": theta_values.tolist(),
                 "bins_per_linewidth": args.bins_per_linewidth,
@@ -439,12 +458,19 @@ def main() -> None:
 
 
 def _solve_orientation_tuple(args: tuple[float, float, tuple[float, ...], float]) -> dict[str, float]:
-    theta, field, lifetimes, bins_per_linewidth = args
-    return solve_orientation(theta, field, lifetimes, bins_per_linewidth)
+    return solve_orientation(*args)
 
 
-_FAD_MODEL = build_radical("FAD", FAD_NUCLEI)
-_TRP_MODEL = build_radical("TrpH", TRP_NUCLEI)
+_FAD_MODEL = build_radical("FAD", FAD_NUCLEI, quadrupole_scale=0.0)
+_TRP_MODEL = build_radical("TrpH", TRP_NUCLEI, quadrupole_scale=0.0)
+
+
+@lru_cache(maxsize=4)
+def reference_models(quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE):
+    if quadrupole_scale == 0:
+        return _FAD_MODEL, _TRP_MODEL
+    return (build_radical("FAD", FAD_NUCLEI, quadrupole_scale),
+            build_radical("TrpH", TRP_NUCLEI, quadrupole_scale))
 
 
 if __name__ == "__main__":

@@ -30,6 +30,7 @@ from scipy.interpolate import CubicSpline
 from scipy.optimize import minimize_scalar
 
 from rpm_three_nitrogen_optimum import PairModel, NITROGENS, B_N5_AT_ONE_UT
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import add_quadrupole_argument
 
 AXIAL_N5_MT = np.array([0.6046, 1.2, 1.7569])
@@ -108,7 +109,7 @@ def angular_metrics(model, scale, taus, angle_step=.05, refine_step=.002,
             "gamma":gamma, "theta_gamma_deg":angles}
 
 
-def field_cell(field, angle_step=.01, refine_factor=1., quadrupole_scale=0.):
+def field_cell(field, angle_step=.01, refine_factor=1., quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     start = time.perf_counter()
     model = PairModel("three_nitrogen", field_mT=field, quadrupole_scale=quadrupole_scale)
     fine = (.0002 if field >= 3 else .001) * refine_factor
@@ -129,7 +130,7 @@ def field_cell(field, angle_step=.01, refine_factor=1., quadrupole_scale=0.):
 
 
 def scaling_cell(azz, scale, angle_step=.05, refine_step=.002, taus=None, kind="scaling",
-                 quadrupole_scale=0.):
+                 quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     start = time.perf_counter()
     taus = TAUS if taus is None else np.asarray(taus)
     axial_scale = azz / NITROGENS[0][3]
@@ -201,7 +202,7 @@ def local_peak_brackets(rows):
             if g[i] >= g[i-1] and g[i] >= g[i+1] and g[i] >= .9*g.max()]
 
 
-def refine_optimum(azz, tau, bracket, kind="scaling", quadrupole_scale=0.):
+def refine_optimum(azz, tau, bracket, kind="scaling", quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     cells = {}
     def objective(scale):
         cell = scaling_cell(azz, float(scale), taus=[tau], kind=kind, quadrupole_scale=quadrupole_scale)
@@ -215,7 +216,7 @@ def refine_optimum(azz, tau, bracket, kind="scaling", quadrupole_scale=0.):
             "lambda":float(optimum.x), "cells":list(cells.values())}
 
 
-def refine_all(output, workers, kind="scaling", quadrupole_scale=0.):
+def refine_all(output, workers, kind="scaling", quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     marker = output / f"{kind}_refinement.json"
     if marker.exists():
         return
@@ -245,7 +246,7 @@ def best_scaling(rows):
             for azz in AXIAL_N5_MT for tau in TAUS]
 
 
-def resolution_checks(output, workers, quadrupole_scale=0.):
+def resolution_checks(output, workers, quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     marker = output / "resolution_checks.json"
     if marker.exists():
         return json.loads(marker.read_text())
@@ -346,7 +347,7 @@ def require_complete_inventory(output):
         raise RuntimeError(f"incomplete suite: {len(missing)} missing discovery units")
 
 
-def report(output, quadrupole_scale=0.):
+def report(output, quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     require_complete_inventory(output)
     repo_root = Path(__file__).resolve().parents[2]
     brief = repo_root/"methods"/"references"/"RPM_transverse_vs_axial_brief_v2.pdf"
@@ -526,7 +527,7 @@ Source: Paper/Final Results/RPM_transverse_vs_axial_brief_v2.pdf, sections 1-3.
         "resolution_passed":summary["numerical_resolution_passed"]},indent=2),flush=True)
 
 
-def ensure_manifest(output, quadrupole_scale=0.):
+def ensure_manifest(output, quadrupole_scale=NOMINAL_QUADRUPOLE_SCALE):
     configuration={"version":1,"nuclei":NITROGENS,"dimensions":[2,2,3,3,3],
         "axis_convention":"all principal axes aligned", "axial_scan_N5_mT":AXIAL_N5_MT.tolist(),
         "axial_mapping":"all three Azz scaled together relative to original N5 Azz",
@@ -559,7 +560,7 @@ def main():
     parser.add_argument("--output-dir",type=Path,default=Path("outputs/three_nitrogen_suite"))
     parser.add_argument("--workers",type=int,default=4)
     parser.add_argument("--resume",action="store_true")
-    add_quadrupole_argument(parser, default=0.0)
+    add_quadrupole_argument(parser)
     args=parser.parse_args()
     if args.workers<1:
         parser.error("workers must be positive")

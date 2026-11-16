@@ -49,6 +49,7 @@ from poster_reproduction.core import (
     random_phase_initial_state,
 )
 from rpm_quantum_needle_jd_sweeps import SweepConfig, coarse_grid_indices, integrate_yield
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import ALL_NUCLEI, FAD_NUCLEI, NUCLEAR_RADICALS, add_quadrupole_argument
 from rpm_statevector_engine import SingletPopulationObservable, singlet_population
 
@@ -122,7 +123,7 @@ class RegimeConfig:
     coarse_integration_step_us: float = 0.0025
     state_error_budget: float = 2.4e-5
     smoke: bool = False
-    quadrupole_scale: float = 0.0
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE
 
     @property
     def model(self) -> ProductionModel:

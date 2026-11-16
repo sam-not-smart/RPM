@@ -35,9 +35,9 @@ from rpm_shared_capacity import spare_capacity
 from rpm_statevector_engine import SingletPopulationObservable
 
 
-OFF_FIELD = replace(PRODUCTION_MODEL, samples=4)
+OFF_FIELD = replace(PRODUCTION_MODEL, samples=4, quadrupole_scale=0.0)
 ON_FIELD = replace(OFF_FIELD, quadrupole_scale=1.0)
-OFF_PULSE = ControlConfig()
+OFF_PULSE = ControlConfig(quadrupole_scale=0.0)
 ON_PULSE = replace(OFF_PULSE, quadrupole_scale=1.0)
 
 

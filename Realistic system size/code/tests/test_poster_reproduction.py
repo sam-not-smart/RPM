@@ -211,7 +211,7 @@ class PosterReproductionTests(unittest.TestCase):
         self.assertAlmostEqual(condition.d_paper_uT, -347.875)
         self.assertAlmostEqual(condition.exchange_J_uT, 115.95833333333333)
         self.assertAlmostEqual(condition.ratio_D_over_J, -3.0)
-        self.assertEqual(PRODUCTION_MODEL.quadrupole_scale, 0.0)
+        self.assertEqual(PRODUCTION_MODEL.quadrupole_scale, 1.0)
         self.assertEqual(PRODUCTION_MODEL.lifetime_us, 5.0)
 
     def test_simpson_yield_matches_constant_population_integral(self):

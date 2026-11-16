@@ -48,7 +48,7 @@ class ThreeNitrogenQuadrupoleTests(unittest.TestCase):
 
     def test_q_off_matches_old_model_at_both_fields(self):
         for b in (.05,3.):
-            old=PairModel("three_nitrogen",field_mT=b)
+            old=PairModel("three_nitrogen",field_mT=b,quadrupole_scale=0.0)
             new=QuadrupoleModel(b,BY_KEY["off"])
             for angle in (0.,38.6,89.8,90.,143.):
                 expected=old.curve(1.,np.array([angle]),TAUS_US)[:,0]

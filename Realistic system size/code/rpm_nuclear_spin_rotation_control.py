@@ -47,6 +47,7 @@ from poster_reproduction.core import (
     spin_pi_pulse,
 )
 from rpm_quantum_needle_jd_sweeps import SweepConfig, integrate_yield
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import (
     ALL_NUCLEI, FAD_NUCLEI, NUCLEAR_RADICALS, Nucleus, add_quadrupole_argument, spin_operators,
 )
@@ -81,7 +82,7 @@ class ControlConfig:
     damping_gate_fraction: float = 0.10
     bootstrap_replicates: int = 2000
     smoke: bool = False
-    quadrupole_scale: float = 0.0
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE
 
     @property
     def model(self) -> ProductionModel:

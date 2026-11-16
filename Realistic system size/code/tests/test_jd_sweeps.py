@@ -232,13 +232,13 @@ class CouplingConventionTests(unittest.TestCase):
         self.assertAlmostEqual(singlet_energy, energy(triplet_minus, d_parallel, exchange), places=13)
 
     def test_sweep_hamiltonian_is_explicitly_quadrupole_free(self) -> None:
-        self.assertEqual(QUADRUPOLE_SCALE, 0.0)
+        self.assertEqual(QUADRUPOLE_SCALE, 1.0)
         condition = low_exchange_condition(10.0)
         hamiltonian = build_quantum_needle_hamiltonian(
             90.0,
             exchange_J_MHz=condition.exchange_J_MHz,
             dipolar_tensor_MHz=condition.dipolar_tensor_MHz,
-            quadrupole_scale=QUADRUPOLE_SCALE,
+            quadrupole_scale=0.0,
         )
         self.assertFalse(any("quadrupole" in term.label for term in hamiltonian.terms))
         self.assertEqual(len([term for term in hamiltonian.terms if term.axes == (0, 1)]), 1)
@@ -342,7 +342,7 @@ class CheckpointAndManifestTests(unittest.TestCase):
             output = Path(directory)
             config = SweepConfig()
             manifest = ensure_manifest(output, config, resume=False)
-            self.assertEqual(manifest["quadrupole_scale"], 0.0)
+            self.assertEqual(manifest["quadrupole_scale"], 1.0)
             resumed = ensure_manifest(output, config, resume=True)
             self.assertEqual(resumed["configuration_hash"], config.configuration_hash)
             with self.assertRaises(RuntimeError):

@@ -78,7 +78,7 @@ def quadrupole_tensors(condition: Condition) -> tuple[np.ndarray, ...]:
 
 class QuadrupoleModel:
     def __init__(self, field_mT: float, condition: Condition, bridge: bool=False):
-        self.base=PairModel("three_nitrogen",field_mT=field_mT)
+        self.base=PairModel("three_nitrogen",field_mT=field_mT,quadrupole_scale=0.0)
         self.nuclear_dimension=self.base.nuclear_dimension
         self.dimension=self.base.dimension
         self.tensors_mT=quadrupole_tensors(condition)
@@ -704,7 +704,7 @@ def verify_physics(output):
         u=expm(-1j*h*t)
         reference.append(float(np.trace(projector@u@rho@u.conj().T).real))
     density_error=float(np.max(abs(actual-reference)))
-    base=PairModel("three_nitrogen")
+    base=PairModel("three_nitrogen",quadrupole_scale=0.0)
     zero=QuadrupoleModel(.05,BY_KEY["off"])
     q0_error=max(float(np.max(abs(zero.yields(t)-base.curve(1.,np.array([t]),TAUS_US)[:,0]))) for t in (0.,85.,90.,95.,180.))
     # Archive comparison uses independently saved Q=0, tau10 metrics.
@@ -727,7 +727,7 @@ def verify_physics(output):
     quad_only_error=float(np.max(abs(only_values-1)))
     # Pure axial HF and exactly axial, collinear Q must commute, even in
     # a transverse applied field, because Q acts only on the nuclear spins.
-    axial=PairModel("three_nitrogen")
+    axial=PairModel("three_nitrogen",quadrupole_scale=0.0)
     h0=axial.hamiltonian(0.,53.)
     q=np.zeros_like(h0,dtype=complex)
     for i,key in enumerate(Q_KEYS):

@@ -36,6 +36,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.linalg
 
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, add_quadrupole_argument, spin_operators
 from rpm_statevector_engine import dense_aligned_toy_quadrupole
 
@@ -97,7 +98,7 @@ QUADRUPOLE = dense_aligned_toy_quadrupole(DIMENSIONS, ("FAD:N5", "TrpH:N1"))
 
 
 def hamiltonian(condition: str, field_mT: float, theta_deg: float,
-                quadrupole_scale: float = 0.0) -> np.ndarray:
+                quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> np.ndarray:
     theta = math.radians(theta_deg)
     zeeman = field_mT * (
         math.sin(theta) * TOTAL_ELECTRON[0] + math.cos(theta) * TOTAL_ELECTRON[2]
@@ -107,7 +108,7 @@ def hamiltonian(condition: str, field_mT: float, theta_deg: float,
 
 
 def exact_singlet_yield(condition: str, field_mT: float, theta_deg: float,
-                       quadrupole_scale: float = 0.0) -> float:
+                       quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> float:
     """Return Phi_S for equal first-order S/T recombination, exactly."""
 
     energies, vectors = scipy.linalg.eigh(
@@ -136,7 +137,7 @@ class GridConfig:
     refine_angle_step_deg: float = 0.001
     refine_half_width_deg: float = 0.025
     candidate_count: int = 4
-    quadrupole_scale: float = 0.0
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE
 
     def stable_dict(self) -> dict[str, object]:
         return {
@@ -424,7 +425,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--refine-half-width", type=float, default=0.025)
     parser.add_argument("--candidate-count", type=int, default=4)
     parser.add_argument("--report-only", action="store_true")
-    add_quadrupole_argument(parser, default=0.0)
+    add_quadrupole_argument(parser)
     return parser.parse_args()
 
 

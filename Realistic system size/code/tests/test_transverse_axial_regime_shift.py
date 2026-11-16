@@ -44,7 +44,7 @@ class TransverseAxialRegimeShiftTests(unittest.TestCase):
         config = RegimeConfig()
         condition = config.model.condition
         self.assertEqual(config.lifetime_us, 5.0)
-        self.assertEqual(config.model.quadrupole_scale, 0.0)
+        self.assertEqual(config.model.quadrupole_scale, 1.0)
         self.assertEqual(config.model.ratio_D_over_J, -3.0)
         self.assertAlmostEqual(condition.d_paper_uT, -347.875)
         self.assertAlmostEqual(condition.exchange_J_uT, 115.95833333333333)

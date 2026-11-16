@@ -28,7 +28,7 @@ class TwoNucleusRegimeShiftRefinedTests(unittest.TestCase):
             spectrum_a = diagonalize_radical(toy_a, theta_deg, 1000.0 * field_mT)
             spectrum_b = diagonalize_radical(toy_b, theta_deg, 1000.0 * field_mT)
             reference = direct_line_yields(spectrum_a, spectrum_b, (10.0,))[10.0]
-            actual = exact_singlet_yield("full", field_mT, theta_deg)
+            actual = exact_singlet_yield("full", field_mT, theta_deg, quadrupole_scale=0.0)
             self.assertAlmostEqual(actual, reference, places=12)
 
     def test_ablation_removes_only_n5_transverse_terms(self) -> None:

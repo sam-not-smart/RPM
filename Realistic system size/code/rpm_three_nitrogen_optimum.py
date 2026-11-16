@@ -30,6 +30,7 @@ import scipy.interpolate
 import scipy.linalg
 import scipy.optimize
 
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import GAMMA_E_MHZ_PER_MT, TWOPI, add_quadrupole_argument, spin_operators
 from rpm_statevector_engine import dense_aligned_toy_quadrupole
 
@@ -56,7 +57,7 @@ def embed(op: np.ndarray, axis: int, dims: tuple[int, ...]) -> np.ndarray:
 class PairModel:
     def __init__(self, name: str, field_mT: float = FIELD_MT,
                  n5_azz_mT: float | None = None, axial_scale: float = 1.0,
-                 quadrupole_scale: float = 0.0):
+                 quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE):
         if name not in MODELS:
             raise ValueError(name)
         self.name = name
@@ -118,7 +119,7 @@ def scale_grid() -> np.ndarray:
 
 
 def metrics_for_scale(model_name: str, scale: float, angle_step: float, refine_step: float = 0.005,
-                      quadrupole_scale: float = 0.0) -> dict:
+                      quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> dict:
     start = time.perf_counter()
     model = PairModel(model_name, quadrupole_scale=quadrupole_scale)
     theta = np.arange(0.0, 90.0 + angle_step / 2.0, angle_step)
@@ -185,7 +186,7 @@ def load_rows(output: Path) -> list[dict]:
 
 
 def refine_peak(model: str, tau: float, metric: str, lower: float, upper: float, angle_step: float,
-                quadrupole_scale: float = 0.0) -> dict:
+                quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> dict:
     cells = {}
     def objective(scale):
         cell=metrics_for_scale(model,float(scale),angle_step,quadrupole_scale=quadrupole_scale)
@@ -198,7 +199,7 @@ def refine_peak(model: str, tau: float, metric: str, lower: float, upper: float,
     return {"model":model,"tau":tau,"metric":metric,"lambda":float(optimum.x),"cells":list(cells.values())}
 
 
-def refine_sweep(output: Path, angle_step: float, workers: int, quadrupole_scale: float = 0.0) -> None:
+def refine_sweep(output: Path, angle_step: float, workers: int, quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> None:
     marker=output / "peak_refinement.json"
     if marker.exists():
         return
@@ -224,7 +225,7 @@ def refine_sweep(output: Path, angle_step: float, workers: int, quadrupole_scale
     marker.write_text(json.dumps(diagnostics,indent=2)+"\n")
 
 
-def report(output: Path, quadrupole_scale: float = 0.0) -> None:
+def report(output: Path, quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE) -> None:
     rows = load_rows(output)
     with (output / "sweep_metrics.csv").open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
@@ -296,7 +297,7 @@ def main() -> None:
     parser.add_argument("--angle-step",type=float,default=0.05)
     parser.add_argument("--resume",action="store_true")
     parser.add_argument("--report-only",action="store_true")
-    add_quadrupole_argument(parser, default=0.0)
+    add_quadrupole_argument(parser)
     args=parser.parse_args()
     output=args.output_dir
     output.mkdir(parents=True,exist_ok=True)

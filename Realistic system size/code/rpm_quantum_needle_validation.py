@@ -38,6 +38,7 @@ import scipy.linalg
 
 import rpm_quantum_needle_reproduction as exact
 from rpm_quantum_needle_model import (
+    NOMINAL_QUADRUPOLE_SCALE, add_quadrupole_argument, nominal_quadrupole_metadata,
     GAMMA_E_MHZ_PER_MT,
     NUCLEAR_DIMENSION,
     STATE_DIMENSION,
@@ -89,6 +90,7 @@ class ValidationConfig:
     lanczos_safety_factor: float = 2.0
     lanczos_initial_step_us: float = 0.05
     lanczos_maximum_step_us: float = 0.25
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE
 
     @property
     def maximum_time_us(self) -> float:
@@ -104,6 +106,9 @@ class ValidationConfig:
 
     def stable_dict(self) -> dict[str, object]:
         result = asdict(self)
+        if self.quadrupole_scale == 0:
+            result.pop("quadrupole_scale")
+        result.update(nominal_quadrupole_metadata(self.quadrupole_scale))
         result["sweep_angles_deg"] = list(self.sweep_angles_deg)
         result["stage1_angles_deg"] = list(STAGE1_ANGLES)
         result["state_dimension"] = STATE_DIMENSION
@@ -218,7 +223,7 @@ def propagate_full_state(
         config.field_microT,
         exchange_J_MHz=0.0,
         dipolar_tensor_MHz=np.zeros((3, 3)),
-        quadrupole_scale=0.0,
+        quadrupole_scale=config.quadrupole_scale,
     )
     construction_seconds = time.perf_counter() - build_started
     initial_state = singlet_initial_state(
@@ -369,6 +374,7 @@ def exact_reference(
         float(theta_deg),
         config.field_microT,
         config.lifetime_us,
+        config.quadrupole_scale,
         len(times_us),
         float(times_us[0]) if len(times_us) else None,
         float(times_us[-1]) if len(times_us) else None,
@@ -376,8 +382,9 @@ def exact_reference(
     cached = _EXACT_REFERENCE_CACHE.get(cache_key)
     if cached is not None:
         return cached
-    fad = exact.diagonalize_radical(exact._FAD_MODEL, theta_deg, config.field_microT)
-    trp = exact.diagonalize_radical(exact._TRP_MODEL, theta_deg, config.field_microT)
+    fad_model, trp_model = exact.reference_models(config.quadrupole_scale)
+    fad = exact.diagonalize_radical(fad_model, theta_deg, config.field_microT)
+    trp = exact.diagonalize_radical(trp_model, theta_deg, config.field_microT)
     # Match the reference runner's established 16 bins per recombination
     # linewidth.  A fixed 0.00125 rad/us grid was ten times finer than needed
     # for the 5-us validation lifetime and made the oracle unnecessarily slow.
@@ -948,6 +955,7 @@ def final_report(output_dir: Path, config: ValidationConfig, manifest: dict[str,
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    add_quadrupole_argument(parser)
     parser.add_argument(
         "--stage",
         choices=(
@@ -975,7 +983,7 @@ def main() -> None:
         raise ValueError("--walltime-hours must be in (0, 24].")
     output_dir = args.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
-    base_config = ValidationConfig()
+    base_config = ValidationConfig(quadrupole_scale=args.quadrupole_scale)
     benchmark_path = output_dir / "benchmark_selection.json"
     if benchmark_path.exists() and args.resume:
         benchmark = json.loads(benchmark_path.read_text(encoding="utf-8"))

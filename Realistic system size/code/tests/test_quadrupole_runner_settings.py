@@ -68,21 +68,21 @@ class QuadrupoleRunnerSettings(unittest.TestCase):
     def test_resume_keeps_q_off_and_q_on_separate(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            ensure_manifest(root, ControlConfig())
+            ensure_manifest(root, ControlConfig(quadrupole_scale=0.0))
             with self.assertRaises(ValueError):
                 ensure_manifest(root, ControlConfig(quadrupole_scale=1.0))
             jd = root / "jd"
             jd.mkdir()
-            ensure_jd(jd, SweepConfig(), False)
+            ensure_jd(jd, SweepConfig(quadrupole_scale=0.0), False)
             with self.assertRaises(RuntimeError):
                 ensure_jd(jd, SweepConfig(quadrupole_scale=1.0), True)
 
     def test_exact_toys_and_spectral_core_are_q_sensitive(self):
         for off, on in (
             (hamiltonian("full", 0.05, 90.0, 0.0), hamiltonian("full", 0.05, 90.0, 1.0)),
-            (PairModel("three_nitrogen").hamiltonian(1.0, 90.0),
+            (PairModel("three_nitrogen", quadrupole_scale=0.0).hamiltonian(1.0, 90.0),
              PairModel("three_nitrogen", quadrupole_scale=1.0).hamiltonian(1.0, 90.0)),
-            (build_core_hamiltonian(90.0, 115.95833333333333),
+            (build_core_hamiltonian(90.0, 115.95833333333333, quadrupole_scale=0.0),
              build_core_hamiltonian(90.0, 115.95833333333333, quadrupole_scale=1.0)),
         ):
             self.assertGreater(np.linalg.norm(on - off), 1.0)

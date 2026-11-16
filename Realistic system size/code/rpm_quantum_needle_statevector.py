@@ -41,6 +41,7 @@ import numpy as np
 from scipy.stats import qmc, t as student_t
 
 from rpm_quantum_needle_model import (
+    NOMINAL_QUADRUPOLE_SCALE, add_quadrupole_argument, nominal_quadrupole_metadata,
     DEFAULT_FIELD_MICROT,
     DEFAULT_LIFETIMES_US,
     DIAGNOSTIC_ANGLES_DEG,
@@ -89,9 +90,13 @@ class RunConfig:
     lanczos_state_error_budget: float = 2.4e-5
     lanczos_initial_step_us: float = 0.05
     lanczos_maximum_step_us: float = 0.25
+    quadrupole_scale: float = NOMINAL_QUADRUPOLE_SCALE
 
     def stable_dict(self) -> dict[str, object]:
         result = asdict(self)
+        if self.quadrupole_scale == 0:
+            result.pop("quadrupole_scale")
+        result.update(nominal_quadrupole_metadata(self.quadrupole_scale))
         result["lifetimes_us"] = list(self.lifetimes_us)
         result["spin_order"] = list(SPIN_ORDER)
         result["dimensions"] = list(SYSTEM_DIMENSIONS)
@@ -189,7 +194,7 @@ def run_cell_full(task: CellTask) -> CellResult:
         config.field_microT,
         exchange_J_MHz=config.exchange_J_MHz,
         dipolar_tensor_MHz=np.asarray(config.dipolar_tensor_MHz),
-        quadrupole_scale=0.0,
+        quadrupole_scale=config.quadrupole_scale,
     )
     rng = np.random.default_rng(_seed(config.seed, 0xA11CE, task.sample_id))
     initial_state = singlet_initial_state(SYSTEM_DIMENSIONS, rng)
@@ -633,6 +638,13 @@ def create_report(
     reference_csv: Path | None,
 ) -> dict[str, object]:
     reference = read_reference(reference_csv)
+    if reference:
+        meta_path = reference_csv.with_name("quantum_needle_metadata.json")
+        meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
+        if float(meta.get("quadrupole_scale", 0.0)) != config.quadrupole_scale:
+            raise ValueError("Reference and propagated quadrupole scales differ")
+        if config.exchange_J_MHz or np.any(config.dipolar_tensor_MHz):
+            raise ValueError("The independent-radical reference requires J=D=0")
     summary_rows: list[dict[str, object]] = []
     all_cells: dict[float, tuple[np.ndarray, np.ndarray, list[CellResult]]] = {}
     for angle_index, theta in enumerate(angles_deg):
@@ -958,7 +970,7 @@ def benchmark_full_trajectory(
         config.field_microT,
         exchange_J_MHz=config.exchange_J_MHz,
         dipolar_tensor_MHz=np.asarray(config.dipolar_tensor_MHz),
-        quadrupole_scale=0.0,
+        quadrupole_scale=config.quadrupole_scale,
     )
     construction_seconds = time.perf_counter() - construction_started
     state_started = time.perf_counter()
@@ -1043,7 +1055,7 @@ def benchmark_full_trajectory(
 
 def _benchmark_task(_: int) -> float:
     started = time.perf_counter()
-    hamiltonian = build_quantum_needle_hamiltonian(90.0, quadrupole_scale=0.0)
+    hamiltonian = build_quantum_needle_hamiltonian(90.0)
     state = singlet_initial_state(SYSTEM_DIMENSIONS, np.random.default_rng(1234))
     for _ in range(4):
         state = hamiltonian.matvec(state)
@@ -1076,6 +1088,7 @@ def benchmark_workers(output_dir: Path) -> int:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    add_quadrupole_argument(parser)
     parser.add_argument("--stage", choices=("auto", "pilot", "full", "report"), default="auto")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--output-dir", type=Path, default=Path("outputs") / "quantum_needle_statevector")
@@ -1106,6 +1119,7 @@ def main() -> None:
         raise ValueError("--walltime-hours must be positive.")
     dipolar_tensor = axial_dipolar_tensor_MHz(args.D_MHz)
     config = RunConfig(
+        quadrupole_scale=args.quadrupole_scale,
         seed=args.seed,
         exchange_J_MHz=args.J_MHz,
         dipolar_tensor_MHz=tuple(tuple(float(value) for value in row) for row in dipolar_tensor),

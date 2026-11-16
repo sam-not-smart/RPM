@@ -39,6 +39,7 @@ import numpy as np
 import scipy.integrate
 import scipy.stats
 
+from rpm_quantum_needle_model import NOMINAL_QUADRUPOLE_SCALE
 from rpm_quantum_needle_model import (
     GAMMA_E_MHZ_PER_MT,
     NUCLEAR_DIMENSION,
@@ -58,7 +59,7 @@ from rpm_statevector_engine import (
 
 
 SCHEMA_VERSION = 1
-QUADRUPOLE_SCALE = 0.0
+QUADRUPOLE_SCALE = NOMINAL_QUADRUPOLE_SCALE
 SCREEN_ANGLES_DEG = tuple(float(value) for value in range(0, 181, 30))
 REFINED_ANGLES_DEG = tuple(float(value) for value in range(0, 181, 15))
 DIPOLE_PAPER_MAGNITUDES_UT = (
@@ -159,7 +160,7 @@ class CouplingCondition:
 
     @property
     def configuration_hash(self) -> str:
-        payload = json.dumps(self.stable_dict(), sort_keys=True, separators=(",", ":"))
+        payload = json.dumps(self.stable_dict(0.0), sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -194,7 +195,7 @@ class EfimovaHoreCondition:
 
     @property
     def configuration_hash(self) -> str:
-        payload = json.dumps(self.stable_dict(), sort_keys=True, separators=(",", ":"))
+        payload = json.dumps(self.stable_dict(0.0), sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(payload.encode()).hexdigest()
 
 
