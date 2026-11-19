@@ -1,0 +1,12 @@
+{
+  "source": "Sam's local Paper/main.tex snapshot",
+  "source_last_modified_local": "2026-10-12",
+  "packaged_date": "2026-11-19",
+  "source_sha256": "c1286da5e4cef5b436f216ff244d25a986fb78e2b0aad2b6fc2f5b6a15127140",
+  "packaged_tex_sha256": "eb3ee486471312d5d7ff7ef2bdbb8550eb6b1ea95d296e264f32506d070668b1",
+  "changes": "Only the ten includegraphics paths were adjusted to repository-relative assets. Manuscript prose and captions were not revised.",
+  "figure_assets": "Eight PNGs already exist under figures/. The two referenced PDF figures are included under Paper/assets/.",
+  "overleaf_comparison": "Not performed; this is not claimed to be the latest Overleaf manuscript.",
+  "bibliography": "Deferred at Sam's request. No .bib file is included.",
+  "figure_10": "The existing reference image is retained in the draft; numerical reproduction is deferred."
+}
